@@ -1,4 +1,5 @@
 /*! Open Historia — map feature (city/structure) selection UI © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
+import UiIcon from "../GameUI/carbonIcons.jsx";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useMap } from "react-map-gl/maplibre";
@@ -346,7 +347,7 @@ const FeaturePopup = () => {
               flexShrink: 0,
             }}
           >
-            {"✕"}
+            <UiIcon name="close" size={14} />
           </button>
         </div>
 

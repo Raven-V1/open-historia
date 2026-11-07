@@ -1,5 +1,6 @@
 /*! Open Historia — portions (map-editor embed, apply-to-scenario, country picker) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { CarbonModal } from "./carbonControls.jsx";
 import UiIcon, { DifficultyIcon } from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, SCREEN_HEIGHT, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -4767,7 +4768,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         {(countryPicker) => (
         <div
           onClick={closeCountryPicker}
-          style={{ position: "fixed", inset: 0, zIndex: 10060, background: "rgba(0,0,0,0.7)", backdropFilter: "blur(6px)", display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "center", padding: `${SAFE_TOP} ${SAFE_RIGHT} ${SAFE_BOTTOM} ${SAFE_LEFT}` }}
+          style={{ visibility: difficultyPick ? "hidden" : "visible", position: "fixed", inset: 0, zIndex: 10060, background: "rgba(0,0,0,0.7)", backdropFilter: "blur(6px)", display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "center", padding: `${SAFE_TOP} ${SAFE_RIGHT} ${SAFE_BOTTOM} ${SAFE_LEFT}` }}
         >
           {/* On a phone the card takes the whole screen height rather than 80%
               of it: the search, the map, the list and the buttons need every
@@ -4796,72 +4797,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
               overflow: difficultyPick ? "visible" : isMobile ? "auto" : "hidden",
             }}
           >
-            {difficultyPick ? (
-              <>
-                <div style={{ fontWeight: 800, fontSize: "1.2rem", letterSpacing: "-0.01em" }}>Choose your difficulty</div>
-                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.8rem", margin: "0.2rem 0 0.85rem" }}>
-                  How hard should the world fight back?
-                </div>
-                {selectedCountryOption && (() => {
-                  const flagUrl = flagImageUrlFromGid(selectedCountryOption.code) || flagImageUrlFromGid(selectedCountryOption.name)
-                    || (gidToAlpha2(selectedCountryOption.code) ? bundledFlagUrl(`https://flagcdn.com/${gidToAlpha2(selectedCountryOption.code)}.svg`) : null);
-                  return (
-                    <div style={{ alignItems: "center", display: "flex", fontSize: "0.95rem", fontWeight: 700, gap: "0.6rem", marginBottom: "0.85rem", padding: "0.6rem 0.85rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10 }}>
-                      {flagUrl ? (
-                        <img
-                          src={bundledFlagUrl(flagUrl)}
-                          alt=""
-                          style={{ borderRadius: 3, boxShadow: "0 1px 3px rgba(0,0,0,0.5)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", display: "block", flexShrink: 0, height: "1.2rem", objectFit: "cover", width: "1.75rem" }}
-                        />
-                      ) : (
-                        <span aria-hidden="true" style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: 3, display: "inline-block", flexShrink: 0, height: "1.2rem", width: "1.75rem" }} />
-                      )}
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <span>{selectedCountryOption.name}</span>
-                        <span style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontWeight: 400 }}>Selected Nation</span>
-                      </div>
-                    </div>
-                  );
-                })()}
-                {difficultyPick?.group && (
-                  <div style={{ alignItems: "center", display: "flex", fontSize: "0.95rem", fontWeight: 700, gap: "0.6rem", marginBottom: "0.85rem", padding: "0.6rem 0.85rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10 }}>
-                    <span aria-hidden="true" style={{ background: difficultyPick.group.color || "#a1a1aa", borderRadius: 4, display: "inline-block", height: 20, width: 20 }} />
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span data-no-translate>{difficultyPick.group.name}</span>
-                      <span style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontWeight: 400 }}>Selected Group</span>
-                    </div>
-                  </div>
-                )}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", overflowY: "auto" }}>
-                  {DIFFICULTY_LEVELS.map((level) => (
-                    <button
-                      key={level.id}
-                      type="button"
-                      onClick={() => pickDifficulty(level.id)}
-                      style={{
-                        ...themeButtonStyle,
-                        alignItems: "center",
-                        background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
-                        border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
-                        borderRadius: 10,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "0.3rem",
-                        padding: "0.9rem 0.6rem",
-                        transition: "background 0.15s ease, border-color 0.15s ease",
-                      }}
-                    >
-                      <span style={{ lineHeight: 1 }}><DifficultyIcon id={level.id} size={28} /></span>
-                      <span style={{ fontWeight: 700, fontSize: "0.92rem" }}>{level.label}</span>
-                      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", textAlign: "center", lineHeight: 1.3 }}>{level.blurb}</span>
-                    </button>
-                  ))}
-                </div>
-                <button type="button" className="oh-tap-row" onClick={() => setDifficultyPick(null)} style={touchFit({ ...themeButtonStyle, marginTop: "0.85rem", borderRadius: 8, padding: "0.6rem" }, touch)}>
-                  Back
-                </button>
-              </>
-            ) : (
+            {difficultyPick ? null : (
               <>
                 <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.6rem", marginBottom: "0.75rem", flexShrink: 0 }}>
                   <div>
@@ -5034,6 +4970,74 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         </div>
         )}
       </Presence>
+      <CarbonModal
+        open={Boolean(difficultyPick)}
+        passiveModal
+        size="sm"
+        className="oh-difficulty-modal"
+        modalHeading="Choose your difficulty"
+        modalLabel="How hard should the world fight back?"
+        onRequestClose={() => setDifficultyPick(null)}
+      >
+          {selectedCountryOption && (() => {
+            const flagUrl = flagImageUrlFromGid(selectedCountryOption.code) || flagImageUrlFromGid(selectedCountryOption.name)
+              || (gidToAlpha2(selectedCountryOption.code) ? bundledFlagUrl(`https://flagcdn.com/${gidToAlpha2(selectedCountryOption.code)}.svg`) : null);
+            return (
+              <div style={{ alignItems: "center", display: "flex", fontSize: "0.95rem", fontWeight: 700, gap: "0.6rem", marginBottom: "0.85rem", padding: "0.6rem 0.85rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10 }}>
+                {flagUrl ? (
+                  <img
+                    src={bundledFlagUrl(flagUrl)}
+                    alt=""
+                    style={{ borderRadius: 3, boxShadow: "0 1px 3px rgba(0,0,0,0.5)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", display: "block", flexShrink: 0, height: "1.2rem", objectFit: "cover", width: "1.75rem" }}
+                  />
+                ) : (
+                  <span aria-hidden="true" style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: 3, display: "inline-block", flexShrink: 0, height: "1.2rem", width: "1.75rem" }} />
+                )}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span>{selectedCountryOption.name}</span>
+                  <span style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontWeight: 400 }}>Selected Nation</span>
+                </div>
+              </div>
+            );
+          })()}
+          {difficultyPick?.group && (
+            <div style={{ alignItems: "center", display: "flex", fontSize: "0.95rem", fontWeight: 700, gap: "0.6rem", marginBottom: "0.85rem", padding: "0.6rem 0.85rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10 }}>
+              <span aria-hidden="true" style={{ background: difficultyPick.group.color || "#a1a1aa", borderRadius: 4, display: "inline-block", height: 20, width: 20 }} />
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span data-no-translate>{difficultyPick.group.name}</span>
+                <span style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontWeight: 400 }}>Selected Group</span>
+              </div>
+            </div>
+          )}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", overflowY: "auto" }}>
+            {DIFFICULTY_LEVELS.map((level) => (
+              <button
+                key={level.id}
+                type="button"
+                onClick={() => pickDifficulty(level.id)}
+                style={{
+                  ...themeButtonStyle,
+                  alignItems: "center",
+                  background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+                  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+                  borderRadius: 10,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.3rem",
+                  padding: "0.9rem 0.6rem",
+                  transition: "background 0.15s ease, border-color 0.15s ease",
+                }}
+              >
+                <span style={{ lineHeight: 1 }}><DifficultyIcon id={level.id} size={28} /></span>
+                <span style={{ fontWeight: 700, fontSize: "0.92rem" }}>{level.label}</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", textAlign: "center", lineHeight: 1.3 }}>{level.blurb}</span>
+              </button>
+            ))}
+          </div>
+          <button type="button" className="oh-tap-row" onClick={() => setDifficultyPick(null)} style={touchFit({ ...themeButtonStyle, marginTop: "0.85rem", borderRadius: 8, padding: "0.6rem" }, touch)}>
+            Back
+          </button>
+      </CarbonModal>
 
       {/* Pressing Play on a game whose scenario this library does not hold. The
           third button appears only when the sender recorded somewhere to fetch

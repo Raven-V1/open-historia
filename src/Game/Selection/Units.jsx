@@ -7,6 +7,7 @@
 // are disband one of their own units and ask, in words, for orders — which
 // queues an action the AI weighs on the next jump rather than moving anything now.
 
+import UiIcon from "../GameUI/carbonIcons.jsx";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useMap } from "react-map-gl/maplibre";
@@ -408,7 +409,7 @@ const UnitPopup = () => {
               flexShrink: 0,
             }}
           >
-            {"✕"}
+            <UiIcon name="close" size={14} />
           </button>
         </div>
 

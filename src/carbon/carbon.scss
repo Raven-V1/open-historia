@@ -36,6 +36,7 @@
 @use '@carbon/styles/scss/components/combo-box';
 @use '@carbon/styles/scss/components/modal';
 @use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/components/tabs';
 
 // The tokens. Carbon Dark is the page's default while no theme attribute is
 // set yet (first paint), so a Carbon component never renders without colours.

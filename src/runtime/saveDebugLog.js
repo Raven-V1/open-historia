@@ -60,15 +60,15 @@ const useDebugLogEnabled = () =>
 // happened, because the player pressed Save.
 const saveLabel = (state) => {
     if (state === "working") return "Saving…";
-    if (state === "saved") return "✓ Saved — attach the file to your report";
-    if (state === "copied") return "✓ Log copied — paste it into your report";
+    if (state === "saved") return "Saved — attach the file to your report";
+    if (state === "copied") return "Log copied — paste it into your report";
     if (state === "failed") return "Couldn't save — try again";
-    return "💾 Save logging file";
+    return "Save logging file";
 };
 
 const copyLabel = (state, idleLabel) => {
     if (state === "working") return "Copying…";
-    if (state === "copied") return "✓ Copied!";
+    if (state === "copied") return "Copied!";
     if (state === "failed") return "Couldn't copy — try again";
     return idleLabel;
 };

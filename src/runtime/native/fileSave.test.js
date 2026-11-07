@@ -112,7 +112,7 @@ test("the notice says where the file went, keeps the file name out of translatio
   const notice = document.getElementById("oh-saved-notice");
   assert.ok(notice, "the notice is on the page");
   assert.equal(notice.attributes.role, "status");
-  assert.deepEqual(texts(notice), ["Saved to your Downloads folder", "Open Historia / game-1-game.zip", "Share", "✕"]);
+  assert.deepEqual(texts(notice), ["Saved to your Downloads folder", "Open Historia / game-1-game.zip", "Share", "Close"]);
   assert.equal("data-no-translate" in findText(notice, "Open Historia / game-1-game.zip").attributes, true);
   findText(notice, "Share").listeners.click();
   assert.equal(shared, 1);
@@ -120,7 +120,7 @@ test("the notice says where the file went, keeps the file name out of translatio
 
   showSavedNotice({ fileName: "a.zip" });
   assert.equal(findText(document.getElementById("oh-saved-notice"), "Share"), null, "no Share button without a share sheet");
-  findText(document.getElementById("oh-saved-notice"), "✕").listeners.click();
+  findText(document.getElementById("oh-saved-notice"), "Close").listeners.click();
   assert.equal(document.getElementById("oh-saved-notice"), null);
   delete globalThis.document;
 });

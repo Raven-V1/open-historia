@@ -11,6 +11,7 @@ import CarbonTextInput from "@carbon/react/es/components/TextInput/TextInput.js"
 import CarbonCheckbox from "@carbon/react/es/components/Checkbox/Checkbox.js";
 import CarbonComboBox from "@carbon/react/es/components/ComboBox/ComboBox.js";
 import CarbonModal from "@carbon/react/es/components/Modal/Modal.js";
+import { Tab as CarbonTab, TabList as CarbonTabList, Tabs as CarbonTabs } from "@carbon/react/es/components/Tabs/Tabs.js";
 import CarbonSlider from "@carbon/react/es/components/Slider/Slider.js";
 
 // A switch. Its label is shown by the row around it, so Carbon's is kept for
@@ -32,4 +33,4 @@ export const SwitchControl = ({ label, checked, onChange, disabled = false }) =>
   );
 };
 
-export { CarbonComboBox, CarbonModal, CarbonSelect, CarbonSelectItem, CarbonTextInput, CarbonCheckbox, CarbonSlider };
+export { CarbonTab, CarbonTabList, CarbonTabs, CarbonComboBox, CarbonModal, CarbonSelect, CarbonSelectItem, CarbonTextInput, CarbonCheckbox, CarbonSlider };

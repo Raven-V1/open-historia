@@ -1,7 +1,7 @@
 /*! Open Historia — portions (reasoning toggle + small-screen menu) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { lazy, Suspense, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import UiIcon from "./carbonIcons.jsx";
-import { CarbonComboBox, CarbonSelect, CarbonTextInput, SwitchControl } from "./carbonControls.jsx";
+import { CarbonCheckbox, CarbonComboBox, CarbonSelect, CarbonSlider, CarbonTab, CarbonTabList, CarbonTabs, CarbonTextInput, SwitchControl } from "./carbonControls.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
 import { createPortal } from "react-dom";
@@ -1158,7 +1158,7 @@ const FillPanel = ({ connections, onDone }) => {
         </div>
         {connections.map((connection) => (
             <label key={connection.id} className="oh-tap-row" style={{ alignItems: "center", display: "flex", gap: "0.5rem", fontSize: "0.8rem", marginBottom: "0.35rem", cursor: "pointer" }}>
-            <input type="checkbox" checked={ticked.includes(connection.id)} onChange={() => toggle(connection.id)} />
+            <CarbonCheckbox id={`oh-fill-${connection.id}`} labelText="" hideLabel checked={ticked.includes(connection.id)} onChange={() => toggle(connection.id)} />
             {connectionDisplayName(connection)} <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>({getProviderMeta(connection.provider).label})</span>
             </label>
         ))}
@@ -2623,16 +2623,17 @@ const SoundSection = ({ musicOn, onToggleMusic, effectsOn, onToggleEffects }) =>
             <label style={{ alignItems: "center", display: "flex", gap: "0.75rem", justifyContent: "space-between", marginBottom: "0.85rem", opacity: musicOn ? 1 : 0.5 }}>
                 <span style={{ fontSize: "0.9rem" }}>{"Music volume"}</span>
                 <span style={{ alignItems: "center", display: "flex", gap: "0.6rem" }}>
-                    <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    step="1"
+                    <CarbonSlider
+                    id="oh-settings-music-volume"
+                    min={0}
+                    max={100}
+                    step={1}
                     value={volume}
                     disabled={!musicOn}
-                    onChange={(event) => setMapSettingValue(MAP_SETTING_KEYS.musicVolume, String(musicVolumeOf(event.target.value)))}
-                    aria-label="Music volume"
-                    style={{ accentColor: "#3b82f6", width: "9rem" }}
+                    hideTextInput
+                    onChange={({ value }) => setMapSettingValue(MAP_SETTING_KEYS.musicVolume, String(musicVolumeOf(value)))}
+                    ariaLabelInput="Music volume"
+                    labelText=""
                     />
                     <span data-no-translate style={{ color: "var(--oh-link, #93c5fd)", fontSize: "0.78rem", minWidth: "2.6rem", textAlign: "right", fontWeight: 650 }}>{`${volume}%`}</span>
                 </span>
@@ -3165,30 +3166,20 @@ const QUICK_MENU_TABS = [
     { key: "help", label: "Help" },
 ];
 
-// `fill` (a phone): the four tabs share the strip evenly, with room for all
-// four down to a 320 px screen.
-const QuickMenuTabButton = ({ label, selected, onClick, fill = false }) => (
-    <button
-    type="button"
-    className="oh-tap-row"
-    onClick={onClick}
-    style={{
-        background: selected ? "var(--oh-ui-active, rgba(0,0,0,0.42))" : "transparent",
-        border: `1px solid ${selected ? "var(--oh-ui-accent, rgba(255,255,255,0.28))" : "transparent"}`,
-        borderRadius: "8px",
-        color: selected ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 56%, transparent)",
-        cursor: "pointer",
-        fontFamily: "inherit",
-        fontSize: "0.72rem",
-        fontWeight: 850,
-        padding: "0.5rem 0.8rem",
-        textTransform: "uppercase",
-        letterSpacing: "0.04em",
-        ...(fill ? { flex: "1 1 auto", padding: "0.5rem 0.45rem" } : null),
-    }}
+// The four tabs are Carbon's Tabs (the panels under them are drawn by the menu
+// itself, so only the strip is used). `fill` (a phone): the tabs share the
+// strip evenly, with room for all four down to a 320 px screen.
+const QuickMenuTabs = ({ active, onChange, fill = false }) => (
+    <CarbonTabs
+    selectedIndex={Math.max(0, QUICK_MENU_TABS.findIndex((tab) => tab.key === active))}
+    onChange={({ selectedIndex }) => onChange(QUICK_MENU_TABS[selectedIndex].key)}
     >
-    {label}
-    </button>
+    <CarbonTabList aria-label="Game menu" contained={fill} fullWidth={fill}>
+    {QUICK_MENU_TABS.map((tab) => (
+        <CarbonTab key={tab.key}>{tab.label}</CarbonTab>
+    ))}
+    </CarbonTabList>
+    </CarbonTabs>
 );
 
 const QuickMenuPanel = ({ title, description, children }) => (
@@ -3519,10 +3510,8 @@ const SettingsMenu = ({
                 <button type="button" className="oh-tap" onClick={() => onClose?.()} aria-label="Close game menu" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2rem", justifyContent: "center", width: "2rem" }}>×</button>
             </div>
 
-            <div style={{ background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.03))", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.07))", borderRadius: "10px", display: "flex", gap: "0.2rem", padding: "0.2rem", marginBottom: "0.8rem", overflowX: "auto", scrollbarWidth: "none" }}>
-                {QUICK_MENU_TABS.map((tab) => (
-                    <QuickMenuTabButton key={tab.key} label={tab.label} selected={activeQuickTab === tab.key} onClick={() => setActiveQuickTab(tab.key)} fill={isMobile} />
-                ))}
+            <div style={{ marginBottom: "0.75rem" }}>
+                <QuickMenuTabs active={activeQuickTab} onChange={setActiveQuickTab} fill={isMobile} />
             </div>
 
             <div key={activeQuickTab} className="oh-surface-in" style={{ flex: 1, minHeight: 0 }}>
