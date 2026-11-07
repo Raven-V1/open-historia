@@ -98,6 +98,9 @@ export const countVisit = async ({
   fetchImpl = typeof fetch === "undefined" ? null : (...args) => fetch(...args),
 } = {}) => {
   try {
+    // A fork that does not want to be counted (or ask) sets VITE_OH_NO_VISIT_COUNT=1
+    // in its .env files: the upstream counter IDs in consent.js are not theirs.
+    if (env.VITE_OH_NO_VISIT_COUNT) return "";
     if (!doc?.head || doc.querySelector?.(`script[${VISIT_GATE_MARK}]`)) return "";
     const kind = visitNeedsKind(env, hostname) && fetchImpl ? await askKind(fetchImpl) : null;
     const tag = visitTagOf({ env, kind, hostname });
