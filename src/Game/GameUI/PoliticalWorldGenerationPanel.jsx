@@ -71,7 +71,7 @@ const textareaStyle = {
   background: "rgba(0,0,0,0.2)",
   border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "12px",
-  color: "#e5e7eb",
+  color: "var(--oh-ink, #e5e7eb)",
   fontFamily: "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace",
   fontSize: "0.72rem",
   lineHeight: 1.45,

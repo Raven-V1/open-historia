@@ -255,6 +255,15 @@ const APP_SHELL_MAX_WIDTH = "3000px";
 // min track keeps cards readable from ordinary laptops through ultrawide.
 const LIBRARY_GRID_TEMPLATE = "repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr))";
 const CARD_TEXT_SHADOW = "0 1px 2px rgba(0,0,0,0.9), 0 5px 16px rgba(0,0,0,0.72), 0 14px 30px rgba(0,0,0,0.55)";
+// Text on a card's accent colour: dark on a light accent, white on a dark one,
+// so the badge and the button read in either theme.
+const inkOnAccent = (hex) => {
+  const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i.exec(String(hex || ""));
+  if (!m) return "#ffffff";
+  const [r, g, b] = [m[1], m[2], m[3]].map((part) => parseInt(part, 16));
+  return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? "#0b0f14" : "#ffffff";
+};
+
 const SCENARIO_CARD_TEXT_SHADOW = "0 1px 2px rgba(0,0,0,0.96), 0 6px 18px rgba(0,0,0,0.82), 0 16px 34px rgba(0,0,0,0.64)";
 
 const ButtonIcon = ({ kind, size = 15, strokeWidth = 1.9 }) => {
@@ -1026,6 +1035,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 border: "1px solid rgba(255,255,255,0.18)",
                 borderRadius: "999px",
                 color: "rgba(248,248,250,0.96)",
+                ...(selected ? { color: inkOnAccent(scenario.accentColor), textShadow: "none" } : null),
                 display: "inline-flex",
                 fontSize: "0.68rem",
                 fontWeight: 700,
@@ -1149,7 +1159,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 borderColor: updating || updateIsPrimary ? "#27a663dd" : `${scenario.accentColor}`,
                 borderRadius: "11px",
                 boxShadow: `0 3px 12px ${scenario.accentColor}33`,
-                color: "var(--oh-ink, #fff)",
+                color: updating || updateIsPrimary ? "#ffffff" : inkOnAccent(scenario.accentColor),
                 cursor: updating ? "progress" : "pointer",
                 fontSize: "0.88rem",
                 fontWeight: 700,
@@ -1381,6 +1391,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
                 border: "1px solid rgba(255,255,255,0.18)",
                 borderRadius: "999px",
                 color: "rgba(248,248,250,0.96)",
+                ...(active ? { color: inkOnAccent(game.accentColor), textShadow: "none" } : null),
                 display: "inline-flex",
                 flex: "0 0 auto",
                 fontSize: "0.68rem",

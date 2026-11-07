@@ -165,7 +165,7 @@ const WebGLWarningPopup = () => (
         padding: "2rem",
         maxWidth: "420px",
         width: "90%",
-        color: "#eaeaea",
+        color: "var(--oh-ink, #eaeaea)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
         textAlign: "center",
       }}
@@ -185,7 +185,7 @@ const WebGLWarningPopup = () => (
         WebGL Not Available
       </h2>
       <p style={{ margin: "0 0 0.5rem", lineHeight: 1.6, color: "#ccc", fontSize: "0.95rem" }}>
-        This application requires <strong style={{ color: "#eaeaea" }}>WebGL</strong> to render
+        This application requires <strong style={{ color: "var(--oh-ink, #eaeaea)" }}>WebGL</strong> to render
         the map, but it doesn't appear to be supported or enabled in your browser.
       </p>
       <p style={{ margin: "0 0 1.5rem", lineHeight: 1.6, color: "#999", fontSize: "0.85rem" }}>

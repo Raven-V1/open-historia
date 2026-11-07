@@ -609,7 +609,7 @@ const MAP_FEATURE_STATUS_META = {
     under_construction: { label: "Under construction", color: "#fcd34d" },
     active: { label: "Active", color: "#86efac" },
     damaged: { label: "Damaged", color: "#fca5a5" },
-    inactive: { label: "Inactive", color: "#d1d1d5" },
+    inactive: { label: "Inactive", color: "var(--oh-ink, #d1d1d5)" },
     abandoned: { label: "Abandoned", color: "#fdba74" },
     destroyed: { label: "Destroyed", color: "#f87171" },
 };
@@ -2887,7 +2887,7 @@ const GroupsView = ({ meta, header, busy, status, game, runBusy, beginClickMode,
         <>
         {header(meta.title, meta.subtitle)}
         <div style={{ overflowY: "auto", paddingRight: "0.08rem" }}>
-            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 17%, transparent)", borderRadius: 10, color: "#e4e4e7", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 17%, transparent)", borderRadius: 10, color: "var(--oh-ink, #e4e4e7)", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
                 A group controls an area without owning it: the regions stay their countries', and the map outlines and tints the group's area in its colour. The description is what the AI is told the group is; the AI can found, change, move and erase groups too.
             </div>
 
@@ -3139,7 +3139,7 @@ const PuppetStatesView = ({ meta, header, busy, status, game, polities, runBusy,
         <>
         {header(meta.title, meta.subtitle)}
         <div style={{ overflowY: "auto", paddingRight: "0.08rem" }}>
-            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 17%, transparent)", borderRadius: 10, color: "#e4e4e7", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 17%, transparent)", borderRadius: 10, color: "var(--oh-ink, #e4e4e7)", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
                 A puppet stays a separate country with its own land; its overlord directs it. The rules are the ledger's: one overlord each, no puppet holds puppets of its own, and a secret once public stays public. The next time skip is told of each change.
             </div>
 
@@ -4927,7 +4927,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             <>
             {header(meta.title, meta.subtitle)}
             <div style={{ overflowY: "auto", paddingRight: "0.08rem" }}>
-                <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 17%, transparent)", borderRadius: 10, color: "#e4e4e7", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
+                <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 17%, transparent)", borderRadius: 10, color: "var(--oh-ink, #e4e4e7)", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
                     <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" }}>Canonical now · evolvable later.</strong> Region edits change the present territorial state only. Future wars, treaties and simulated events remain free to move it again.
                 </div>
 

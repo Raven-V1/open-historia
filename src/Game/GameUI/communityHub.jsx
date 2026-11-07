@@ -268,7 +268,7 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
         </div>
         <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem" }}>
           {post.official && (
-            <span style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)", borderRadius: "999px", color: "#e4e4e7", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginRight: "0.35rem", padding: "0.08rem 0.4rem", textTransform: "uppercase" }}>
+            <span style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)", borderRadius: "999px", color: "var(--oh-ink, #e4e4e7)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginRight: "0.35rem", padding: "0.08rem 0.4rem", textTransform: "uppercase" }}>
               <UiIcon name="check" size={14} /> Official
             </span>
           )}

@@ -16,7 +16,7 @@ const panel = {
   borderRadius: 12,
   background: "rgba(14, 17, 22, 0.86)",
   border: "1px solid rgba(255,255,255,0.10)",
-  color: "rgba(239,242,246,0.94)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)",
   fontSize: 13,
   lineHeight: 1.4,
   marginBottom: "0.9rem",

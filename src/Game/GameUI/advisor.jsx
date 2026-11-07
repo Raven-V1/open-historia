@@ -273,7 +273,7 @@ const AdvisorActionsCard = ({ items, onOpenActions }) => {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}>
         <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" }}><UiIcon name="task" size={14} /> Actions {summary}</span>
         {onOpenActions && (
-            <button type="button" onClick={onOpenActions} style={{ background: "none", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", borderRadius: "6px", color: "#e4e4e7", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
+            <button type="button" onClick={onOpenActions} style={{ background: "none", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", borderRadius: "6px", color: "var(--oh-ink, #e4e4e7)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
             Open Actions
             </button>
         )}
@@ -374,7 +374,7 @@ const AdvisorActionProposalCard = ({ proposal, receipt, queueAction, targetActio
         )}
         <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.4rem", marginTop: "0.6rem", flexWrap: "wrap" }}>
             {canDiscuss && (
-                <button type="button" disabled={busy || disabled} onClick={discuss} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", borderRadius: "7px", background: "transparent", color: "#e4e4e7", padding: "0.3rem 0.55rem", cursor: busy || disabled ? "default" : "pointer" }}>Discuss</button>
+                <button type="button" disabled={busy || disabled} onClick={discuss} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", borderRadius: "7px", background: "transparent", color: "var(--oh-ink, #e4e4e7)", padding: "0.3rem 0.55rem", cursor: busy || disabled ? "default" : "pointer" }}>Discuss</button>
             )}
             {queued && (
                 <button type="button" disabled={busy || disabled} onClick={() => doAction(onCancel, "The Action could not be removed from the queue.")} style={{ border: "1px solid rgba(251,191,36,0.4)", borderRadius: "7px", background: "rgba(251,191,36,0.08)", color: "#fde68a", padding: "0.3rem 0.55rem", cursor: busy || disabled ? "default" : "pointer" }}>{busy ? "Cancelling…" : "Cancel"}</button>
@@ -383,7 +383,7 @@ const AdvisorActionProposalCard = ({ proposal, receipt, queueAction, targetActio
                 <button type="button" disabled={busy || disabled} onClick={() => doAction(onProceed, "The Action was not queued.")} style={{ border: "1px solid rgba(147,197,253,0.6)", borderRadius: "7px", background: "rgba(59,130,246,0.22)", color: "var(--oh-link, #dbeafe)", padding: "0.3rem 0.55rem", cursor: busy || disabled ? "default" : "pointer" }}>{busy ? "Queueing…" : proposal.operation === "remove" ? "Proceed / Remove" : "Proceed / Queue"}</button>
             )}
             {["resolved", "updated", "removed", "conflict", "no-longer-queued", "target-unavailable", "target-resolved"].includes(state) && onOpenActions && (
-                <button type="button" onClick={onOpenActions} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)", borderRadius: "7px", background: "transparent", color: "#e4e4e7", padding: "0.3rem 0.55rem", cursor: "pointer" }}>Open Actions</button>
+                <button type="button" onClick={onOpenActions} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)", borderRadius: "7px", background: "transparent", color: "var(--oh-ink, #e4e4e7)", padding: "0.3rem 0.55rem", cursor: "pointer" }}>Open Actions</button>
             )}
         </div>
         {queued && <div style={{ fontSize: "0.68rem", marginTop: "0.35rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)" }}>Queued on the Actions board. It will resolve when game time advances.</div>}

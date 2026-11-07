@@ -96,7 +96,7 @@ const buttonStyle = (primary) => ({
   backgroundColor: primary ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
   border: `1px solid ${primary ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)"}`,
   borderRadius: "8px",
-  color: primary ? "#04141a" : "#e7e9ea",
+  color: primary ? "#04141a" : "var(--oh-ink, #e7e9ea)",
   cursor: "pointer",
   flex: 1,
   fontSize: "0.72rem",
@@ -173,7 +173,7 @@ export const PeaceOfferCard = ({ offer, viewer }) => {
   };
   const state = open ? (mine ? "Waiting for their answer" : "") : OFFER_STATUS_TEXT[offer?.status] ?? "";
   return (
-    <div role="group" data-peace-offer={offer?.id} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: `1px solid ${open && toMe ? "rgba(43,193,243,0.55)" : "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)"}`, borderRadius: "12px", color: "#e7e9ea", display: "flex", flexDirection: "column", gap: "0.4rem", fontSize: "0.78rem", lineHeight: 1.4, margin: "0.35rem 0", opacity: open ? 1 : 0.72, padding: "0.7rem 0.85rem" }}>
+    <div role="group" data-peace-offer={offer?.id} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: `1px solid ${open && toMe ? "rgba(43,193,243,0.55)" : "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)"}`, borderRadius: "12px", color: "var(--oh-ink, #e7e9ea)", display: "flex", flexDirection: "column", gap: "0.4rem", fontSize: "0.78rem", lineHeight: 1.4, margin: "0.35rem 0", opacity: open ? 1 : 0.72, padding: "0.7rem 0.85rem" }}>
       <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.64rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>
         {mine ? <>Your terms of peace · <span data-no-translate>{offer?.to}</span></> : <>Peace offered · <span data-no-translate>{offer?.from}</span></>}
         {state ? <> · {state}</> : null}
@@ -204,7 +204,7 @@ const paymentOf = (key, mine, theirs) => {
   return { payer, receiver, share: heavy ? 0.03 : 0.01, years: heavy ? 10 : 5 };
 };
 
-const fieldStyle = { backgroundColor: "rgba(0,0,0,0.35)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)", borderRadius: "6px", color: "#e7e9ea", fontSize: "0.66rem", padding: "0.3rem 0.4rem", width: "100%" };
+const fieldStyle = { backgroundColor: "rgba(0,0,0,0.35)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)", borderRadius: "6px", color: "var(--oh-ink, #e7e9ea)", fontSize: "0.66rem", padding: "0.3rem 0.4rem", width: "100%" };
 
 // What becomes of the enemy country: "free" (nothing), "annex" (all its land is
 // the player's), or a kind of puppet of the player's (runtime/puppets.js).

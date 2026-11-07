@@ -30,7 +30,7 @@ const noticeStyle = {
   border: "1px solid color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 32%, transparent)",
   backgroundColor: "var(--oh-ui-overlay-strong, rgba(16,21,24,0.96))",
   boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-  color: "#e5e7eb",
+  color: "var(--oh-ink, #e5e7eb)",
   fontFamily: "sans-serif",
   fontSize: "0.76rem",
   lineHeight: 1.45,

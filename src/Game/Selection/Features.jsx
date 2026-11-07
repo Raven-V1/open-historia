@@ -81,11 +81,11 @@ const titleCase = (value) =>
 const TIER_LABEL = { 1: "Town", 2: "City", 3: "Major city", 4: "Capital" };
 
 const MARKER_STATUS_META = {
-  planned: { label: "Planned", color: "#e4e4e7" },
+  planned: { label: "Planned", color: "var(--oh-ink, #e4e4e7)" },
   under_construction: { label: "Under construction", color: "#fcd34d" },
   active: { label: "Active", color: "#86efac" },
   damaged: { label: "Damaged", color: "#fca5a5" },
-  inactive: { label: "Inactive", color: "#d1d1d5" },
+  inactive: { label: "Inactive", color: "var(--oh-ink, #d1d1d5)" },
   abandoned: { label: "Abandoned", color: "#fdba74" },
   destroyed: { label: "Destroyed", color: "#f87171" },
 };

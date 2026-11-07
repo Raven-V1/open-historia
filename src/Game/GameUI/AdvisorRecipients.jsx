@@ -9,7 +9,7 @@ const field = {
 const subtle = { color: "#97acbd", fontSize: "0.68rem" };
 const button = {
   background: "#203648", border: "1px solid rgba(133, 191, 219, .2)",
-  borderRadius: 5, color: "#d8e5ee", cursor: "pointer",
+  borderRadius: 5, color: "var(--oh-ink, #d8e5ee)", cursor: "pointer",
   fontFamily: "inherit", fontSize: "0.72rem", padding: "0.4rem 0.55rem",
 };
 const blank = () => ({ name: "", title: "", personality: "", recipientType: ADVISOR_RECIPIENT_TYPES.MINISTER, binding: null, officeKey: "" });

@@ -208,7 +208,7 @@ const refreshMenuButtonStyle = {
     background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
     border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
     borderRadius: "8px",
-    color: "#e7e7e9",
+    color: "var(--oh-ink, #e7e7e9)",
     cursor: "pointer",
     fontSize: "0.74rem",
     fontWeight: 750,
@@ -370,7 +370,7 @@ const CustomStatCard = ({ stat, value }) => {
             <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.05em", marginBottom: "0.3rem", textTransform: "uppercase" }}>
                 {stat.icon} {stat.label}
             </div>
-            <div data-no-translate style={{ color: stat.color || "#e7e7e9", fontSize: "1.05rem", fontWeight: 800, overflowWrap: "anywhere" }}>
+            <div data-no-translate style={{ color: stat.color || "var(--oh-ink, #e7e7e9)", fontSize: "1.05rem", fontWeight: 800, overflowWrap: "anywhere" }}>
                 {formatted}
             </div>
         </div>
@@ -927,7 +927,7 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
                     aria-label="Sort bilateral relations"
                     value={relationSort}
                     onChange={(event) => setRelationSort(event.target.value)}
-                    style={{ background: "var(--oh-paper, #242429)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)", borderRadius: "7px", color: "#e4e4e7", cursor: "pointer", flexShrink: 0, fontSize: "0.66rem", minHeight: "2rem", maxWidth: "8.2rem", padding: "0.3rem" }}
+                    style={{ background: "var(--oh-paper, #242429)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)", borderRadius: "7px", color: "var(--oh-ink, #e4e4e7)", cursor: "pointer", flexShrink: 0, fontSize: "0.66rem", minHeight: "2rem", maxWidth: "8.2rem", padding: "0.3rem" }}
                 >
                     <option value="strongest">Strongest first</option>
                     <option value="weakest">Weakest first</option>
@@ -1086,7 +1086,7 @@ const statsSubtabStyle = (selected, touch = false) => ({
     border: 0,
     borderBottom: selected ? "2px solid #86c9e7" : "2px solid transparent",
     borderRadius: 0,
-    color: selected ? "#eaf7fd" : "rgba(194,211,224,0.58)",
+    color: selected ? "var(--oh-ink, #eaf7fd)" : "rgba(194,211,224,0.58)",
     cursor: "pointer",
     display: "flex",
     flex: 1,
@@ -1143,7 +1143,7 @@ const advancedMetricGroupsFor = (indexRows = INDEX_ROWS, definition = null) => {
             icon: "◈",
             metrics: [
                 { key: "gdp", label: "GDP", unit: "gdp", color: "#34d399", format: formatEuroTotal },
-                { key: "gdpPerCapita", label: "GDP per capita", unit: "gdpPerCapita", color: "#e7e7e9", format: formatEuroPerCapita },
+                { key: "gdpPerCapita", label: "GDP per capita", unit: "gdpPerCapita", color: "var(--oh-ink, #e7e7e9)", format: formatEuroPerCapita },
                 { key: "population", label: "Population", unit: "population", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", format: formatPopulation },
             ],
         },
@@ -3060,7 +3060,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginBottom: "0.3rem", textTransform: "uppercase" }}>
                 Total population
                 </div>
-                <div data-no-translate style={{ color: "#e7e7e9", fontSize: "1.15rem", fontWeight: 800 }}>
+                <div data-no-translate style={{ color: "var(--oh-ink, #e7e7e9)", fontSize: "1.15rem", fontWeight: 800 }}>
                 {formatPopulation(totalPopulation)}
                 </div>
                 {populationScope && (
@@ -3136,7 +3136,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 <button
                 type="button"
                 onClick={() => setAdvancedOpen(true)}
-                style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: "11px", color: "#e7e7ea", cursor: "pointer", display: "flex", gap: "0.65rem", justifyContent: "space-between", marginTop: "0.9rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
+                style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: "11px", color: "var(--oh-ink, #e7e7ea)", cursor: "pointer", display: "flex", gap: "0.65rem", justifyContent: "space-between", marginTop: "0.9rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
                 >
                     <span style={{ alignItems: "center", display: "flex", gap: "0.6rem", minWidth: 0 }}>
                         <span style={{ alignItems: "center", backgroundColor: "rgba(59,130,246,0.18)", border: "1px solid rgba(147,197,253,0.2)", borderRadius: "8px", display: "inline-flex", flexShrink: 0, fontSize: "1rem", height: "2rem", justifyContent: "center", width: "2rem" }}><UiIcon name="bars" size={16} /></span>
@@ -3153,7 +3153,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 onClick={() => setTrackingOpen(true)}
                 disabled={turnRunning}
                 title={turnRunning ? TURN_RUNNING_NOTE : undefined}
-                style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "11px", color: "#e7e7e9", cursor: turnRunning ? "not-allowed" : "pointer", display: "flex", opacity: turnRunning ? 0.55 : 1, gap: "0.7rem", justifyContent: "space-between", marginTop: "0.55rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
+                style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "11px", color: "var(--oh-ink, #e7e7e9)", cursor: turnRunning ? "not-allowed" : "pointer", display: "flex", opacity: turnRunning ? 0.55 : 1, gap: "0.7rem", justifyContent: "space-between", marginTop: "0.55rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
                 >
                     <span style={{ alignItems: "center", display: "flex", gap: "0.65rem", minWidth: 0 }}>
                         <span style={{ alignItems: "center", backgroundColor: "rgba(234,179,8,0.12)", border: "1px solid rgba(250,204,21,0.22)", borderRadius: "8px", color: "#fbbf24", display: "inline-flex", flexShrink: 0, fontSize: "0.98rem", height: "2rem", justifyContent: "center", width: "2rem" }}><UiIcon name="settings" size={16} /></span>
