@@ -1,6 +1,7 @@
 /*! Open Historia — portions (reasoning toggle + small-screen menu) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { lazy, Suspense, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
 import UiIcon from "./carbonIcons.jsx";
+import { CarbonComboBox, CarbonSelect, CarbonTextInput, SwitchControl } from "./carbonControls.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
 import { createPortal } from "react-dom";
@@ -243,54 +244,21 @@ function groupProviders(options) {
 }
 
 const LanguagePicker = ({ label, current, onSelect, saving = false, helperText, options = getLanguageOptions() }) => {
-    const [query, setQuery] = useState("");
-    const normalizedQuery = query.trim().toLowerCase();
-    const filtered = normalizedQuery
-        ? options.filter((option) =>
-            `${option.name} ${option.native} ${option.code}`.toLowerCase().includes(normalizedQuery))
-        : options;
-    const listed = filtered.some((option) => option.code === current);
-
+    const languageText = (option) => (option ? `${option.name}${option.native && option.native !== option.name ? ` — ${option.native}` : ""}` : "");
     return (
         <div style={fieldGroupStyle}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.4rem" }}>
-            <label style={{ ...labelStyle, marginBottom: 0 }}>{label}</label>
-            {query && (
-                <button
-                type="button"
-                onClick={() => setQuery("")}
-                style={{ background: "none", border: "none", color: "#60a5fa", fontSize: "0.7rem", cursor: "pointer", padding: 0 }}
-                >
-                Clear
-                </button>
-            )}
-        </div>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-            <select
-            data-no-translate
-            value={listed ? current : ""}
-            onChange={(event) => onSelect(event.target.value)}
-            style={{ ...inputStyle, flex: "1 1 200px", cursor: "pointer", opacity: saving ? 0.6 : 1, borderColor: "rgba(96,165,250,0.3)" }}
-            >
-            {!listed && (
-                <option value="" disabled>
-                {filtered.length ? `${filtered.length} matches — pick one` : "No matching language"}
-                </option>
-            )}
-            {filtered.map((option) => (
-                <option key={option.code} value={option.code} style={{ color: "black" }}>
-                {option.name}{option.native && option.native !== option.name ? ` — ${option.native}` : ""}
-                </option>
-            ))}
-            </select>
-            <input
-            style={{ ...inputStyle, flex: "0 1 180px", minWidth: "130px" }}
-            type="text"
-            value={query}
-            placeholder="Search languages..."
-            onChange={(event) => setQuery(event.target.value)}
-            />
-        </div>
+        <CarbonComboBox
+        id={`oh-language-${label.replace(/\s+/g, "-").toLowerCase()}`}
+        titleText={label}
+        placeholder="Search languages..."
+        items={options}
+        selectedItem={options.find((option) => option.code === current) || null}
+        itemToString={languageText}
+        shouldFilterItem={({ item, inputValue }) => !inputValue || inputValue === languageText(options.find((option) => option.code === current)) || `${item.name} ${item.native} ${item.code}`.toLowerCase().includes(inputValue.trim().toLowerCase())}
+        onChange={({ selectedItem }) => { if (selectedItem) onSelect(selectedItem.code); }}
+        disabled={saving}
+        size="md"
+        />
         {helperText && (
             <div style={helperStyle}>
             {helperText}
@@ -463,14 +431,7 @@ const GameBasemapField = () => {
     return (
         <div style={fieldGroupStyle}>
             <label style={labelStyle} htmlFor="game-basemap-style">Basemap</label>
-            <select
-                id="game-basemap-style"
-                data-no-translate
-                value={shown.pick}
-                disabled={only}
-                onChange={(event) => setGamePick(event.target.value)}
-                style={{ ...inputStyle, cursor: only ? "not-allowed" : "pointer", opacity: only ? 0.6 : 1 }}
-            >
+            <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="game-basemap-style" data-no-translate value={shown.pick} disabled={only} onChange={(event) => setGamePick(event.target.value)} >
                 {option(maps[0])}
                 {grouped ? (
                     <>
@@ -478,7 +439,7 @@ const GameBasemapField = () => {
                         <optgroup label={uiString(BASEMAP_GROUP_LABELS.builtin)}>{builtin.map(option)}</optgroup>
                     </>
                 ) : [...scenarioOwn, ...builtin].map(option)}
-            </select>
+            </CarbonSelect>
             <div style={helperStyle}>
                 {only
                     ? "This scenario has one map."
@@ -533,16 +494,9 @@ const DefaultBasemapField = () => {
             />
             <div style={fieldGroupStyle}>
                 <label style={labelStyle} htmlFor="default-basemap">Default basemap</label>
-                <select
-                    id="default-basemap"
-                    data-no-translate
-                    value={value}
-                    disabled={!useDefault}
-                    onChange={(event) => setMapSettingValue(DEFAULT_BASEMAP_KEY, event.target.value)}
-                    style={{ ...inputStyle, cursor: useDefault ? "pointer" : "not-allowed", opacity: useDefault ? 1 : 0.6 }}
-                >
+                <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="default-basemap" data-no-translate value={value} disabled={!useDefault} onChange={(event) => setMapSettingValue(DEFAULT_BASEMAP_KEY, event.target.value)} >
                     {ESRI_BASEMAPS.map((basemap) => <option key={basemap.id} value={basemap.id} style={{ color: "black" }}>{basemap.label}</option>)}
-                </select>
+                </CarbonSelect>
                 <div style={helperStyle}>
                     {useDefault
                         ? "Games start on this map wherever their scenario offers it, and on the scenario's starting map elsewhere. Each game's own settings can still pick another."
@@ -598,41 +552,7 @@ const Toggle = ({ label, enabled, onToggle, disabled = false, inactive = "" }) =
             </span>
         )
         : <span style={{ fontSize: "0.86rem", fontWeight: 550, color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", paddingRight: "0.5rem" }}>{label}</span>}
-    <button
-    type="button"
-    onClick={touch || disabled ? undefined : onToggle}
-    disabled={disabled}
-    aria-label={label}
-    style={{
-        width: "2.75rem",
-        height: "1.5rem",
-        borderRadius: "9999px",
-        border: "none",
-        cursor: disabled ? "default" : "pointer",
-        opacity: disabled ? 0.45 : 1,
-        position: "relative",
-        padding: "2px",
-        boxSizing: "border-box",
-        transition: "background-color 150ms ease, box-shadow 150ms ease",
-        backgroundColor: enabled ? (inactive ? "var(--oh-ui-hover, rgba(59,130,246,0.35))" : "var(--oh-ui-active, #3b82f6)") : "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
-        boxShadow: enabled && !inactive ? "0 0 10px var(--oh-ui-line, rgba(59,130,246,0.35))" : "none",
-        flexShrink: 0,
-        outline: "none",
-    }}
-    >
-    <div
-    style={{
-        width: "1.25rem",
-        height: "1.25rem",
-        backgroundColor: "#ffffff",
-        borderRadius: "50%",
-        transform: enabled ? "translateX(1.25rem)" : "translateX(0px)",
-        transition: "transform 150ms cubic-bezier(0.2, 0, 0, 1)",
-        boxShadow: "0 1px 3px rgba(0,0,0,0.35)",
-        pointerEvents: "none",
-    }}
-    />
-    </button>
+    <SwitchControl label={label} checked={enabled} disabled={disabled} onChange={() => onToggle()} />
     </div>
     );
 };
@@ -789,17 +709,13 @@ const StructuredModeSelect = ({ onChange, value }) => {
     return (
         <div style={fieldGroupStyle}>
         <label style={labelStyle}>How the AI answers</label>
-        <select
-        value={mode}
-        onChange={(event) => onChange(event.target.value)}
-        style={{ ...inputStyle, cursor: "pointer" }}
-        >
+        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-4" value={mode} onChange={(event) => onChange(event.target.value)} >
         {["auto", ...STRUCTURED_MODES].map((option) => (
             <option key={option} value={option} style={{ color: "black" }}>
             {STRUCTURED_MODE_LABELS[option]}
             </option>
         ))}
-        </select>
+        </CarbonSelect>
         <div style={helperStyle}>
         {/* The general point first, so it reads the same whatever is selected,
             then what THIS choice means. */}
@@ -858,7 +774,11 @@ const SettingsInput = ({
             />
         ) : isPassword ? (
             <div style={{ alignItems: "center", display: "flex", position: "relative" }}>
-                <input
+                <CarbonTextInput
+                id={`${listId}-field`}
+                hideLabel
+                labelText={label || placeholder || "API key"}
+                className="oh-carbon-password"
                 type={effectiveType}
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
@@ -866,7 +786,6 @@ const SettingsInput = ({
                 autoComplete="off"
                 spellCheck={false}
                 list={list ? listId : undefined}
-                style={{ ...inputStyle, paddingRight: "2.5rem" }}
                 />
                 <button
                   type="button"
@@ -907,7 +826,10 @@ const SettingsInput = ({
                 </button>
             </div>
         ) : (
-            <input
+            <CarbonTextInput
+            id={`${listId}-field`}
+            hideLabel
+            labelText={label || placeholder || "Value"}
             type={type}
             value={value}
             onChange={(event) => onChange(event.target.value)}
@@ -915,7 +837,6 @@ const SettingsInput = ({
             autoComplete="off"
             spellCheck={false}
             list={list ? listId : undefined}
-            style={inputStyle}
             />
         )}
         {list && (
@@ -1172,13 +1093,13 @@ const EntryEditor = ({ entry, connections, entries }) => {
         {connections.length > 1 && (
             <div style={fieldGroupStyle}>
             <label style={labelStyle}>Connection</label>
-            <select data-no-translate value={entry.connectionId} onChange={(event) => set("connectionId")(event.target.value)} style={{ ...inputStyle, cursor: "pointer" }}>
+            <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-5" data-no-translate value={entry.connectionId} onChange={(event) => set("connectionId")(event.target.value)} >
             {connections.map((candidate) => (
                 <option key={candidate.id} value={candidate.id} style={{ color: "black" }}>
                 {connectionDisplayName(candidate)} — {getProviderMeta(candidate.provider).label}
                 </option>
             ))}
-            </select>
+            </CarbonSelect>
             </div>
         )}
         {connection && <ConnectionFields connection={connection} sharedBy={sharedBy} />}
@@ -1331,10 +1252,10 @@ const FallbackListSection = () => {
         {filling && <FillPanel connections={connections} onDone={() => setFilling(false)} />}
         <div style={{ ...fieldGroupStyle, marginTop: "0.9rem" }}>
         <label style={labelStyle}>When a model is rate limited</label>
-        <select value={view.rateLimitPolicy} onChange={(event) => setRateLimitPolicy(event.target.value)} style={{ ...inputStyle, cursor: "pointer" }}>
+        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-6" value={view.rateLimitPolicy} onChange={(event) => setRateLimitPolicy(event.target.value)} >
         <option value="next" style={{ color: "black" }}>Use the next one straight away (default)</option>
         <option value="wait" style={{ color: "black" }}>Wait, then try it again</option>
-        </select>
+        </CarbonSelect>
         <div style={helperStyle}>
         A rate limit is a short pause, not a used-up allowance, and it is usually
         over by the next call — which starts at the top of the list again. Waiting
@@ -1439,12 +1360,12 @@ const TaskPicks = () => {
                 {AI_TASK_ROUTING.filter((entry) => entry.group === group).map(({ key, label, hint }) => (
                     <div key={key} style={fieldGroupStyle}>
                     <label style={labelStyle}>{label}</label>
-                    <select value={withConnection.some((entry) => entry.id === picks[key]) ? picks[key] : ""} onChange={(event) => update(key, event.target.value)} style={{ ...inputStyle, cursor: "pointer" }}>
+                    <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-7" value={withConnection.some((entry) => entry.id === picks[key]) ? picks[key] : ""} onChange={(event) => update(key, event.target.value)} >
                     <option value="" style={{ color: "black" }}>Start at the top of the list</option>
                     {withConnection.map((entry, index) => (
                         <option key={entry.id} value={entry.id} style={{ color: "black" }}>{index + 1}. {entry.resolved.label}</option>
                     ))}
-                    </select>
+                    </CarbonSelect>
                     <div style={helperStyle}>{hint}</div>
                     </div>
                 ))}
@@ -2447,9 +2368,9 @@ const PerformanceModeSetting = () => {
     return (
         <div style={fieldGroupStyle}>
         <label style={labelStyle} htmlFor="game-performance-mode">Performance mode</label>
-        <select id="game-performance-mode" value={mode} onChange={(event) => choose(event.target.value)} style={{ ...inputStyle, cursor: "pointer" }}>
+        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="game-performance-mode" value={mode} onChange={(event) => choose(event.target.value)} >
         {PERFORMANCE_MODES.map((entry) => <option key={entry.key || "auto"} value={entry.key} style={{ color: "black" }}>{entry.label}</option>)}
-        </select>
+        </CarbonSelect>
         <div style={helperStyle}>
         Auto picks Low memory in the Android app, on a touch screen with no mouse, and on a device with 4 GB of memory or less: the map loads in smaller steps with fewer workers. Full is faster on a strong tablet, and Low memory can steady a weak computer. A change applies after the game is reloaded.
         </div>
@@ -2520,16 +2441,11 @@ const DisplayModeSelector = ({ isFullscreenEnabled, onToggleFullscreen }) => {
     return (
         <div style={fieldGroupStyle}>
             <label style={labelStyle} htmlFor="game-display-mode">Display mode</label>
-            <select
-                id="game-display-mode"
-                style={inputStyle}
-                value={activeMode}
-                onChange={(event) => selectMode(event.target.value)}
-            >
+            <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="game-display-mode" value={activeMode} onChange={(event) => selectMode(event.target.value)} >
                 <option value="windowed">Windowed</option>
                 {isDesktop && <option value="maximized">Maximized</option>}
                 <option value="fullscreen">Fullscreen</option>
-            </select>
+            </CarbonSelect>
             <div style={helperStyle}>
                 {activeMode === "maximized"
                     ? "The game's window fills your screen, with its title bar."
@@ -2578,19 +2494,14 @@ const PlayerFocusSetting = () => {
     return (
         <div style={fieldGroupStyle}>
         <label style={{ ...labelStyle, fontWeight: 700 }}>Player focus — for this game</label>
-        <select
-        disabled={saving || !gameId}
-        value={following ? "" : focus}
-        onChange={(event) => choose(event.target.value || null)}
-        style={{ ...inputStyle, cursor: "pointer" }}
-        >
+        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-10" disabled={saving || !gameId} value={following ? "" : focus} onChange={(event) => choose(event.target.value || null)} >
         <option value="" style={{ color: "black" }}>{`Scenario default (${scenarioLabel})`}</option>
         {PLAYER_FOCUS_LEVELS.map((level) => (
             <option key={level.key} value={level.key} style={{ color: "black" }}>
             {level.label}
             </option>
         ))}
-        </select>
+        </CarbonSelect>
         <div style={helperStyle}>
         {/* Every level, not only the one selected: the choice is between four
             feels, and a player cannot compare them one at a time. */}
@@ -3027,15 +2938,10 @@ const SettingsWorkspace = ({
                 <SettingsSection title="Map presentation" description="Choose the map mode and visual presentation options.">
                     <div style={fieldGroupStyle}>
                         <label style={labelStyle} htmlFor="game-map-mode">Map mode</label>
-                        <select
-                            id="game-map-mode"
-                            style={inputStyle}
-                            value={mapMode || "political"}
-                            onChange={(event) => updateMapMode(event.target.value)}
-                        >
+                        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="game-map-mode" value={mapMode || "political"} onChange={(event) => updateMapMode(event.target.value)} >
                             <option value="political">Political (Countries and borders)</option>
                             <option value="diplomatic">Diplomatic (Allies, enemies, trade partners)</option>
-                        </select>
+                        </CarbonSelect>
                         <div style={helperStyle}>Diplomatic mode colours each country by where it stands with you: your puppets, allies, friends, hostile countries and enemies at war.</div>
                     </div>
                 </SettingsSection>

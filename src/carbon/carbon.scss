@@ -22,6 +22,20 @@
 );
 @use '@carbon/styles/scss/theme';
 @use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/layout';
+
+// The components in use (each its own partial, never the whole library).
+@use '@carbon/styles/scss/utilities/visually-hidden' as hidden;
+@use '@carbon/styles/scss/components/toggle';
+@use '@carbon/styles/scss/components/select';
+@use '@carbon/styles/scss/components/text-input';
+@use '@carbon/styles/scss/components/checkbox';
+@use '@carbon/styles/scss/components/slider';
+@use '@carbon/styles/scss/components/form';
+@use '@carbon/styles/scss/components/list-box';
+@use '@carbon/styles/scss/components/combo-box';
+@use '@carbon/styles/scss/components/modal';
+@use '@carbon/styles/scss/components/button';
 
 // The tokens. Carbon Dark is the page's default while no theme attribute is
 // set yet (first paint), so a Carbon component never renders without colours.
@@ -195,4 +209,59 @@
   select option:disabled {
     color: var(--cds-text-disabled) !important;
   }
+}
+
+// Carbon components under the other themes. The controls are Carbon's whatever
+// the theme, so that there is one set of them and not a copy per theme; they
+// take their colours from the theme the player chose by reading its variables
+// (the --oh-grey-* and --oh-ui-* ones the five palettes, Custom and the
+// original interface already set), falling back to Carbon Dark's own values.
+:root[data-oh-ui-theme]:not([data-oh-ui-theme^='carbon']) {
+  --cds-background: var(--oh-grey-bg);
+  --cds-layer-01: var(--oh-grey-surface);
+  --cds-layer-02: var(--oh-grey-raised);
+  --cds-layer-hover-01: var(--oh-grey-selected);
+  --cds-layer-selected-01: var(--oh-grey-selected);
+  --cds-field-01: var(--oh-grey-raised);
+  --cds-field-02: var(--oh-grey-raised);
+  --cds-field-hover-01: var(--oh-grey-selected);
+  --cds-border-subtle-01: var(--oh-grey-border);
+  --cds-border-strong-01: var(--oh-grey-border-strong);
+  --cds-text-primary: var(--oh-grey-text);
+  --cds-text-secondary: var(--oh-grey-muted);
+  --cds-text-helper: var(--oh-grey-faint);
+  --cds-icon-primary: var(--oh-grey-text);
+  --cds-icon-secondary: var(--oh-grey-muted);
+  --cds-interactive: var(--oh-ui-accent, #3b82f6);
+  --cds-focus: var(--oh-ui-accent, #3b82f6);
+  --cds-link-primary: var(--oh-ui-accent, #60a5fa);
+  --cds-toggle-off: var(--oh-grey-border-strong);
+  --cds-button-primary: var(--oh-ui-accent, #3b82f6);
+  --cds-background-hover: var(--oh-grey-selected);
+  --cds-overlay: rgba(0, 0, 0, 0.6);
+}
+
+// Carbon's helper for text that is only for screen readers (the label of the
+// switches, for one); its own stylesheet declares it, the partials above do not.
+.cds--visually-hidden {
+  @include hidden.visually-hidden;
+}
+
+// A password field keeps room for its show / hide button.
+.cds--text-input.oh-carbon-password {
+  padding-inline-end: 2.75rem;
+}
+
+// The lists Carbon draws (the language picker's menu): the page has no global
+// reset, so the bullets and the browser's margins are taken off here.
+.cds--list-box__menu,
+.cds--list-box__menu-item__option {
+  list-style: none;
+  margin: 0;
+}
+.cds--list-box__menu {
+  padding: 0;
+}
+.cds--list-box__menu {
+  overflow-x: hidden;
 }

@@ -40,7 +40,8 @@ test("Actions and Settings controls use opt-in palettes with original color fall
   assert.match(actions, /background: inputValue\.trim\(\) && !isSubmitting && !isImproving \? "var\(--oh-ui-active, #3b82f6\)"/);
   assert.match(actions, /boxShadow: "inset 0 0 0 1px var\(--oh-ui-accent, transparent\)"/);
   assert.match(settings, /const primaryButtonStyle = \{[\s\S]*?backgroundColor: "var\(--oh-ui-active,/);
-  assert.match(settings, /backgroundColor: enabled \? \(inactive \? "var\(--oh-ui-hover,/);
+  // The switch is Carbon's Toggle, which takes the theme's colours from carbon.scss.
+  assert.match(settings, /<SwitchControl label=\{label\} checked=\{enabled\}/);
   assert.match(settings, /data-oh-theme-hud=""/);
 });
 
