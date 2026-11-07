@@ -167,7 +167,7 @@ test("Settings shows the row only where there is an answer to give, and re-reads
   assert.match(settings, /\{signalNote && <div[^>]*>\{"Your browser asks sites not to track you, so this is off\."\}<\/div>\}/);
   // The policy link in the group is the one the Help tab opens.
   assert.match(settings, /<a\s+href=\{PRIVACY_HREF\}\s+target="_blank"\s+rel="noopener noreferrer"/);
-  assert.match(settings, /<QuickAction title="Privacy" description="What the game keeps and sends" symbol="§" href=\{PRIVACY_HREF\} \/>/);
+  assert.match(settings, /<QuickAction title="Privacy" description="What the game keeps and sends" symbol=\{<UiIcon name="policy" size=\{18\} \/>\} href=\{PRIVACY_HREF\} \/>/);
 
   const hook = fs.readFileSync(new URL("./visitConsent.js", import.meta.url), "utf8");
   assert.match(hook, /window\.addEventListener\(VISIT_CONSENT_EVENT, read\);/);
