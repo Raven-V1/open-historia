@@ -662,7 +662,7 @@ export const DebugConsole = ({ open, onClose }) => {
                                 ...buttonStyle,
                                 border: "none",
                                 backgroundColor: activeTab === tab.id ? COLORS.accent : "transparent",
-                                color: activeTab === tab.id ? "white" : COLORS.muted,
+                                color: activeTab === tab.id ? "var(--oh-ink, #fff)" : COLORS.muted,
                                 textTransform: "uppercase",
                                 letterSpacing: "0.08em",
                             }}

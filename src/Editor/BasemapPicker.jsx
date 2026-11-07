@@ -621,7 +621,7 @@ const BasemapPicker = ({
             aria-label={isMobile ? "Add basemap or detailed map" : undefined}
             title="A basemap: a picture (.png, .jpg) or a painted map (.geojson, .kml, .zip…). Or a detailed map: a .pmtiles file of picture tiles, up to 500 MB. GeoTIFF files and .pmtiles of vector tiles are shown for the current session only."
           >
-            {busy ? (isMobile ? "…" : "Adding…") : isMobile ? "⬆" : "⬆ Add basemap or detailed map"}
+            {busy ? (isMobile ? "…" : "Adding…") : isMobile ? <UiIcon name="upload" size={14} /> : <><UiIcon name="upload" size={14} /> Add basemap or detailed map</>}
             <input
               type="file"
               accept={acceptFor(BACKGROUND_ACCEPT)}
@@ -675,7 +675,7 @@ const BasemapPicker = ({
                 {loading ? (
                   <div style={dim}>Loading…</div>
                 ) : !painted.length ? (
-                  <div style={dim}>No basemaps of your own yet. Use “⬆ Add basemap or detailed map” to add a picture or a painted map (.png, .jpg, .geojson…); it stays here so you can reuse it on any scenario.</div>
+                  <div style={dim}>No basemaps of your own yet. Use “Add basemap or detailed map” to add a picture or a painted map (.png, .jpg, .geojson…); it stays here so you can reuse it on any scenario.</div>
                 ) : (
                   <div style={rowScroll}>
                     {painted.map((bm) => (
@@ -703,7 +703,7 @@ const BasemapPicker = ({
                 {loading ? (
                   <div style={dim}>Loading…</div>
                 ) : !mine.some((bm) => bm.kind === "tiled") ? (
-                  <div style={dim}>No detailed maps yet. Download one from the Community tab, or add your own .pmtiles file with “⬆ Add basemap or detailed map”. A detailed map is drawn on top of a scenario&apos;s basemap.</div>
+                  <div style={dim}>No detailed maps yet. Download one from the Community tab, or add your own .pmtiles file with “Add basemap or detailed map”. A detailed map is drawn on top of a scenario&apos;s basemap.</div>
                 ) : (
                   <div style={rowScroll}>
                     {mine.filter((bm) => bm.kind === "tiled").map((bm) => (

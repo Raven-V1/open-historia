@@ -392,7 +392,7 @@ const FlagPicker = ({ open, onClose, ownerCode, currentFlag, mapFlags = {}, auth
               on one row; on mobile it would eat a whole wrapped line, so drop it. */}
           {!isMobile && <div style={{ flex: 1 }} />}
           <label style={uploadBtn} title="Upload your own">
-            {isMobile ? "⬆" : "⬆ Upload your own"}
+            {isMobile ? <UiIcon name="upload" size={14} /> : <><UiIcon name="upload" size={14} /> Upload your own</>}
             <input
               type="file"
               accept={FLAG_ACCEPT}
@@ -500,7 +500,7 @@ const FlagPicker = ({ open, onClose, ownerCode, currentFlag, mapFlags = {}, auth
                   onClick={() => openFlagPublishForm({ name: ownerCode ? `${ownerCode} flag` : "", author, polity: ownerCode || "" })}
                   title="Opens the hub's flag form — drag your image in and submit"
                 >
-                  ⬆ Share a flag
+                  <UiIcon name="upload" size={14} /> Share a flag
                 </button>
                 <a
                   href={communityFlagsHubUrl()}
@@ -520,7 +520,7 @@ const FlagPicker = ({ open, onClose, ownerCode, currentFlag, mapFlags = {}, auth
               ) : filteredCommunity.length === 0 ? (
                 <div style={dim}>
                   {community.length === 0
-                    ? "No community flags yet — “⬆ Share a flag” posts one to the hub for everyone."
+                    ? "No community flags yet — “Share a flag” posts one to the hub for everyone."
                     : `No community flag matches “${query}”.`}
                 </div>
               ) : (
@@ -561,7 +561,7 @@ const FlagPicker = ({ open, onClose, ownerCode, currentFlag, mapFlags = {}, auth
                           {busyId === post.id
                             ? (post.fromScenario ? "Adding…" : "Applying…")
                             : post.fromScenario
-                              ? `⬇ Add ${post.flagCount} flag${post.flagCount === 1 ? "" : "s"}`
+                              ? <><UiIcon name="download" size={14} /> {`Add ${post.flagCount} flag${post.flagCount === 1 ? "" : "s"}`}</>
                               : "Use this flag"}
                         </button>
                       </div>

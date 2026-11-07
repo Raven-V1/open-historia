@@ -50,26 +50,26 @@ export const dismissFeaturePopup = () => {
 };
 
 // DOM-side emoji per kind (the on-map glyphs are font-limited; the popup isn't).
-const KIND_EMOJI = [
-  [/city|town|settlement|metropolis|capital/, "🏙"],
-  [/military base|army base|fort|fortress|barracks|garrison|outpost|citadel|castle/, "🏰"],
-  [/bunker|shelter/, "🛡"],
-  [/missile|silo|launch/, "🚀"],
-  [/embassy|consulate/, "🏛"],
-  [/port|harbor|harbour|naval/, "⚓"],
-  [/airbase|airfield|airport|air base/, "✈"],
-  [/nuclear|reactor|plant|power/, "⚡"],
-  [/factory|industrial|refinery|mine/, "🏭"],
-  [/radar|listening|intelligence|spy/, "📡"],
-  [/monument|memorial|shrine|temple|cathedral|mosque/, "🗿"],
+const KIND_ICON = [
+  [/city|town|settlement|metropolis|capital/, "building"],
+  [/military base|army base|fort|fortress|barracks|garrison|outpost|citadel|castle/, "military"],
+  [/bunker|shelter/, "military"],
+  [/missile|silo|launch/, "rocket"],
+  [/embassy|consulate/, "flag"],
+  [/port|harbor|harbour|naval/, "anchor"],
+  [/airbase|airfield|airport|air base/, "plane"],
+  [/nuclear|reactor|plant|power/, "flash"],
+  [/factory|industrial|refinery|mine/, "tools"],
+  [/radar|listening|intelligence|spy/, "radar"],
+  [/monument|memorial|shrine|temple|cathedral|mosque/, "catalog"],
 ];
 
-const emojiForKind = (kind) => {
+const iconForKind = (kind) => {
   const normalized = String(kind || "").toLowerCase();
-  for (const [pattern, emoji] of KIND_EMOJI) {
-    if (pattern.test(normalized)) return emoji;
+  for (const [pattern, name] of KIND_ICON) {
+    if (pattern.test(normalized)) return <UiIcon name={name} size={24} />;
   }
-  return "📍";
+  return <UiIcon name="pin" size={24} />;
 };
 
 const titleCase = (value) =>
@@ -144,7 +144,7 @@ const settleButton = {
   background: "rgba(255,255,255,0.08)",
   border: "1px solid rgba(255,255,255,0.18)",
   borderRadius: "6px",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: "11px",
   fontWeight: 700,
@@ -301,12 +301,12 @@ const FeaturePopup = () => {
           maxHeight: asSheet ? (isMobile ? SHEET_MAX_HEIGHT : SIDEWAYS_SHEET_MAX_HEIGHT) : undefined,
           boxShadow: "0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)",
           border: "1px solid rgba(255,255,255,0.12)",
-          color: "white",
+          color: "var(--oh-ink, #fff)",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "9px", padding: "10px 12px 8px" }}>
           <span style={{ fontSize: "1.5rem", lineHeight: 1 }}>
-            {isCity ? (feature.capital === "primary" ? "⭐" : "🏙") : emojiForKind(feature.kind)}
+            {isCity ? <UiIcon name={feature.capital === "primary" ? "star" : "building"} size={24} /> : iconForKind(feature.kind)}
           </span>
           <div style={{ minWidth: 0, flex: 1 }}>
             <div style={{ fontWeight: 700, fontSize: "13px", wordBreak: "break-word" }}>{feature.name}</div>

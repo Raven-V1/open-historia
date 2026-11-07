@@ -94,7 +94,7 @@ export default function DetailedMapsInstallOffer({ offers, onDone, title = "This
             <input type="checkbox" checked={ticked.has(keyOf(offer))} onChange={() => toggle(offer)} />
             <span data-no-translate style={{ fontWeight: 600 }}>{offer.name}</span>
             <span style={{ opacity: 0.65 }}>{formatBytes(offer.bytes)}</span>
-            {offer.starting && <span style={{ opacity: 0.65 }}>★ the starting map</span>}
+            {offer.starting && <span style={{ opacity: 0.65 }}>the starting map</span>}
             {offer.have ? <span style={{ opacity: 0.65 }}>an update</span> : null}
           </label>
         ))}

@@ -6,6 +6,7 @@
 // imports the result (regions + countries + cities + a vector basemap) into the
 // editor. Pure presentation — the generation itself lives in fmgDriver.js.
 
+import UiIcon from "../../Game/GameUI/carbonIcons.jsx";
 import React, { useState } from "react";
 import { panelSurface, inputStyle } from "../editorStyles.js";
 import { MAX_CULTURES, SYNC_TEMPLATES } from "./fmgDriver.js";
@@ -74,7 +75,7 @@ const FmgPanel = ({ open, onToggle, busy, log = [], onGenerate }) => {
           background: "rgba(59,130,246,0.85)",
         }}
       >
-        🗺 GENERATE {open ? "▸" : "◂"}
+        <UiIcon name="map" size={14} /> GENERATE <UiIcon name={open ? "chevronRight" : "chevronLeft"} size={12} />
       </button>
 
       {open && (
@@ -159,7 +160,7 @@ const FmgPanel = ({ open, onToggle, busy, log = [], onGenerate }) => {
               opacity: busy ? 0.85 : 1,
             }}
           >
-            {busy ? "Generating…" : "⚙ Generate & import"}
+            {busy ? "Generating…" : <><UiIcon name="settings" size={14} /> Generate & import</>}
           </button>
 
           {/* console log */}

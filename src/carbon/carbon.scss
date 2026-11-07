@@ -37,6 +37,8 @@
 @use '@carbon/styles/scss/components/modal';
 @use '@carbon/styles/scss/components/button';
 @use '@carbon/styles/scss/components/tabs';
+@use '@carbon/styles/scss/components/popover';
+@use '@carbon/styles/scss/components/tooltip';
 
 // The tokens. Carbon Dark is the page's default while no theme attribute is
 // set yet (first paint), so a Carbon component never renders without colours.
@@ -270,4 +272,128 @@
 // Above the game's own layers (the HUD, the panels), as its other dialogs are.
 .cds--modal {
   z-index: 10040;
+}
+
+// Carbon Light: the pastel text colours the panels write inline for a dark
+// background (light blue, green, amber, red) become Carbon's darker tones, so
+// they can be read on white. Matched by the colour in the style attribute
+// ("; color:" so a border-color is not caught); the update notice's cards,
+// which stay dark artwork, keep theirs.
+:root[data-oh-ui-theme='carbon-light'] {
+  [style^='color: rgb(252, 165, 165']:not(.ohr-card *),
+  [style*='; color: rgb(252, 165, 165']:not(.ohr-card *),
+  [style^='color: rgba(252, 165, 165']:not(.ohr-card *),
+  [style*='; color: rgba(252, 165, 165']:not(.ohr-card *),
+  [style^='color: rgb(254, 202, 202']:not(.ohr-card *),
+  [style*='; color: rgb(254, 202, 202']:not(.ohr-card *),
+  [style^='color: rgba(254, 202, 202']:not(.ohr-card *),
+  [style*='; color: rgba(254, 202, 202']:not(.ohr-card *),
+  [style^='color: rgb(248, 113, 113']:not(.ohr-card *),
+  [style*='; color: rgb(248, 113, 113']:not(.ohr-card *),
+  [style^='color: rgba(248, 113, 113']:not(.ohr-card *),
+  [style*='; color: rgba(248, 113, 113']:not(.ohr-card *),
+  [style^='color: rgb(253, 164, 175']:not(.ohr-card *),
+  [style*='; color: rgb(253, 164, 175']:not(.ohr-card *),
+  [style^='color: rgba(253, 164, 175']:not(.ohr-card *),
+  [style*='; color: rgba(253, 164, 175']:not(.ohr-card *),
+  [style^='color: rgb(255, 180, 168']:not(.ohr-card *),
+  [style*='; color: rgb(255, 180, 168']:not(.ohr-card *),
+  [style^='color: rgba(255, 180, 168']:not(.ohr-card *),
+  [style*='; color: rgba(255, 180, 168']:not(.ohr-card *),
+  [style^='color: rgb(255, 123, 114']:not(.ohr-card *),
+  [style*='; color: rgb(255, 123, 114']:not(.ohr-card *),
+  [style^='color: rgba(255, 123, 114']:not(.ohr-card *),
+  [style*='; color: rgba(255, 123, 114']:not(.ohr-card *) {
+    color: #a2191f !important;
+  }
+  [style^='color: rgb(253, 230, 138']:not(.ohr-card *),
+  [style*='; color: rgb(253, 230, 138']:not(.ohr-card *),
+  [style^='color: rgba(253, 230, 138']:not(.ohr-card *),
+  [style*='; color: rgba(253, 230, 138']:not(.ohr-card *),
+  [style^='color: rgb(251, 191, 36']:not(.ohr-card *),
+  [style*='; color: rgb(251, 191, 36']:not(.ohr-card *),
+  [style^='color: rgba(251, 191, 36']:not(.ohr-card *),
+  [style*='; color: rgba(251, 191, 36']:not(.ohr-card *),
+  [style^='color: rgb(252, 211, 77']:not(.ohr-card *),
+  [style*='; color: rgb(252, 211, 77']:not(.ohr-card *),
+  [style^='color: rgba(252, 211, 77']:not(.ohr-card *),
+  [style*='; color: rgba(252, 211, 77']:not(.ohr-card *),
+  [style^='color: rgb(245, 158, 11']:not(.ohr-card *),
+  [style*='; color: rgb(245, 158, 11']:not(.ohr-card *),
+  [style^='color: rgba(245, 158, 11']:not(.ohr-card *),
+  [style*='; color: rgba(245, 158, 11']:not(.ohr-card *) {
+    color: #8e6a00 !important;
+  }
+  [style^='color: rgb(254, 215, 170']:not(.ohr-card *),
+  [style*='; color: rgb(254, 215, 170']:not(.ohr-card *),
+  [style^='color: rgba(254, 215, 170']:not(.ohr-card *),
+  [style*='; color: rgba(254, 215, 170']:not(.ohr-card *),
+  [style^='color: rgb(253, 186, 116']:not(.ohr-card *),
+  [style*='; color: rgb(253, 186, 116']:not(.ohr-card *),
+  [style^='color: rgba(253, 186, 116']:not(.ohr-card *),
+  [style*='; color: rgba(253, 186, 116']:not(.ohr-card *) {
+    color: #8a3800 !important;
+  }
+  [style^='color: rgb(187, 247, 208']:not(.ohr-card *),
+  [style*='; color: rgb(187, 247, 208']:not(.ohr-card *),
+  [style^='color: rgba(187, 247, 208']:not(.ohr-card *),
+  [style*='; color: rgba(187, 247, 208']:not(.ohr-card *),
+  [style^='color: rgb(134, 239, 172']:not(.ohr-card *),
+  [style*='; color: rgb(134, 239, 172']:not(.ohr-card *),
+  [style^='color: rgba(134, 239, 172']:not(.ohr-card *),
+  [style*='; color: rgba(134, 239, 172']:not(.ohr-card *),
+  [style^='color: rgb(52, 211, 153']:not(.ohr-card *),
+  [style*='; color: rgb(52, 211, 153']:not(.ohr-card *),
+  [style^='color: rgba(52, 211, 153']:not(.ohr-card *),
+  [style*='; color: rgba(52, 211, 153']:not(.ohr-card *),
+  [style^='color: rgb(34, 197, 94']:not(.ohr-card *),
+  [style*='; color: rgb(34, 197, 94']:not(.ohr-card *),
+  [style^='color: rgba(34, 197, 94']:not(.ohr-card *),
+  [style*='; color: rgba(34, 197, 94']:not(.ohr-card *),
+  [style^='color: rgb(167, 243, 208']:not(.ohr-card *),
+  [style*='; color: rgb(167, 243, 208']:not(.ohr-card *),
+  [style^='color: rgba(167, 243, 208']:not(.ohr-card *),
+  [style*='; color: rgba(167, 243, 208']:not(.ohr-card *) {
+    color: #0e6027 !important;
+  }
+  [style^='color: rgb(147, 197, 253']:not(.ohr-card *),
+  [style*='; color: rgb(147, 197, 253']:not(.ohr-card *),
+  [style^='color: rgba(147, 197, 253']:not(.ohr-card *),
+  [style*='; color: rgba(147, 197, 253']:not(.ohr-card *),
+  [style^='color: rgb(191, 219, 254']:not(.ohr-card *),
+  [style*='; color: rgb(191, 219, 254']:not(.ohr-card *),
+  [style^='color: rgba(191, 219, 254']:not(.ohr-card *),
+  [style*='; color: rgba(191, 219, 254']:not(.ohr-card *),
+  [style^='color: rgb(96, 165, 250']:not(.ohr-card *),
+  [style*='; color: rgb(96, 165, 250']:not(.ohr-card *),
+  [style^='color: rgba(96, 165, 250']:not(.ohr-card *),
+  [style*='; color: rgba(96, 165, 250']:not(.ohr-card *),
+  [style^='color: rgb(224, 246, 254']:not(.ohr-card *),
+  [style*='; color: rgb(224, 246, 254']:not(.ohr-card *),
+  [style^='color: rgba(224, 246, 254']:not(.ohr-card *),
+  [style*='; color: rgba(224, 246, 254']:not(.ohr-card *) {
+    color: #0043ce !important;
+  }
+}
+
+// Carbon Light: hairline borders written as a faint white line (made for a dark
+// panel) become Carbon's own subtle border, so they show on white.
+:root[data-oh-ui-theme='carbon-light'] {
+  [style*='solid rgba(255, 255, 255, 0.04)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.05)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.06)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.07)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.08)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.09)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.1)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.12)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.14)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.15)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.16)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.18)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.2)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.22)']:not(.ohr-card *):not([data-oh-dark-art] *),
+  [style*='solid rgba(255, 255, 255, 0.25)']:not(.ohr-card *):not([data-oh-dark-art] *) {
+    border-color: var(--cds-border-subtle-01) !important;
+  }
 }

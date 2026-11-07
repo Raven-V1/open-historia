@@ -79,6 +79,9 @@ import SettingsAdjust from "@carbon/icons-react/es/SettingsAdjust.js";
 import Grid from "@carbon/icons-react/es/Grid.js";
 import Table from "@carbon/icons-react/es/Table.js";
 import ColumnDependency from "@carbon/icons-react/es/ColumnDependency.js";
+import Upload from "@carbon/icons-react/es/Upload.js";
+import ChevronRight from "@carbon/icons-react/es/ChevronRight.js";
+import ChevronLeft from "@carbon/icons-react/es/ChevronLeft.js";
 
 const ICONS = {
   add: Add, anchor: Anchor, arrow: ArrowUpRight, building: Building, check: Checkmark, dot: CircleFilled,
@@ -117,6 +120,9 @@ const ICONS = {
   like: ThumbsUp,
   pin: Pin,
   download: Download,
+  upload: Upload,
+  chevronRight: ChevronRight,
+  chevronLeft: ChevronLeft,
   ring: CircleOutline,
   faceCool: FaceCool,
   faceEasy: FaceSatisfied,

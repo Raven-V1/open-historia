@@ -310,7 +310,7 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
     >
       <div style={{ alignItems: "center", display: "inline-flex", flexShrink: 0, gap: "0.45rem", whiteSpace: "nowrap" }}>
         {post.installs != null && (
-          <span title="Times this scenario has been imported" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>⬇ {post.installs}</span>
+          <span title="Times this scenario has been imported" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}><UiIcon name="download" size={14} /> {post.installs}</span>
         )}
         <span title="Liked (reactions on the hub post)" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}><UiIcon name="like" size={14} /> {post.upvotes}</span>
         <span title="Comments on the hub post" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}><UiIcon name="chat" size={14} /> {post.comments}</span>
@@ -446,7 +446,7 @@ const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, t
     )}
 
     <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "1.1rem", marginBottom: "0.55rem" }}>
-      {post.installs != null && <span style={detailStat}>⬇ {post.installs} imported</span>}
+      {post.installs != null && <span style={detailStat}><UiIcon name="download" size={14} /> {post.installs} imported</span>}
       <a href={post.url} target="_blank" rel="noopener noreferrer" title="Like this scenario on its GitHub post" style={{ ...detailStat, textDecoration: "none" }}><UiIcon name="like" size={14} /> {post.upvotes} liked</a>
       <a href={post.url} target="_blank" rel="noopener noreferrer" title="Comment on its GitHub post" style={{ ...detailStat, textDecoration: "none" }}><UiIcon name="chat" size={14} /> {post.comments} comments</a>
     </div>
@@ -984,7 +984,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
               onClick={() => setPublishPickerOpen((open) => !open)}
               style={touchFit({ ...pillButton, background: "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" }, touch)}
             >
-              ⬆ Publish to Hub
+              <UiIcon name="upload" size={14} /> Publish to Hub
             </button>
             <a href={HUB_URL} target="_blank" rel="noopener noreferrer" className="oh-tap-row" style={touchFit({ ...pillButton, textDecoration: "none" }, touch)}>
               Open Hub ↗

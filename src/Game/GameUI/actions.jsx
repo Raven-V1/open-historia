@@ -250,7 +250,7 @@ const ActionItem = ({ action, onDelete, locked = false }) => {
             transition: "opacity 0.15s, color 0.15s, background 0.15s",
         }}
         >
-        {"\u2715"}
+        <UiIcon name="close" size={14} />
         </button>
         </div>
     );
@@ -574,7 +574,7 @@ const StandingGoal = ({ country, round, gameDate, isOpen }) => {
                 width: "100%",
             }}
             >
-            {"\u{1F3AF} Set a standing goal"}
+            <UiIcon name="target" size={14} /> <span>Set a standing goal</span>
             </button>
         );
     }
@@ -595,7 +595,7 @@ const StandingGoal = ({ country, round, gameDate, isOpen }) => {
         </button>
         </div>
         <span title={goal} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", display: "-webkit-box", fontSize: "0.8rem", lineHeight: "1.45", overflow: "hidden", WebkitBoxOrient: "vertical", WebkitLineClamp: 3 }}>
-        {"\u{1F3AF} "}{goal}
+        <UiIcon name="target" size={14} /> {goal}
         </span>
         <GoalProgress country={country} round={round} turnRunning={turnRunning} />
         </div>
@@ -936,12 +936,12 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
                 aria-selected={active}
                 className="oh-tap-row"
                 onClick={() => setTab(key)}
-                style={{ alignItems: "center", background: active ? "var(--oh-ui-active, var(--oh-grey-selected))" : "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid " + (active ? "var(--oh-ui-accent, var(--oh-grey-border-strong))" : "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"), borderRadius: "8px", color: active ? "white" : "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", cursor: "pointer", display: "flex", flex: "0 0 auto", fontFamily: "sans-serif", fontSize: ".8rem", fontWeight: 750, gap: ".38rem", padding: isTouch ? ".3rem .62rem" : ".36rem .74rem", whiteSpace: "nowrap" }}
+                style={{ alignItems: "center", background: active ? "var(--oh-ui-active, var(--oh-grey-selected))" : "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid " + (active ? "var(--oh-ui-accent, var(--oh-grey-border-strong))" : "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"), borderRadius: "8px", color: active ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", cursor: "pointer", display: "flex", flex: "0 0 auto", fontFamily: "sans-serif", fontSize: ".8rem", fontWeight: 750, gap: ".38rem", padding: isTouch ? ".3rem .62rem" : ".36rem .74rem", whiteSpace: "nowrap" }}
                 >
                 <span aria-hidden="true" style={{ display: "inline-flex", opacity: .8 }}>{key === "projects" ? <ProjectsTabIcon /> : <OrdersTabIcon />}</span>
                 <span>{label}</span>
                 {key === "projects" && projectCount > 0 && (
-                    <span data-no-translate style={{ alignItems: "center", background: active ? "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 999, color: active ? "#fff" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", display: "inline-flex", fontSize: ".57rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", minWidth: "1.05rem", padding: "0 .25rem" }}>{projectCount}</span>
+                    <span data-no-translate style={{ alignItems: "center", background: active ? "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 999, color: active ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", display: "inline-flex", fontSize: ".57rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", minWidth: "1.05rem", padding: "0 .25rem" }}>{projectCount}</span>
                 )}
                 </button>
             );
@@ -972,7 +972,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
             event.currentTarget.style.background = "none";
         }}
         >
-        {"\u2715"}
+        <UiIcon name="close" size={14} />
         </button>
         </div>
 

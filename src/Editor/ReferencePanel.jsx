@@ -8,6 +8,7 @@
 // panel is open), and trace borders through it at 50% opacity. It is never
 // saved with the document and never exported to the game.
 
+import UiIcon from "../Game/GameUI/carbonIcons.jsx";
 import Panel from "./Panel.jsx";
 import { Row, Toggle, NumberField } from "./fields.jsx";
 import { inputStyle } from "./editorStyles.js";
@@ -51,7 +52,7 @@ const ReferencePanel = ({ refImage, setRefImage, onRecenter, onClose }) => {
           marginBottom: 10,
         }}
       >
-        {refImage ? "⬆ Replace image" : "⬆ Upload reference image"}
+        <UiIcon name="upload" size={14} /> {refImage ? "Replace image" : "Upload reference image"}
         <input
           type="file"
           accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"

@@ -1377,7 +1377,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
       >
         <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.4rem", minWidth: 0 }}>
           <span style={{
-                background: active ? `${game.accentColor}cc` : "color-mix(in srgb, var(--oh-paper, rgb(10,12,18)) 85%, transparent)",
+                background: active ? `${game.accentColor}cc` : "rgba(10,12,18,0.85)",
                 border: "1px solid rgba(255,255,255,0.18)",
                 borderRadius: "999px",
                 color: "rgba(248,248,250,0.96)",
@@ -1395,7 +1395,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
           </span>
           <span
             style={{
-              background: "color-mix(in srgb, var(--oh-paper, rgb(10,12,18)) 85%, transparent)",
+              background: "rgba(10,12,18,0.85)",
               border: "1px solid rgba(255,255,255,0.12)",
               borderRadius: "999px",
               color: "rgba(255,255,255,0.85)",
@@ -1424,7 +1424,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
             onClick={() => setCardMenuOpen((open) => !open)}
             style={touchFit({
               ...themeButtonStyle,
-              background: cardMenuOpen ? "rgba(255,255,255,0.18)" : "color-mix(in srgb, var(--oh-paper, rgb(10,12,18)) 85%, transparent)",
+              background: cardMenuOpen ? "rgba(255,255,255,0.18)" : "rgba(10,12,18,0.85)",
               cursor: busy ? "progress" : "pointer",
               fontSize: "1.05rem",
               lineHeight: 1,
