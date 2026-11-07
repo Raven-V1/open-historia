@@ -79,3 +79,10 @@ electron/channel.json
 
 # Relocatable wiki preview (scripts/build-wiki-preview.mjs) — a build output, like dist-site.
 dist-wiki-preview/
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+.env*
+!.env.example
