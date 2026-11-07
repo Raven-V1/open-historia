@@ -1,5 +1,6 @@
 /*! Open Historia — standalone country panel */
 import React, { useCallback, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import StatsPane from "./stats.jsx";
 import "./countryDossier.css";
 import { ADVISOR_SLIDE } from "./advisorSlide.js";
@@ -95,7 +96,7 @@ const CountryPanel = ({ open, onClose, width, onResize, onResizeEnd, mapRef, req
           title="Close country panel"
           aria-label="Close country panel"
           style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", fontSize: "1.35rem", lineHeight: 1, padding: "0 0 0 0.5rem", display: "flex", alignItems: "center" }}
-        >✕</button>
+        ><UiIcon name="close" size={16} /></button>
       </div>
 
       <div style={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0 }}>

@@ -1,5 +1,6 @@
 /*! Open Historia — structured scenario scripted-event authoring © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useEffect, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { createPortal } from "react-dom";
 import { INSTITUTION_MEMBER_STATUSES } from "../../runtime/institutions.js";
 import { PUPPET_KINDS, puppetKindLabel } from "../../runtime/puppets.js";
@@ -452,7 +453,7 @@ const ScriptedEventsEditor = ({
                           <div style={{ flex: "1 1 14rem", minWidth: 0 }}>
                             <select aria-label="Referenced scripted event" style={selectStyle(styles,{width:"100%"})} value={condition?.eventId || ""} onChange={(e) => patchCondition(index, conditionIndex, { eventId: e.target.value, outcomeId: "" })}>
                               <option style={optionStyle} value="">Select earlier event</option>
-                              {isFutureReference && <option style={optionStyle} value={referenced.id}>⚠ {eventTitle(referenced)} (not earlier)</option>}
+                              {isFutureReference && <option style={optionStyle} value={referenced.id}>{eventTitle(referenced)} (not earlier — check)</option>}
                               {prior.map(({ event: candidate }) => <option key={candidate.id} style={optionStyle} value={candidate.id}>{eventTitle(candidate)}</option>)}
                             </select>
                             {isFutureReference && <div style={{ color: "#fbbf24", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.2rem" }}>This dependency points to an event that has not resolved yet. Choose an earlier event or this condition will fail when checked.</div>}
@@ -467,7 +468,7 @@ const ScriptedEventsEditor = ({
                           <div style={{ flex: "1 1 14rem", minWidth: 0 }}>
                             <select aria-label="Referenced scripted outcome" style={selectStyle(styles,{width:"100%"})} value={condition?.outcomeId || ""} onChange={(e) => patchCondition(index, conditionIndex, { outcomeId: e.target.value })}>
                               <option style={optionStyle} value="">Select outcome</option>
-                              {missingOutcome && <option style={optionStyle} value={condition.outcomeId}>⚠ Missing outcome: {condition.outcomeId}</option>}
+                              {missingOutcome && <option style={optionStyle} value={condition.outcomeId}>Missing outcome: {condition.outcomeId}</option>}
                               {outcomes.map((outcome) => <option key={outcome.id} style={optionStyle} value={outcome.id}>{clean(outcome.title || outcome.text || outcome.id)}</option>)}
                             </select>
                             {missingOutcome && <div style={{ color: "#fbbf24", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.2rem" }}>The referenced outcome no longer exists. Pick another outcome before saving.</div>}

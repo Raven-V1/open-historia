@@ -10,6 +10,7 @@
 // (PrehistoryPanel.jsx), with its own Save.
 
 import React, { useEffect, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 
 import { saveScenario } from "../../runtime/library.js";
 import { useTouchPrimary } from "../../runtime/mobileUi.js";
@@ -105,7 +106,7 @@ const SideEditor = ({ front, side, countries, onChange, touch }) => {
               onClick={() => setMembers(members.filter((other) => other !== name))}
               style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", fontSize: "0.85rem", lineHeight: 1, padding: "0 0.25rem" }}
               type="button"
-            >✕</button>
+            ><UiIcon name="close" size={14} /></button>
           </span>
         ))}
       </div>

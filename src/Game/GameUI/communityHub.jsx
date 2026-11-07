@@ -12,6 +12,7 @@
 // author drags the bundle in.
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
 import {
@@ -263,12 +264,12 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
             whiteSpace: "nowrap",
           }}
         >
-          {post.pinned ? "📌 " : ""}{post.title}
+          {post.pinned ? <><UiIcon name="pin" size={14} /> </> : ""}{post.title}
         </div>
         <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem" }}>
           {post.official && (
             <span style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)", borderRadius: "999px", color: "#e4e4e7", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginRight: "0.35rem", padding: "0.08rem 0.4rem", textTransform: "uppercase" }}>
-              ✓ Official
+              <UiIcon name="check" size={14} /> Official
             </span>
           )}
           by {post.author} · {new Date(post.createdAt).toLocaleDateString()}
@@ -311,8 +312,8 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
         {post.installs != null && (
           <span title="Times this scenario has been imported" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>⬇ {post.installs}</span>
         )}
-        <span title="Liked (👍 reactions on the hub post)" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>👍 {post.upvotes}</span>
-        <span title="Comments on the hub post" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>💬 {post.comments}</span>
+        <span title="Liked (reactions on the hub post)" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}><UiIcon name="like" size={14} /> {post.upvotes}</span>
+        <span title="Comments on the hub post" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}><UiIcon name="chat" size={14} /> {post.comments}</span>
       </div>
       <div style={{ alignItems: "center", display: "inline-flex", flexShrink: 0, gap: "0.35rem", marginLeft: "auto", whiteSpace: "nowrap" }}>
         <a
@@ -321,7 +322,7 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
           rel="noopener noreferrer"
           className="oh-tap-row"
           onClick={(event) => event.stopPropagation()}
-          title="Open the GitHub post to 👍 like or 💬 comment"
+          title="Open the GitHub post to like or comment"
           style={touchFit({
             ...pillButton,
             boxSizing: "border-box",
@@ -336,7 +337,7 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
             whiteSpace: "nowrap",
           }, touch)}
         >
-          👍 Like ↗
+          <UiIcon name="like" size={14} /> Like ↗
         </a>
         <button
           type="button"
@@ -432,7 +433,7 @@ const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, t
         <img src={post.avatarUrl} alt={post.author} style={{ borderRadius: "50%", height: "1.8rem", width: "1.8rem" }} />
       )}
       <h3 style={{ fontSize: "1.3rem", fontWeight: 800, margin: 0 }}>
-        {post.pinned ? "📌 " : ""}{post.title}
+        {post.pinned ? <><UiIcon name="pin" size={14} /> </> : ""}{post.title}
       </h3>
     </div>
     <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.8rem", marginBottom: "0.9rem" }}>
@@ -446,8 +447,8 @@ const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, t
 
     <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "1.1rem", marginBottom: "0.55rem" }}>
       {post.installs != null && <span style={detailStat}>⬇ {post.installs} imported</span>}
-      <a href={post.url} target="_blank" rel="noopener noreferrer" title="Like this scenario on its GitHub post" style={{ ...detailStat, textDecoration: "none" }}>👍 {post.upvotes} liked</a>
-      <a href={post.url} target="_blank" rel="noopener noreferrer" title="Comment on its GitHub post" style={{ ...detailStat, textDecoration: "none" }}>💬 {post.comments} comments</a>
+      <a href={post.url} target="_blank" rel="noopener noreferrer" title="Like this scenario on its GitHub post" style={{ ...detailStat, textDecoration: "none" }}><UiIcon name="like" size={14} /> {post.upvotes} liked</a>
+      <a href={post.url} target="_blank" rel="noopener noreferrer" title="Comment on its GitHub post" style={{ ...detailStat, textDecoration: "none" }}><UiIcon name="chat" size={14} /> {post.comments} comments</a>
     </div>
     {/* The languages it ships its own text in (its language packs), each in
         its own name. */}
@@ -458,7 +459,7 @@ const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, t
       </div>
     ) : null}
     <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", fontSize: "0.78rem", marginBottom: "1rem" }}>
-      Likes and comments live on the scenario's GitHub post — tap 👍 or 💬 above (or the button below) to open it and react there.
+      Likes and comments live on the scenario's GitHub post — tap Like or Comment above (or the button below) to open it and react there.
     </div>
 
     {/* The whole description, in the author's own lines (hubPosts.js);
@@ -528,7 +529,7 @@ const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, t
         </button>
       )}
       <a href={post.url} target="_blank" rel="noopener noreferrer" className="oh-tap-row" style={touchFit({ ...pillButton, textDecoration: "none" }, touch)}>
-        👍 Like / 💬 Comment ↗
+        <UiIcon name="like" size={14} /> Like / <UiIcon name="chat" size={14} /> Comment ↗
       </a>
     </div>
   </div>
@@ -751,7 +752,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
       if (stillRelevant) {
         setNotice(
           `Imported "${details?.scenario?.name ?? post.title}" — it's in your Scenarios tab. ` +
-            `Enjoyed it? Open its hub post (👍 Like ↗) and hit 👍 to like or 💬 to comment.`,
+            `Enjoyed it? Open its hub post (Like ↗) and hit Like or Comment.`,
         );
         const missingBasemap = unresolvedBundleBackground(bundle);
         if (missingBasemap) {
@@ -939,7 +940,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
               row is narrower, and the controls must not be pushed apart. */}
           <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.5rem 1rem", marginBottom: "0.9rem" }}>
             <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", flex: "1 1 20rem", fontSize: "0.78rem", lineHeight: 1.5, minWidth: 0 }}>
-              Community scenarios from the hub — ⬇ = imports, 👍 = likes. Open any post to 👍 like or 💬 comment on GitHub.
+              Community scenarios from the hub, with import and like counts. Open any post to like or comment on GitHub.
               {" "}<span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>The OFFICIAL badge marks a post made by a team member of the game.</span>
             </div>
             <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "flex-end", marginLeft: "auto" }}>
@@ -1040,7 +1041,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
           {rows && (
             searchQuery.trim() ? (
               <ScenarioRow
-                title={`🔍 Results (${searchResults.length})`}
+                title={`Results (${searchResults.length})`}
                 posts={searchResults}
                 busyId={busyId}
                 onImport={handleImport}
@@ -1056,7 +1057,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
               <>
                 {rows.pinned.length > 0 && (
                   <ScenarioRow
-                    title="📌 Featured"
+                    title="Featured"
                     posts={rows.pinned}
                     busyId={busyId}
                     onImport={handleImport}

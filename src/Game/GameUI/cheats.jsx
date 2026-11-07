@@ -1,5 +1,6 @@
 /*! Open Historia — cheats panel © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon, { DifficultyIcon } from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -146,10 +147,10 @@ const transferWholeCountry = async (source, owner, game) => {
 };
 
 const TOOLS = [
-    { id: "master-ai", title: "GM Console", subtitle: "Master AI · AI-assisted world intervention and canonical changes", icon: "✦", badge: "AI" },
-    { id: "reminders", title: "Simulation Reminders", subtitle: "Standing facts every AI in the game is told until you withdraw them — and what the next skip will hear", icon: "❖" },
+    { id: "master-ai", title: "GM Console", subtitle: "Master AI · AI-assisted world intervention and canonical changes", icon: <UiIcon name="ai" size={16} />, badge: "AI" },
+    { id: "reminders", title: "Simulation Reminders", subtitle: "Standing facts every AI in the game is told until you withdraw them — and what the next skip will hear", icon: <UiIcon name="catalog" size={16} /> },
     { id: "roll-back-turn", title: "Roll Back Turn", subtitle: "Restore the game to the start of an earlier turn", icon: "↶" },
-    { id: "your-country", title: "Play As Country", subtitle: "Change which country you're currently controlling", icon: "♛" },
+    { id: "your-country", title: "Play As Country", subtitle: "Change which country you're currently controlling", icon: <UiIcon name="user" size={16} /> },
     { id: "difficulty", title: "Difficulty", subtitle: "Decide how things tend to go for you", icon: "◈" },
     { id: "annex-country", title: "Annex Country", subtitle: "Transfer an entire country's mapped territory", icon: "⇢" },
     { id: "annex-regions", title: "Annex Regions", subtitle: "Transfer individual map regions to another country", icon: "⌖" },
@@ -157,12 +158,12 @@ const TOOLS = [
     { id: "add-country", title: "Add Country", subtitle: "Create a new polity for custom or fantasy campaigns", icon: "+", badge: "Advanced" },
     { id: "regions", title: "Region Inspector", subtitle: "Inspect control, sovereignty, claims, and region identity", icon: "▦" },
     { id: "groups", title: "Groups", subtitle: "Cartels, militias, outbreaks: groups that control an area without owning it, and what each is", icon: "⬡" },
-    { id: "puppets", title: "Puppet States", subtitle: "Protectorates, puppet states and client states: who answers to whom, how loyally, and ending it", icon: "⛓" },
+    { id: "puppets", title: "Puppet States", subtitle: "Protectorates, puppet states and client states: who answers to whom, how loyally, and ending it", icon: <UiIcon name="link" size={16} /> },
     { id: "edit-feature", title: "Map Feature Editor", subtitle: "Inspect and edit runtime features and scenario cities", icon: "◉" },
     { id: "add-feature", title: "Add Map Feature", subtitle: "Place cities, HQs, landmarks, ports, and other world features", icon: "+" },
     { id: "clear-features", title: "Clear Map Features", subtitle: "Remove custom features or restore standard cities", icon: "⌫", badge: "Advanced" },
     { id: "events", title: "Event Editor", subtitle: "Search, create, and repair canonical timeline events", icon: "≡" },
-    { id: "interactive-event", title: "Interactive Event", subtitle: "Play any event on the record out as a scene, the way a time skip offers one now and then", icon: "⚡" },
+    { id: "interactive-event", title: "Interactive Event", subtitle: "Play any event on the record out as a scene, the way a time skip offers one now and then", icon: <UiIcon name="flash" size={16} /> },
     { id: "history-document", title: "History Document", subtitle: "Read and edit the living history the AI is given in place of older events; the timeline keeps every event", icon: "≣" },
 ];
 
@@ -171,7 +172,7 @@ const TOOL_GROUPS = [
         id: "gm-history",
         title: "GM & History",
         subtitle: "Intervene in the world, repair canon, or restore an earlier state.",
-        icon: "✦",
+        icon: <UiIcon name="ai" size={16} />,
         tools: ["master-ai", "reminders", "events", "interactive-event", "history-document", "roll-back-turn"],
     },
     {
@@ -185,7 +186,7 @@ const TOOL_GROUPS = [
         id: "military",
         title: "Military",
         subtitle: "Inspect and manually manipulate forces on the map.",
-        icon: "⚔",
+        icon: <UiIcon name="military" size={16} />,
         tools: ["forces"],
     },
     {
@@ -456,7 +457,7 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
         )}
         <div style={{ fontSize: "1rem", fontWeight: 800 }}>{title}</div>
         </div>
-        <button type="button" className="oh-tap" aria-label="Close cheats" onClick={onClose} style={{ ...buttonStyle, padding: "0.25rem 0.55rem" }}>✕</button>
+        <button type="button" className="oh-tap" aria-label="Close cheats" onClick={onClose} style={{ ...buttonStyle, padding: "0.25rem 0.55rem" }}><UiIcon name="close" size={16} /></button>
         </div>
         {subtitle && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.74rem", marginTop: "0.2rem" }}>{subtitle}</div>}
         </div>
@@ -535,7 +536,7 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
                             if (typeof onOpenForces !== "function") return null;
                             return (
                                 <button key="forces" type="button" onClick={onOpenForces} style={homeToolButtonStyle}>
-                                    <span style={iconTileStyle}>⚔</span>
+                                    <span style={iconTileStyle}><UiIcon name="military" size={16} /></span>
                                     <span style={{ flex: 1, minWidth: 0 }}>
                                         <span style={{ display: "block", fontSize: "0.78rem", fontWeight: 760 }}>Force Manager</span>
                                         <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", display: "block", fontSize: "0.65rem", fontWeight: 500, lineHeight: 1.35, marginTop: "0.08rem" }}>Deploy, inspect, edit, and repair forces on the map</span>
@@ -2507,7 +2508,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                                                     : "Event removed from canonical history. Existing world state was left untouched.";
                                             });
                                         }}
-                                    >🗑</button>
+                                    ><UiIcon name="trash" size={14} /></button>
                                 </div>
                             </div>
 
@@ -4218,7 +4219,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 zIndex: 4,
                             }}
                         >
-                            {busy ? "Applying canonical transaction…" : gmApplied ? "Applied ✓" : "Apply Transaction"}
+                            {busy ? "Applying canonical transaction…" : gmApplied ? <>Applied <UiIcon name="check" size={14} /></> : "Apply Transaction"}
                         </button>
                         <div style={{ color: gmApplied ? "rgba(134,239,172,0.72)" : "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.64rem", lineHeight: 1.35, marginTop: "0.35rem", textAlign: "center" }}>
                             {gmApplied
@@ -4537,7 +4538,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     const nextGame = await readGameData({ force: true });
                                     await writeGameData({ ...nextGame, difficulty: level.id });
                                     await refresh();
-                                    return `Difficulty set to ${level.label} ${level.emoji}. Future simulation and diplomatic bargaining use this rigor; GM/admin edits remain exact.`;
+                                    return `Difficulty set to ${level.label}. Future simulation and diplomatic bargaining use this rigor; GM/admin edits remain exact.`;
                                 })}
                                 style={{
                                     ...buttonStyle,
@@ -4552,7 +4553,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 }}
                             >
                                 <div style={{ alignItems: "center", display: "flex", gap: "0.42rem", width: "100%" }}>
-                                    <span style={{ fontSize: "1.15rem", lineHeight: 1 }}>{level.emoji}</span>
+                                    <span style={{ lineHeight: 1 }}><DifficultyIcon id={level.id} size={20} /></span>
                                     <div style={{ minWidth: 0 }}>
                                         <div style={{ alignItems: "center", display: "flex", gap: "0.3rem" }}>
                                             <strong style={{ color: "var(--oh-ink, #fff)", fontSize: "0.76rem" }}>{level.label}</strong>
@@ -4587,7 +4588,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                         <div>
                             <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.56rem", fontWeight: 900, letterSpacing: "0.08em" }}>CURRENT BEHAVIOR</div>
                             <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.82rem", fontWeight: 800, marginTop: "0.08rem" }}>
-                                {currentMeta.emoji} {currentMeta.label}
+                                <DifficultyIcon id={currentMeta.id} size={16} /> {currentMeta.label}
                             </div>
                         </div>
                         <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.58rem", textAlign: "right" }}>

@@ -16,6 +16,7 @@
 // Military figures in the map editor's Countries panel (Editor/MilitaryFields.jsx).
 
 import React, { useEffect, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 
 import { useTouchPrimary } from "../../runtime/mobileUi.js";
 import { MEN_PER_FORMATION_BY_ERA } from "../../runtime/fronts/constants.js";
@@ -274,7 +275,7 @@ const ScenarioWarSettings = ({ value, gameDate = "", onChange }) => {
               title={MECHANIC_HINTS[key]}
               type="button"
             >
-              <span aria-hidden="true">{on ? "✓" : "○"}</span>
+              <span aria-hidden="true">{on ? <UiIcon name="check" size={14} /> : <UiIcon name="ring" size={14} />}</span>
               {MECHANIC_LABELS[key]}
             </button>
           );

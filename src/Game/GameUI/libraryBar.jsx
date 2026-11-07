@@ -1,6 +1,6 @@
 /*! Open Historia — portions (map-editor embed, apply-to-scenario, country picker) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import UiIcon from "./carbonIcons.jsx";
+import UiIcon, { DifficultyIcon } from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, SCREEN_HEIGHT, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
 import { Presence } from "./presence.jsx";
@@ -4851,7 +4851,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                         transition: "background 0.15s ease, border-color 0.15s ease",
                       }}
                     >
-                      <span style={{ fontSize: "1.75rem", lineHeight: 1 }}>{level.emoji}</span>
+                      <span style={{ lineHeight: 1 }}><DifficultyIcon id={level.id} size={28} /></span>
                       <span style={{ fontWeight: 700, fontSize: "0.92rem" }}>{level.label}</span>
                       <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", textAlign: "center", lineHeight: 1.3 }}>{level.blurb}</span>
                     </button>

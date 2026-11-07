@@ -1,5 +1,6 @@
 /*! Open Historia — Forces panel © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useCallback, useEffect, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import {
   subscribeUnits,
   getUnits,
@@ -28,12 +29,12 @@ const TYPE_LABEL = {
   garrison: "Garrison",
 };
 const TYPE_GLYPH = {
-  infantry: "🛡",
-  armor: "⚙",
-  air: "✈",
-  naval: "⚓",
-  artillery: "💥",
-  garrison: "🏰",
+  infantry: <UiIcon name="military" size={16} />,
+  armor: <UiIcon name="tools" size={16} />,
+  air: <UiIcon name="plane" size={16} />,
+  naval: <UiIcon name="anchor" size={16} />,
+  artillery: <UiIcon name="rocket" size={16} />,
+  garrison: <UiIcon name="building" size={16} />,
 };
 
 // Strength is a percentage of the formation's established strength, so the bands
@@ -114,7 +115,7 @@ const UnitRow = ({ unit, dimmed, onClick }) => (
       opacity: dimmed ? 0.65 : 1,
     }}
   >
-    <span style={{ fontSize: "1.1rem", lineHeight: 1 }}>{TYPE_GLYPH[unit.type] ?? "🛡"}</span>
+    <span style={{ fontSize: "1.1rem", lineHeight: 1 }}>{TYPE_GLYPH[unit.type] ?? <UiIcon name="military" size={16} />}</span>
     <div style={{ minWidth: 0, flex: 1 }}>
       <div style={{ fontSize: "12px", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
         {unit.name}
@@ -326,7 +327,7 @@ export const ForcesPanel = ({ mapRef, topOffset = "0px", open = false, onToggle 
           onClick={() => setEditingId((current) => (current === u.id ? "" : u.id))}
           style={{ ...smallButtonStyle, flexShrink: 0, width: "2rem", padding: 0 }}
         >
-          ✎
+          <UiIcon name="edit" size={14} />
         </button>
       </div>
       {editingId === u.id && (
@@ -415,7 +416,7 @@ export const ForcesPanel = ({ mapRef, topOffset = "0px", open = false, onToggle 
               aria-label="Close forces"
               style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", fontSize: "14px" }}
             >
-              ✕
+              <UiIcon name="close" size={14} />
             </button>
           </div>
 

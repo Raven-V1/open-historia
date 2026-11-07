@@ -1,5 +1,6 @@
 /*! Open Historia — national stats pane © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { memo, startTransition, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -412,7 +413,7 @@ const CustomStatsSheet = ({ definition, sheet, hiddenKeys = [] }) => {
 const IntelligenceServiceCard = ({ value, style }) => (
     <div className="oh-country-intelligence-stat" style={style}>
         <div className="oh-country-intelligence-stat-heading">
-            <span className="oh-country-intelligence-stat-label">🕵 Intelligence service</span>
+            <span className="oh-country-intelligence-stat-label"><UiIcon name="spy" size={14} /> Intelligence service</span>
             <span data-no-translate className="oh-country-intelligence-stat-value">{value}/100</span>
         </div>
         <Bar value={value} color="#38bdf8" />
@@ -698,7 +699,7 @@ const GroupsOnTerritory = ({ world, targetCountry, isPlayer, mapRef }) => {
 
     return (
         <>
-        <div style={sectionTitleStyle}>{isPlayer ? "👥 Groups on our territory" : "👥 Groups on its territory"}</div>
+        <div style={sectionTitleStyle}>{isPlayer ? <><UiIcon name="group" size={14} /> Groups on our territory</> : <><UiIcon name="group" size={14} /> Groups on its territory</>}</div>
         <div style={{ ...cardStyle, padding: 0, overflow: "hidden" }}>
         {rows.map((row, index) => {
             const count = row.regionIds.length;
@@ -1161,7 +1162,7 @@ const advancedMetricGroupsFor = (indexRows = INDEX_ROWS, definition = null) => {
         {
             key: "strategic",
             label: "Strategic indices",
-            icon: "⚑",
+            icon: <UiIcon name="flag" size={16} />,
             metrics: [
                 { key: "stability", label: "National stability", unit: "index", color: "#22c55e", format: (value) => `${Math.round(Number(value) || 0)}` },
                 ...indexRows.map((row) => ({
@@ -1539,7 +1540,7 @@ const AdvancedStatsModal = ({
                                         const compatible = !selectedMetrics.length || selectedUnit === metric.unit || checked;
                                         return (
                                             <button key={metric.key} type="button" className="oh-tap-row" onClick={() => toggleMetric(metric)} style={{ alignItems: "center", backgroundColor: checked ? `${metric.color}16` : "transparent", border: `1px solid ${checked ? `${metric.color}50` : "transparent"}`, borderRadius: "7px", color: checked ? "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)" : compatible ? "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)", cursor: "pointer", display: "flex", fontSize: "0.66rem", fontWeight: checked ? 800 : 650, gap: "0.45rem", padding: "0.38rem 0.45rem", textAlign: "left", width: "100%" }}>
-                                                <span aria-hidden="true" style={{ alignItems: "center", backgroundColor: checked ? metric.color : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: `1px solid ${checked ? metric.color : "color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)"}`, borderRadius: "4px", color: "var(--oh-paper, #121214)", display: "inline-flex", flexShrink: 0, fontSize: "0.55rem", fontWeight: 1000, height: "14px", justifyContent: "center", width: "14px" }}>{checked ? "✓" : ""}</span>
+                                                <span aria-hidden="true" style={{ alignItems: "center", backgroundColor: checked ? metric.color : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: `1px solid ${checked ? metric.color : "color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)"}`, borderRadius: "4px", color: "var(--oh-paper, #121214)", display: "inline-flex", flexShrink: 0, fontSize: "0.55rem", fontWeight: 1000, height: "14px", justifyContent: "center", width: "14px" }}>{checked ? <UiIcon name="check" size={10} /> : ""}</span>
                                                 <span style={{ flex: 1, minWidth: 0 }}>{metric.label}</span>
                                             </button>
                                         );
@@ -1664,7 +1665,7 @@ const HistoricalTrackingModal = ({
             <div style={{ background: "color-mix(in srgb, var(--oh-paper, rgb(20,20,22)) 99.5%, transparent)", border: "1px solid var(--oh-hud-border)", borderRadius: "18px", boxShadow: "var(--oh-hud-shadow)", display: "flex", flexDirection: "column", height: `min(760px, calc(${APP_HEIGHT} - 2.4rem))`, maxWidth: "980px", minHeight: "520px", overflow: "hidden", width: "min(94vw, 980px)", ...(isMobile ? phoneSheetStyle : fit ? { minHeight: 0 } : null) }}>
                 <div style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "flex", gap: "0.8rem", justifyContent: "space-between", padding: "1rem 1.05rem 0.95rem" }}>
                     <div style={{ alignItems: "center", display: "flex", gap: "0.8rem", minWidth: 0 }}>
-                        <div style={{ alignItems: "center", backgroundColor: "rgba(234,179,8,0.12)", border: "1px solid rgba(250,204,21,0.22)", borderRadius: "12px", color: "#fbbf24", display: "inline-flex", flexShrink: 0, fontSize: "1.2rem", height: "2.5rem", justifyContent: "center", width: "2.5rem" }}>⚙</div>
+                        <div style={{ alignItems: "center", backgroundColor: "rgba(234,179,8,0.12)", border: "1px solid rgba(250,204,21,0.22)", borderRadius: "12px", color: "#fbbf24", display: "inline-flex", flexShrink: 0, fontSize: "1.2rem", height: "2.5rem", justifyContent: "center", width: "2.5rem" }}><UiIcon name="settings" size={18} /></div>
                         <div style={{ minWidth: 0 }}>
                             <div style={{ color: "var(--oh-ink, #fff)", fontSize: "1.15rem", fontWeight: 850 }}>Historical tracking</div>
                             <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.75rem", marginTop: "0.12rem" }}>
@@ -1788,7 +1789,7 @@ const HistoricalTrackingModal = ({
                                         >
                                             <span style={{ minWidth: 0 }}>
                                                 <span style={{ alignItems: "center", display: "flex", gap: "0.4rem", minWidth: 0 }}>
-                                                    <span aria-hidden="true" style={{ alignItems: "center", backgroundColor: tracked ? "#22c55e" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: `1px solid ${tracked ? "#22c55e" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"}`, borderRadius: "4px", color: "var(--oh-paper, #121214)", display: "inline-flex", flexShrink: 0, fontSize: "0.55rem", fontWeight: 1000, height: "14px", justifyContent: "center", width: "14px" }}>{tracked ? "✓" : ""}</span>
+                                                    <span aria-hidden="true" style={{ alignItems: "center", backgroundColor: tracked ? "#22c55e" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: `1px solid ${tracked ? "#22c55e" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"}`, borderRadius: "4px", color: "var(--oh-paper, #121214)", display: "inline-flex", flexShrink: 0, fontSize: "0.55rem", fontWeight: 1000, height: "14px", justifyContent: "center", width: "14px" }}>{tracked ? <UiIcon name="check" size={10} /> : ""}</span>
                                                     <span style={{ fontSize: "0.74rem", fontWeight: tracked ? 800 : 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.label}</span>
                                                 </span>
                                                 <span style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", display: "flex", flexWrap: "wrap", fontSize: "0.62rem", gap: "0.35rem", marginTop: "0.18rem" }}>
@@ -2933,25 +2934,25 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
             aria-pressed={statsView === "politics"}
             onClick={() => setStatsView("politics")}
             style={statsSubtabStyle(statsView === "politics", touch)}
-            >🏛 Politics</button>
+            ><UiIcon name="building" size={14} /> Politics</button>
             <button
             type="button"
             aria-pressed={statsView === "diplomacy"}
             onClick={() => setStatsView("diplomacy")}
             style={statsSubtabStyle(statsView === "diplomacy", touch)}
-            >🤝 Diplomacy</button>
+            ><UiIcon name="partner" size={14} /> Diplomacy</button>
             <button
             type="button"
             aria-pressed={statsView === "economy"}
             onClick={() => setStatsView("economy")}
             style={statsSubtabStyle(statsView === "economy", touch)}
-            >{statSheetDefinition.custom ? "📊 National" : "📈 Economy"}</button>
+            >{statSheetDefinition.custom ? <><UiIcon name="bars" size={14} /> National</> : <><UiIcon name="chart" size={14} /> Economy</>}</button>
             <button
             type="button"
             aria-pressed={statsView === "ranking"}
             onClick={() => setStatsView("ranking")}
             style={statsSubtabStyle(statsView === "ranking", touch)}
-            >🏆 Ranking</button>
+            ><UiIcon name="trophy" size={14} /> Ranking</button>
             </div>
 
             <div className="oh-country-content" data-view={statsView}>
@@ -3034,7 +3035,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 <div style={{ ...cardStyle, marginTop: "1rem" }}>
                 <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "0.45rem" }}>
                 <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-                ⚠ National stability
+                <UiIcon name="warning" size={14} /> National stability
                 </span>
                 <span data-no-translate style={{ fontSize: "0.85rem", fontWeight: 800 }}>
                 {clamp01(sheet.stability)}/100
@@ -3046,7 +3047,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 {intelligence !== null && <IntelligenceServiceCard value={intelligence} style={{ marginTop: "0.6rem" }} />}
 
                 {/* Strategic indices */}
-                <div className="oh-country-stat-category" style={{ ...sectionTitleStyle, margin: undefined }}>⚑ Strategic indices</div>
+                <div className="oh-country-stat-category" style={{ ...sectionTitleStyle, margin: undefined }}><UiIcon name="flag" size={14} /> Strategic indices</div>
                 <div style={{ display: "grid", gap: "0.55rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(12rem, 100%), 1fr))" }}>
                 {indexRows.map((row) => (
                     <IndexMetricCard key={row.key} icon={row.icon} label={row.label} value={sheet.indices?.[row.key]} color={row.color} />
@@ -3054,7 +3055,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 </div>
 
                 {/* Population — whole polity plus core/integrated vs other territories. */}
-                <div className="oh-country-stat-category" style={{ ...sectionTitleStyle, margin: undefined }}>👥 Population</div>
+                <div className="oh-country-stat-category" style={{ ...sectionTitleStyle, margin: undefined }}><UiIcon name="group" size={14} /> Population</div>
                 <div style={cardStyle}>
                 <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginBottom: "0.3rem", textTransform: "uppercase" }}>
                 Total population
@@ -3070,7 +3071,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 </div>
 
                 {/* Economy */}
-                <div className="oh-country-stat-category" style={{ ...sectionTitleStyle, margin: undefined }}>📈 Economy</div>
+                <div className="oh-country-stat-category" style={{ ...sectionTitleStyle, margin: undefined }}><UiIcon name="chart" size={14} /> Economy</div>
                 <div style={{ display: "grid", gap: "0.55rem", gridTemplateColumns: "1fr 1fr" }}>
                 <EconomyCard
                 label="GDP"
@@ -3127,7 +3128,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                     them out for every country (MilitaryCard). */}
                 {worldSnapshot && (
                     <>
-                    <div className="oh-country-stat-category" style={{ ...sectionTitleStyle, margin: undefined }}>⚔ Military</div>
+                    <div className="oh-country-stat-category" style={{ ...sectionTitleStyle, margin: undefined }}><UiIcon name="military" size={14} /> Military</div>
                     <MilitaryCard world={worldSnapshot} country={resolvedTargetKey || targetCountry} />
                     </>
                 )}
@@ -3138,7 +3139,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: "11px", color: "#e7e7ea", cursor: "pointer", display: "flex", gap: "0.65rem", justifyContent: "space-between", marginTop: "0.9rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
                 >
                     <span style={{ alignItems: "center", display: "flex", gap: "0.6rem", minWidth: 0 }}>
-                        <span style={{ alignItems: "center", backgroundColor: "rgba(59,130,246,0.18)", border: "1px solid rgba(147,197,253,0.2)", borderRadius: "8px", display: "inline-flex", flexShrink: 0, fontSize: "1rem", height: "2rem", justifyContent: "center", width: "2rem" }}>📊</span>
+                        <span style={{ alignItems: "center", backgroundColor: "rgba(59,130,246,0.18)", border: "1px solid rgba(147,197,253,0.2)", borderRadius: "8px", display: "inline-flex", flexShrink: 0, fontSize: "1rem", height: "2rem", justifyContent: "center", width: "2rem" }}><UiIcon name="bars" size={16} /></span>
                         <span style={{ minWidth: 0 }}>
                             <span style={{ display: "block", fontSize: "0.76rem", fontWeight: 850 }}>Advanced statistics</span>
                             <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", display: "block", fontSize: "0.62rem", marginTop: "0.08rem" }}>Explore campaign trends and historical snapshots</span>
@@ -3155,7 +3156,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "11px", color: "#e7e7e9", cursor: turnRunning ? "not-allowed" : "pointer", display: "flex", opacity: turnRunning ? 0.55 : 1, gap: "0.7rem", justifyContent: "space-between", marginTop: "0.55rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
                 >
                     <span style={{ alignItems: "center", display: "flex", gap: "0.65rem", minWidth: 0 }}>
-                        <span style={{ alignItems: "center", backgroundColor: "rgba(234,179,8,0.12)", border: "1px solid rgba(250,204,21,0.22)", borderRadius: "8px", color: "#fbbf24", display: "inline-flex", flexShrink: 0, fontSize: "0.98rem", height: "2rem", justifyContent: "center", width: "2rem" }}>⚙</span>
+                        <span style={{ alignItems: "center", backgroundColor: "rgba(234,179,8,0.12)", border: "1px solid rgba(250,204,21,0.22)", borderRadius: "8px", color: "#fbbf24", display: "inline-flex", flexShrink: 0, fontSize: "0.98rem", height: "2rem", justifyContent: "center", width: "2rem" }}><UiIcon name="settings" size={16} /></span>
                         <span style={{ minWidth: 0 }}>
                             <span style={{ display: "block", fontSize: "0.75rem", fontWeight: 850 }}>Historical tracking</span>
                             <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", display: "block", fontSize: "0.62rem", marginTop: "0.08rem" }}>

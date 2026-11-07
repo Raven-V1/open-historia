@@ -1,5 +1,6 @@
 /*! Open Historia — portions (drawer close/slide + mobile layout) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useState, useRef, useEffect } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { Chart, registerables } from "chart.js";
 import { sendMessage, startChat, loadHistory } from "../AI/main.jsx";
 import { requestDiplomaticChat } from "./chat.jsx";
@@ -172,7 +173,7 @@ const AdvisorProjectsCard = ({ items, onOpenProjects }) => {
     return (
         <div style={{ marginTop: "0.75rem", background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.3)", borderRadius: "10px", padding: "0.65rem 0.8rem" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}>
-        <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "rgba(191,219,254,0.95)" }}>🎯 Projects {summary}</span>
+        <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "rgba(191,219,254,0.95)" }}><UiIcon name="target" size={14} /> Projects {summary}</span>
         {onOpenProjects && (
             <button type="button" onClick={onOpenProjects} style={{ background: "none", border: "1px solid rgba(59,130,246,0.5)", borderRadius: "6px", color: "rgba(191,219,254,0.9)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
             Open Projects
@@ -216,7 +217,7 @@ const AdvisorProjectsProblem = ({ kind, detail, excerpt, onRetry }) => {
 
     return (
         <div style={{ marginTop: "0.75rem", background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.35)", borderRadius: "10px", padding: "0.65rem 0.8rem" }}>
-        <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "rgba(253,230,138,0.95)" }}>⚠ Board not fully updated</div>
+        <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "rgba(253,230,138,0.95)" }}><UiIcon name="warning" size={14} /> Board not fully updated</div>
         <p style={{ margin: "0.3rem 0 0", fontSize: "0.75rem", lineHeight: 1.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)" }}>{message}</p>
         {detail && (
             <p data-no-translate style={{ margin: "0.3rem 0 0", fontSize: "0.68rem", lineHeight: 1.45, color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>
@@ -270,7 +271,7 @@ const AdvisorActionsCard = ({ items, onOpenActions }) => {
     return (
         <div style={{ marginTop: "0.75rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: "10px", padding: "0.65rem 0.8rem" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}>
-        <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" }}>📋 Actions {summary}</span>
+        <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" }}><UiIcon name="task" size={14} /> Actions {summary}</span>
         {onOpenActions && (
             <button type="button" onClick={onOpenActions} style={{ background: "none", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", borderRadius: "6px", color: "#e4e4e7", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
             Open Actions
@@ -359,7 +360,7 @@ const AdvisorActionProposalCard = ({ proposal, receipt, queueAction, targetActio
     return (
         <div style={{ marginTop: "0.6rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", borderRadius: "9px", padding: "0.6rem 0.7rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem" }}>
-            <strong style={{ fontSize: "0.76rem" }}>📋 {label}</strong>
+            <strong style={{ fontSize: "0.76rem" }}><UiIcon name="task" size={14} /> {label}</strong>
             <span aria-live="polite" style={{ fontSize: "0.67rem", color: ["queued", "updated", "removed", "resolved"].includes(state) ? "#86efac" : "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>
                 {statusLabel}
             </span>
@@ -432,7 +433,7 @@ const AdvisorDraftSend = ({ draft, onDraft }) => {
             fontFamily: "sans-serif", fontSize: "0.76rem", fontWeight: 600, padding: "0.35rem 0.65rem",
             textAlign: "left",
         }}>
-        {handedOff ? "✓ In Diplomacy — press send there" : `✉️ Draft to ${draft.targetType === "institution-council" ? `Council · ${draft.institutionId}` : draft.targetType === "institution-lifecycle" ? `hearing · ${draft.country || draft.institutionId}` : draft.country}`}
+        {handedOff ? <><UiIcon name="check" size={14} /> In Diplomacy — press send there</> : <><UiIcon name="email" size={14} /> {`Draft to ${draft.targetType === "institution-council" ? `Council · ${draft.institutionId}` : draft.targetType === "institution-lifecycle" ? `hearing · ${draft.country || draft.institutionId}` : draft.country}`}</>}
         </button>
         {sentOn && (
             <div style={{ color: "rgba(253,230,138,0.9)", fontFamily: "sans-serif", fontSize: "0.7rem", marginTop: "0.25rem" }}>
@@ -475,10 +476,10 @@ const AdvisorDeployPlace = ({ deployment, placed, onPlace }) => {
             fontFamily: "sans-serif", fontSize: "0.76rem", fontWeight: 600, padding: "0.35rem 0.65rem",
         }}>
         {status === "placed"
-            ? `✓ ${deployment.name} placed`
+            ? <><UiIcon name="check" size={14} /> {`${deployment.name} placed`}</>
             : status === "placing"
                 ? `Placing ${deployment.name}…`
-                : `📍 Place ${deployment.name} here`}
+                : <><UiIcon name="location" size={14} /> {`Place ${deployment.name} here`}</>}
         </button>
         {error && <span role="alert" style={{ color: "#fca5a5", fontSize: "0.7rem", lineHeight: 1.35 }}>{error}</span>}
         </div>
@@ -530,10 +531,10 @@ const AdvisorInstitutionDraftAction = ({ draft, completed, onExecute }) => {
             textAlign: "left",
         }}>
         {status === "completed"
-            ? `✓ ${institutionDraftButtonLabel(draft)}`
+            ? <><UiIcon name="check" size={14} /> {institutionDraftButtonLabel(draft)}</>
             : status === "working"
                 ? "Applying institution action…"
-                : `🏛️ ${institutionDraftButtonLabel(draft)}`}
+                : <><UiIcon name="building" size={14} /> {institutionDraftButtonLabel(draft)}</>}
         </button>
         {error && <span style={{ color: "#fca5a5", fontSize: "0.7rem", lineHeight: 1.35 }}>{error}</span>}
         </div>
@@ -823,7 +824,7 @@ const AdvisorMessageRow = React.memo(({ msg, msgIndex, speakerName = "Advisor", 
         )}
         {msg.role !== "user" && (
             <span className="oh-advisor-speaker">
-            {msg.role === "error" ? "⚠️ Error" : `🧭 ${speakerName}`}
+            {msg.role === "error" ? <><UiIcon name="warning" size={14} /> Error</> : <><UiIcon name="compass" size={14} /> {speakerName}</>}
             </span>
         )}
         {/* Player-typed text stays verbatim under UI translation. */}
@@ -840,7 +841,7 @@ const AdvisorMessageRow = React.memo(({ msg, msgIndex, speakerName = "Advisor", 
         {/* Not while streaming: a chart still arriving is not a broken one. */}
         {chartProblem && !msg.streaming && (
             <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", marginTop: "0.6rem" }}>
-            📉 The chart could not be drawn: {chartProblem}.
+            <UiIcon name="chart" size={14} /> The chart could not be drawn: {chartProblem}.
             </div>
         )}
         {msg.suggestionsNotApplied && !msg.streaming && (
@@ -926,10 +927,10 @@ const AdvisorDocumentNotice = ({ notice }) => {
     if (!report) return null;
     return (
         <div style={{ alignItems: "flex-start", display: "flex", flexDirection: "column" }}>
-            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.7rem", marginBottom: "0.25rem" }}>🧭 Advisor</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.7rem", marginBottom: "0.25rem" }}><UiIcon name="compass" size={14} /> Advisor</span>
             <div className="oh-advisor-notice">
                 <div>
-                    📄 A new paper on your desk: <span data-no-translate style={{ fontWeight: 800 }}>{report.title}</span>, {noticeHow(notice)}.
+                    <UiIcon name="document" size={14} /> A new paper on your desk: <span data-no-translate style={{ fontWeight: 800 }}>{report.title}</span>, {noticeHow(notice)}.
                 </div>
                 <button type="button" onClick={() => setOpen((value) => !value)} style={{ background: "none", border: "none", color: "#fde68a", cursor: "pointer", fontFamily: "inherit", fontSize: "0.74rem", fontWeight: 700, marginTop: "0.3rem", padding: 0 }}>
                     {open ? "Put it away" : "Read it"}
@@ -1008,7 +1009,7 @@ const AdvisorMessageList = React.memo(({ messages, visibleLimit, onShowEarlier, 
 
     {isLoading && !(messages[messages.length - 1]?.role === "advisor" && messages[messages.length - 1]?.streaming) && (
         <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column", gap: "0.25rem" }}>
-        <span style={{ fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>🧭 {speakerName}</span>
+        <span style={{ fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}><UiIcon name="compass" size={14} /> {speakerName}</span>
         <div className="oh-advisor-thinking">
         <ThinkingDots />
         </div>
@@ -1974,7 +1975,7 @@ const AdvisorPanel = ({ isAdvisorOpen, mapRef, onClose, width, onResize, onResiz
         style={confirmingClear
             ? { background: "rgba(239,68,68,0.18)", border: "1px solid rgba(239,68,68,0.55)", borderRadius: "8px", color: "#fca5a5", cursor: "pointer", fontFamily: "sans-serif", fontSize: "0.8rem", fontWeight: 600, lineHeight: 1, padding: "0 0.6rem", display: "flex", alignItems: "center" }
             : { background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", cursor: "pointer", fontSize: "1.35rem", lineHeight: 1, padding: 0, display: "flex", alignItems: "center" }}
-        >{confirmingClear ? "Clear?" : "🗑"}</button>
+        >{confirmingClear ? "Clear?" : <UiIcon name="trash" size={14} />}</button>
         {/* The way out. On a phone the advisor is the whole screen and this ✕
             (or Back) is all that closes it, so it is finger-sized there. */}
         {onClose && (
@@ -1984,7 +1985,7 @@ const AdvisorPanel = ({ isAdvisorOpen, mapRef, onClose, width, onResize, onResiz
             title="Close advisor"
             aria-label="Close advisor"
             style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", fontSize: "1.35rem", lineHeight: 1, padding: "0 0 0 0.5rem", display: "flex", alignItems: "center" }}
-            >✕</button>
+            ><UiIcon name="close" size={16} /></button>
         )}
         </div>
 

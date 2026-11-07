@@ -28,12 +28,88 @@ import Time from "@carbon/icons-react/es/Time.js";
 import TrashCan from "@carbon/icons-react/es/TrashCan.js";
 import Warning from "@carbon/icons-react/es/Warning.js";
 import Wikis from "@carbon/icons-react/es/Wikis.js";
+import Chat from "@carbon/icons-react/es/Chat.js";
+import NotificationFilled from "@carbon/icons-react/es/NotificationFilled.js";
+import VolumeUp from "@carbon/icons-react/es/VolumeUp.js";
+import VolumeMute from "@carbon/icons-react/es/VolumeMute.js";
+import Pen from "@carbon/icons-react/es/Pen.js";
+import View from "@carbon/icons-react/es/View.js";
+import UserAvatar from "@carbon/icons-react/es/UserAvatar.js";
+import Task from "@carbon/icons-react/es/Task.js";
+import Radar from "@carbon/icons-react/es/Radar.js";
+import Target from "@carbon/icons-react/es/Target.js";
+import Email from "@carbon/icons-react/es/Email.js";
+import Compass from "@carbon/icons-react/es/Compass.js";
+import ChartLine from "@carbon/icons-react/es/ChartLine.js";
+import ChartBar from "@carbon/icons-react/es/ChartBar.js";
+import Group from "@carbon/icons-react/es/Group.js";
+import Partnership from "@carbon/icons-react/es/Partnership.js";
+import Trophy from "@carbon/icons-react/es/Trophy.js";
+import Settings from "@carbon/icons-react/es/Settings.js";
+import UserMilitary from "@carbon/icons-react/es/UserMilitary.js";
+import Catalog from "@carbon/icons-react/es/Catalog.js";
+import Link from "@carbon/icons-react/es/Link.js";
+import Locked from "@carbon/icons-react/es/Locked.js";
+import Plane from "@carbon/icons-react/es/Plane.js";
+import Tools from "@carbon/icons-react/es/Tools.js";
+import Rocket from "@carbon/icons-react/es/Rocket.js";
+import Scales from "@carbon/icons-react/es/Scales.js";
+import Folder from "@carbon/icons-react/es/Folder.js";
+import Edit from "@carbon/icons-react/es/Edit.js";
+import Microscope from "@carbon/icons-react/es/Microscope.js";
+import ThumbsUp from "@carbon/icons-react/es/ThumbsUp.js";
+import Pin from "@carbon/icons-react/es/Pin.js";
+import Download from "@carbon/icons-react/es/Download.js";
+import CircleOutline from "@carbon/icons-react/es/CircleOutline.js";
+import FaceCool from "@carbon/icons-react/es/FaceCool.js";
+import FaceSatisfied from "@carbon/icons-react/es/FaceSatisfied.js";
+import FaceDissatisfied from "@carbon/icons-react/es/FaceDissatisfied.js";
+import Fire from "@carbon/icons-react/es/Fire.js";
+import FaceDizzy from "@carbon/icons-react/es/FaceDizzy.js";
 
 const ICONS = {
   add: Add, anchor: Anchor, arrow: ArrowUpRight, building: Building, check: Checkmark, dot: CircleFilled,
   close: Close, copy: Copy, cube: Cube, document: Document, flag: Flag, flash: Flash, location: Location,
   ai: MagicWand, map: Map, menu: Menu, music: Music, save: Save, search: Search, stop: StopSign, time: Time,
   trash: TrashCan, warning: Warning, water: Wikis,
+  chat: Chat,
+  bell: NotificationFilled,
+  volume: VolumeUp,
+  mute: VolumeMute,
+  pen: Pen,
+  spy: View,
+  user: UserAvatar,
+  task: Task,
+  radar: Radar,
+  target: Target,
+  email: Email,
+  compass: Compass,
+  chart: ChartLine,
+  bars: ChartBar,
+  group: Group,
+  partner: Partnership,
+  trophy: Trophy,
+  settings: Settings,
+  military: UserMilitary,
+  catalog: Catalog,
+  link: Link,
+  lock: Locked,
+  plane: Plane,
+  tools: Tools,
+  rocket: Rocket,
+  scales: Scales,
+  folder: Folder,
+  edit: Edit,
+  science: Microscope,
+  like: ThumbsUp,
+  pin: Pin,
+  download: Download,
+  ring: CircleOutline,
+  faceCool: FaceCool,
+  faceEasy: FaceSatisfied,
+  faceHard: FaceDissatisfied,
+  fire: Fire,
+  faceDizzy: FaceDizzy,
 };
 
 // A decorative icon that sits in a line of text. `name` is a key of ICONS.
@@ -42,5 +118,10 @@ export const UiIcon = ({ name, size = 16, style, ...rest }) => {
   if (!Glyph) return null;
   return <Glyph aria-hidden="true" size={size} style={{ flexShrink: 0, verticalAlign: "-0.15em", ...style }} {...rest} />;
 };
+
+// The icon of each difficulty level, in place of the level's emoji (which stays
+// in the level's data: only the interface stops showing it).
+const DIFFICULTY_ICONS = { "very-easy": "faceCool", easy: "faceEasy", medium: "scales", hard: "faceHard", "very-hard": "fire", impossible: "faceDizzy" };
+export const DifficultyIcon = ({ id, size = 24, ...rest }) => <UiIcon name={DIFFICULTY_ICONS[id] || "scales"} size={size} {...rest} />;
 
 export default UiIcon;

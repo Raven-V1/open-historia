@@ -13,6 +13,7 @@
 // an icon library, neither of which this app carries).
 
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import {
     GENERATION_COMPLETE_EVENT,
     clearAiRecords,
@@ -644,7 +645,7 @@ export const DebugConsole = ({ open, onClose }) => {
                     </div>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
                         <button type="button" className="oh-tap-row" onClick={refresh} title="Refresh" style={buttonStyle}>Refresh</button>
-                        <button type="button" className="oh-tap" onClick={onClose} title="Close" aria-label="Close the AI debug console" style={buttonStyle}>✕ Close</button>
+                        <button type="button" className="oh-tap" onClick={onClose} title="Close" aria-label="Close the AI debug console" style={buttonStyle}><UiIcon name="close" size={14} /> Close</button>
                     </div>
                 </div>
 

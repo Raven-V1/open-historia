@@ -1,5 +1,6 @@
 /*! Open Historia — country info panel © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "../GameUI/carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP } from "../../runtime/mobileUi.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -468,7 +469,7 @@ const CountryInfoPanel = () => {
         onClick={() => setCountry(null)}
         style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: "1.15rem", lineHeight: 1, padding: "0.2rem" }}
         >
-        {"✕"}
+        <UiIcon name="close" size={16} />
         </button>
         </div>
 

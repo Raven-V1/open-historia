@@ -7,7 +7,7 @@ import fs from "node:fs";
 const source = fs.readFileSync(new URL("./communityHub.jsx", import.meta.url), "utf8");
 
 test("community discovery has one featured shelf and one sortable browse grid", () => {
-  assert.match(source, /title="📌 Featured"/);
+  assert.match(source, /title="Featured"/);
   assert.match(source, />Browse Community</);
   assert.match(source, /const \[browseSort, setBrowseSort\] = useState\("installs"\)/);
   assert.match(source, /posts=\{rows\.browse\}/);

@@ -39,6 +39,7 @@
 // runtime/projects.js, NOT read off what the model last wrote. That is what keeps
 // the board honest between AI turns.
 import React, { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, useCanHover, useTouchPrimary } from "../../runtime/mobileUi.js";
 
 import { getNationFlags } from "../../runtime/assets.js";
@@ -150,7 +151,7 @@ const progressColor = (project, flags) => {
   return "#22c55e";
 };
 
-const SECRECY_GLYPH = { restricted: "🔒", covert: "🕵" };
+const SECRECY_GLYPH = { restricted: <UiIcon name="lock" size={14} />, covert: <UiIcon name="spy" size={14} /> };
 
 // How far an entry can be trusted, when it came from a spy at all. Never says
 // WHY — the player is not told their agent was turned, only that the analysts
@@ -433,7 +434,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
     <div style={cardStyle}>
       <div style={{ alignItems: "baseline", display: "flex", gap: "0.4rem", justifyContent: "space-between" }}>
         <div style={{ alignItems: "baseline", display: "flex", flexWrap: "wrap", gap: "0.35rem", minWidth: 0 }}>
-          <span aria-hidden="true">{project.kind === "operation" ? "⚔" : "🔬"}</span>
+          <span aria-hidden="true">{project.kind === "operation" ? <UiIcon name="military" size={14} /> : <UiIcon name="science" size={14} />}</span>
           <span data-no-translate style={{ fontSize: "0.86rem", fontWeight: 700, wordBreak: "break-word" }}>
             {project.name}
           </span>
@@ -549,7 +550,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem", marginTop: "0.5rem" }}>
           {flags.overdue && (
             <Pill color="#fca5a5" bg="rgba(239,68,68,0.18)" title={`Target date passed ${Math.abs(flags.daysToTarget)} days ago`}>
-              ⚠ Overdue
+              <UiIcon name="warning" size={14} /> Overdue
             </Pill>
           )}
           {flags.dueSoon && (
@@ -591,7 +592,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
           onMouseEnter={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)"; }}
           onMouseLeave={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; }}
         >
-          🧭 {mine ? "Ask advisor" : "What do we know?"}
+          <UiIcon name="compass" size={14} /> {mine ? "Ask advisor" : "What do we know?"}
         </button>
         {/* The one thing the player CAN do about a rival's programme, offered where
             the priority dial would have been: not a lever on their work, a question
@@ -606,7 +607,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
             onMouseEnter={(event) => { event.currentTarget.style.background = "rgba(249,115,22,0.25)"; }}
             onMouseLeave={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; }}
           >
-            ⚖ Our options
+            <UiIcon name="scales" size={14} /> Our options
           </button>
         )}
         {hasFocus && (
@@ -618,7 +619,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
             onMouseEnter={(event) => { event.currentTarget.style.background = "rgba(59,130,246,0.25)"; }}
             onMouseLeave={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; }}
           >
-            📍 Show on map
+            <UiIcon name="location" size={14} /> Show on map
           </button>
         )}
         {project.eventIds.length > 0 && (
@@ -1556,7 +1557,7 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
             textAlign: "center",
           }}
           >
-            <div style={{ fontSize: "1.5rem", marginBottom: "0.4rem" }}>🗂</div>
+            <div style={{ fontSize: "1.5rem", marginBottom: "0.4rem" }}><UiIcon name="folder" size={24} /></div>
             <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)", fontSize: "0.8rem", fontWeight: 600 }}>
               Nothing on the board yet
             </div>
@@ -1581,7 +1582,7 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
                 padding: "0.45rem 0.8rem",
               }}
             >
-              🧭 Ask your advisor to populate this
+              <UiIcon name="compass" size={14} /> Ask your advisor to populate this
             </button>
           </div>
         )}
@@ -1660,7 +1661,7 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
             onMouseEnter={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"; }}
             onMouseLeave={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; }}
           >
-            🧭 Ask the advisor to review or extend the board
+            <UiIcon name="compass" size={14} /> Ask the advisor to review or extend the board
           </button>
         )}
       </div>

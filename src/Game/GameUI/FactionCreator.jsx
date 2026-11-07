@@ -11,6 +11,7 @@
 // it controls, not land it owns (runtime/groups.js).
 
 import { lazy, Suspense, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { createPortal } from "react-dom";
 import { isTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -126,7 +127,7 @@ const FactionCreator = ({ regionsGeojson, ownerOverrides = null, customBackgroun
             {flag ? (
               <img src={bundledFlagUrl(flag)} alt="" style={{ width: 34, height: 22, objectFit: "contain", borderRadius: 3, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" }} />
             ) : (
-              <span aria-hidden="true" style={{ fontSize: "1.4rem" }}>🏳️</span>
+              <span aria-hidden="true" style={{ fontSize: "1.4rem" }}><UiIcon name="flag" size={22} /></span>
             )}
             <button type="button" className="oh-tap-row" onClick={() => setFlagOpen(true)} style={pill(false)}>
               {flag ? "Change flag" : "Choose flag"}

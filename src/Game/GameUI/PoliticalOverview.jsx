@@ -7,6 +7,7 @@
 // 2026-11-03). A country whose parties lack them can have them filled in on
 // the player's asking (onCompile: Game/AI/gameplay.js assessPoliticalLandscape).
 import React, { useEffect, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { buildGovernmentPartyPresentation, buildPoliticalLandscapeViews } from "../../runtime/politicalPresentation.js";
 import { formatGameDateReadable } from "../../runtime/gameDates.js";
 import { PARTY_ROLE_LABELS, findIdeology, isListedSubideology } from "../../runtime/politics.js";
@@ -537,7 +538,7 @@ const IntelligenceAssessment = ({ intelligence }) => {
   return (
     <div className="oh-country-politics-secondary" style={{ ...card, background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", borderColor: "var(--oh-grey-border)", marginTop: "0.85rem", padding: "0.72rem 0.78rem" }}>
       <div style={{ alignItems: "center", display: "flex", gap: "0.35rem", justifyContent: "space-between" }}>
-        <div style={{ ...sectionLabel, color: "var(--oh-grey-text)" }}>🕵 Intelligence assessment</div>
+        <div style={{ ...sectionLabel, color: "var(--oh-grey-text)" }}><UiIcon name="spy" size={14} /> Intelligence assessment</div>
         {intelligence.confidence && <Badge>{intelligence.confidence} confidence</Badge>}
       </div>
       {intelligence.summary && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: "0.69rem", lineHeight: 1.48, marginTop: "0.48rem" }}>{intelligence.summary}</div>}

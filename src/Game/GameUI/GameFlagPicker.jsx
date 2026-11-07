@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { createPortal } from "react-dom";
 import { getNationFlags } from "../../runtime/assets.js";
 import { resolvePolityFlag, setPolityFlag } from "../../runtime/polityFlags.js";
@@ -350,7 +351,7 @@ const GameFlagPicker = ({ isOpen, polity, world, onClose, onApplied }) => {
                         <div style={{ fontWeight: 800, fontSize: "1rem" }}>Change flag</div>
                         <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.75rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{polity?.name || polity?.polityKey || polity?.code}</div>
                     </div>
-                    <button type="button" className="oh-tap" aria-label="Close flag picker" onClick={onClose} style={{ ...buttonStyle, padding: "0.35rem 0.55rem", fontSize: "1rem", background: "transparent" }}>✕</button>
+                    <button type="button" className="oh-tap" aria-label="Close flag picker" onClick={onClose} style={{ ...buttonStyle, padding: "0.35rem 0.55rem", fontSize: "1rem", background: "transparent" }}><UiIcon name="close" size={14} /></button>
                 </div>
 
                 {/* On a phone the tabs, the search and the two actions take as many

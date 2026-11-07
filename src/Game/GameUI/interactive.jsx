@@ -14,6 +14,7 @@
 // extra cost (gameplay.js resolveInteractiveScene). Letting an offer pass,
 // taking a move back and setting a scene aside cost nothing.
 import React, { useEffect, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useRuntimeState } from "../../runtime/useRuntimeState.js";
 import { offeredEvent } from "../../runtime/interactiveOffer.js";
@@ -186,12 +187,12 @@ export const InteractivePanel = ({ open = true, onClose, onOpenTimeline }) => {
             <div role="dialog" aria-label="Interactive event" style={panelStyle}>
                 <div style={{ alignItems: "center", borderBottom: "1px solid rgba(250,204,21,0.18)", display: "flex", gap: "0.75rem", justifyContent: "space-between", padding: "0.9rem 1.1rem" }}>
                     <div>
-                        <div style={{ color: YELLOW, fontSize: "0.95rem", fontWeight: 850, letterSpacing: "0.02em" }}>⚡ Interactive event</div>
+                        <div style={{ color: YELLOW, fontSize: "0.95rem", fontWeight: 850, letterSpacing: "0.02em" }}><UiIcon name="flash" size={14} /> Interactive event</div>
                         <div style={{ ...caption, marginTop: "0.15rem" }}>A moment of the campaign played out as a scene. Time stands still until it ends.</div>
                     </div>
                     {/* Kept on one line: squeezed by the caption on a phone, it
                         broke into "✕" over "Leave". */}
-                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Leave" title="Close — a scene in progress stays where it is, and an offer stays until the next time skip" style={{ ...quietButton(false), flexShrink: 0, whiteSpace: "nowrap" }}>✕ Leave</button>
+                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Leave" title="Close — a scene in progress stays where it is, and an offer stays until the next time skip" style={{ ...quietButton(false), flexShrink: 0, whiteSpace: "nowrap" }}><UiIcon name="close" size={14} /> Leave</button>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem", overflowY: "auto", padding: "1rem 1.1rem 1.1rem" }}>

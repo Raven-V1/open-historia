@@ -1,5 +1,6 @@
 /*! Open Historia — portions (era diplomacy + mobile panel sizing) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { memo, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, isTouchPrimary, useCanHover, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { isComposerSendKey } from "../../runtime/composerKeys.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
@@ -214,7 +215,7 @@ const summarizeDiplomaticParticipants = (countries) => {
 //      still knows which one this tile is.
 //   3. the scenario's flags.json by code, then a community-hub flag post.
 
-const FALLBACK_FLAG_EMOJI = "🏳";
+const FALLBACK_FLAG_EMOJI = <UiIcon name="flag" size={16} />;
 
 // "code::name" -> Promise<string|null>. Module-level so every component asking
 // about the same country shares one resolution, and the hub/flags.json are
@@ -564,7 +565,7 @@ const PollCard = ({ poll, playerCountry, onVote }) => {
                         }}
                     >
                         <span>
-                            {option.label}{chosen ? " ✓" : ""}
+                            {option.label}{chosen ? <> <UiIcon name="check" size={14} /></> : ""}
                             {!canHover && voters.length > 0 && (
                                 <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", display: "block", fontSize: "0.68rem", marginTop: "0.15rem" }}>{voters.join(", ")}</span>
                             )}
@@ -864,7 +865,7 @@ const MessageBubble = ({ msg, onRetry, compact = false, showTime = true }) => {
                 // A phone's bubble is narrower than a long polity name on one
                 // line, which pushed the whole thread sideways.
                 whiteSpace: isMobile ? "normal" : "nowrap" }}>
-            {isError ? "⚠️ Error" : <><FlagImg url={flagUrl} alt={msg.speaker} size=".95em" /><strong style={{ fontWeight: 650, color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)" }}>{msg.speaker}</strong></>}
+            {isError ? <><UiIcon name="warning" size={14} /> Error</> : <><FlagImg url={flagUrl} alt={msg.speaker} size=".95em" /><strong style={{ fontWeight: 650, color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)" }}>{msg.speaker}</strong></>}
             </span>
         )}
 
@@ -1053,7 +1054,7 @@ const CountryTile = ({ country, code, flagUrl, isSelected, onToggle }) => {
         }}
         >
         {isSelected && (
-            <div style={{ position: "absolute", top: "0.3rem", right: "0.3rem", width: "14px", height: "14px", borderRadius: "50%", background: "#3b82f6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.55rem", color: "var(--oh-ink, #fff)", fontWeight: 700 }}>✓</div>
+            <div style={{ position: "absolute", top: "0.3rem", right: "0.3rem", width: "14px", height: "14px", borderRadius: "50%", background: "#3b82f6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.55rem", color: "var(--oh-ink, #fff)", fontWeight: 700 }}><UiIcon name="check" size={10} /></div>
         )}
         <FlagImg url={flagUrl} alt={country} width="2.3rem" height="1.6rem" />
         <span style={{ fontSize: "0.72rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", textAlign: "center", lineHeight: 1.3 }}>{shortName}</span>
@@ -1100,7 +1101,7 @@ const CountrySelectorModal = ({
         </div>
         <button className="oh-tap" aria-label="Close" onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "1.1rem", padding: "0.1rem 0.3rem", borderRadius: "6px", lineHeight: 1 }}
         onMouseEnter={e => { e.currentTarget.style.color = "white"; e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"; }}
-        onMouseLeave={e => { e.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)"; e.currentTarget.style.background = "none"; }}>✕</button>
+        onMouseLeave={e => { e.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)"; e.currentTarget.style.background = "none"; }}><UiIcon name="close" size={14} /></button>
         </div>
         <div style={{ marginTop: "0.85rem", padding: "0.65rem 0.9rem", borderRadius: "10px", backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }}>
         <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)" }}>{selectedLabel}{single ? "" : ` (${selected.length})`}:</div>
@@ -2301,7 +2302,7 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                 )}
                 <button className="oh-tap" onClick={() => onToggleRead?.()} title={unread ? "Mark as read" : "Mark as unread"} aria-label={unread ? "Mark as read" : "Mark as unread"} style={{ display: "flex", alignItems: "center", background: "none", border: "1px solid transparent", cursor: "pointer", color: "rgba(96,165,250,.7)", padding: ".3rem", borderRadius: 7, lineHeight: 1 }}><EnvelopeIcon filled={unread} /></button>
                 <button className="oh-tap" title={confirmingDelete ? "Click again to delete this chat" : "Delete chat"} aria-label={confirmingDelete ? "Confirm deleting this chat" : "Delete chat"} onClick={() => { if (confirmingDelete) { onDelete?.(); } else { setConfirmingDelete(true); } }} onBlur={() => setConfirmingDelete(false)} style={{ display: "flex", alignItems: "center", gap: ".3rem", background: confirmingDelete ? "rgba(239,68,68,.18)" : "none", border: `1px solid ${confirmingDelete ? "rgba(239,68,68,.55)" : "transparent"}`, cursor: "pointer", color: confirmingDelete ? "#fca5a5" : "rgba(239,68,68,.62)", fontSize: ".72rem", fontWeight: 600, fontFamily: "sans-serif", padding: confirmingDelete ? ".25rem .5rem" : ".3rem", borderRadius: 7, lineHeight: 1 }}>{confirmingDelete ? "Delete?" : <TrashIcon />}</button>
-                <button className="oh-tap" onClick={onBack} aria-label="Close conversation" style={{ background: "none", border: "none", cursor: "pointer", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "1rem", lineHeight: 1, padding: ".28rem .34rem", borderRadius: 7 }}>✕</button>
+                <button className="oh-tap" onClick={onBack} aria-label="Close conversation" style={{ background: "none", border: "none", cursor: "pointer", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "1rem", lineHeight: 1, padding: ".28rem .34rem", borderRadius: 7 }}><UiIcon name="close" size={14} /></button>
                 </div>
             )}
 
@@ -2459,7 +2460,7 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                         aria-pressed={makeDemand}
                         title={makeDemand ? "This message is a demand. Click to send it as an ordinary message." : `Make this message a demand of ${countries[0]?.name}`}
                         style={{ background: makeDemand ? "rgba(234,179,8,0.22)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: `1px solid ${makeDemand ? "rgba(234,179,8,0.7)" : "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)"}`, borderRadius: "10px", color: makeDemand ? "rgb(250,204,21)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", flexShrink: 0, fontFamily: "sans-serif", fontSize: "0.72rem", fontWeight: 700, height: "2.5rem", padding: "0 0.6rem" }}
-                        >{makeDemand ? "⚑ Demand" : "⚑"}</button>
+                        >{makeDemand ? <><UiIcon name="flag" size={14} /> Demand</> : <UiIcon name="flag" size={14} />}</button>
                     )}
                     <textarea
                     ref={composerRef}
@@ -2840,7 +2841,7 @@ const ChatGroupHeader = ({ label }) => (
 // made the indicator meaningless.
 const GeneratingBanner = () => (
     <div style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: "10px", display: "flex", gap: "0.55rem", padding: "0.6rem 0.8rem" }}>
-    <span style={{ flexShrink: 0, fontSize: "1rem" }}>🖊</span>
+    <span style={{ flexShrink: 0, fontSize: "1rem" }}><UiIcon name="pen" size={16} /></span>
     <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "0.78rem", fontWeight: 600 }}>
     Diplomacy in progress<PulsingDots /><span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontWeight: 400 }}> — a country may be reaching out</span>
     </span>
@@ -3016,7 +3017,7 @@ const InterceptView = ({ target, exchange, clarity, seal, onBack }) => {
         <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.85rem 1rem 0.6rem", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", flexShrink: 0 }}>
         <button className="oh-tap" onClick={onBack} aria-label="Back" style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", padding: "0.2rem", display: "flex" }}><BackIcon /></button>
         <div style={{ minWidth: 0, flex: 1 }}>
-        <div style={{ fontWeight: 700, fontSize: "0.9rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>🕵 {target} ↔ {exchange.counterpart}</div>
+        <div style={{ fontWeight: 700, fontSize: "0.9rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}><UiIcon name="spy" size={14} /> {target} ↔ {exchange.counterpart}</div>
         <div style={{ fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>{exchange.subject}{exchange.date ? " · " + exchange.date : ""}</div>
         </div>
         </div>
@@ -3130,7 +3131,7 @@ const IntelligenceCountryHeader = ({ country, subtitle = "" }) => {
     return (
         <div style={{ display: "flex", alignItems: "center", gap: ".65rem", minWidth: 0 }}>
             <div style={{ width: "2.6rem", height: "1.75rem", borderRadius: 5, overflow: "hidden", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
-                {flagUrl ? <FlagImg url={flagUrl} alt="" width="100%" height="100%" /> : <span style={{ fontSize: "1rem" }}>🏳</span>}
+                {flagUrl ? <FlagImg url={flagUrl} alt="" width="100%" height="100%" /> : <span style={{ fontSize: "1rem" }}><UiIcon name="flag" size={16} /></span>}
             </div>
             <div style={{ minWidth: 0 }}>
                 <div style={{ fontWeight: 800, fontSize: ".95rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{country?.name || "Unknown polity"}</div>
@@ -3475,7 +3476,7 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
         <div key={spy.id} style={{ ...panel, padding: ".65rem .7rem" }}>
             <div style={{ display: "flex", alignItems: "center", gap: ".55rem" }}>
                 <div style={{ flex: 1, minWidth: 0 }}>
-                    <div style={{ fontSize: ".77rem", fontWeight: 750 }}>{spy.status === "discovered" ? "🕵️ " : "🎭 "}{spy.owner}</div>
+                    <div style={{ fontSize: ".77rem", fontWeight: 750 }}>{spy.status === "discovered" ? <UiIcon name="spy" size={14} /> : <UiIcon name="user" size={14} />}{" "}{spy.owner}</div>
                     <div style={{ marginTop: ".12rem", fontSize: ".6rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>
                         {spy.status === "discovered" ? "agent in custody — decide what to do" : `double agent since ${spy.turnedAt || "capture"} — ${spy.owner} still trusts them`}
                     </div>
@@ -3489,7 +3490,7 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
                     {spy.status === "turned" && (() => {
                         const unchanged = storyOf(spy) === spy.coverStory;
                         const justSaved = savedFlash === spy.id;
-                        return <button className="oh-tap-row" onClick={() => handleStory(spy)} disabled={unchanged && !justSaved} style={{ ...spyBtn(true), ...(unchanged && !justSaved ? { opacity: .45, cursor: "default" } : {}) }}>{justSaved ? "Saved ✓" : "Save"}</button>;
+                        return <button className="oh-tap-row" onClick={() => handleStory(spy)} disabled={unchanged && !justSaved} style={{ ...spyBtn(true), ...(unchanged && !justSaved ? { opacity: .45, cursor: "default" } : {}) }}>{justSaved ? <>Saved <UiIcon name="check" size={14} /></> : "Save"}</button>;
                     })()}
                 </div>
             )}
@@ -3644,7 +3645,7 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
                         </div>
                     ))}
                     {error && <div style={{ fontSize: ".66rem", color: "#fca5a5" }}>{error}</div>}
-                    <button className="oh-tap-row" onClick={() => setChoosing(true)} disabled={full} style={{ width: "100%", marginTop: ".1rem", padding: ".65rem", borderRadius: 8, border: "1px solid var(--oh-grey-border-strong)", background: "var(--oh-grey-raised)", color: "var(--oh-grey-text)", fontSize: ".72rem", fontWeight: 750, cursor: full ? "not-allowed" : "pointer", fontFamily: "sans-serif", opacity: full ? .5 : 1 }}>♟ Deploy a network</button>
+                    <button className="oh-tap-row" onClick={() => setChoosing(true)} disabled={full} style={{ width: "100%", marginTop: ".1rem", padding: ".65rem", borderRadius: 8, border: "1px solid var(--oh-grey-border-strong)", background: "var(--oh-grey-raised)", color: "var(--oh-grey-text)", fontSize: ".72rem", fontWeight: 750, cursor: full ? "not-allowed" : "pointer", fontFamily: "sans-serif", opacity: full ? .5 : 1 }}><UiIcon name="add" size={14} /> Deploy a network</button>
                 </div>
             )}
 
@@ -3661,7 +3662,7 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
                     <div style={{ ...subhead, marginTop: ".2rem" }}>Intercepted traffic</div>
                     {Object.values(intercepts).some((entry) => (entry?.exchanges || []).some((exchange) => !isDocumentExchange(exchange))) ? Object.entries(intercepts).flatMap(([target, entry]) => (entry.exchanges || []).filter((exchange) => !isDocumentExchange(exchange)).map((exchange) => (
                         <button key={`${target}-${exchange.id}`} className="oh-tap-row" onClick={() => { setOpen({ target, exchange }); void ensureCountryAssessed(target, { reason: "intercept read" }); }} style={{ ...panel, padding: ".58rem .7rem", display: "flex", alignItems: "center", gap: ".55rem", color: "var(--oh-ink, #fff)", cursor: "pointer", textAlign: "left", fontFamily: "sans-serif" }}>
-                            <span aria-hidden="true" style={{ fontSize: ".9rem" }}>{isDocumentExchange(exchange) ? "📄" : "📡"}</span>
+                            <span aria-hidden="true" style={{ fontSize: ".9rem" }}>{isDocumentExchange(exchange) ? <UiIcon name="document" size={16} /> : <UiIcon name="radar" size={16} />}</span>
                             <span style={{ flex: 1, minWidth: 0 }}><strong style={{ display: "block", fontSize: ".69rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{target} ↔ {exchange.counterpart}</strong><span style={{ display: "block", marginTop: ".1rem", fontSize: ".59rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{exchange.subject}{exchange.date ? ` · ${exchange.date}` : ""}</span></span>
                         </button>
                     ))) : <div style={{ fontSize: ".65rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>No intercepted diplomatic traffic is on file.</div>}
@@ -4407,7 +4408,7 @@ const ChatPanel = ({ isOpen, onClose, requestedCountry, requestedDraft = "", onC
                         </div>
                         <button className="oh-tap" aria-label="Close diplomacy panel" onClick={onClose} style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", cursor: "pointer", fontSize: "1.1rem", lineHeight: 1, padding: "0.15rem 0.3rem", borderRadius: "6px" }}
                         onMouseEnter={e => { e.currentTarget.style.color = "white"; e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)"; e.currentTarget.style.background = "none"; }}>✕</button>
+                        onMouseLeave={e => { e.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)"; e.currentTarget.style.background = "none"; }}><UiIcon name="close" size={14} /></button>
                     </div>
                     {/* Three tabs are wider than a phone's header: there they
                         stay one row that scrolls sideways, not two. */}
@@ -5165,11 +5166,11 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                 event.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)";
                             }}
                         >
-                            ✕
+                            <UiIcon name="close" size={14} />
                         </button>
 
                         <div style={{ fontSize: "0.78rem", fontWeight: 800, marginBottom: "0.25rem" }}>
-                            💬 {item.sender}
+                            <UiIcon name="chat" size={14} /> {item.sender}
                         </div>
                         <div style={{ fontSize: "0.74rem", lineHeight: 1.35, color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)" }}>
                             {item.preview}
@@ -5247,7 +5248,7 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                     aria-label={soundEnabled ? "Mute diplomacy notification sound" : "Enable diplomacy notification sound"}
                                     style={{ border: "none", background: "transparent", color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", cursor: "pointer", fontSize: "0.82rem" }}
                                 >
-                                    {soundEnabled ? "🔊" : "🔇"}
+                                    {soundEnabled ? <UiIcon name="volume" size={16} /> : <UiIcon name="mute" size={16} />}
                                 </button>
                                 <button
                                     className="oh-tap-row"
@@ -5261,7 +5262,7 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                         fontSize: "0.68rem",
                                     }}
                                 >
-                                    {desktopPermission === "granted" ? "Desktop ✓" : "Desktop"}
+                                    {desktopPermission === "granted" ? <>Desktop <UiIcon name="check" size={14} /></> : "Desktop"}
                                 </button>
                                 <button
                                     className="oh-tap-row"
@@ -5325,7 +5326,7 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                             fontSize: "0.72rem",
                         }}
                     >
-                        🔔 {notificationItems.length > 99 ? "99+" : notificationItems.length}
+                        <UiIcon name="bell" size={14} /> {notificationItems.length > 99 ? "99+" : notificationItems.length}
                     </button>
                 </div>
             )}

@@ -1,5 +1,6 @@
 /*! Open Historia — scenario-defined National Stats sheet editor © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import {
   MAX_CUSTOM_STATS,
   MAX_STAT_SECTIONS,
@@ -513,8 +514,8 @@ const StatsSheetEditor = ({ value, onChange }) => {
         const sectionEditing = editingSectionKey === section.key;
         const sectionActions = (
           <>
-            <button type="button" className="oh-tap" aria-label={`Edit section ${section.label}`} title="Edit section" onClick={() => setEditingSectionKey(sectionEditing ? "" : section.key)} style={touchFit({ ...buttonStyle(false), flex: "0 0 auto", minWidth: "2rem", padding: 0 }, touch, { icon: true })}>✎</button>
-            <button type="button" className="oh-tap" aria-label={`Delete section ${section.label}`} title={sections.length <= 1 ? "A custom sheet needs at least one section" : "Delete section"} disabled={sections.length <= 1} onClick={() => removeSection(section.key)} style={touchFit({ ...buttonStyle(false), color: "#fca5a5", flex: "0 0 auto", minWidth: "2rem", opacity: sections.length <= 1 ? 0.4 : 1, padding: 0 }, touch, { icon: true })}>🗑</button>
+            <button type="button" className="oh-tap" aria-label={`Edit section ${section.label}`} title="Edit section" onClick={() => setEditingSectionKey(sectionEditing ? "" : section.key)} style={touchFit({ ...buttonStyle(false), flex: "0 0 auto", minWidth: "2rem", padding: 0 }, touch, { icon: true })}><UiIcon name="edit" size={14} /></button>
+            <button type="button" className="oh-tap" aria-label={`Delete section ${section.label}`} title={sections.length <= 1 ? "A custom sheet needs at least one section" : "Delete section"} disabled={sections.length <= 1} onClick={() => removeSection(section.key)} style={touchFit({ ...buttonStyle(false), color: "#fca5a5", flex: "0 0 auto", minWidth: "2rem", opacity: sections.length <= 1 ? 0.4 : 1, padding: 0 }, touch, { icon: true })}><UiIcon name="trash" size={14} /></button>
           </>
         );
         return (
@@ -553,7 +554,7 @@ const StatsSheetEditor = ({ value, onChange }) => {
                   }}
                   onDragEnd={() => setDragItem(null)}
                   style={{ ...buttonStyle(false), cursor: "grab", flex: "0 0 auto", minWidth: "2rem", padding: 0 }}
-                >☰</button>
+                ><UiIcon name="menu" size={14} /></button>
               )}              <span style={{ fontSize: "0.9rem" }}>{section.icon || "◆"}</span>
               <div style={{ flex: 1, minWidth: touch ? "8rem" : 0 }}>
                 <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.72rem", fontWeight: 850, letterSpacing: "0.06em", overflow: "hidden", textOverflow: "ellipsis", textTransform: "uppercase", whiteSpace: "nowrap" }}>{section.label}</div>
@@ -620,7 +621,7 @@ const StatsSheetEditor = ({ value, onChange }) => {
                           }}
                           onDragEnd={() => setDragItem(null)}
                           style={{ ...buttonStyle(false), cursor: "grab", flex: "0 0 auto", minWidth: "2rem", padding: 0 }}
-                        >☰</button>
+                        ><UiIcon name="menu" size={14} /></button>
                       )}
                       <StatPreview stat={stat} minWidth={touch ? "9rem" : 0} />
                       <div style={{ display: "flex", flex: "0 0 auto", gap: "0.32rem" }}>
@@ -630,8 +631,8 @@ const StatsSheetEditor = ({ value, onChange }) => {
                             <button type="button" className="oh-tap" aria-label={`Move ${stat.label} down`} title="Move down" disabled={!canMoveDown} onClick={() => moveStatBy(sectionIndex, statIndex, 1)} style={touchFit({ ...buttonStyle(false), minWidth: "2rem", opacity: canMoveDown ? 1 : 0.4, padding: 0 }, touch, { icon: true })}>▼</button>
                           </>
                         )}
-                        <button type="button" className="oh-tap" aria-label={`Edit ${stat.label}`} title="Edit" onClick={() => setEditingStatKey(editing ? "" : stat.key)} style={touchFit({ ...buttonStyle(false), minWidth: "2rem", padding: 0 }, touch, { icon: true })}>✎</button>
-                        <button type="button" className="oh-tap" aria-label={`Delete ${stat.label}`} title={totalStats <= 1 ? "A custom sheet needs at least one statistic" : "Delete"} disabled={totalStats <= 1} onClick={() => removeStat(section.key, stat.key)} style={touchFit({ ...buttonStyle(false), color: "#fca5a5", minWidth: "2rem", opacity: totalStats <= 1 ? 0.4 : 1, padding: 0 }, touch, { icon: true })}>🗑</button>                      </div>
+                        <button type="button" className="oh-tap" aria-label={`Edit ${stat.label}`} title="Edit" onClick={() => setEditingStatKey(editing ? "" : stat.key)} style={touchFit({ ...buttonStyle(false), minWidth: "2rem", padding: 0 }, touch, { icon: true })}><UiIcon name="edit" size={14} /></button>
+                        <button type="button" className="oh-tap" aria-label={`Delete ${stat.label}`} title={totalStats <= 1 ? "A custom sheet needs at least one statistic" : "Delete"} disabled={totalStats <= 1} onClick={() => removeStat(section.key, stat.key)} style={touchFit({ ...buttonStyle(false), color: "#fca5a5", minWidth: "2rem", opacity: totalStats <= 1 ? 0.4 : 1, padding: 0 }, touch, { icon: true })}><UiIcon name="trash" size={14} /></button>                      </div>
                     </div>
                     {editing && <StatEditor stat={stat} onPatch={(patch) => patchStat(section.key, stat.key, patch)} />}
                   </div>

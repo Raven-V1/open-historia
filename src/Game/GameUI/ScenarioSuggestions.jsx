@@ -15,6 +15,7 @@
 //    that somebody suggested changes to their scenario.
 
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -459,7 +460,7 @@ const DialogFrame = ({ title, subtitle, onClose, children, footer }) => {
             <div style={{ fontSize: "1.2rem", fontWeight: 800, letterSpacing: "-0.02em" }}>{title}</div>
             {subtitle ? <div style={{ ...quietTextStyle, marginTop: "0.2rem" }}>{subtitle}</div> : null}
           </div>
-          <button type="button" aria-label="Close" className="oh-tap" onClick={onClose} style={{ ...buttonStyle, minWidth: "2.2rem", padding: 0 }}>✕</button>
+          <button type="button" aria-label="Close" className="oh-tap" onClick={onClose} style={{ ...buttonStyle, minWidth: "2.2rem", padding: 0 }}><UiIcon name="close" size={14} /></button>
         </div>
         <div style={{ display: "grid", gap: "0.8rem", overflowY: "auto", padding: "1rem 1.1rem" }}>{children}</div>
         {footer ? <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "flex", flexWrap: "wrap", gap: "0.5rem", padding: "0.8rem 1.1rem" }}>{footer}</div> : null}
@@ -923,7 +924,7 @@ export const SuggestionReviewDialog = ({ scenario, source, onClose, onReviewMap,
               <div style={quietTextStyle}>They open in the map editor, listed beside the map and marked on it, to accept or reject one by one. Save the map there to keep what you accepted.</div>
               <div>
                 <button type="button" className="oh-tap-row" disabled={busy} onClick={() => onReviewMap?.(suggestion, decisions, key)} style={tapFit(primaryButtonStyle, touch)}>
-                  🗺️ Review the map changes
+                  <UiIcon name="map" size={14} /> Review the map changes
                 </button>
               </div>
             </div>
@@ -1135,7 +1136,7 @@ export const SuggestionCountBadge = ({ count, onClick }) => {
       title="People have suggested changes to this scenario"
       style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 22%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 55%, transparent)", borderRadius: 999, color: "var(--oh-ink, #fff)", cursor: "pointer", display: "inline-flex", fontSize: "0.7rem", fontWeight: 700, gap: "0.3rem", padding: "0.3rem 0.6rem", position: "relative", zIndex: 3 }}
     >
-      {count === 1 ? "💬 1 suggestion" : `💬 ${count} suggestions`}
+      {count === 1 ? <><UiIcon name="chat" size={14} /> 1 suggestion</> : <><UiIcon name="chat" size={14} /> {`${count} suggestions`}</>}
     </button>
   );
 };
@@ -1148,7 +1149,7 @@ export const SuggestionsBanner = ({ scenarios, onOpen }) => {
   if (!rows.length) return null;
   return (
     <div style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 10%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 30%, transparent)", borderRadius: 16, display: "flex", flexWrap: "wrap", gap: "0.6rem", marginBottom: "1rem", padding: "0.7rem 0.9rem" }}>
-      <span style={{ fontSize: "0.86rem", fontWeight: 700 }}>💬 People have suggested changes to your scenarios</span>
+      <span style={{ fontSize: "0.86rem", fontWeight: 700 }}><UiIcon name="chat" size={14} /> People have suggested changes to your scenarios</span>
       <span style={{ flex: 1 }} />
       {rows.map(({ scenario, count }) => (
         <button key={scenario.id} type="button" className="oh-tap-row" onClick={() => onOpen?.(scenario)} style={tapFit(buttonStyle, touch)}>

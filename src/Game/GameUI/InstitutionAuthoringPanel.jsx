@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { createPortal } from "react-dom";
 
 import {
@@ -486,7 +487,7 @@ export default function InstitutionAuthoringPanel({ details, onDetailsChange }) 
                       const label = option?.label || name;
                       return (
                         <span key={name.toLocaleLowerCase()} title={flagged ? "Not a polity in this scenario" : option?.polityKey || name} style={{ alignItems: "center", background: flagged ? "rgba(245,158,11,0.1)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: `1px solid ${flagged ? "rgba(245,158,11,0.38)" : "var(--oh-grey-border)"}`, borderRadius: "999px", color: flagged ? "#fde68a" : undefined, display: "inline-flex", fontSize: "0.66rem", gap: "0.35rem", padding: "0.3rem 0.35rem 0.3rem 0.55rem" }}>
-                          {flagged && <span aria-hidden="true">⚠</span>}
+                          {flagged && <span aria-hidden="true"><UiIcon name="warning" size={14} /></span>}
                           {label}
                           <button aria-label={`Remove ${label}`} onClick={() => removeMember(name)} style={{ background: "transparent", border: 0, color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", fontSize: "0.8rem", lineHeight: 1, padding: "0 0.15rem" }} type="button">×</button>
                         </span>
@@ -504,7 +505,7 @@ export default function InstitutionAuthoringPanel({ details, onDetailsChange }) 
                   <div data-institution-unmatched-members="true" style={{ background: "rgba(245,158,11,0.07)", border: "1px solid rgba(245,158,11,0.24)", borderRadius: 10, color: "#fde68a", fontSize: "0.64rem", lineHeight: 1.45, marginTop: "0.55rem", padding: "0.5rem 0.6rem" }}>
                     {unmatched.size === 1
                       ? `${[...unmatched][0]} is not a polity in this scenario. Check the spelling: it is kept as written, and it will vote and count toward quorum as a member.`
-                      : `${unmatched.size} members, marked ⚠, are not polities in this scenario. Check the spelling: they are kept as written, and they will vote and count toward quorum as members.`}
+                      : `${unmatched.size} members, marked with a warning, are not polities in this scenario. Check the spelling: they are kept as written, and they will vote and count toward quorum as members.`}
                   </div>
                 )}
               </details>
