@@ -13,7 +13,6 @@ import { installWebApiRouter } from "./router.js";
 import { ensureSeeded, migrateStoreLayout } from "./libraryStore.js";
 import * as idb from "./idb.js";
 import { bringHttpSavesAcross } from "./saveMove.js";
-import { showDemoNotice, shouldShowDemoNotice } from "./demoNotice.js";
 import { isNativeApp, showNativeBoot } from "./nativeBoot.js";
 import { forgetRetiredAccount } from "./retiredAccount.js";
 import { setBootTranslations } from "./bootTexts.js";
@@ -127,12 +126,13 @@ export const installWebBackend = async () => {
           else showArrivalNotice(takeMoveNotice());
         });
       }
-    } else if (shouldShowDemoNotice()) {
-      await bootLanguage;
-      showDemoNotice();
     }
+    // This fork deliberately never shows the upstream "this is a demo" notice
+    // (demoNotice.js). It is kept in the tree, unused, because
+    // noGoogleFonts.test.js reads it and because deleting it would conflict
+    // with every merge from upstream.
   } catch (error) {
     if (boot) boot.settle();
-    console.warn("Demo notice failed:", error.message);
+    console.warn("Web boot failed:", error.message);
   }
 };
