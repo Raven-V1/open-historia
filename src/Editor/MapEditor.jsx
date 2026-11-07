@@ -1418,7 +1418,7 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
     background: primary ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
     border: `1px solid ${primary ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"}`,
     borderRadius: 10,
-    color: "var(--oh-ink, #fff)",
+    color: primary ? "#06171d" : "var(--oh-ink, #fff)",
     cursor: dim ? "default" : "pointer",
     display: "flex",
     fontSize: 12.5,
@@ -1554,6 +1554,7 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
 
   return (
     <div
+      data-oh-dark-scope
       style={{
         position: "fixed",
         inset: 0,

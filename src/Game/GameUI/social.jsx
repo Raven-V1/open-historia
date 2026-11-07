@@ -644,7 +644,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
     };
 
   return (
-    <div role="dialog" aria-label="Rostra" style={frameStyle}>
+    <div role="dialog" aria-label="Rostra" data-oh-dark-scope style={frameStyle}>
       {framed && (
         <>
           {/* The side buttons, as the frame's only ornament. */}
