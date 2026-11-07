@@ -24,7 +24,7 @@ test("library landing uses one meaningful browse collection instead of duplicate
   // A shelf's heading can carry an action (Recently deleted's Empty), and
   // keeps its divider.
   assert.match(source, /const MenuRow = \(\{ action, children, description, emptyText, icon, title \}\) =>/);
-  assert.match(source, /<div style=\{\{ background: "rgba\(255,255,255,0\.08\)", flex: 1, height: 1 \}\} \/>/);
+  assert.match(source, /<div style=\{\{ background: "color-mix\(in srgb, var\(--oh-ink, #fff\) 8%, transparent\)", flex: 1, height: 1 \}\} \/>/);
   assert.match(source, /const LibraryCollection = \(\{ children, controls, description, emptyText, title \}\) =>/);
   assert.match(source, /const LIBRARY_GRID_TEMPLATE = "repeat\(auto-fill, minmax\(min\(100%, 16\.5rem\), 1fr\)\)"/);
   assert.match(source, /gridTemplateColumns: LIBRARY_GRID_TEMPLATE/);
@@ -246,7 +246,7 @@ test("each page has a header of its own on a wide screen: its name and its actio
   assert.match(menu, /\{tabActions\.map\(\(\{ icon, label, run \}\) => \(/);
   // A phone: the pages across the top, the actions heading the page by name.
   // A phone's header stands on a solid backdrop, so its row of pages reads over the library scrolling under it.
-  assert.match(menu, /\{isMobile \? \(\s+<div style=\{\{ background: "var\(--oh-ui-overlay-strong, rgba\(15,15,17,0\.92\)\)", backdropFilter: "blur\(14px\)", borderBottom: "1px solid rgba\(255,255,255,0\.08\)", flexShrink: 0 \}\}>/);
+  assert.match(menu, /\{isMobile \? \(\s+<div style=\{\{ background: "var\(--oh-ui-overlay-strong, rgba\(15,15,17,0\.92\)\)", backdropFilter: "blur\(14px\)", borderBottom: "1px solid color-mix\(in srgb, var\(--oh-ink, #fff\) 8%, transparent\)", flexShrink: 0 \}\}>/);
   assert.match(menu, /\{isMobile && \(typeof onOpenSettings === "function" \|\| tabActions\.length > 0\) && \(/);
   // The Community page's controls stay together on the right of its help.
   const hub = fs.readFileSync(new URL("./communityHub.jsx", import.meta.url), "utf8");

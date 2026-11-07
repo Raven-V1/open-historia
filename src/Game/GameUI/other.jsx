@@ -17,7 +17,7 @@ const baseStyle = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     fontFamily: "sans-serif",
     borderRadius: "14px",
     border: "1px solid var(--oh-hud-border)",
@@ -34,10 +34,10 @@ const FallbackBadge = ({ label }) => (
     aria-label={label ? `${label} flag unavailable` : "Flag unavailable"}
     style={{
         alignItems: "center",
-        background: "rgba(255,255,255,0.063)",
-        border: "1px solid rgba(255,255,255,0.12)",
+        background: "color-mix(in srgb, var(--oh-ink, #fff) 6.3%, transparent)",
+        border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
         borderRadius: "5px",
-        color: "rgba(255,255,255,0.68)",
+        color: "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)",
         display: "flex",
         fontSize: "1rem",
         fontWeight: 700,
@@ -193,7 +193,7 @@ const Other = memo(function Other({ dockStyle = DEFAULT_DOCK_STYLE, active = fal
             src={bundledFlagUrl(flagUrl)}
             alt={displayName}
             onError={() => setImageFailed(true)}
-            style={{ borderRadius: "5px", boxShadow: "0 0 0 1px rgba(255,255,255,0.16)", height: "100%", objectFit: "cover", width: "100%" }}
+            style={{ borderRadius: "5px", boxShadow: "0 0 0 1px color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)", height: "100%", objectFit: "cover", width: "100%" }}
             />
         ) : flagEmoji ? (
             <span style={{ fontSize: "1.35rem", lineHeight: 1 }}>{flagEmoji}</span>

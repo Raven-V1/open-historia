@@ -92,6 +92,11 @@
   --oh-hud-glass: none;
   --oh-hud-blur: none;
 
+  // What the interface's hard-coded white (text, lines, translucent fills) turns
+  // into: the theme's own text colour. Code writes var(--oh-ink, #fff), so the
+  // original and the other themes, which never set this, keep the white.
+  --oh-ink: var(--cds-text-primary);
+  --oh-link: var(--cds-link-primary);
   --oh-ui-glass-pill: var(--cds-layer-01);
   --oh-ui-glass-chip: var(--cds-layer-02);
   --oh-ui-glass-line: var(--cds-border-subtle-01);
@@ -146,5 +151,18 @@
   .oh-country-government,
   .ohr-card {
     border-left: 1px solid var(--cds-border-subtle-01) !important;
+  }
+}
+
+// Carbon's corners are square. Most of the interface writes its radius inline
+// (borderRadius: "10px" on cards, buttons, inputs, popups), which only an
+// !important rule in the stylesheet can override; matched by the radius the
+// style attribute says. Circles and pills (50%, 999px) are not matched, so
+// dots, avatars and the round logo stay round.
+:root[data-oh-ui-theme^='carbon'] {
+  @each $r in 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 24 {
+    [style*='border-radius: #{$r}px'] {
+      border-radius: 0 !important;
+    }
   }
 }

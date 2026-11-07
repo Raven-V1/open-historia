@@ -132,7 +132,7 @@ const baseStyle = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     fontFamily: "sans-serif",
     borderRadius: "14px",
     border: "1px solid var(--oh-hud-border)",
@@ -144,7 +144,7 @@ const labelStyle = {
     fontSize: "0.78rem",
     fontWeight: 650,
     marginBottom: "0.4rem",
-    color: "rgba(255,255,255,0.88)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)",
     cursor: "text",
 };
 
@@ -152,9 +152,9 @@ const inputStyle = {
     width: "100%",
     padding: "0.55rem 0.75rem",
     borderRadius: "8px",
-    border: "1px solid rgba(255,255,255,0.1)",
-    backgroundColor: "rgba(255,255,255,0.04)",
-    color: "#f8fafc",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+    backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+    color: "var(--oh-ink, #fff)",
     fontSize: "0.82rem",
     outline: "none",
     boxSizing: "border-box",
@@ -165,7 +165,7 @@ const inputStyle = {
 const helperStyle = {
     marginTop: "0.35rem",
     fontSize: "0.72rem",
-    color: "rgba(255,255,255,0.48)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)",
     lineHeight: 1.45,
 };
 
@@ -176,9 +176,9 @@ const fieldGroupStyle = {
 const smallButtonStyle = {
     padding: "0.45rem 0.75rem",
     borderRadius: "8px",
-    border: "1px solid rgba(255,255,255,0.1)",
-    backgroundColor: "rgba(255,255,255,0.06)",
-    color: "#f8fafc",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+    backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+    color: "var(--oh-ink, #fff)",
     fontSize: "0.78rem",
     fontWeight: 600,
     cursor: "pointer",
@@ -199,8 +199,8 @@ const listCardStyle = {
     gap: "0.5rem",
     padding: "0.6rem 0.75rem",
     borderRadius: "8px",
-    border: "1px solid rgba(255,255,255,0.08)",
-    backgroundColor: "rgba(255,255,255,0.025)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+    backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)",
     marginBottom: "0.45rem",
 };
 
@@ -592,11 +592,11 @@ const Toggle = ({ label, enabled, onToggle, disabled = false, inactive = "" }) =
     {inactive
         ? (
             <span style={{ minWidth: 0, paddingRight: "0.5rem" }}>
-            <span style={{ display: "block", fontSize: "0.86rem", fontWeight: 550, color: "rgba(255,255,255,0.9)" }}>{label}</span>
-            <span style={{ color: "rgba(255,255,255,0.45)", display: "block", fontSize: "0.7rem", marginTop: "0.15rem" }}>{inactive}</span>
+            <span style={{ display: "block", fontSize: "0.86rem", fontWeight: 550, color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)" }}>{label}</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", display: "block", fontSize: "0.7rem", marginTop: "0.15rem" }}>{inactive}</span>
             </span>
         )
-        : <span style={{ fontSize: "0.86rem", fontWeight: 550, color: "rgba(255,255,255,0.9)", paddingRight: "0.5rem" }}>{label}</span>}
+        : <span style={{ fontSize: "0.86rem", fontWeight: 550, color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", paddingRight: "0.5rem" }}>{label}</span>}
     <button
     type="button"
     onClick={touch || disabled ? undefined : onToggle}
@@ -613,7 +613,7 @@ const Toggle = ({ label, enabled, onToggle, disabled = false, inactive = "" }) =
         padding: "2px",
         boxSizing: "border-box",
         transition: "background-color 150ms ease, box-shadow 150ms ease",
-        backgroundColor: enabled ? (inactive ? "var(--oh-ui-hover, rgba(59,130,246,0.35))" : "var(--oh-ui-active, #3b82f6)") : "rgba(255,255,255,0.14)",
+        backgroundColor: enabled ? (inactive ? "var(--oh-ui-hover, rgba(59,130,246,0.35))" : "var(--oh-ui-active, #3b82f6)") : "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
         boxShadow: enabled && !inactive ? "0 0 10px var(--oh-ui-line, rgba(59,130,246,0.35))" : "none",
         flexShrink: 0,
         outline: "none",
@@ -659,7 +659,7 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
 
     return (
         <div style={{ marginBottom: "1rem" }}>
-        <label style={{ display: "block", fontSize: "0.9rem", marginBottom: "0.6rem", color: "white" }}>
+        <label style={{ display: "block", fontSize: "0.9rem", marginBottom: "0.6rem", color: "var(--oh-ink, #fff)" }}>
         AI Provider
         </label>
 
@@ -669,9 +669,9 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
             width: "100%",
             padding: "0.8rem 0.9rem",
             borderRadius: "10px",
-            border: "1px solid rgba(255,255,255,0.12)",
+            border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
             backgroundColor: "rgba(0,0,0,0.18)",
-            color: "white",
+            color: "var(--oh-ink, #fff)",
             cursor: "pointer",
             textAlign: "left",
         }}
@@ -681,11 +681,11 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
         <div style={{ fontSize: "0.9rem", fontWeight: 700 }}>
         {selectedProvider.label}
         </div>
-        <div style={{ marginTop: "0.2rem", fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.45 }}>
+        <div style={{ marginTop: "0.2rem", fontSize: "0.72rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", lineHeight: 1.45 }}>
         {selectedProvider.group} · {selectedProvider.description}
         </div>
         </div>
-        <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)" }}>
+        <div style={{ fontSize: "0.85rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         {isCatalogOpen ? "Hide" : "Change"}
         </div>
         </div>
@@ -701,8 +701,8 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
                 marginTop: "0.7rem",
                 padding: "0.75rem",
                 borderRadius: "10px",
-                border: "1px solid rgba(255,255,255,0.1)",
-                backgroundColor: "rgba(255,255,255,0.04)",
+                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+                backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
             }}
             >
             <input
@@ -721,7 +721,7 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
             <div style={{ maxHeight: "12rem", overflowY: "auto", scrollbarWidth: "none", display: "flex", flexDirection: "column", gap: "0.7rem" }}>
             {groupedProviders.length > 0 ? groupedProviders.map((group) => (
                 <div key={group.name}>
-                <div style={{ marginBottom: "0.35rem", fontSize: "0.68rem", fontWeight: 700, color: "rgba(255,255,255,0.45)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                <div style={{ marginBottom: "0.35rem", fontSize: "0.68rem", fontWeight: 700, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
                 {group.name}
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
@@ -737,9 +737,9 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
                             padding: "0.7rem 0.75rem",
                             borderRadius: "8px",
                             border: "1px solid",
-                            borderColor: selected ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.08)",
+                            borderColor: selected ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
                             backgroundColor: selected ? "rgba(0,0,0,0.42)" : "rgba(0,0,0,0.16)",
-                            color: "white",
+                            color: "var(--oh-ink, #fff)",
                             cursor: "pointer",
                             textAlign: "left",
                         }}
@@ -749,12 +749,12 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
                         {option.label}
                         </span>
                         {selected && (
-                            <span style={{ fontSize: "0.68rem", color: "#93c5fd", fontWeight: 700 }}>
+                            <span style={{ fontSize: "0.68rem", color: "var(--oh-link, #93c5fd)", fontWeight: 700 }}>
                             Active
                             </span>
                         )}
                         </div>
-                        <div style={{ marginTop: "0.18rem", fontSize: "0.72rem", lineHeight: 1.4, color: "rgba(255,255,255,0.6)" }}>
+                        <div style={{ marginTop: "0.18rem", fontSize: "0.72rem", lineHeight: 1.4, color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)" }}>
                         {option.description}
                         </div>
                         </button>
@@ -986,7 +986,7 @@ const STATUS_COLORS = {
     ready: { color: "#86efac", border: "rgba(134,239,172,0.28)", background: "rgba(34,197,94,0.1)" },
     spent: { color: "#fbbf24", border: "rgba(245,158,11,0.32)", background: "rgba(245,158,11,0.1)" },
     unusable: { color: "#fca5a5", border: "rgba(248,113,113,0.34)", background: "rgba(239,68,68,0.1)" },
-    busy: { color: "#93c5fd", border: "rgba(96,165,250,0.3)", background: "rgba(59,130,246,0.1)" },
+    busy: { color: "var(--oh-link, #93c5fd)", border: "rgba(96,165,250,0.3)", background: "rgba(59,130,246,0.1)" },
 };
 
 const describeRowStatus = (status, at) => {
@@ -1194,7 +1194,7 @@ const EntryEditor = ({ entry, connections, entries }) => {
             : "Leave blank to use the built-in default."}
         />
         <details style={{ marginBottom: "0.4rem" }}>
-        <summary style={{ cursor: "pointer", fontSize: "0.74rem", color: "rgba(255,255,255,0.62)", marginBottom: "0.6rem", ...(touch ? TOUCH_SUMMARY : null) }}>This model only</summary>
+        <summary style={{ cursor: "pointer", fontSize: "0.74rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", marginBottom: "0.6rem", ...(touch ? TOUCH_SUMMARY : null) }}>This model only</summary>
         <SettingsInput
         label="Custom parameters for this model (JSON)"
         multiline
@@ -1224,7 +1224,7 @@ const FillPanel = ({ connections, onDone }) => {
         setAdded(fillFallbackList(order, models.split(/[\n,]/)));
     };
     return (
-        <div style={{ marginTop: "0.7rem", padding: "0.75rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.03)" }}>
+        <div style={{ marginTop: "0.7rem", padding: "0.75rem", borderRadius: "10px", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)" }}>
         <div style={{ fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.4rem" }}>Fill the list</div>
         <div style={{ ...helperStyle, marginTop: 0, marginBottom: "0.6rem" }}>
         Every model on every ticked connection, strongest model first across all of
@@ -1234,7 +1234,7 @@ const FillPanel = ({ connections, onDone }) => {
         {connections.map((connection) => (
             <label key={connection.id} className="oh-tap-row" style={{ alignItems: "center", display: "flex", gap: "0.5rem", fontSize: "0.8rem", marginBottom: "0.35rem", cursor: "pointer" }}>
             <input type="checkbox" checked={ticked.includes(connection.id)} onChange={() => toggle(connection.id)} />
-            {connectionDisplayName(connection)} <span style={{ color: "rgba(255,255,255,0.45)" }}>({getProviderMeta(connection.provider).label})</span>
+            {connectionDisplayName(connection)} <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>({getProviderMeta(connection.provider).label})</span>
             </label>
         ))}
         <SettingsInput label="Models, strongest first (one per line)" multiline value={models} onChange={setModels} placeholder={GEMINI_DEFAULT_CHAIN.join("\n")} />
@@ -1298,7 +1298,7 @@ const FallbackListSection = () => {
             <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between", flexWrap: "wrap" }}>
             <div style={{ minWidth: 0, flex: 1 }}>
             <div data-no-translate style={{ fontSize: "0.82rem", fontWeight: 650, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-            <span style={{ color: "rgba(255,255,255,0.4)", marginRight: "0.4rem" }}>{index + 1}</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", marginRight: "0.4rem" }}>{index + 1}</span>
             {entry.resolved?.label ?? "(connection removed)"}
             </div>
             <div style={{ ...helperStyle, marginTop: "0.15rem" }}>
@@ -1562,14 +1562,14 @@ const RequestBudgetSection = () => {
         >
             <div style={{ marginBottom: "0.95rem" }}>
                 <div style={{ alignItems: "baseline", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
-                    <div style={{ color: "rgba(255,255,255,0.92)", fontSize: "0.82rem", fontWeight: 800 }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)", fontSize: "0.82rem", fontWeight: 800 }}>
                         <span data-no-translate>{day.used}</span> of <span data-no-translate>{day.limit}</span> used today
                     </div>
-                    <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.64rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.64rem" }}>
                         resets at <span data-no-translate>{formatResetTime(day.resetAt)}</span>
                     </div>
                 </div>
-                <div style={{ background: "rgba(255,255,255,0.07)", borderRadius: "999px", height: "6px", marginTop: "0.4rem", overflow: "hidden" }}>
+                <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "999px", height: "6px", marginTop: "0.4rem", overflow: "hidden" }}>
                     <div style={{ background: barColor, height: "100%", width: `${Math.round(share * 100)}%` }} />
                 </div>
                 <div style={{ ...helperStyle, marginTop: "0.4rem" }}>
@@ -1581,10 +1581,10 @@ const RequestBudgetSection = () => {
                 </div>
                 {tasks.length > 0 && (
                     <details style={{ marginTop: "0.4rem" }}>
-                        <summary style={{ cursor: "pointer", fontSize: "0.74rem", color: "rgba(255,255,255,0.62)", ...(touch ? TOUCH_SUMMARY : null) }}>Used today, by task</summary>
+                        <summary style={{ cursor: "pointer", fontSize: "0.74rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", ...(touch ? TOUCH_SUMMARY : null) }}>Used today, by task</summary>
                         <div style={{ display: "grid", gap: "0.15rem", marginTop: "0.3rem" }}>
                             {tasks.map((row) => (
-                                <div key={row.label} style={{ color: "rgba(255,255,255,0.72)", display: "flex", fontSize: "0.72rem", gap: "0.5rem", justifyContent: "space-between" }}>
+                                <div key={row.label} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", display: "flex", fontSize: "0.72rem", gap: "0.5rem", justifyContent: "space-between" }}>
                                     {/* A task this table does not name is shown as it was counted. */}
                                     <span data-no-translate={row.named ? undefined : true} style={{ minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.label}</span>
                                     <span data-no-translate>{row.count}</span>
@@ -1598,7 +1598,7 @@ const RequestBudgetSection = () => {
             <div style={{ border: "1px solid rgba(248,113,113,0.18)", borderRadius: "10px", background: "rgba(239,68,68,0.055)", marginBottom: "0.95rem", padding: "0.7rem 0.75rem" }}>
                 <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.6rem", justifyContent: "space-between" }}>
                     <div style={{ minWidth: 0 }}>
-                        <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.76rem", fontWeight: 800 }}>Emergency AI stop</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.76rem", fontWeight: 800 }}>Emergency AI stop</div>
                         <div style={{ ...helperStyle, marginTop: "0.2rem" }}>
                             Cancels all live AI generation requests the client can abort, including retries and fallback attempts. It does not undo finished work; an already-submitted provider batch job, or an Android native-LAN request already inside the native HTTP plugin, cannot be recalled.
                         </div>
@@ -1608,9 +1608,9 @@ const RequestBudgetSection = () => {
                     onClick={cancelActiveRequests}
                     style={{
                         ...smallButtonStyle,
-                        backgroundColor: activeAiRequests ? "rgba(239,68,68,0.18)" : "rgba(255,255,255,0.06)",
-                        borderColor: activeAiRequests ? "rgba(248,113,113,0.4)" : "rgba(255,255,255,0.13)",
-                        color: activeAiRequests ? "#fecaca" : "rgba(255,255,255,0.72)",
+                        backgroundColor: activeAiRequests ? "rgba(239,68,68,0.18)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                        borderColor: activeAiRequests ? "rgba(248,113,113,0.4)" : "color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)",
+                        color: activeAiRequests ? "#fecaca" : "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
                         flexShrink: 0,
                         fontWeight: 800,
                     }}
@@ -1618,7 +1618,7 @@ const RequestBudgetSection = () => {
                         Cancel all AI requests{activeAiRequests ? ` (${activeAiRequests})` : ""}
                     </button>
                 </div>
-                {cancelNotice && <div role="status" style={{ ...helperStyle, color: "rgba(255,255,255,0.68)", marginTop: "0.45rem" }}>{cancelNotice}</div>}
+                {cancelNotice && <div role="status" style={{ ...helperStyle, color: "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)", marginTop: "0.45rem" }}>{cancelNotice}</div>}
             </div>
 
             <Toggle
@@ -1714,10 +1714,10 @@ const SocialLinks = ({ discordUrl, redditUrl, githubUrl }) => {
                 rel="noopener noreferrer"
                 className="oh-tap-row"
                 style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
                     borderRadius: "7px",
-                    color: "rgba(255,255,255,0.58)",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)",
                     fontSize: "0.68rem",
                     fontWeight: 700,
                     padding: "0.38rem 0.55rem",
@@ -2055,28 +2055,28 @@ const DiagnosticsLogViewer = () => {
             The desktop app&apos;s own entries could not be read just now.
             </div>
         )}
-        <div style={{ maxHeight: "18rem", overflowY: "auto", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "6px" }}>
+        <div style={{ maxHeight: "18rem", overflowY: "auto", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "6px" }}>
         {shown === null && <div style={viewerNoteStyle}>Reading the log…</div>}
         {shown !== null && entries.length === 0 && (
             <div style={viewerNoteStyle}>{onlyProblems ? "No problems logged." : "Nothing logged yet."}</div>
         )}
         {entries.map((entry, index) => (
-            <div key={`${entry.at}-${index}`} style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "0.3rem 0.45rem" }}>
+            <div key={`${entry.at}-${index}`} style={{ borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", padding: "0.3rem 0.45rem" }}>
             <div
             className="oh-tap-row"
             onClick={() => entry.detail && setExpanded(expanded === index ? null : index)}
             style={{ cursor: entry.detail ? "pointer" : "default", display: "flex", gap: "0.45rem", fontSize: "0.72rem", alignItems: touch ? "center" : "baseline" }}
             >
-            <span style={{ color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>{String(entry.at || "").slice(11, 19)}</span>
-            <span style={{ color: entry.problem ? "#ffb35c" : "rgba(255,255,255,0.55)", fontWeight: 700, whiteSpace: "nowrap" }}>{entry.category}</span>
-            <span style={{ color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", whiteSpace: "nowrap" }}>{String(entry.at || "").slice(11, 19)}</span>
+            <span style={{ color: entry.problem ? "#ffb35c" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontWeight: 700, whiteSpace: "nowrap" }}>{entry.category}</span>
+            <span style={{ color: "var(--oh-ink, #fff)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
             {entry.message}{entry.repeat > 1 ? ` (×${entry.repeat})` : ""}
             </span>
-            {entry.detail && <span style={{ color: "rgba(255,255,255,0.35)" }}>{expanded === index ? "▾" : "▸"}</span>}
+            {entry.detail && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)" }}>{expanded === index ? "▾" : "▸"}</span>}
             </div>
             {expanded === index && (
                 <pre style={{
-                    background: "rgba(0,0,0,0.35)", borderRadius: 6, color: "rgba(255,255,255,0.8)",
+                    background: "rgba(0,0,0,0.35)", borderRadius: 6, color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)",
                     fontSize: "0.68rem", margin: "0.3rem 0 0", maxHeight: "12rem", overflow: "auto", padding: "0.45rem",
                     whiteSpace: "pre-wrap", wordBreak: "break-word",
                 }}>{entry.detail}</pre>
@@ -2088,7 +2088,7 @@ const DiagnosticsLogViewer = () => {
     );
 };
 
-const viewerNoteStyle = { padding: "0.6rem", fontSize: "0.72rem", color: "rgba(255,255,255,0.45)" };
+const viewerNoteStyle = { padding: "0.6rem", fontSize: "0.72rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" };
 
 // The button picks its own game — whichever is being played — so both the tooltip
 // and the result name it. A campaign name can be long; the button is one line.
@@ -2223,7 +2223,7 @@ const DiagnosticsPanel = () => {
 
     return (
         <div>
-        <div style={{ marginBottom: "0.55rem", fontSize: "0.72rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.35 }}>
+        <div style={{ marginBottom: "0.55rem", fontSize: "0.72rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", lineHeight: 1.35 }}>
         The game keeps a running log of what you did — saves opened, orders queued, turns taken, and anything that went wrong. Send it with a bug report and it says what happened, in order. Saving it with the game attaches the campaign it happened in, which is what lets a fix be tested against it.
         </div>
 
@@ -2278,7 +2278,7 @@ const DiagnosticsPanel = () => {
         {viewing && <DiagnosticsLogViewer />}
 
         <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
-        <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>
+        <span style={{ fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>
         {/* The size, not just the count, because the cap is otherwise invisible:
             a player watching the count sit still cannot tell a quiet game from a
             log that is silently rolling its oldest entries off the front. */}
@@ -2304,7 +2304,7 @@ const DiagnosticsPanel = () => {
         </button>
         </div>
 
-        <div style={{ margin: "0.5rem 0 1rem", fontSize: "0.68rem", color: "rgba(255,255,255,0.38)", lineHeight: 1.4 }}>
+        <div style={{ margin: "0.5rem 0 1rem", fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", lineHeight: 1.4 }}>
         {/* The warning tracks the switch below rather than stating the worst
             case always: a player reading "your conversations are included" on a
             log that does not contain them learns to disbelieve this line, which
@@ -2347,16 +2347,16 @@ const helperTextStyle = {
     marginTop: "-0.7rem",
     marginBottom: "0.7rem",
     fontSize: "0.72rem",
-    color: "rgba(255,255,255,0.45)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)",
     lineHeight: 1.35,
 };
 
 const diagnosticsButton = {
     alignItems: "center",
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.18)",
+    background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)",
     borderRadius: "8px",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     cursor: "pointer",
     display: "flex",
     fontFamily: "sans-serif",
@@ -2385,8 +2385,8 @@ const PRIVACY_HREF = import.meta.env.VITE_OH_NATIVE ? "https://openhistoria.com/
 
 const QuickAction = ({ title, description, symbol, tone = "neutral", onClick, href, compact = false }) => {
     const tones = {
-        neutral: { background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.04))", border: "var(--oh-ui-line, rgba(255,255,255,0.08))", icon: "var(--oh-ui-overlay-card, rgba(255,255,255,0.08))", color: "#f8fafc" },
-        slate: { background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.05))", border: "var(--oh-ui-line, rgba(255,255,255,0.12))", icon: "var(--oh-ui-overlay-card, rgba(255,255,255,0.08))", color: "#e4e4e7" },
+        neutral: { background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.04))", border: "var(--oh-ui-line, rgba(255,255,255,0.08))", icon: "var(--oh-ui-overlay-card, rgba(255,255,255,0.08))", color: "var(--oh-ink, #fff)" },
+        slate: { background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.05))", border: "var(--oh-ui-line, rgba(255,255,255,0.12))", icon: "var(--oh-ui-overlay-card, rgba(255,255,255,0.08))", color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" },
         blue: { background: "var(--oh-ui-active, rgba(59,130,246,0.08))", border: "var(--oh-ui-line, rgba(96,165,250,0.18))", icon: "var(--oh-ui-active, rgba(59,130,246,0.16))", color: "var(--oh-ui-text, #dbeafe)" },
         amber: { background: "rgba(245,158,11,0.07)", border: "rgba(251,191,36,0.17)", icon: "rgba(245,158,11,0.14)", color: "#fde68a" },
     };
@@ -2412,7 +2412,7 @@ const QuickAction = ({ title, description, symbol, tone = "neutral", onClick, hr
             <span aria-hidden="true" style={{ alignItems: "center", background: palette.icon, border: `1px solid ${palette.border}`, borderRadius: "8px", display: "inline-flex", flexShrink: 0, fontSize: compact ? "0.85rem" : "1rem", fontWeight: 900, height: compact ? "1.9rem" : "2.35rem", justifyContent: "center", width: compact ? "1.9rem" : "2.35rem" }}>{symbol}</span>
             <span style={{ minWidth: 0 }}>
                 <span style={{ display: "block", fontSize: compact ? "0.78rem" : "0.84rem", fontWeight: 850 }}>{title}</span>
-                {description && <span style={{ color: "rgba(255,255,255,0.38)", display: "block", fontSize: compact ? "0.61rem" : "0.64rem", lineHeight: 1.35, marginTop: "0.16rem" }}>{description}</span>}
+                {description && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", display: "block", fontSize: compact ? "0.61rem" : "0.64rem", lineHeight: 1.35, marginTop: "0.16rem" }}>{description}</span>}
             </span>
         </>
     );
@@ -2613,9 +2613,9 @@ const SettingsSection = ({ title, description, right, children }) => (
             <div style={{ minWidth: 0 }}>
                 <div style={{ alignItems: "center", display: "flex", gap: "0.5rem" }}>
                     <span data-oh-section-bar style={{ backgroundColor: "#3b82f6", borderRadius: "2px", display: "inline-block", height: "0.85rem", width: "3px" }} />
-                    <span style={{ color: "#f8fafc", fontSize: "0.92rem", fontWeight: 750, letterSpacing: "-0.01em" }}>{title}</span>
+                    <span style={{ color: "var(--oh-ink, #fff)", fontSize: "0.92rem", fontWeight: 750, letterSpacing: "-0.01em" }}>{title}</span>
                 </div>
-                {description && <div data-oh-section-desc style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.22rem", paddingLeft: "0.7rem" }}>{description}</div>}
+                {description && <div data-oh-section-desc style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.22rem", paddingLeft: "0.7rem" }}>{description}</div>}
             </div>
             {right}
         </div>
@@ -2719,7 +2719,7 @@ const SoundSection = ({ musicOn, onToggleMusic, effectsOn, onToggleEffects }) =>
                     aria-label="Music volume"
                     style={{ accentColor: "#3b82f6", width: "9rem" }}
                     />
-                    <span data-no-translate style={{ color: "#93c5fd", fontSize: "0.78rem", minWidth: "2.6rem", textAlign: "right", fontWeight: 650 }}>{`${volume}%`}</span>
+                    <span data-no-translate style={{ color: "var(--oh-link, #93c5fd)", fontSize: "0.78rem", minWidth: "2.6rem", textAlign: "right", fontWeight: 650 }}>{`${volume}%`}</span>
                 </span>
             </label>
             <Toggle label="Sound effects" enabled={effectsOn} onToggle={onToggleEffects} />
@@ -2930,7 +2930,7 @@ const SettingsWorkspace = ({
                         background: selected ? "var(--oh-ui-active, rgba(59,130,246,0.12))" : "transparent",
                         border: `1px solid ${selected ? "rgba(96,165,250,0.3)" : "transparent"}`,
                         borderRadius: "10px",
-                        color: selected ? "var(--oh-ui-text, #ffffff)" : "rgba(255,255,255,0.6)",
+                        color: selected ? "var(--oh-ui-text, #ffffff)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)",
                         cursor: "pointer",
                         display: "flex",
                         flex: isMobile ? "1 1 0" : "none",
@@ -2944,10 +2944,10 @@ const SettingsWorkspace = ({
                         ...(isMobile ? { flexDirection: "column", gap: "0.25rem", justifyContent: "center", padding: "0.45rem 0.2rem", textAlign: "center" } : null),
                     }}
                     >
-                        <span aria-hidden="true" style={{ alignItems: "center", background: selected ? "var(--oh-ui-active, rgba(59,130,246,0.24))" : "rgba(255,255,255,0.04)", border: `1px solid ${selected ? "rgba(96,165,250,0.4)" : "transparent"}`, borderRadius: "8px", color: selected ? "var(--oh-ui-accent, #60a5fa)" : "rgba(255,255,255,0.7)", display: "inline-flex", flexShrink: 0, fontSize: "0.85rem", fontWeight: 700, height: "1.9rem", justifyContent: "center", width: "1.9rem", transition: "all 140ms ease" }}>{section.icon}</span>
+                        <span aria-hidden="true" style={{ alignItems: "center", background: selected ? "var(--oh-ui-active, rgba(59,130,246,0.24))" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: `1px solid ${selected ? "rgba(96,165,250,0.4)" : "transparent"}`, borderRadius: "8px", color: selected ? "var(--oh-ui-accent, #60a5fa)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", display: "inline-flex", flexShrink: 0, fontSize: "0.85rem", fontWeight: 700, height: "1.9rem", justifyContent: "center", width: "1.9rem", transition: "all 140ms ease" }}>{section.icon}</span>
                         <span>
                             <span style={{ display: "block", fontSize: "0.8rem", fontWeight: selected ? 750 : 600, color: selected ? "var(--oh-ui-accent, #bfdbfe)" : "inherit" }}>{section.label}</span>
-                            {!isMobile && <span style={{ color: selected ? "rgba(191,219,254,0.65)" : "rgba(255,255,255,0.32)", display: "block", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.12rem" }}>{section.description}</span>}
+                            {!isMobile && <span style={{ color: selected ? "rgba(191,219,254,0.65)" : "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)", display: "block", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.12rem" }}>{section.description}</span>}
                         </span>
                     </button>
                 );
@@ -2964,9 +2964,9 @@ const SettingsWorkspace = ({
             <div style={{ marginBottom: "0.2rem" }}>
                 <div style={{ alignItems: "center", display: "flex", gap: "0.5rem" }}>
                     <span style={{ color: "var(--oh-ui-accent, #60a5fa)", fontSize: "0.95rem" }}>{page?.icon}</span>
-                    <span style={{ color: "#f8fafc", fontSize: "1.1rem", fontWeight: 800, letterSpacing: "-0.01em" }}>{pageTitle}</span>
+                    <span style={{ color: "var(--oh-ink, #fff)", fontSize: "1.1rem", fontWeight: 800, letterSpacing: "-0.01em" }}>{pageTitle}</span>
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.72rem", marginTop: "0.2rem" }}>{pageDescription}</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.72rem", marginTop: "0.2rem" }}>{pageDescription}</div>
             </div>
 
             {activeSection === "general" && (
@@ -3221,25 +3221,25 @@ const SettingsWorkspace = ({
     // ✕ or the bottom of the page.
     return createPortal(
         <div role="dialog" aria-modal="true" aria-label="Game settings" className={leaving ? "oh-fade-out" : closing ? "oh-fade-out-slow" : fromRect ? undefined : "oh-fade-in"} style={{ alignItems: "center", background: "rgba(8,9,11,0.75)", display: "flex", inset: 0, justifyContent: "center", padding: isMobile ? `calc(0.45rem + ${SAFE_TOP}) calc(0.45rem + ${SAFE_RIGHT}) calc(0.45rem + ${SAFE_BOTTOM}) calc(0.45rem + ${SAFE_LEFT})` : "clamp(0.8rem, 2vw, 1.6rem)", position: "fixed", zIndex: 2147483000, contain: "strict" }}>
-            <div ref={cardRef} className="oh-ws-card" style={{ background: "var(--oh-ui-bg, rgba(20,21,24,0.97))", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.08))", borderRadius: isMobile ? "12px" : "18px", boxShadow: "0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04)", color: "white", display: "flex", flexDirection: "column", fontFamily: "sans-serif", height: isMobile ? `calc(${APP_HEIGHT} - 0.9rem - ${SAFE_TOP} - ${SAFE_BOTTOM})` : `min(800px, calc(${APP_HEIGHT} - 2.4rem))`, maxWidth: "1120px", overflow: "hidden", width: isMobile ? `calc(100vw - 0.9rem - ${SAFE_LEFT} - ${SAFE_RIGHT})` : "min(94vw, 1120px)" }}>
-                <div style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.07)", display: "flex", gap: "0.75rem", padding: "0.85rem 1.1rem" }}>
-                    <button type="button" className="oh-tap" onClick={onBack} aria-label="Back to game menu" title="Back to game menu" style={{ alignItems: "center", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "rgba(255,255,255,0.7)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>←</button>
+            <div ref={cardRef} className="oh-ws-card" style={{ background: "var(--oh-ui-bg, rgba(20,21,24,0.97))", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.08))", borderRadius: isMobile ? "12px" : "18px", boxShadow: "0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", color: "var(--oh-ink, #fff)", display: "flex", flexDirection: "column", fontFamily: "sans-serif", height: isMobile ? `calc(${APP_HEIGHT} - 0.9rem - ${SAFE_TOP} - ${SAFE_BOTTOM})` : `min(800px, calc(${APP_HEIGHT} - 2.4rem))`, maxWidth: "1120px", overflow: "hidden", width: isMobile ? `calc(100vw - 0.9rem - ${SAFE_LEFT} - ${SAFE_RIGHT})` : "min(94vw, 1120px)" }}>
+                <div style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "flex", gap: "0.75rem", padding: "0.85rem 1.1rem" }}>
+                    <button type="button" className="oh-tap" onClick={onBack} aria-label="Back to game menu" title="Back to game menu" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>←</button>
                     <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.45rem 0.65rem" }}>
                             <span data-oh-section-bar style={{ backgroundColor: "var(--oh-ui-accent, #3b82f6)", borderRadius: "3px", display: "inline-block", height: "1.05rem", width: "4px" }} />
-                            <span style={{ color: "#f8fafc", fontSize: "1.04rem", fontWeight: 800 }}>Settings</span>
+                            <span style={{ color: "var(--oh-ink, #fff)", fontSize: "1.04rem", fontWeight: 800 }}>Settings</span>
                             {forGame && context?.scenarioName && <span style={{ backgroundColor: "rgba(59,130,246,0.15)", border: "1px solid rgba(96,165,250,0.3)", borderRadius: "6px", color: "#93c5fd", fontSize: "0.7rem", fontWeight: 700, padding: "0.15rem 0.45rem" }}>{context.scenarioName}</span>}
                         </div>
-                        <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.66rem", marginTop: "0.12rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.66rem", marginTop: "0.12rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {forGame
                                 ? [context?.countryName ? `Playing as ${context.countryName}` : "", context?.date || ""].filter(Boolean).join(" · ") || "Game preferences"
                                 : "For every game. A game's own settings are in its ☰ menu."}
                         </div>
                     </div>
-                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Close settings" style={{ alignItems: "center", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "rgba(255,255,255,0.7)", cursor: "pointer", display: "flex", fontSize: "1.1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>×</button>
+                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Close settings" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", display: "flex", fontSize: "1.1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>×</button>
                 </div>
                 <div style={{ display: "grid", flex: 1, gridTemplateColumns: isMobile ? "minmax(0, 1fr)" : "235px minmax(0, 1fr)", gridTemplateRows: isMobile ? "auto minmax(0, 1fr)" : "minmax(0, 1fr)", minHeight: 0 }}>
-                    <aside style={{ backgroundColor: "rgba(0,0,0,0.18)", borderBottom: isMobile ? "1px solid rgba(255,255,255,0.06)" : "none", borderRight: isMobile ? "none" : "1px solid rgba(255,255,255,0.06)", minHeight: 0, overflowY: isMobile ? "visible" : "auto" }}>{nav}</aside>
+                    <aside style={{ backgroundColor: "rgba(0,0,0,0.18)", borderBottom: isMobile ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)" : "none", borderRight: isMobile ? "none" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", minHeight: 0, overflowY: isMobile ? "visible" : "auto" }}>{nav}</aside>
                     <main style={{ minHeight: 0, overflowY: "auto", padding: isMobile ? "0.8rem" : "1.1rem 1.25rem 1.4rem", contain: "paint" }}>{content}</main>
                 </div>
             </div>
@@ -3266,7 +3266,7 @@ const QuickMenuTabButton = ({ label, selected, onClick, fill = false }) => (
         background: selected ? "var(--oh-ui-active, rgba(0,0,0,0.42))" : "transparent",
         border: `1px solid ${selected ? "var(--oh-ui-accent, rgba(255,255,255,0.28))" : "transparent"}`,
         borderRadius: "8px",
-        color: selected ? "#f4f4f5" : "rgba(255,255,255,0.56)",
+        color: selected ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 56%, transparent)",
         cursor: "pointer",
         fontFamily: "inherit",
         fontSize: "0.72rem",
@@ -3284,8 +3284,8 @@ const QuickMenuTabButton = ({ label, selected, onClick, fill = false }) => (
 const QuickMenuPanel = ({ title, description, children }) => (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
         <div>
-            <div style={{ color: "#f8fafc", fontSize: "0.82rem", fontWeight: 850 }}>{title}</div>
-            {description && <div style={{ color: "rgba(255,255,255,0.36)", fontSize: "0.64rem", lineHeight: 1.45, marginTop: "0.18rem" }}>{description}</div>}
+            <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.82rem", fontWeight: 850 }}>{title}</div>
+            {description && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 36%, transparent)", fontSize: "0.64rem", lineHeight: 1.45, marginTop: "0.18rem" }}>{description}</div>}
         </div>
         {children}
     </div>
@@ -3300,12 +3300,12 @@ const ContextSummaryCard = ({ context }) => {
 
     return (
         <div style={{ background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.03))", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.07))", borderRadius: "11px", padding: "0.8rem 0.85rem" }}>
-            <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.74rem", fontWeight: 800, marginBottom: "0.6rem" }}>Current session</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: "0.74rem", fontWeight: 800, marginBottom: "0.6rem" }}>Current session</div>
             <div style={{ display: "grid", gap: "0.45rem" }}>
                 {rows.map((row) => (
                     <div key={row.label} style={{ alignItems: "baseline", display: "grid", gap: "0.4rem", gridTemplateColumns: "5.2rem minmax(0, 1fr)" }}>
-                        <span style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.63rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>{row.label}</span>
-                        <span data-no-translate={row.label !== "Scenario" ? true : undefined} style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.72rem", fontWeight: 650, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.value}</span>
+                        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.63rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>{row.label}</span>
+                        <span data-no-translate={row.label !== "Scenario" ? true : undefined} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.72rem", fontWeight: 650, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.value}</span>
                     </div>
                 ))}
             </div>
@@ -3537,7 +3537,7 @@ const SettingsMenu = ({
                     <QuickAction title="Privacy" description="What the game keeps and sends" symbol="§" href={PRIVACY_HREF} />
                 </div>
                 <div style={{ alignItems: isMobile ? "stretch" : "center", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.55rem", justifyContent: "space-between" }}>
-                    <span style={{ color: "rgba(255,255,255,0.24)", fontSize: "0.6rem" }}>Community</span>
+                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 24%, transparent)", fontSize: "0.6rem" }}>Community</span>
                     <SocialLinks discordUrl={discordUrl} redditUrl={redditUrl} githubUrl={githubUrl} />
                 </div>
             </QuickMenuPanel>
@@ -3595,17 +3595,17 @@ const SettingsMenu = ({
             boxShadow: "var(--oh-hud-shadow)",
         }}
         >
-            <div style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.07)", display: "flex", gap: "0.75rem", margin: "-0.1rem -0.1rem 0.75rem", padding: "0 0.1rem 0.7rem" }}>
+            <div style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "flex", gap: "0.75rem", margin: "-0.1rem -0.1rem 0.75rem", padding: "0 0.1rem 0.7rem" }}>
                 <img alt="Open Historia" src="/logo.png" style={{ borderRadius: "8px", flexShrink: 0, height: "2.25rem", width: "2.25rem" }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ alignItems: "baseline", display: "flex", flexWrap: "wrap", gap: "0.35rem 0.55rem" }}>
-                        <span style={{ color: "#f8fafc", fontSize: "0.92rem", fontWeight: 900 }}>{context?.scenarioName || context?.gameName || "Open Historia"}</span>
+                        <span style={{ color: "var(--oh-ink, #fff)", fontSize: "0.92rem", fontWeight: 900 }}>{context?.scenarioName || context?.gameName || "Open Historia"}</span>
                     </div>
-                    <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.61rem", marginTop: "0.15rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.61rem", marginTop: "0.15rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {[context?.countryName ? `Playing as ${context.countryName}` : "", context?.date || ""].filter(Boolean).join(" · ") || "Game menu"}
                     </div>
                 </div>
-                <button type="button" className="oh-tap" onClick={() => onClose?.()} aria-label="Close game menu" style={{ alignItems: "center", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "rgba(255,255,255,0.58)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2rem", justifyContent: "center", width: "2rem" }}>×</button>
+                <button type="button" className="oh-tap" onClick={() => onClose?.()} aria-label="Close game menu" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2rem", justifyContent: "center", width: "2rem" }}>×</button>
             </div>
 
             <div style={{ background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.03))", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.07))", borderRadius: "10px", display: "flex", gap: "0.2rem", padding: "0.2rem", marginBottom: "0.8rem", overflowX: "auto", scrollbarWidth: "none" }}>

@@ -97,7 +97,7 @@ const baseStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "sans-serif",
   borderRadius: "14px",
   border: "1px solid var(--oh-hud-border)",
@@ -198,7 +198,7 @@ const WebGLWarningPopup = () => (
           border: "1px solid #e94560",
           borderRadius: "8px",
           background: "#e94560",
-          color: "#fff",
+          color: "var(--oh-ink, #fff)",
           padding: "0.55rem 1.2rem",
           fontSize: "0.9rem",
           fontWeight: 700,
@@ -297,7 +297,7 @@ const WarRoomButton = ({ open, isMobile, onToggle }) => {
       backgroundSize: "cover",
       border: "1px solid rgba(0,0,0,0.6)",
       boxShadow: open
-        ? "0 0 0 2px rgba(255,255,255,0.85), 0 3px 12px rgba(0,0,0,0.55)"
+        ? "0 0 0 2px color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent), 0 3px 12px rgba(0,0,0,0.55)"
         : "0 3px 12px rgba(0,0,0,0.55)",
       transition: "left 0.3s ease, bottom 0.3s ease, box-shadow 0.15s ease",
       // Under an open Actions, Projects or Diplomacy panel (9998), as the

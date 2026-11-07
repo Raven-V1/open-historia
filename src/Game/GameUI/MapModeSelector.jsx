@@ -71,7 +71,7 @@ export const MapModeSelector = memo(function MapModeSelector({ dockStyle = DEFAU
             borderRadius: "10px",
             boxShadow: "var(--oh-hud-shadow-soft)",
             padding: "0.45rem 0.6rem",
-            color: "white",
+            color: "var(--oh-ink, #fff)",
             fontSize: "0.72rem",
             display: "flex",
             flexDirection: "column",
@@ -86,11 +86,11 @@ export const MapModeSelector = memo(function MapModeSelector({ dockStyle = DEFAU
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
-              borderBottom: "1px solid rgba(255,255,255,0.1)",
+              borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
               paddingBottom: "0.25rem",
               marginBottom: "0.15rem",
               fontWeight: 700,
-              color: "rgba(255,255,255,0.75)",
+              color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)",
               letterSpacing: "0.03em",
               textTransform: "uppercase",
               fontSize: "0.62rem",
@@ -104,7 +104,7 @@ export const MapModeSelector = memo(function MapModeSelector({ dockStyle = DEFAU
               style={{
                 background: "transparent",
                 border: "none",
-                color: "rgba(255,255,255,0.5)",
+                color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)",
                 cursor: "pointer",
                 padding: "0 0.15rem",
                 fontSize: "0.75rem",
@@ -134,7 +134,7 @@ export const MapModeSelector = memo(function MapModeSelector({ dockStyle = DEFAU
                   boxShadow: `0 0 6px ${item.color}55`,
                 }}
               />
-              <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.7rem" }}>
+              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.7rem" }}>
                 {item.label}
               </span>
             </div>
@@ -170,7 +170,7 @@ export const MapModeSelector = memo(function MapModeSelector({ dockStyle = DEFAU
             border: "none",
             cursor: "pointer",
             background: !isDiplo ? "var(--oh-ui-glass-active, rgba(255,255,255,0.14))" : "transparent",
-            color: !isDiplo ? "#ffffff" : "rgba(255,255,255,0.55)",
+            color: !isDiplo ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)",
             fontSize: "0.75rem",
             fontWeight: !isDiplo ? 600 : 400,
             transition: "all 0.15s ease",
@@ -197,7 +197,7 @@ export const MapModeSelector = memo(function MapModeSelector({ dockStyle = DEFAU
             border: "none",
             cursor: "pointer",
             background: isDiplo ? "var(--oh-ui-glass-active, rgba(37,99,235,0.3))" : "transparent",
-            color: isDiplo ? "var(--oh-ui-glass-active-text, #60a5fa)" : "rgba(255,255,255,0.55)",
+            color: isDiplo ? "var(--oh-ui-glass-active-text, #60a5fa)" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)",
             borderWidth: "1px",
             borderStyle: "solid",
             borderColor: isDiplo ? "var(--oh-ui-glass-active-line, rgba(96,165,250,0.4))" : "transparent",
