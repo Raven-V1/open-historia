@@ -2612,10 +2612,10 @@ const SettingsSection = ({ title, description, right, children }) => (
         <div style={{ alignItems: "flex-start", display: "flex", gap: "0.75rem", justifyContent: "space-between", marginBottom: "0.85rem" }}>
             <div style={{ minWidth: 0 }}>
                 <div style={{ alignItems: "center", display: "flex", gap: "0.5rem" }}>
-                    <span style={{ backgroundColor: "#3b82f6", borderRadius: "2px", display: "inline-block", height: "0.85rem", width: "3px" }} />
+                    <span data-oh-section-bar style={{ backgroundColor: "#3b82f6", borderRadius: "2px", display: "inline-block", height: "0.85rem", width: "3px" }} />
                     <span style={{ color: "#f8fafc", fontSize: "0.92rem", fontWeight: 750, letterSpacing: "-0.01em" }}>{title}</span>
                 </div>
-                {description && <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.22rem", paddingLeft: "0.7rem" }}>{description}</div>}
+                {description && <div data-oh-section-desc style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.22rem", paddingLeft: "0.7rem" }}>{description}</div>}
             </div>
             {right}
         </div>
@@ -3226,7 +3226,7 @@ const SettingsWorkspace = ({
                     <button type="button" className="oh-tap" onClick={onBack} aria-label="Back to game menu" title="Back to game menu" style={{ alignItems: "center", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "rgba(255,255,255,0.7)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>←</button>
                     <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.45rem 0.65rem" }}>
-                            <span style={{ backgroundColor: "var(--oh-ui-accent, #3b82f6)", borderRadius: "3px", display: "inline-block", height: "1.05rem", width: "4px" }} />
+                            <span data-oh-section-bar style={{ backgroundColor: "var(--oh-ui-accent, #3b82f6)", borderRadius: "3px", display: "inline-block", height: "1.05rem", width: "4px" }} />
                             <span style={{ color: "#f8fafc", fontSize: "1.04rem", fontWeight: 800 }}>Settings</span>
                             {forGame && context?.scenarioName && <span style={{ backgroundColor: "rgba(59,130,246,0.15)", border: "1px solid rgba(96,165,250,0.3)", borderRadius: "6px", color: "#93c5fd", fontSize: "0.7rem", fontWeight: 700, padding: "0.15rem 0.45rem" }}>{context.scenarioName}</span>}
                         </div>

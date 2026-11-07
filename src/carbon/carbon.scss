@@ -1,0 +1,150 @@
+// Open Historia — the Carbon themes (Carbon Dark = g100, Carbon Light = g10) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE).
+// Carbon Design System tokens (Apache-2.0, IBM) as CSS custom properties, and
+// the bridge from them to the variables the game's own interface already reads
+// (--oh-ui-*, --oh-grey-*, --oh-hud-*; runtime/uiTheme.js, docs/ui-themes.md).
+//
+// Only the two Carbon themes use this file: every other theme sets its
+// variables from JavaScript (uiTheme.js) and the "Default (Original)" theme sets
+// none, so none of the rules below reach them. Each Carbon component that is
+// used is added by its own partial (see components.scss), never the whole
+// library, so the stylesheet grows with what is used.
+//
+// What is switched off on purpose: Carbon's global reset and body rules (the
+// game has its own, styles.css), its @font-face for IBM Plex (the fonts are
+// served from the bundle, assets/fonts/fonts-ibm-plex.css, and no Google or
+// CDN address may appear: noGoogleFonts.test.js) and its default type styles.
+
+@use '@carbon/styles/scss/config' with (
+  $css--body: false,
+  $css--font-face: false,
+  $css--reset: false,
+  $css--default-type: false
+);
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/themes';
+
+// The tokens. Carbon Dark is the page's default while no theme attribute is
+// set yet (first paint), so a Carbon component never renders without colours.
+:root,
+:root[data-oh-ui-theme='carbon-dark'] {
+  @include theme.theme(themes.$g100);
+}
+
+:root[data-oh-ui-theme='carbon-dark'] {
+  color-scheme: dark;
+}
+
+:root[data-oh-ui-theme='carbon-light'] {
+  @include theme.theme(themes.$g10);
+  color-scheme: light;
+}
+
+// The bridge. Surfaces are flat and opaque: Carbon expresses depth by layering
+// one token over the next (background, layer-01, layer-02, layer-03), not with
+// blur, glass or shadow, so the HUD's glass, blur and shadow are switched off
+// here and its corners squared.
+:root[data-oh-ui-theme^='carbon'] {
+  --oh-font-ui: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --oh-font-mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
+
+  --oh-ui-bg: var(--cds-background);
+  --oh-ui-surface: var(--cds-layer-01);
+  --oh-ui-raised: var(--cds-layer-02);
+  --oh-ui-header: var(--cds-layer-01);
+  --oh-ui-active: var(--cds-layer-selected-01);
+  --oh-ui-hover: var(--cds-layer-hover-01);
+  --oh-ui-accent: var(--cds-interactive);
+  --oh-ui-text: var(--cds-text-primary);
+  --oh-ui-muted: var(--cds-text-secondary);
+  --oh-ui-line: var(--cds-border-subtle-01);
+  --oh-ui-focus: var(--cds-focus);
+  --oh-ui-overlay: var(--cds-layer-01);
+  --oh-ui-overlay-strong: var(--cds-layer-01);
+  --oh-ui-overlay-card: var(--cds-layer-02);
+  --oh-ui-overlay-header: var(--cds-layer-02);
+
+  --oh-grey-bg: var(--cds-background);
+  --oh-grey-surface: var(--cds-layer-01);
+  --oh-grey-raised: var(--cds-layer-02);
+  --oh-grey-selected: var(--cds-layer-selected-01);
+  --oh-grey-border: var(--cds-border-subtle-01);
+  --oh-grey-border-strong: var(--cds-border-strong-01);
+  --oh-grey-text: var(--cds-text-primary);
+  --oh-grey-muted: var(--cds-text-secondary);
+  --oh-grey-faint: var(--cds-text-helper);
+
+  --oh-hud-bg: var(--cds-layer-01);
+  --oh-hud-bg-strong: var(--cds-layer-01);
+  --oh-hud-bg-soft: var(--cds-layer-02);
+  --oh-hud-border: var(--cds-border-subtle-01);
+  --oh-hud-border-strong: var(--cds-border-strong-01);
+  --oh-hud-text: var(--cds-text-primary);
+  --oh-hud-muted: var(--cds-text-secondary);
+  --oh-hud-faint: var(--cds-text-helper);
+  --oh-hud-blue: var(--cds-support-info);
+  --oh-hud-blue-soft: var(--cds-layer-selected-01);
+  --oh-hud-amber: var(--cds-support-warning);
+  --oh-hud-amber-hover: var(--cds-support-warning);
+  --oh-hud-red: var(--cds-support-error);
+  --oh-hud-radius: 0;
+  --oh-hud-shadow: none;
+  --oh-hud-shadow-soft: none;
+  --oh-hud-glass: none;
+  --oh-hud-blur: none;
+
+  --oh-ui-glass-pill: var(--cds-layer-01);
+  --oh-ui-glass-chip: var(--cds-layer-02);
+  --oh-ui-glass-line: var(--cds-border-subtle-01);
+  --oh-ui-glass-hover: var(--cds-layer-hover-01);
+  --oh-ui-glass-active: var(--cds-layer-selected-01);
+  --oh-ui-glass-active-line: var(--cds-interactive);
+  --oh-ui-glass-active-text: var(--cds-text-primary);
+}
+
+// Typography. The page and its controls are set in Plex. Many components name
+// their font inline (fontFamily: "sans-serif" on about a hundred of them,
+// "monospace" and ui-monospace on the code and log views), and an inline style
+// beats a stylesheet, so those are matched by what the style attribute says
+// and carried over with !important. Cinzel / EB Garamond (the loading screen,
+// the vault door, the update notices) and Georgia are named on purpose and are
+// not matched, so the game's own artwork keeps its faces.
+:root[data-oh-ui-theme^='carbon'] {
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-family: var(--oh-font-ui);
+  }
+
+  [style*='font-family: sans-serif'] {
+    font-family: var(--oh-font-ui) !important;
+  }
+
+  [style*='font-family: monospace'],
+  [style*='font-family: ui-monospace'] {
+    font-family: var(--oh-font-mono) !important;
+  }
+}
+
+// Carbon's section heading is plain text over a rule or a layer: no coloured
+// bar before it. The settings headings carry data-oh-section-bar on the bar
+// itself; the three decorative left edges (the Subordination block, the
+// Government card, the update-notice card) are switched to Carbon's ordinary
+// 1px border. Bars that carry meaning (party colours, war lines, the country
+// picker's colours, quotations) are not touched.
+:root[data-oh-ui-theme^='carbon'] {
+  [data-oh-section-bar] {
+    display: none !important;
+  }
+
+  [data-oh-section-desc] {
+    padding-left: 0 !important;
+  }
+
+  [data-oh-edge-bar],
+  .oh-country-government,
+  .ohr-card {
+    border-left: 1px solid var(--cds-border-subtle-01) !important;
+  }
+}

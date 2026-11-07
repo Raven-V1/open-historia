@@ -853,7 +853,7 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
         </div>
 
         {diplomacy.subordination && (
-            <section className="oh-country-ledger-section" style={{ borderLeft: "3px solid #d6b878", padding: "0.15rem 0.65rem 0.45rem" }}>
+            <section data-oh-edge-bar className="oh-country-ledger-section" style={{ borderLeft: "3px solid #d6b878", padding: "0.15rem 0.65rem 0.45rem" }}>
             <div className="oh-country-ledger-header">Subordination</div>
             <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.78rem", fontWeight: 850, marginTop: "0.28rem" }}>{diplomacy.subordination.headline}</div>
             <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.66rem", lineHeight: 1.45, marginTop: "0.22rem" }}>{diplomacy.subordination.meaning}</div>
