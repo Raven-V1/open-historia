@@ -21,7 +21,7 @@ test("Rostra preserves upstream theme coverage and tints only its remaining neut
   assert.match(library, /const themeSurfaceStyle = \{[\s\S]*?border: "1px solid var\(--oh-ui-line,/);
   assert.match(library, /const editorNavButtonStyle = \(active\) => \(\{[\s\S]*?background: active \? "var\(--oh-ui-active,/);
   assert.match(library, /const CreateScenarioTile = [\s\S]*?background: "var\(--oh-ui-overlay-card,/);
-  assert.equal((library.match(/data-oh-theme-nav=""/g) || []).length, 3);
+  assert.equal((library.match(/data-oh-theme-nav=""/g) || []).length, 4); // Carbon fork: the Dark/Light switch is a fourth rail button
   assert.match(library, /const accent = record\.accentColor \|\| "#a1a1aa"/);
   assert.match(css, /@media \(hover: hover\) \{[\s\S]*?\[data-oh-theme-nav\]:hover:not\(:disabled\)/);
   assert.match(css, /color-mix\(in srgb, var\(--oh-ui-accent\) 38%, transparent\)/);

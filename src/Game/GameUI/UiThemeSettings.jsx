@@ -72,6 +72,13 @@ export default function UiThemeSettings() {
   return (
     <div className="oh-theme-settings">
       <div className="oh-theme-intro">Choose Carbon Dark or Carbon Light, keep the original interface, pick one of five themed palettes or make your own. Map and gameplay colors are not affected.</div>
+      <div className="oh-theme-scheme" role="group" aria-label="Dark or light">
+        {CARBON_THEMES.map((item) => (
+          <button key={item.id} type="button" className="oh-theme-preset" aria-pressed={theme.preset === item.id} onClick={() => selectUiTheme(item.id)}>
+            <span>{item.scheme === "dark" ? "Dark" : "Light"}</span>
+          </button>
+        ))}
+      </div>
       <div className="oh-theme-preset-grid" role="group" aria-label="Interface theme">
         <button type="button" className="oh-theme-preset" aria-pressed={theme.preset === DEFAULT_UI_THEME} onClick={() => selectUiTheme(DEFAULT_UI_THEME)}>
           <Sample colors={ORIGINAL_PREVIEW} />

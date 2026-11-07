@@ -3,6 +3,9 @@ import React, { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExt
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, SCREEN_HEIGHT, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
 import { Presence } from "./presence.jsx";
+import Asleep from "@carbon/icons-react/es/Asleep.js";
+import Light from "@carbon/icons-react/es/Light.js";
+import { toggleCarbonScheme, useUiTheme } from "../../runtime/uiTheme.js";
 import {
   PROMPT_EDITOR_SECTIONS,
   PROMPT_GUIDANCE_DEFAULTS,
@@ -411,7 +414,10 @@ const railButtonStyle = (active) => ({
 // The rail down the left of the main menu, on a screen wide enough for it: the
 // mark and the name, a rounded square for each page, and Settings at its
 // foot. A phone keeps the pages as a row across the top.
-const MenuRail = ({ activeTab, onTab, onOpenSettings, onOpenHistory }) => (
+const MenuRail = ({ activeTab, onTab, onOpenSettings, onOpenHistory }) => {
+  const uiTheme = useUiTheme();
+  const carbonLight = uiTheme.preset === "carbon-light";
+  return (
   <nav
     style={{
       alignItems: "center",
@@ -459,6 +465,18 @@ const MenuRail = ({ activeTab, onTab, onOpenSettings, onOpenHistory }) => (
       </button>
     ))}
     <div style={{ flex: 1, minHeight: "0.6rem" }} />
+    <button
+      aria-label={carbonLight ? "Switch to dark theme" : "Switch to light theme"}
+      className="oh-tap-row"
+      data-oh-theme-nav=""
+      onClick={toggleCarbonScheme}
+      style={railButtonStyle(false)}
+      title={carbonLight ? "Switch to dark theme" : "Switch to light theme"}
+      type="button"
+    >
+      {carbonLight ? <Asleep size={MENU_RAIL_ICON} /> : <Light size={MENU_RAIL_ICON} />}
+      <span>{carbonLight ? "Dark" : "Light"}</span>
+    </button>
     {typeof onOpenSettings === "function" && (
       <button className="oh-tap-row" data-oh-theme-nav="" onClick={onOpenSettings} style={railButtonStyle(false)} type="button">
         <ButtonIcon kind="settings" size={MENU_RAIL_ICON} />
@@ -466,7 +484,8 @@ const MenuRail = ({ activeTab, onTab, onOpenSettings, onOpenHistory }) => (
       </button>
     )}
   </nav>
-);
+  );
+};
 
 // On a touch screen .oh-tap / .oh-tap-row (styles.css) make a control a
 // finger's 44 px, but a min-height written inline beats a class, and every pill

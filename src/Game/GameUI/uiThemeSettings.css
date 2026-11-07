@@ -68,3 +68,13 @@
   .oh-theme-footer { align-items: flex-start; flex-direction: column; }
 }
 @media (prefers-reduced-motion: reduce) { .oh-theme-settings * { transition: none !important; } }
+
+.oh-theme-scheme {
+  display: flex;
+  gap: 1px;
+  margin-bottom: 0.75rem;
+}
+.oh-theme-scheme .oh-theme-preset {
+  flex: 1;
+  justify-content: center;
+}
