@@ -10,6 +10,7 @@
 // tree, its own map instance) so it can't disturb the game's MapLibre map.
 
 import { useCallback, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import UiIcon from "../Game/GameUI/carbonIcons.jsx";
 import "ol/ol.css";
 import OlMap from "./OlMap.jsx";
 import EditorSidebar, { SIDEBAR_WIDTH } from "./EditorSidebar.jsx";
@@ -756,10 +757,10 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
         console.warn("[editor] save generated basemap to library failed:", e);
       }
       d.setSaveStatus("dirty");
-      fmgLogLine(`✓ Imported ${seed.stats.regions} regions, ${seed.stats.polities} countries, ${seed.stats.cities} cities.`);
+      fmgLogLine(`Imported ${seed.stats.regions} regions, ${seed.stats.polities} countries, ${seed.stats.cities} cities.`);
       api.fitToData?.();
     } catch (e) {
-      fmgLogLine(`✗ ${e?.message || e}`);
+      fmgLogLine(`Failed: ${e?.message || e}`);
       console.warn("[editor] FMG generate failed:", e);
     } finally {
       setFmgBusy(false);
@@ -1414,10 +1415,10 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
 
   const scenarioButton = (primary, dim = Boolean(scenarioAction) || !hydrated) => ({
     alignItems: "center",
-    background: primary ? "#2bc1f3" : "rgba(255,255,255,0.06)",
-    border: `1px solid ${primary ? "#2bc1f3" : "rgba(255,255,255,0.12)"}`,
+    background: primary ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+    border: `1px solid ${primary ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"}`,
     borderRadius: 10,
-    color: "#fff",
+    color: "var(--oh-ink, #fff)",
     cursor: dim ? "default" : "pointer",
     display: "flex",
     fontSize: 12.5,
@@ -1476,7 +1477,7 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
         title={!hydrated ? "The scenario’s map is still loading" : `Save this map into ${scenarioName || "the scenario"} and keep editing`}
         style={{ ...scenarioButton(false), gridColumn: exitButton ? undefined : "1 / -1" }}
       >
-        {!hydrated ? "Loading map…" : scenarioAction === "save" ? "Saving…" : "💾 Save"}
+        {!hydrated ? "Loading map…" : scenarioAction === "save" ? "Saving…" : <><UiIcon name="save" size={14} /> Save</>}
       </button>
       {exitButton}
       <button
@@ -1494,7 +1495,7 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
     <div style={{ display: "flex", flexDirection: "column", gap: 7 }}>
       <span style={{ display: "flex", alignItems: "center", gap: 6 }}>
         {d.colors[paintOwner] && (
-          <span style={{ width: 16, height: 16, flexShrink: 0, borderRadius: 4, border: "1px solid rgba(255,255,255,0.3)", background: `rgb(${d.colors[paintOwner].join(",")})` }} />
+          <span style={{ width: 16, height: 16, flexShrink: 0, borderRadius: 4, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)", background: `rgb(${d.colors[paintOwner].join(",")})` }} />
         )}
         <select
           value={paintOwner}
@@ -1510,7 +1511,7 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
           ))}
         </select>
       </span>
-      <span style={{ color: "rgba(255,255,255,0.55)" }}>paint over</span>
+      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>paint over</span>
       <select
         value={paintOnlyOwner}
         onChange={(e) => setPaintOnlyOwner(e.target.value)}
@@ -1530,7 +1531,7 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
       </button>
     </div>
   ) : d.activeTool === "modify" ? (
-    <div style={{ color: d.selection.length ? "rgba(255,255,255,0.7)" : "#fbbf24" }}>
+    <div style={{ color: d.selection.length ? "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" : "#fbbf24" }}>
       <b>Manual vertex override:</b>{" "}
       {d.selection.length === 0
         ? "select the regions to edit first"
@@ -1539,16 +1540,16 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
           : `${d.selection.length} selected regions · drag a vertex · drag an edge to insert · Alt-click a vertex to remove · snap magnet enabled · Ctrl/Cmd+Z undo`}
     </div>
   ) : d.activeTool === "border" ? (
-    <div style={{ color: d.selection.length === 2 ? "rgba(255,255,255,0.74)" : "#fbbf24" }}>
+    <div style={{ color: d.selection.length === 2 ? "color-mix(in srgb, var(--oh-ink, #fff) 74%, transparent)" : "#fbbf24" }}>
       <b>Shared border precision:</b>{" "}
       {d.selection.length === 2
         ? "drag a border vertex or edge on either selected region; the released point is welded into BOTH regions · cyan halo = shared-border magnet · Alt-click removes the corresponding shared vertex · a 100 m topology check runs after each edit · Ctrl/Cmd+Z undo"
         : `select exactly 2 neighbouring regions first (${d.selection.length} selected)`}
     </div>
   ) : isWarTool(d.activeTool) ? (
-    <div style={{ color: "rgba(255,255,255,0.7)" }}>{WAR_TOOL_HINTS[d.activeTool]}</div>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>{WAR_TOOL_HINTS[d.activeTool]}</div>
   ) : d.activeTool === "select" ? (
-    <div style={{ color: "rgba(255,255,255,0.7)" }}>Click a region to select it, Shift-click to add more, and double-click to select its whole country.</div>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>Click a region to select it, Shift-click to add more, and double-click to select its whole country.</div>
   ) : null;
 
   return (
@@ -1556,10 +1557,10 @@ const MapEditor = ({ onClose, scenarioName, onApplyToScenario, initialMap, revie
       style={{
         position: "fixed",
         inset: 0,
-        background: "#111113",
+        background: "var(--oh-paper, #111113)",
         overflow: "hidden",
         fontFamily: "sans-serif",
-        color: "white",
+        color: "var(--oh-ink, #fff)",
         "--editor-dock-left": `${dockLeft}px`,
         "--editor-dock-right": `${dockRight}px`,
         "--editor-top": "12px",

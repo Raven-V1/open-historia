@@ -12,6 +12,7 @@
 // the editor's) is what makes the two pickers look like siblings.
 
 import { useEffect, useMemo, useState } from "react";
+import UiIcon from "../Game/GameUI/carbonIcons.jsx";
 import { builtInFlagChoices, filterBuiltInFlags, suggestedBuiltInFlag } from "./builtInFlags.js";
 import {
   communityFlagsHubUrl,
@@ -38,7 +39,7 @@ const overlay = {
   // close buttons sat over it however high its z-index went. The Workshop is flat
   // grey now and the hazard is gone, but the root is where this belongs anyway.
   zIndex: 130,
-  background: "rgba(8,8,9,0.82)",
+  background: "color-mix(in srgb, var(--oh-paper, rgb(8,8,9)) 82%, transparent)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -49,10 +50,10 @@ const panel = {
   maxHeight: "88vh",
   display: "flex",
   flexDirection: "column",
-  background: "#1b1b1e",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "var(--oh-paper, #1b1b1e)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "18px",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   boxShadow: "0 24px 80px rgba(0,0,0,0.55)",
   overflow: "hidden",
 };
@@ -61,43 +62,43 @@ const headerBar = {
   alignItems: "center",
   gap: "0.6rem",
   padding: "0.85rem 1.1rem",
-  borderBottom: "1px solid rgba(255,255,255,0.08)",
+  borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
 };
 const bodyBox = { padding: "1.1rem", overflowY: "auto" };
 const rowTitle = { fontSize: "0.78rem", opacity: 0.6, margin: "0.2rem 0 0.5rem", letterSpacing: "0.04em" };
 const dim = { fontSize: "0.82rem", opacity: 0.6, padding: "0.6rem 0" };
 const cardSurface = {
   position: "relative",
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "10px",
   overflow: "hidden",
   cursor: "pointer",
 };
 const tabBtn = (active) => ({
-  background: active ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.12)",
+  background: active ? "rgba(0,0,0,0.5)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
   borderRadius: "999px",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: "0.8rem",
   padding: "0.35rem 0.8rem",
 });
 const uploadBtn = {
-  background: "rgba(255,255,255,0.14)",
-  border: "1px solid rgba(255,255,255,0.14)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
   borderRadius: "8px",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: "0.8rem",
   padding: "0.4rem 0.7rem",
   whiteSpace: "nowrap",
 };
 const closeBtn = {
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.12)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
   borderRadius: "8px",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: "0.9rem",
   lineHeight: 1,
@@ -112,7 +113,7 @@ const FlagCard = ({ title, subtitle, imageUrl, active, onClick, onPublish, onDel
   <div
     style={{
       ...cardSurface,
-      outline: active ? "2px solid rgba(255,255,255,0.28)" : "none",
+      outline: active ? "2px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "none",
       outlineOffset: "-2px",
     }}
     onClick={onClick}
@@ -128,7 +129,7 @@ const FlagCard = ({ title, subtitle, imageUrl, active, onClick, onPublish, onDel
           onError={(e) => { e.currentTarget.style.visibility = "hidden"; }}
         />
       ) : (
-        <span style={{ fontSize: "1.4rem", opacity: 0.5 }}>🏳️</span>
+        <span style={{ fontSize: "1.4rem", opacity: 0.5 }}><UiIcon name="flag" size={22} /></span>
       )}
     </div>
     <div style={{ padding: "0.4rem 0.5rem" }}>
@@ -136,8 +137,8 @@ const FlagCard = ({ title, subtitle, imageUrl, active, onClick, onPublish, onDel
       {subtitle && <div style={{ fontSize: "0.7rem", opacity: 0.55 }}>{subtitle}</div>}
     </div>
     {active && (
-      <div style={{ position: "absolute", top: 6, right: 6, background: "rgba(255,255,255,0.28)", borderRadius: 6, fontSize: "0.65rem", padding: "0.1rem 0.35rem" }}>
-        ✓ In use
+      <div style={{ position: "absolute", top: 6, right: 6, background: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", borderRadius: 6, fontSize: "0.65rem", padding: "0.1rem 0.35rem" }}>
+        <UiIcon name="check" size={14} /> In use
       </div>
     )}
     {onDelete && (
@@ -147,11 +148,11 @@ const FlagCard = ({ title, subtitle, imageUrl, active, onClick, onPublish, onDel
         onClick={(e) => { e.stopPropagation(); onDelete(); }}
         style={{
           position: "absolute", right: 6, bottom: 6, background: "rgba(0,0,0,0.6)",
-          border: "none", borderRadius: 6, color: "#fff", cursor: "pointer", fontSize: "0.7rem",
+          border: "none", borderRadius: 6, color: "var(--oh-ink, #fff)", cursor: "pointer", fontSize: "0.7rem",
           lineHeight: 1, padding: "0.2rem 0.35rem",
         }}
       >
-        ✕
+        <UiIcon name="close" size={14} />
       </button>
     )}
     {fromCommunity && <CommunitySourceBadge url={communityUrl} />}
@@ -161,8 +162,8 @@ const FlagCard = ({ title, subtitle, imageUrl, active, onClick, onPublish, onDel
         title="Share this flag with the community"
         onClick={(e) => { e.stopPropagation(); onPublish(); }}
         style={{
-          position: "absolute", left: 6, bottom: 6, background: "rgba(255,255,255,0.1)",
-          border: "none", borderRadius: 6, color: "#fff", cursor: "pointer", fontSize: "0.7rem",
+          position: "absolute", left: 6, bottom: 6, background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+          border: "none", borderRadius: 6, color: "var(--oh-ink, #fff)", cursor: "pointer", fontSize: "0.7rem",
           lineHeight: 1, padding: "0.2rem 0.35rem",
         }}
       >
@@ -382,8 +383,8 @@ const FlagPicker = ({ open, onClose, ownerCode, currentFlag, mapFlags = {}, auth
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Search…"
             style={{
-              background: "rgba(0,0,0,0.3)", border: "1px solid rgba(255,255,255,0.14)",
-              borderRadius: 8, color: "#fff", fontSize: "0.8rem", padding: "0.35rem 0.6rem",
+              background: "rgba(0,0,0,0.3)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
+              borderRadius: 8, color: "var(--oh-ink, #fff)", fontSize: "0.8rem", padding: "0.35rem 0.6rem",
               width: isMobile ? "auto" : "9rem", flex: isMobile ? "1 1 6rem" : "0 0 auto", minWidth: "5rem",
             }}
           />
@@ -404,7 +405,7 @@ const FlagPicker = ({ open, onClose, ownerCode, currentFlag, mapFlags = {}, auth
               {isMobile ? "↺" : "Remove"}
             </button>
           )}
-          <button type="button" className="oh-tap" aria-label="Close flag picker" style={{ ...closeBtn, marginLeft: isMobile ? "auto" : undefined }} onClick={onClose}>✕</button>
+          <button type="button" className="oh-tap" aria-label="Close flag picker" style={{ ...closeBtn, marginLeft: isMobile ? "auto" : undefined }} onClick={onClose}><UiIcon name="close" size={16} /></button>
         </div>
 
         <div style={bodyBox}>
@@ -495,7 +496,7 @@ const FlagPicker = ({ open, onClose, ownerCode, currentFlag, mapFlags = {}, auth
               <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", marginBottom: "0.6rem" }}>
                 <button
                   type="button"
-                  style={{ ...uploadBtn, background: "rgba(255,255,255,0.1)" }}
+                  style={{ ...uploadBtn, background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }}
                   onClick={() => openFlagPublishForm({ name: ownerCode ? `${ownerCode} flag` : "", author, polity: ownerCode || "" })}
                   title="Opens the hub's flag form — drag your image in and submit"
                 >
@@ -532,17 +533,17 @@ const FlagPicker = ({ open, onClose, ownerCode, currentFlag, mapFlags = {}, auth
                         {post.pictureUrl ? (
                           <img src={post.pictureUrl} alt="" loading="lazy" style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                         ) : (
-                          <span style={{ fontSize: "2rem", opacity: 0.6 }}>🚩</span>
+                          <span style={{ fontSize: "2rem", opacity: 0.6 }}><UiIcon name="flag" size={28} /></span>
                         )}
                         {post.fromScenario && (
-                          <span style={{ position: "absolute", left: 6, top: 6, background: "rgba(255,255,255,0.28)", borderRadius: 6, color: "#fff", fontSize: "0.62rem", fontWeight: 700, padding: "0.15rem 0.35rem" }}>
+                          <span style={{ position: "absolute", left: 6, top: 6, background: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", borderRadius: 6, color: "var(--oh-ink, #fff)", fontSize: "0.62rem", fontWeight: 700, padding: "0.15rem 0.35rem" }}>
                             {post.flagCount} flag{post.flagCount === 1 ? "" : "s"} · scenario
                           </span>
                         )}
                       </div>
                       <div style={{ padding: "0.4rem 0.5rem" }}>
                         <div style={{ fontSize: "0.78rem", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                          {post.official && <span title="Posted by the project">✓ </span>}
+                          {post.official && <span title="Posted by the project"><UiIcon name="check" size={14} /> </span>}
                           {post.title}
                         </div>
                         <div style={{ fontSize: "0.7rem", opacity: 0.55 }}>by {post.author}</div>

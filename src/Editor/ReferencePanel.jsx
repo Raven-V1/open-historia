@@ -97,7 +97,7 @@ const ReferencePanel = ({ refImage, setRefImage, onRecenter, onClose }) => {
               Remove
             </button>
           </div>
-          <div style={{ fontSize: 11, lineHeight: 1.5, color: "rgba(255,255,255,0.55)" }}>
+          <div style={{ fontSize: 11, lineHeight: 1.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>
             {refImage.locked
               ? "Locked: dragging moves the map. Unlock to move or resize the image."
               : "Drag inside the image to move it; drag a corner to resize (free stretch, so you can match the map projection; hold Shift to keep its shape)."}{" "}

@@ -41,15 +41,15 @@ const commonOr = (arr, blank = "") => {
 const foldPolityName = (value) => String(value ?? "").trim().toLowerCase();
 
 const InspectorSection = ({ title, children }) => (
-  <section style={{ display: "flex", flexDirection: "column", gap: 8, paddingTop: 10, borderTop: "1px solid rgba(255,255,255,0.08)" }}>
-    <div style={{ color: "rgba(255,255,255,0.5)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{title}</div>
+  <section style={{ display: "flex", flexDirection: "column", gap: 8, paddingTop: 10, borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" }}>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: 10.5, fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{title}</div>
     {children}
   </section>
 );
 
 const Field = ({ label, title, children }) => (
   <div title={title} style={{ display: "flex", flexDirection: "column", gap: 4, minWidth: 0 }}>
-    <span style={{ color: "rgba(255,255,255,0.72)", fontSize: 12 }}>{label}</span>
+    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: 12 }}>{label}</span>
     {children}
   </div>
 );
@@ -154,9 +154,9 @@ const FitToBackground = ({ api, selection, regionEpoch }) => {
           onBlur={keep}
           style={{ flex: 1, minWidth: 0 }}
         />
-        <span style={{ minWidth: 48, textAlign: "right", color: "rgba(255,255,255,0.72)", fontSize: 12 }}>{shown}</span>
+        <span style={{ minWidth: 48, textAlign: "right", color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: 12 }}>{shown}</span>
       </span>
-      {status && <span style={{ color: "rgba(255,255,255,0.55)", fontSize: 11, lineHeight: 1.4 }}>{status}</span>}
+      {status && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: 11, lineHeight: 1.4 }}>{status}</span>}
     </Field>
   );
 };
@@ -276,7 +276,7 @@ const SelectionInspector = ({ api, selection, types, colors, colorOverrides, set
       width={320}
     >
       {single && (
-        <div style={{ fontSize: 11, color: "rgba(255,255,255,0.45)", fontFamily: "ui-monospace, monospace", overflowWrap: "anywhere" }}>
+        <div style={{ fontSize: 11, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontFamily: "ui-monospace, monospace", overflowWrap: "anywhere" }}>
           {summaries[0]?.id}
         </div>
       )}
@@ -309,7 +309,7 @@ const SelectionInspector = ({ api, selection, types, colors, colorOverrides, set
         </Field>
         {allWater && onSetFreezing && (
           <div title="Ices over in a season of its climate zone whose effects say Water freezes (the War map panel's Climate tab)." style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 8, fontSize: 12.5 }}>
-            <span style={{ color: "rgba(255,255,255,0.72)" }}>Can freeze</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)" }}>Can freeze</span>
             <Toggle value={allFreeze} onChange={(on) => onSetFreezing(summaries.map((s) => String(s.id)), on)} />
           </div>
         )}
@@ -319,7 +319,7 @@ const SelectionInspector = ({ api, selection, types, colors, colorOverrides, set
         <Field label="Polity" title="The polity that owns these regions. Type an existing polity's name, or a name that does not exist yet and press Enter to create it — a country that has never existed is one keystroke away. Rename and manage polities in the Polities panel; changing a display name there keeps all territory attached.">
           <span style={{ display: "flex", alignItems: "center", gap: 6, width: "100%" }}>
             {ownerRgb && (
-              <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 4, border: "1px solid rgba(255,255,255,0.3)", background: rgbToHex(ownerRgb) }} />
+              <span style={{ width: 18, height: 18, flexShrink: 0, borderRadius: 4, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)", background: rgbToHex(ownerRgb) }} />
             )}
             <input
               value={ownerShown}
@@ -339,7 +339,7 @@ const SelectionInspector = ({ api, selection, types, colors, colorOverrides, set
                 flex: 1,
                 minWidth: 0,
                 padding: "5px 7px",
-                border: `1px solid ${draftIsNew ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.16)"}`,
+                border: `1px solid ${draftIsNew ? "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)"}`,
               }}
             />
             <datalist id="oh-polity-options">
@@ -395,7 +395,7 @@ const SelectionInspector = ({ api, selection, types, colors, colorOverrides, set
                     <img
                       src={bundledFlagUrl(ownerFlag)}
                       alt=""
-                      style={{ width: 26, height: 18, flexShrink: 0, objectFit: "contain", borderRadius: 3, border: "1px solid rgba(255,255,255,0.3)" }}
+                      style={{ width: 26, height: 18, flexShrink: 0, objectFit: "contain", borderRadius: 3, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)" }}
                     />
                   )}
                   <button onClick={() => onOpenFlagPicker(form.owner)} style={{ ...pillButton(false), minWidth: 0 }}>

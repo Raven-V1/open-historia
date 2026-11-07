@@ -71,7 +71,7 @@ const MarkerPopup = ({ feature, x, y, isNew, polities = [], onChange, onDelete, 
         style={{ ...inputStyle, padding: "6px 8px", fontSize: 13, fontWeight: 600 }}
       />
 
-      <label style={{ display: "grid", gap: 4, color: "rgba(255,255,255,0.7)" }}>
+      <label style={{ display: "grid", gap: 4, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         <span style={{ fontSize: 10.5, fontWeight: 700 }}>Type</span>
         <select
           value={customKind ? "__other" : kind}
@@ -100,7 +100,7 @@ const MarkerPopup = ({ feature, x, y, isNew, polities = [], onChange, onDelete, 
         )}
       </label>
 
-      <label style={{ display: "grid", gap: 4, color: "rgba(255,255,255,0.7)" }}>
+      <label style={{ display: "grid", gap: 4, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         <span style={{ fontSize: 10.5, fontWeight: 700 }}>Held by</span>
         <select
           value={owner}
@@ -114,7 +114,7 @@ const MarkerPopup = ({ feature, x, y, isNew, polities = [], onChange, onDelete, 
         </select>
       </label>
 
-      <label style={{ display: "grid", gap: 4, color: "rgba(255,255,255,0.7)" }}>
+      <label style={{ display: "grid", gap: 4, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         <span style={{ fontSize: 10.5, fontWeight: 700 }}>State</span>
         <select
           value={feature.status || "active"}
@@ -127,7 +127,7 @@ const MarkerPopup = ({ feature, x, y, isNew, polities = [], onChange, onDelete, 
         </select>
       </label>
 
-      <label style={{ display: "grid", gap: 4, color: "rgba(255,255,255,0.7)" }}>
+      <label style={{ display: "grid", gap: 4, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         <span style={{ fontSize: 10.5, fontWeight: 700 }}>Note (the AI reads it)</span>
         <textarea
           value={feature.note || ""}

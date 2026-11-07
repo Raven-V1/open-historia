@@ -13,6 +13,7 @@
 // never covers the tool buttons — floating it top-left did, on phones.
 
 import { useEffect, useRef, useState } from "react";
+import UiIcon from "../Game/GameUI/carbonIcons.jsx";
 import Icon from "./Icon.jsx";
 import { panelSurface, inputStyle } from "./editorStyles.js";
 import { searchSeedCities } from "./citiesImport.js";
@@ -27,7 +28,7 @@ const rowStyle = {
   cursor: "pointer",
   background: "transparent",
   border: "none",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   width: "100%",
   textAlign: "left",
 };
@@ -97,7 +98,7 @@ const SearchBar = ({ api, features, polities, setSelection, onAddCity, placement
 
   return (
     <div ref={boxRef} style={fill ? { position: "relative", flex: 1, minWidth: 0 } : { position: "relative", flex: "1 1 170px", maxWidth: 300, minWidth: 140 }}>
-      <div style={{ display: "flex", alignItems: "center", gap: 6, height: 34, boxSizing: "border-box", padding: "0 9px", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10 }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 6, height: 34, boxSizing: "border-box", padding: "0 9px", background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10 }}>
         <Icon name="search" size={14} style={{ opacity: 0.6, flexShrink: 0 }} />
         <input
           value={query}
@@ -118,10 +119,10 @@ const SearchBar = ({ api, features, polities, setSelection, onAddCity, placement
               setQuery("");
               setOpen(false);
             }}
-            style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: 13, flexShrink: 0 }}
+            style={{ background: "transparent", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", fontSize: 13, flexShrink: 0 }}
             title="Clear"
           >
-            ✕
+            <UiIcon name="close" size={14} />
           </button>
         )}
       </div>
@@ -144,7 +145,7 @@ const SearchBar = ({ api, features, polities, setSelection, onAddCity, placement
           }}
         >
           {!hasResults && (
-            <div style={{ padding: "6px 8px", fontSize: 12, color: "rgba(255,255,255,0.5)" }}>No places found.</div>
+            <div style={{ padding: "6px 8px", fontSize: 12, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>No places found.</div>
           )}
 
           {results.custom.map((f) => (
@@ -152,14 +153,14 @@ const SearchBar = ({ api, features, polities, setSelection, onAddCity, placement
               key={`c-${f.id}`}
               style={rowStyle}
               onClick={() => api?.locateFeature(f.coord)}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
               {badge("THIS MAP", "#d4d4d8")}
               <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {f.name}
               </span>
-              <span style={{ fontSize: 10.5, color: "rgba(255,255,255,0.45)" }}>{formatPop(f.population)}</span>
+              <span style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>{formatPop(f.population)}</span>
             </button>
           ))}
 
@@ -171,14 +172,14 @@ const SearchBar = ({ api, features, polities, setSelection, onAddCity, placement
                 setSelection?.([r.id]);
                 api?.zoomToRegion(r.id);
               }}
-              onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
+              onMouseEnter={(e) => (e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)")}
               onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
             >
               {badge("REGION", "#86efac")}
               <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {r.name || r.id}
               </span>
-              <span style={{ fontSize: 10.5, color: "rgba(255,255,255,0.45)" }}>{polityDisplayName(polities, r.owner)}</span>
+              <span style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>{polityDisplayName(polities, r.owner)}</span>
             </button>
           ))}
 
@@ -187,15 +188,15 @@ const SearchBar = ({ api, features, polities, setSelection, onAddCity, placement
               <button
                 style={{ ...rowStyle, flex: 1 }}
                 onClick={() => api?.locateFeature(c.coord)}
-                onMouseEnter={(e) => (e.currentTarget.style.background = "rgba(255,255,255,0.08)")}
+                onMouseEnter={(e) => (e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)")}
                 onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}
               >
                 {badge("WORLD", "#fcd34d")}
                 <span style={{ fontSize: 12.5, fontWeight: 600, flex: 1, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                   {c.name}
                 </span>
-                <span style={{ fontSize: 10.5, color: "rgba(255,255,255,0.45)" }}>
-                  {c.capital ? "★ " : ""}
+                <span style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>
+                  {c.capital ? <><UiIcon name="star" size={12} /> </> : ""}
                   {formatPop(c.population)}
                 </span>
               </button>
@@ -204,9 +205,9 @@ const SearchBar = ({ api, features, polities, setSelection, onAddCity, placement
                 onClick={() => onAddCity?.(c)}
                 style={{
                   background: "transparent",
-                  border: "1px solid rgba(255,255,255,0.2)",
+                  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)",
                   borderRadius: 6,
-                  color: "#e4e4e7",
+                  color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)",
                   cursor: "pointer",
                   fontSize: 11,
                   fontWeight: 700,

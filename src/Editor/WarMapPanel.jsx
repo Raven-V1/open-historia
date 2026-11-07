@@ -91,30 +91,30 @@ const EFFECTS = [
 ];
 
 const tabButton = (active) => ({
-  background: active ? "rgba(0,0,0,0.49)" : "rgba(255,255,255,0.06)",
-  border: active ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.1)",
+  background: active ? "rgba(0,0,0,0.49)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: active ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: 999,
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: 12,
   fontWeight: 700,
   padding: "5px 12px",
 });
-const hint = { fontSize: 11.5, lineHeight: 1.45, color: "rgba(255,255,255,0.55)" };
-const dim = { fontSize: 10.5, color: "rgba(255,255,255,0.5)" };
+const hint = { fontSize: 11.5, lineHeight: 1.45, color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" };
+const dim = { fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" };
 // (Never shrunk by the panel's column to fit it: the panel scrolls instead.
 // A card clips its corners, and a clipped box would otherwise be squashed.)
-const card = { border: "1px solid rgba(255,255,255,0.1)", borderRadius: 9, overflow: "hidden", flexShrink: 0 };
+const card = { border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 9, overflow: "hidden", flexShrink: 0 };
 const cardHead = {
   display: "flex", alignItems: "center", gap: 8, width: "100%", padding: "7px 9px", cursor: "pointer",
-  background: "rgba(255,255,255,0.04)", border: "none", color: "white", textAlign: "left", fontSize: 12.5, fontWeight: 600,
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "none", color: "var(--oh-ink, #fff)", textAlign: "left", fontSize: 12.5, fontWeight: 600,
 };
 const cardBody = { padding: "9px 10px", display: "flex", flexDirection: "column", gap: 7 };
 const sliderRow = { display: "flex", alignItems: "center", gap: 8, fontSize: 12 };
-const sliderLabel = { flex: "0 0 74px", color: "rgba(255,255,255,0.72)" };
+const sliderLabel = { flex: "0 0 74px", color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)" };
 const slider = { flex: 1, minWidth: 0, accentColor: ACCENT, cursor: "pointer" };
-const sliderValue = { flex: "0 0 56px", textAlign: "right", fontVariantNumeric: "tabular-nums", color: "rgba(255,255,255,0.85)" };
-const iconButton = { background: "transparent", border: "none", color: "rgba(255,255,255,0.7)", cursor: "pointer", padding: 2, display: "flex" };
+const sliderValue = { flex: "0 0 56px", textAlign: "right", fontVariantNumeric: "tabular-nums", color: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)" };
+const iconButton = { background: "transparent", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", padding: 2, display: "flex" };
 const smallInput = { ...inputStyle, padding: "5px 7px" };
 
 // A copy of `record` with `fields` over it; a field set to undefined is taken out.
@@ -384,7 +384,7 @@ const ClimateEditor = ({ zone, patch }) => {
       <div style={labelDim}>Name</div>
       <input value={zone.name || ""} maxLength={80} onChange={(e) => patch({ name: e.target.value })} style={smallInput} />
       <Row label="Colour" title="The zone's colour on the map">
-        <input type="color" value={zone.color || "#7f8c99"} onChange={(e) => patch({ color: e.target.value })} style={{ width: 40, height: 26, padding: 0, border: "1px solid rgba(255,255,255,0.2)", borderRadius: 6, background: "transparent", cursor: "pointer" }} />
+        <input type="color" value={zone.color || "#7f8c99"} onChange={(e) => patch({ color: e.target.value })} style={{ width: 40, height: 26, padding: 0, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", borderRadius: 6, background: "transparent", cursor: "pointer" }} />
       </Row>
       <div style={labelDim}>Blend width</div>
       <div style={sliderRow}>
@@ -584,8 +584,8 @@ const WarMapPanel = ({
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {list.length === 0 && <div style={{ ...hint, padding: "4px 2px" }}>{EMPTY_LABELS[tab]}</div>}
             {list.map((row) => (
-              <div key={row.id} style={{ border: "1px solid rgba(255,255,255,0.09)", borderRadius: 8, display: "flex", alignItems: "center", gap: 6, padding: "6px 8px" }}>
-                <button type="button" onClick={() => onPick(tab, row.id)} style={{ background: "transparent", border: "none", color: "white", cursor: "pointer", flex: 1, minWidth: 0, textAlign: "left", padding: 0, display: "flex", alignItems: "center", gap: 8 }}>
+              <div key={row.id} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)", borderRadius: 8, display: "flex", alignItems: "center", gap: 6, padding: "6px 8px" }}>
+                <button type="button" onClick={() => onPick(tab, row.id)} style={{ background: "transparent", border: "none", color: "var(--oh-ink, #fff)", cursor: "pointer", flex: 1, minWidth: 0, textAlign: "left", padding: 0, display: "flex", alignItems: "center", gap: 8 }}>
                   {tab === "climate" && <Swatch color={row.color || "#7f8c99"} />}
                   <span style={{ flex: 1, minWidth: 0 }}>
                     <span style={{ display: "block", fontSize: 13, fontWeight: 600, overflowWrap: "anywhere" }}>{row.name || "Unnamed"}</span>
@@ -610,7 +610,7 @@ const WarMapPanel = ({
           )}
           {tab === "climate" && (
             <>
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.75)" }}>
+              <div style={{ fontSize: 12, color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)" }}>
                 {freezingCount === 0 ? "No water region can freeze yet." : freezingCount === 1 ? "1 water region can freeze." : `${freezingCount} water regions can freeze.`}
               </div>
               <div style={hint}>Mark lakes and seas in the region panel (Can freeze). They freeze in a season whose effects say Water freezes.</div>

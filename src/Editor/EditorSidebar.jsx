@@ -75,10 +75,10 @@ const NavItem = ({ icon, label, value, count, active, onClick }) => (
     <Icon name={icon} size={16} style={{ flexShrink: 0, opacity: active ? 1 : 0.8 }} />
     <span style={{ flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{label}</span>
     {value && (
-      <span style={{ maxWidth: 92, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "rgba(255,255,255,0.45)", fontSize: 11.5, fontWeight: 600 }}>{value}</span>
+      <span style={{ maxWidth: 92, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: 11.5, fontWeight: 600 }}>{value}</span>
     )}
     {count !== undefined && count !== null && (
-      <span style={{ flexShrink: 0, minWidth: 22, padding: "1px 7px", borderRadius: 999, background: "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.08)", color: "rgba(255,255,255,0.7)", fontSize: 11, fontWeight: 700, textAlign: "center" }}>
+      <span style={{ flexShrink: 0, minWidth: 22, padding: "1px 7px", borderRadius: 999, background: "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: 11, fontWeight: 700, textAlign: "center" }}>
         {count}
       </span>
     )}
@@ -183,16 +183,16 @@ const EditorSidebar = ({
         display: "flex",
         flexDirection: "column",
         background: EDITOR_NAV,
-        [onRight ? "borderLeft" : "borderRight"]: "1px solid rgba(255,255,255,0.08)",
+        [onRight ? "borderLeft" : "borderRight"]: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
         boxShadow: isMobile ? "0 24px 70px rgba(0,0,0,0.55)" : "none",
-        color: "white",
+        color: "var(--oh-ink, #fff)",
         fontFamily: "sans-serif",
         zIndex: isMobile ? 50 : 34,
       }}
     >
-      <div style={{ display: "flex", flexDirection: "column", gap: 10, padding: "14px 12px 12px", borderBottom: "1px solid rgba(255,255,255,0.07)" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 10, padding: "14px 12px 12px", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 10, minWidth: 0 }}>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 40, height: 40, flexShrink: 0, borderRadius: 12, background: "#1c1f27", border: "1px solid rgba(255,255,255,0.09)" }}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 40, height: 40, flexShrink: 0, borderRadius: 12, background: "var(--oh-paper, #1c1f27)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)" }}>
             <Icon name="map" size={20} />
           </div>
           <div style={{ flex: 1, minWidth: 0 }}>
@@ -262,7 +262,7 @@ const EditorSidebar = ({
           </div>
           {TOOL_GROUPS.map((group) => (
             <div key={group.label} style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-              <span style={{ color: "rgba(255,255,255,0.55)", fontSize: 11.5, fontWeight: 600 }}>{group.label}</span>
+              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: 11.5, fontWeight: 600 }}>{group.label}</span>
               <div style={{ display: "grid", gridTemplateColumns: "repeat(6, minmax(0, 1fr))", gap: 4 }}>
                 {group.tools.map((t) => (
                   <button
@@ -281,10 +281,10 @@ const EditorSidebar = ({
             </div>
           ))}
           {tool && (
-            <div style={{ display: "flex", flexDirection: "column", gap: 8, padding: "10px 11px", borderRadius: 12, background: EDITOR_CARD, border: "1px solid rgba(255,255,255,0.08)", fontSize: 12, lineHeight: 1.4 }}>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, padding: "10px 11px", borderRadius: 12, background: EDITOR_CARD, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", fontSize: 12, lineHeight: 1.4 }}>
               <div style={{ display: "flex", alignItems: "flex-start", gap: 8 }}>
                 <Icon name={tool.icon} size={15} style={{ flexShrink: 0, marginTop: 1 }} />
-                <span style={{ fontWeight: 700, color: "rgba(255,255,255,0.92)" }}>{tool.label}</span>
+                <span style={{ fontWeight: 700, color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)" }}>{tool.label}</span>
               </div>
               {toolOptions}
             </div>
@@ -295,7 +295,7 @@ const EditorSidebar = ({
           <span style={sectionLabel}>Panels</span>
           {panelGroups.map((group) => (
             <div key={group.label} style={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              <span style={{ color: "rgba(255,255,255,0.55)", fontSize: 11.5, fontWeight: 600, marginBottom: 3 }}>{group.label}</span>
+              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: 11.5, fontWeight: 600, marginBottom: 3 }}>{group.label}</span>
               {group.items.map((item) => (
                 <NavItem
                   key={item.id}
@@ -319,7 +319,7 @@ const EditorSidebar = ({
         </section>
       </div>
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 9, padding: "12px", borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 9, padding: "12px", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", fontSize: 12 }}>
           {saveStatus === "error" && onRetrySave ? (
             // A failed save says why and is its own Retry: the only other way was
@@ -336,7 +336,7 @@ const EditorSidebar = ({
               </span>
             </button>
           ) : (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: 7, color: "rgba(255,255,255,0.8)" }}>
+            <span style={{ display: "inline-flex", alignItems: "center", gap: 7, color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)" }}>
               <span style={{ width: 9, height: 9, borderRadius: "50%", background: save.color }} />
               {save.label}
             </span>
@@ -375,11 +375,11 @@ const EditorSidebar = ({
         height: 64,
         padding: 0,
         background: EDITOR_NAV,
-        border: "1px solid rgba(255,255,255,0.1)",
+        border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
         [onRight ? "borderRight" : "borderLeft"]: "none",
         borderRadius: onRight ? "10px 0 0 10px" : "0 10px 10px 0",
         boxShadow: onRight ? "-6px 0 18px rgba(0,0,0,0.3)" : "6px 0 18px rgba(0,0,0,0.3)",
-        color: "rgba(255,255,255,0.75)",
+        color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)",
         cursor: "pointer",
       }}
     >
@@ -408,10 +408,10 @@ const EditorSidebar = ({
           <Icon name="menu" size={18} />
           {tool && <Icon name={tool.icon} size={17} style={{ opacity: 0.8 }} />}
         </button>
-        <button type="button" title="Undo" aria-label="Undo" disabled={!canUndo} onClick={onUndo} style={{ ...smallIconButton(!canUndo), ...panelSurface, height: 40, minWidth: 40, borderRadius: 12, color: canUndo ? "#fff" : "rgba(255,255,255,0.28)" }}>
+        <button type="button" title="Undo" aria-label="Undo" disabled={!canUndo} onClick={onUndo} style={{ ...smallIconButton(!canUndo), ...panelSurface, height: 40, minWidth: 40, borderRadius: 12, color: canUndo ? "#fff" : "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" }}>
           <Icon name="undo" size={17} />
         </button>
-        <button type="button" title="Redo" aria-label="Redo" disabled={!canRedo} onClick={onRedo} style={{ ...smallIconButton(!canRedo), ...panelSurface, height: 40, minWidth: 40, borderRadius: 12, color: canRedo ? "#fff" : "rgba(255,255,255,0.28)" }}>
+        <button type="button" title="Redo" aria-label="Redo" disabled={!canRedo} onClick={onRedo} style={{ ...smallIconButton(!canRedo), ...panelSurface, height: 40, minWidth: 40, borderRadius: 12, color: canRedo ? "#fff" : "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" }}>
           <Icon name="redo" size={17} />
         </button>
       </div>

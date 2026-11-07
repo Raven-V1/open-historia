@@ -66,6 +66,7 @@ import FaceSatisfied from "@carbon/icons-react/es/FaceSatisfied.js";
 import FaceDissatisfied from "@carbon/icons-react/es/FaceDissatisfied.js";
 import Fire from "@carbon/icons-react/es/Fire.js";
 import FaceDizzy from "@carbon/icons-react/es/FaceDizzy.js";
+import StarFilled from "@carbon/icons-react/es/StarFilled.js";
 
 const ICONS = {
   add: Add, anchor: Anchor, arrow: ArrowUpRight, building: Building, check: Checkmark, dot: CircleFilled,
@@ -110,6 +111,7 @@ const ICONS = {
   faceHard: FaceDissatisfied,
   fire: Fire,
   faceDizzy: FaceDizzy,
+  star: StarFilled,
 };
 
 // A decorative icon that sits in a line of text. `name` is a key of ICONS.

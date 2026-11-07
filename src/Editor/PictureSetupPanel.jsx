@@ -22,15 +22,15 @@ export const QBAM = Object.freeze({
   bounds: Object.freeze({ west: -181.114, south: -67.1689, east: 180.586, north: 67.0707 }),
 });
 
-const note = { fontSize: 11.5, lineHeight: 1.45, color: "rgba(255,255,255,0.6)", margin: 0 };
+const note = { fontSize: 11.5, lineHeight: 1.45, color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", margin: 0 };
 const warn = { ...note, color: "#ffd59a" };
 const button = (primary) => ({
   flex: 1,
   padding: "8px 10px",
   borderRadius: 8,
-  border: "1px solid rgba(255,255,255,0.16)",
-  background: primary ? "#2bc1f3" : "rgba(255,255,255,0.08)",
-  color: primary ? "#06222d" : "rgba(255,255,255,0.86)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
+  background: primary ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+  color: primary ? "#06222d" : "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)",
   fontWeight: 700,
   fontSize: 12.5,
   cursor: "pointer",

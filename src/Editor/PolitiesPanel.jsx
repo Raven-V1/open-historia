@@ -446,7 +446,7 @@ const PolitiesPanel = ({
             <div key={row.key} style={{ display: "flex", alignItems: "stretch", gap: 6 }}>
               <label
                 title={`Include ${row.name} in bulk actions`}
-                style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 30, flex: "0 0 30px", borderRadius: 8, border: checked ? "1px solid rgba(239,68,68,0.65)" : "1px solid rgba(255,255,255,0.08)", background: checked ? "rgba(239,68,68,0.12)" : "rgba(255,255,255,0.025)", cursor: "pointer" }}
+                style={{ display: "flex", alignItems: "center", justifyContent: "center", width: 30, flex: "0 0 30px", borderRadius: 8, border: checked ? "1px solid rgba(239,68,68,0.65)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", background: checked ? "rgba(239,68,68,0.12)" : "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", cursor: "pointer" }}
               >
                 <input
                   type="checkbox"
@@ -467,9 +467,9 @@ const PolitiesPanel = ({
                   textAlign: "left",
                   padding: "7px 9px",
                   borderRadius: 8,
-                  border: active ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.08)",
-                  background: active ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.035)",
-                  color: "white",
+                  border: active ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+                  background: active ? "rgba(0,0,0,0.25)" : "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)",
+                  color: "var(--oh-ink, #fff)",
                   cursor: "pointer",
                 }}
               >
@@ -479,15 +479,15 @@ const PolitiesPanel = ({
                     height: 14,
                     borderRadius: 4,
                     flex: "0 0 auto",
-                    background: colors?.[row.key] ? `rgb(${colors[row.key].join(",")})` : "rgba(255,255,255,0.18)",
-                    border: "1px solid rgba(255,255,255,0.25)",
+                    background: colors?.[row.key] ? `rgb(${colors[row.key].join(",")})` : "color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)",
                   }}
                 />
                 <span style={{ flex: 1, minWidth: 0 }}>
                   <div style={{ fontSize: 13, fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                     {row.name}
                   </div>
-                  <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.48)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                  <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
                     {row.regionCount ? `${row.regionCount} regions` : "registered, no regions yet"}{row.claimantCount ? ` · ${row.claimantCount} claims` : ""}{Array.isArray(polities?.[row.key]?.formerNames) && polities[row.key].formerNames.length ? ` · formerly ${polities[row.key].formerNames.join(", ")}` : ""}
                   </div>
                 </span>
@@ -498,9 +498,9 @@ const PolitiesPanel = ({
       </div>
 
       {current && (
-        <div style={{ display: "flex", flexDirection: "column", gap: 9, paddingTop: 8, borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: 9, paddingTop: 8, borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }}>
           <div>
-            <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.48)", marginBottom: 4 }}>Name</div>
+            <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", marginBottom: 4 }}>Name</div>
             <div style={{ display: "flex", gap: 6 }}>
               <input value={draftName} onChange={(e) => setDraftName(e.target.value)} style={inputStyle} />
               <button
@@ -528,7 +528,7 @@ const PolitiesPanel = ({
               </button>
             </div>
             {Array.isArray(current.record?.formerNames) && current.record.formerNames.length > 0 && (
-              <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.45)", marginTop: 4 }}>Formerly {current.record.formerNames.join(", ")}</div>
+              <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", marginTop: 4 }}>Formerly {current.record.formerNames.join(", ")}</div>
             )}
           </div>
 
@@ -549,7 +549,7 @@ const PolitiesPanel = ({
             </button>
           </div>
 
-          <details style={{ border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "6px 9px" }}>
+          <details style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 8, padding: "6px 9px" }}>
             <summary style={{ cursor: "pointer", fontSize: 11.5, fontWeight: 700 }}>
               Regions ({ownedRegions.length}){current.claimantCount ? ` · ${current.claimantCount} claimed` : ""}
             </summary>
@@ -561,7 +561,7 @@ const PolitiesPanel = ({
                     type="button"
                     onClick={() => { setSelection?.([region.id]); api?.zoomToRegion?.(region.id); }}
                     title="Select this region and zoom to it"
-                    style={{ textAlign: "left", padding: "4px 7px", borderRadius: 6, border: "1px solid rgba(255,255,255,0.08)", background: "rgba(255,255,255,0.03)", color: "white", cursor: "pointer", fontSize: 11.5 }}
+                    style={{ textAlign: "left", padding: "4px 7px", borderRadius: 6, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", color: "var(--oh-ink, #fff)", cursor: "pointer", fontSize: 11.5 }}
                   >
                     {region.name || region.id}
                   </button>
@@ -571,7 +571,7 @@ const PolitiesPanel = ({
           </details>
 
           <div>
-            <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.48)", marginBottom: 4 }}>Transfer all territory from another polity</div>
+            <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", marginBottom: 4 }}>Transfer all territory from another polity</div>
             <div style={{ display: "flex", gap: 6 }}>
               <select value={transferFrom} onChange={(e) => setTransferFrom(e.target.value)} style={inputStyle}>
                 <option value="">Choose polity…</option>
@@ -584,20 +584,20 @@ const PolitiesPanel = ({
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", width: 52 }}>Colour</span>
+            <span style={{ fontSize: 11, color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", width: 52 }}>Colour</span>
             <ColorField value={colors?.[current.key] || [128, 128, 128]} onChange={(rgb) => setColorOverride?.(current.key, rgb)} />
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <span style={{ fontSize: 11, color: "rgba(255,255,255,0.58)", width: 52 }}>Flag</span>
-            {flags?.[current.key] && <img src={bundledFlagUrl(flags[current.key])} alt="" style={{ width: 28, height: 18, objectFit: "contain", borderRadius: 3, border: "1px solid rgba(255,255,255,0.25)" }} />}
+            <span style={{ fontSize: 11, color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", width: 52 }}>Flag</span>
+            {flags?.[current.key] && <img src={bundledFlagUrl(flags[current.key])} alt="" style={{ width: 28, height: 18, objectFit: "contain", borderRadius: 3, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" }} />}
             <button type="button" style={pillButton(false)} onClick={() => onOpenFlagPicker?.(current.key)}>
               {flags?.[current.key] ? "Change" : "Choose flag"}
             </button>
           </div>
 
           <div>
-            <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.48)", marginBottom: 4 }}>Tags</div>
+            <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", marginBottom: 4 }}>Tags</div>
             <TagField value={tags?.[current.key] || []} suggestions={TAG_SUGGESTIONS} onChange={(next) => setTags?.(current.key, next)} />
           </div>
 
@@ -611,14 +611,14 @@ const PolitiesPanel = ({
 
           {current.record && (
             <div>
-              <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.48)", marginBottom: 4 }}>Scenario note</div>
+              <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", marginBottom: 4 }}>Scenario note</div>
               <textarea
                 value={current.record?.note || ""}
                 onChange={(e) => upsertPolity?.(current.key, { note: e.target.value })}
                 rows={2}
                 style={{ ...inputStyle, resize: "vertical" }}
               />
-              <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.48)", margin: "8px 0 4px" }}>Population when the scenario begins</div>
+              <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", margin: "8px 0 4px" }}>Population when the scenario begins</div>
               <input
                 key={`population-${current.key}`}
                 defaultValue={formatPopulationFigure(current.record?.population)}
@@ -631,7 +631,7 @@ const PolitiesPanel = ({
                 }}
                 style={inputStyle}
               />
-              <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.42)", marginTop: 4 }}>Its troops are raised from these people, and its statistics begin from this figure. You can write 12,500,000 or 12.5 million.</div>
+              <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: 4 }}>Its troops are raised from these people, and its statistics begin from this figure. You can write 12,500,000 or 12.5 million.</div>
               {/* Its own military figures (MilitaryFields.jsx), kept with its record as `military`. */}
               <div style={{ marginTop: 8 }}>
                 <MilitaryFields
@@ -664,7 +664,7 @@ const PolitiesPanel = ({
         </div>
       )}
 
-      <div style={{ paddingTop: 8, borderTop: "1px solid rgba(255,255,255,0.1)", display: "grid", gap: 7 }}>
+      <div style={{ paddingTop: 8, borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", display: "grid", gap: 7 }}>
         <div style={{ display: "flex", alignItems: "center", gap: 7 }}>
           <div style={{ fontSize: 12, fontWeight: 700, flex: 1 }}>Bulk polity roster</div>
           <button
@@ -689,9 +689,9 @@ const PolitiesPanel = ({
 
 
         {rosterPreview && (
-          <div style={{ padding: "8px 9px", borderRadius: 8, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.1)", display: "grid", gap: 6 }}>
+          <div style={{ padding: "8px 9px", borderRadius: 8, background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", display: "grid", gap: 6 }}>
             <div style={{ fontSize: 11.5, fontWeight: 700 }}>{rosterPreview.fileName}</div>
-            <div style={{ fontSize: 10.8, lineHeight: 1.45, color: "rgba(255,255,255,0.62)" }}>
+            <div style={{ fontSize: 10.8, lineHeight: 1.45, color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)" }}>
               {rosterPreview.rows.length.toLocaleString()} unique polity keys · {rosterPreview.fresh.toLocaleString()} new · {rosterPreview.existing.toLocaleString()} already present
               {rosterPreview.incomingColors ? ` · ${rosterPreview.incomingColors.toLocaleString()} colours` : ""}
               {rosterPreview.incomingTags ? ` · ${rosterPreview.incomingTags.toLocaleString()} tag sets` : ""}
@@ -715,7 +715,7 @@ const PolitiesPanel = ({
         )}
       </div>
 
-      <div style={{ paddingTop: 8, borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+      <div style={{ paddingTop: 8, borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }}>
         <div style={{ fontSize: 12, fontWeight: 700, marginBottom: 6 }}>Create country</div>
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
           <input value={newName} onChange={(e) => setNewName(e.target.value)} placeholder="Name, e.g. Austria-Hungary" style={inputStyle} />

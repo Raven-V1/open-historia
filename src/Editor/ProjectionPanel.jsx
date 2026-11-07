@@ -23,14 +23,14 @@ import { FREEFORM, PROJECTIONS, normalizeProjection, sameProjection } from "../.
 import { formatAspect, parseAspect, projectionChoice } from "./projectionConvert.js";
 import { KM_PER_MILE, scaleLabelOf } from "./scaleLineLayer.js";
 
-const note = { fontSize: 11.5, lineHeight: 1.45, color: "rgba(255,255,255,0.6)", margin: 0 };
+const note = { fontSize: 11.5, lineHeight: 1.45, color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", margin: 0 };
 const button = (enabled) => ({
   width: "100%",
   padding: "8px 10px",
   borderRadius: 8,
-  border: "1px solid rgba(255,255,255,0.16)",
-  background: enabled ? "#2bc1f3" : "rgba(255,255,255,0.08)",
-  color: enabled ? "#06222d" : "rgba(255,255,255,0.45)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
+  background: enabled ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+  color: enabled ? "#06222d" : "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)",
   fontWeight: 700,
   fontSize: 12.5,
   cursor: enabled ? "pointer" : "default",
@@ -38,9 +38,9 @@ const button = (enabled) => ({
 const smallButton = {
   padding: "5px 8px",
   borderRadius: 7,
-  border: "1px solid rgba(255,255,255,0.16)",
-  background: "rgba(255,255,255,0.06)",
-  color: "rgba(255,255,255,0.86)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)",
   fontSize: 11.5,
   cursor: "pointer",
 };
@@ -65,7 +65,7 @@ const ScaleLine = ({ line, scaleDraft, draftKm, drawingScale, onDrawScale, onCan
   };
   return (
     <>
-      <div style={{ fontSize: 12.5, fontWeight: 700, color: "rgba(255,255,255,0.86)", marginTop: 4 }}>Scale line</div>
+      <div style={{ fontSize: 12.5, fontWeight: 700, color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", marginTop: 4 }}>Scale line</div>
       {scaleDraft ? (
         <>
           <Row label="Its distance">

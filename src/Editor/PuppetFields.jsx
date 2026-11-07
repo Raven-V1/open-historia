@@ -20,8 +20,8 @@ import {
   setOverlord,
 } from "./scenarioPuppets.js";
 
-const label = { fontSize: 10.5, color: "rgba(255,255,255,0.48)", marginBottom: 4 };
-const hint = { fontSize: 10.5, color: "rgba(255,255,255,0.45)", lineHeight: 1.4 };
+const label = { fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", marginBottom: 4 };
+const hint = { fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", lineHeight: 1.4 };
 
 const PuppetFields = ({ polity, regionCount = 0, choices = [], puppets = [], setPuppets }) => {
   const [error, setError] = useState("");
