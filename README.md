@@ -21,6 +21,8 @@ The game's music is by Scott Buckley ([www.scottbuckley.com.au](https://www.scot
 What the game keeps on your device, what it sends and to whom, and what the project holds: see the [privacy policy](https://openhistoria.com/privacy/) (source: [public/privacy/index.html](public/privacy/index.html)).
 
 <!-- Open Historia — portions (install, Android app, hub & preset docs) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). -->
+> **This is a modified version of [Open Historia](https://github.com/Open-Historia/open-historia)**, a personal fork by Raven-V1 with a redesigned interface, licensed under the same AGPL-3.0-or-later. The source of this fork is at [github.com/Raven-V1/open-historia](https://github.com/Raven-V1/open-historia).
+
 <h1 align="center">Open Historia</h1>
 
 <div align="center">
