@@ -70,7 +70,7 @@ export const BordersFallbackNotice = () => {
         className="oh-tap"
         aria-label="Dismiss"
         onClick={() => setDismissed(true)}
-        style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: "0.9rem", lineHeight: 1, padding: 0 }}
+        style={{ background: "transparent", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", cursor: "pointer", fontSize: "0.9rem", lineHeight: 1, padding: 0 }}
       >
         ×
       </button>

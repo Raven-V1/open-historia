@@ -99,11 +99,11 @@ const CARD_WIDTH = "min(21rem, calc(100vw - 2rem))";
 const COMMUNITY_GRID_TEMPLATE = "repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr))";
 const cardSurface = {
   background: "var(--oh-ui-surface, #12141a)",
-  border: "1px solid rgba(255,255,255,0.09)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)",
   borderRadius: "16px",
   boxShadow: "0 14px 32px rgba(0,0,0,0.45)",
   boxSizing: "border-box",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   display: "flex",
   flexDirection: "column",
   flex: `0 0 ${CARD_WIDTH}`,
@@ -119,7 +119,7 @@ const pillButton = {
   background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.06))",
   border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.12))",
   borderRadius: "9px",
-  color: "rgba(246,246,248,0.92)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.8rem",
@@ -136,7 +136,7 @@ const pillButton = {
 const touchFit = (style, touch) => (touch ? { ...style, minHeight: undefined } : style);
 
 const rowTitleStyle = {
-  color: "rgba(255,255,255,0.9)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)",
   fontSize: "0.95rem",
   fontWeight: 800,
   letterSpacing: "-0.01em",
@@ -147,7 +147,7 @@ const searchInputStyle = {
   background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.06))",
   border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.12))",
   borderRadius: "9px",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   fontSize: "0.8rem",
   height: "2rem",
   minWidth: "12rem",
@@ -214,10 +214,10 @@ const LibraryBadge = ({ status }) => {
       title={badge.title}
       style={{
         alignSelf: "flex-start",
-        background: update ? "rgba(39,166,99,0.16)" : "rgba(255,255,255,0.08)",
-        border: `1px solid ${update ? "rgba(39,166,99,0.45)" : "rgba(255,255,255,0.18)"}`,
+        background: update ? "rgba(39,166,99,0.16)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+        border: `1px solid ${update ? "rgba(39,166,99,0.45)" : "color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)"}`,
         borderRadius: "999px",
-        color: update ? "#bbf7d0" : "#e4e4e7",
+        color: update ? "#bbf7d0" : "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)",
         fontSize: "0.68rem",
         fontWeight: 700,
         padding: "0.12rem 0.5rem",
@@ -254,7 +254,7 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
           style={{
             // The OFFICIAL badge marks a post made by a team member (the hub's owner or a collaborator). A random poster writing
             // "official" in their title stays white.
-            color: post.official ? "#e4e4e7" : "#fff",
+            color: post.official ? "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" : "var(--oh-ink, #fff)",
             fontSize: "0.95rem",
             fontWeight: 800,
             letterSpacing: "-0.02em",
@@ -265,9 +265,9 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
         >
           {post.pinned ? "📌 " : ""}{post.title}
         </div>
-        <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.7rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem" }}>
           {post.official && (
-            <span style={{ background: "rgba(255,255,255,0.13)", border: "1px solid rgba(255,255,255,0.23)", borderRadius: "999px", color: "#e4e4e7", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginRight: "0.35rem", padding: "0.08rem 0.4rem", textTransform: "uppercase" }}>
+            <span style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)", borderRadius: "999px", color: "#e4e4e7", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginRight: "0.35rem", padding: "0.08rem 0.4rem", textTransform: "uppercase" }}>
               ✓ Official
             </span>
           )}
@@ -280,7 +280,7 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
     </div>
     <div
       style={{
-        color: "rgba(244,244,246,0.72)",
+        color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
         display: "-webkit-box",
         fontSize: "0.8rem",
         height: "2.35rem",
@@ -309,10 +309,10 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
     >
       <div style={{ alignItems: "center", display: "inline-flex", flexShrink: 0, gap: "0.45rem", whiteSpace: "nowrap" }}>
         {post.installs != null && (
-          <span title="Times this scenario has been imported" style={{ alignItems: "center", color: "rgba(255,255,255,0.65)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>⬇ {post.installs}</span>
+          <span title="Times this scenario has been imported" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>⬇ {post.installs}</span>
         )}
-        <span title="Liked (👍 reactions on the hub post)" style={{ alignItems: "center", color: "rgba(255,255,255,0.65)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>👍 {post.upvotes}</span>
-        <span title="Comments on the hub post" style={{ alignItems: "center", color: "rgba(255,255,255,0.65)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>💬 {post.comments}</span>
+        <span title="Liked (👍 reactions on the hub post)" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>👍 {post.upvotes}</span>
+        <span title="Comments on the hub post" style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", display: "inline-flex", fontSize: "0.76rem", gap: "0.2rem", lineHeight: 1 }}>💬 {post.comments}</span>
       </div>
       <div style={{ alignItems: "center", display: "inline-flex", flexShrink: 0, gap: "0.35rem", marginLeft: "auto", whiteSpace: "nowrap" }}>
         <a
@@ -347,9 +347,9 @@ const ScenarioCard = ({ post, busy, onImport, onSelect, touch, isMobile, status,
           style={touchFit({
             ...pillButton,
             boxSizing: "border-box",
-            background: post.bundleUrl ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.04)",
-            borderColor: post.bundleUrl ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.08)",
-            color: post.bundleUrl ? "#fff" : "rgba(255,255,255,0.35)",
+            background: post.bundleUrl ? "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+            borderColor: post.bundleUrl ? "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+            color: post.bundleUrl ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)",
             cursor: post.bundleUrl && !busy ? "pointer" : "default",
             flexShrink: 0,
             fontSize: "0.76rem",
@@ -372,7 +372,7 @@ const ScenarioRow = ({ title, posts, busyId, onImport, onSelect, emptyText, layo
   <div style={{ marginBottom: "1.15rem" }}>
     {title ? <div style={rowTitleStyle}>{title}</div> : null}
     {posts.length === 0 ? (
-      <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem", padding: "0.3rem 0 0.6rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.8rem", padding: "0.3rem 0 0.6rem" }}>
         {emptyText || "Nothing here yet."}
       </div>
     ) : layout === "grid" ? (
@@ -391,7 +391,7 @@ const ScenarioRow = ({ title, posts, busyId, onImport, onSelect, emptyText, layo
   </div>
 );
 
-const detailStat = { color: "rgba(255,255,255,0.75)", fontSize: "0.85rem" };
+const detailStat = { color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)", fontSize: "0.85rem" };
 
 // Shared by the grid view and ScenarioDetail so the two can't drift out of
 // sync in style/wording — each rendered its own copy of this before.
@@ -413,7 +413,7 @@ const StatusBanner = ({ notice, error }) => (
 // With a copy already in the library the page plays that copy, and importing
 // another is the two-step side button; otherwise it imports, then plays.
 const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, touch, library, armed }) => (
-  <div style={{ color: "#fff" }}>
+  <div style={{ color: "var(--oh-ink, #fff)" }}>
     <button
       type="button"
       className="oh-tap-row"
@@ -435,7 +435,7 @@ const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, t
         {post.pinned ? "📌 " : ""}{post.title}
       </h3>
     </div>
-    <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.8rem", marginBottom: "0.9rem" }}>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.8rem", marginBottom: "0.9rem" }}>
       by {post.author} · {new Date(post.createdAt).toLocaleDateString()}
     </div>
     {library.status && (
@@ -452,18 +452,18 @@ const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, t
     {/* The languages it ships its own text in (its language packs), each in
         its own name. */}
     {post.languages?.length ? (
-      <div style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.8rem", marginBottom: "0.55rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", fontSize: "0.8rem", marginBottom: "0.55rem" }}>
         <span>{"Languages:"}</span>{" "}
         <span data-no-translate>{post.languages.map((code) => LANGUAGES.find((entry) => entry.code === code)?.native || code).join(", ")}</span>
       </div>
     ) : null}
-    <div style={{ color: "#e4e4e7", fontSize: "0.78rem", marginBottom: "1rem" }}>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", fontSize: "0.78rem", marginBottom: "1rem" }}>
       Likes and comments live on the scenario's GitHub post — tap 👍 or 💬 above (or the button below) to open it and react there.
     </div>
 
     {/* The whole description, in the author's own lines (hubPosts.js);
         the card shows the one-line cut. */}
-    <p style={{ color: "rgba(244,244,246,0.8)", fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "1.3rem", overflowWrap: "anywhere", whiteSpace: "pre-line" }}>
+    <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", fontSize: "0.9rem", lineHeight: 1.6, marginBottom: "1.3rem", overflowWrap: "anywhere", whiteSpace: "pre-line" }}>
       {post.fullDescription || post.description || "No description."}
     </p>
 
@@ -478,10 +478,10 @@ const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, t
           title={`Start a new game from “${library.copy.name}” in your Scenarios tab`}
           style={{
             alignItems: "center",
-            background: "rgba(255,255,255,0.1)",
+            background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
             border: "none",
             borderRadius: "10px",
-            color: "#fff",
+            color: "var(--oh-ink, #fff)",
             cursor: busy ? "default" : "pointer",
             display: "flex",
             fontSize: "1rem",
@@ -500,10 +500,10 @@ const ScenarioDetail = ({ post, busy, onImport, onPlay, onBack, notice, error, t
           onClick={() => onImport(post, { play: true })}
           style={{
             alignItems: "center",
-            background: post.bundleUrl ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.08)",
+            background: post.bundleUrl ? "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
             border: "none",
             borderRadius: "10px",
-            color: post.bundleUrl ? "#fff" : "rgba(255,255,255,0.35)",
+            color: post.bundleUrl ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)",
             cursor: post.bundleUrl && !busy ? "pointer" : "default",
             display: "flex",
             fontSize: "1rem",
@@ -906,7 +906,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
   return (
     // As the main menu's Community tab (fullPage) the surrounding page owns
     // scrolling; as a floating panel it caps its own height and scrolls itself.
-    <div style={{ color: "#fff", ...(fullPage ? {} : { maxHeight: `calc(${APP_HEIGHT} - 11rem)`, overflowY: "auto", paddingRight: "0.2rem" }) }}>
+    <div style={{ color: "var(--oh-ink, #fff)", ...(fullPage ? {} : { maxHeight: `calc(${APP_HEIGHT} - 11rem)`, overflowY: "auto", paddingRight: "0.2rem" }) }}>
       {missingMap?.basemaps && (
         <DetailedMapsInstallOffer key={missingMap.postId} offers={missingMap.basemaps} onDone={finishInstall} />
       )}
@@ -938,9 +938,9 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
               controls together on the right: beside the main menu's rail the
               row is narrower, and the controls must not be pushed apart. */}
           <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.5rem 1rem", marginBottom: "0.9rem" }}>
-            <div style={{ color: "rgba(255,255,255,0.55)", flex: "1 1 20rem", fontSize: "0.78rem", lineHeight: 1.5, minWidth: 0 }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", flex: "1 1 20rem", fontSize: "0.78rem", lineHeight: 1.5, minWidth: 0 }}>
               Community scenarios from the hub — ⬇ = imports, 👍 = likes. Open any post to 👍 like or 💬 comment on GitHub.
-              {" "}<span style={{ color: "#e4e4e7" }}>The OFFICIAL badge marks a post made by a team member of the game.</span>
+              {" "}<span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>The OFFICIAL badge marks a post made by a team member of the game.</span>
             </div>
             <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "flex-end", marginLeft: "auto" }}>
             <input
@@ -952,7 +952,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
               aria-label="Search community scenarios"
               style={searchInputStyle}
             />
-            <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.78rem", fontWeight: 600 }}>Start date</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.78rem", fontWeight: 600 }}>Start date</span>
             <input
               type="text"
               className="oh-tap-row"
@@ -960,7 +960,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
               onChange={(event) => setDateFrom(event.target.value)}
               placeholder="From"
               aria-label="From"
-              style={{ ...searchInputStyle, minWidth: 0, width: "6.5rem", borderColor: dateFrom && !fromBound ? "rgba(248,113,113,0.6)" : "rgba(255,255,255,0.12)" }}
+              style={{ ...searchInputStyle, minWidth: 0, width: "6.5rem", borderColor: dateFrom && !fromBound ? "rgba(248,113,113,0.6)" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)" }}
             />
             <input
               type="text"
@@ -969,7 +969,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
               onChange={(event) => setDateTo(event.target.value)}
               placeholder="To"
               aria-label="To"
-              style={{ ...searchInputStyle, minWidth: 0, width: "6.5rem", borderColor: dateTo && !toBound ? "rgba(248,113,113,0.6)" : "rgba(255,255,255,0.12)" }}
+              style={{ ...searchInputStyle, minWidth: 0, width: "6.5rem", borderColor: dateTo && !toBound ? "rgba(248,113,113,0.6)" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)" }}
             />
             {(dateFrom || dateTo) && (
               <button type="button" className="oh-tap-row" onClick={() => { setDateFrom(""); setDateTo(""); }} style={touchFit(pillButton, touch)}>
@@ -981,7 +981,7 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
               type="button"
               className="oh-tap-row"
               onClick={() => setPublishPickerOpen((open) => !open)}
-              style={touchFit({ ...pillButton, background: "rgba(255,255,255,0.15)", borderColor: "rgba(255,255,255,0.25)" }, touch)}
+              style={touchFit({ ...pillButton, background: "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" }, touch)}
             >
               ⬆ Publish to Hub
             </button>
@@ -990,28 +990,28 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
             </a>
             {/* The one coloured control on this page, on purpose: it is the brand's
                 own blue, and the corner is where a newcomer looks for the door. */}
-            <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="oh-tap-row" style={touchFit({ ...pillButton, background: DISCORD_BLURPLE, borderColor: "#6d78f5", color: "#fff", fontWeight: 700, gap: "0.45rem", textDecoration: "none" }, touch)}>
+            <a href={DISCORD_URL} target="_blank" rel="noopener noreferrer" className="oh-tap-row" style={touchFit({ ...pillButton, background: DISCORD_BLURPLE, borderColor: "#6d78f5", color: "var(--oh-ink, #fff)", fontWeight: 700, gap: "0.45rem", textDecoration: "none" }, touch)}>
               <DiscordMark size="1.05rem" />
               Join the Discord
             </a>
             </div>
           </div>
 
-          <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.76rem", marginBottom: "0.7rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.76rem", marginBottom: "0.7rem" }}>
             Scenarios on the Hub are released under CC BY 4.0.
           </div>
 
           {publishPickerOpen && (
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "14px", marginBottom: "0.9rem", padding: "0.8rem" }}>
-              <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.8rem", marginBottom: "0.55rem" }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "14px", marginBottom: "0.9rem", padding: "0.8rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: "0.8rem", marginBottom: "0.55rem" }}>
                 Pick a scenario to publish. Its bundle downloads to your computer, and a prefilled hub post opens —
                 drag the downloaded file into the Description box there and submit.
               </div>
               {/* Said before the scenario is chosen: choosing one is what publishes it. */}
-              <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.16)", borderRadius: "10px", color: "rgba(255,255,255,0.88)", fontSize: "0.8rem", lineHeight: 1.5, marginBottom: "0.6rem", padding: "0.55rem 0.7rem" }}>
+              <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)", borderRadius: "10px", color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", fontSize: "0.8rem", lineHeight: 1.5, marginBottom: "0.6rem", padding: "0.55rem 0.7rem" }}>
                 <div style={{ fontWeight: 700 }}>Everything you publish to the Hub is released under CC BY 4.0.</div>
                 <div>Only publish what you made yourself, or what you may share under this licence.</div>
-                <a href={SCENARIO_LICENSE_URL} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.88)" }}>About CC BY 4.0 ↗</a>
+                <a href={SCENARIO_LICENSE_URL} target="_blank" rel="noopener noreferrer" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>About CC BY 4.0 ↗</a>
               </div>
               <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
                 {scenarios.map((scenario) => (
@@ -1069,8 +1069,8 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
                 )}
                 <div style={{ alignItems: isMobile ? "stretch" : "flex-end", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.7rem", justifyContent: "space-between", margin: "1.4rem 0 0.8rem" }}>
                   <div>
-                    <div style={{ color: "rgba(255,255,255,0.96)", fontSize: "1.08rem", fontWeight: 800, letterSpacing: "-0.02em" }}>Browse Community</div>
-                    <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.78rem", marginTop: "0.25rem" }}>One catalog, sorted the way you want.</div>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "1.08rem", fontWeight: 800, letterSpacing: "-0.02em" }}>Browse Community</div>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.78rem", marginTop: "0.25rem" }}>One catalog, sorted the way you want.</div>
                   </div>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
                     {[['installs', 'Most Installed'], ['likes', 'Most Liked'], ['recent', 'Newest']].map(([value, label]) => (
@@ -1081,9 +1081,9 @@ const CommunityPanel = ({ fullPage = false, onPlay }) => {
                         onClick={() => setBrowseSort(value)}
                         style={touchFit({
                           ...pillButton,
-                          background: browseSort === value ? "var(--oh-grey-selected)" : "rgba(255,255,255,0.06)",
-                          borderColor: browseSort === value ? "var(--oh-grey-border-strong)" : "rgba(255,255,255,0.1)",
-                          color: browseSort === value ? "var(--oh-grey-text)" : "rgba(255,255,255,0.78)",
+                          background: browseSort === value ? "var(--oh-grey-selected)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                          borderColor: browseSort === value ? "var(--oh-grey-border-strong)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+                          color: browseSort === value ? "var(--oh-grey-text)" : "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)",
                         }, touch)}
                       >
                         {label}

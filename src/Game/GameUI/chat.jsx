@@ -349,7 +349,7 @@ const FlagImg = ({ url, alt = "", size = "1em", width, height }) => {
             style={{
                 width: w, height: h, objectFit: "cover", borderRadius: "2px",
                 display: "inline-block", verticalAlign: "middle",
-                boxShadow: "0 0 0 1px rgba(255,255,255,0.12)", flexShrink: 0,
+                boxShadow: "0 0 0 1px color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", flexShrink: 0,
             }}
         />
     ) : (
@@ -551,9 +551,9 @@ const PollCard = ({ poll, playerCountry, onVote }) => {
                             // taller than its text.
                             ...(isTouch ? { alignItems: "center" } : {}),
                             background: `linear-gradient(to right, rgba(96,165,250,0.28) ${share}%, rgba(255,255,255,0.05) ${share}%)`,
-                            border: chosen ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.12)",
+                            border: chosen ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
                             borderRadius: "8px",
-                            color: "white",
+                            color: "var(--oh-ink, #fff)",
                             cursor: mine || !onVote ? "default" : "pointer",
                             display: "flex",
                             fontFamily: "inherit",
@@ -566,14 +566,14 @@ const PollCard = ({ poll, playerCountry, onVote }) => {
                         <span>
                             {option.label}{chosen ? " ✓" : ""}
                             {!canHover && voters.length > 0 && (
-                                <span data-no-translate style={{ color: "rgba(255,255,255,0.5)", display: "block", fontSize: "0.68rem", marginTop: "0.15rem" }}>{voters.join(", ")}</span>
+                                <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", display: "block", fontSize: "0.68rem", marginTop: "0.15rem" }}>{voters.join(", ")}</span>
                             )}
                         </span>
-                        <span data-no-translate style={{ color: "rgba(255,255,255,0.55)" }}>{option.votes}</span>
+                        <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>{option.votes}</span>
                     </button>
                 );
             })}
-            <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.68rem" }}>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.68rem" }}>
                 {total === 0 ? "Nobody has voted yet" : `${total} vote${total === 1 ? "" : "s"} cast`}
                 {mine ? "" : " · your vote is yours to cast"}
             </span>
@@ -626,9 +626,9 @@ const ReactionChip = ({ emoji, members, flagUrlMap }) => {
     const tooltip = hovered ? ReactDOM.createPortal(
         <div ref={tooltipRef} style={{
             position: "fixed", left: pos.x, top: pos.y - 5, transform: "translate(-50%, -100%)",
-            background: "rgba(18,18,21,.98)", border: "1px solid rgba(255,255,255,.12)", borderRadius: 8,
+            background: "color-mix(in srgb, var(--oh-paper, rgb(18,18,21)) 98%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: 8,
             boxShadow: "0 8px 24px rgba(0,0,0,.35)", padding: ".34rem .48rem", zIndex: 99999, pointerEvents: "none",
-            display: "flex", flexDirection: "column", gap: ".2rem", color: "rgba(255,255,255,.82)", fontSize: ".66rem", whiteSpace: "nowrap",
+            display: "flex", flexDirection: "column", gap: ".2rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: ".66rem", whiteSpace: "nowrap",
         }}>
             {members.map((member) => (
                 <span key={member.country} style={{ display: "inline-flex", alignItems: "center", gap: ".32rem" }}>
@@ -649,12 +649,12 @@ const ReactionChip = ({ emoji, members, flagUrlMap }) => {
             onClick={canHover ? undefined : () => (hovered ? setHovered(false) : handleMouseEnter())}
             title={names.join(", ")} style={{
             minHeight: "1.55rem", padding: ".18rem .42rem", borderRadius: 999,
-            border: "1px solid rgba(255,255,255,.12)", background: "rgba(31,31,35,.94)",
+            border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", background: "color-mix(in srgb, var(--oh-paper, rgb(31,31,35)) 94%, transparent)",
             display: "inline-flex", alignItems: "center", gap: ".28rem", lineHeight: 1, cursor: "default",
             boxShadow: "0 2px 8px rgba(0,0,0,.15)",
         }}>
             <span style={{ fontSize: ".78rem" }}>{emoji}</span>
-            {members.length > 1 && <span style={{ fontSize: ".61rem", fontWeight: 750, color: "rgba(255,255,255,.62)" }}>{members.length}</span>}
+            {members.length > 1 && <span style={{ fontSize: ".61rem", fontWeight: 750, color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)" }}>{members.length}</span>}
             <span style={{ display: "inline-flex", alignItems: "center", marginLeft: members.length > 1 ? ".02rem" : 0 }}>
                 {members.slice(0, 3).map((member, index) => (
                     <span key={member.country} style={{ display: "inline-flex", marginLeft: index ? "-.2rem" : 0, zIndex: 3 - index }}>
@@ -738,10 +738,10 @@ const DemandCard = ({ demand, playerCountry, busy = false, onAnswer, onAcceptAlt
             disabled={busy}
             onClick={onClick}
             style={{
-                background: tone === "danger" ? "rgba(248,113,113,0.14)" : tone === "go" ? "rgba(74,222,128,0.14)" : "rgba(255,255,255,0.06)",
-                border: `1px solid ${tone === "danger" ? "rgba(248,113,113,0.45)" : tone === "go" ? "rgba(74,222,128,0.45)" : "rgba(255,255,255,0.16)"}`,
+                background: tone === "danger" ? "rgba(248,113,113,0.14)" : tone === "go" ? "rgba(74,222,128,0.14)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                border: `1px solid ${tone === "danger" ? "rgba(248,113,113,0.45)" : tone === "go" ? "rgba(74,222,128,0.45)" : "color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)"}`,
                 borderRadius: "8px",
-                color: "white",
+                color: "var(--oh-ink, #fff)",
                 cursor: busy ? "default" : "pointer",
                 flex: 1,
                 fontFamily: "inherit",
@@ -771,13 +771,13 @@ const DemandCard = ({ demand, playerCountry, busy = false, onAnswer, onAcceptAlt
             </span>
             <span style={{ fontSize: "0.85rem", fontWeight: 700, lineHeight: 1.35 }}>{demand?.summary}</span>
             {demand?.alternative && (
-                <span style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.78rem", lineHeight: 1.35 }}>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)", fontSize: "0.78rem", lineHeight: 1.35 }}>
                     {iAmPuppet ? "You offered instead: " : `${demand?.target} offers instead: `}{demand.alternative}
                 </span>
             )}
 
             {reconsidering && (
-                <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.7rem", lineHeight: 1.35 }}>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.7rem", lineHeight: 1.35 }}>
                     You refused this. You can still change your mind.
                 </span>
             )}
@@ -794,7 +794,7 @@ const DemandCard = ({ demand, playerCountry, busy = false, onAnswer, onAcceptAlt
                             onChange={(event) => setText(event.target.value)}
                             placeholder="Or offer an alternative…"
                             disabled={busy}
-                            style={{ background: "rgba(0,0,0,0.28)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 8, color: "white", flex: 1, fontSize: "0.78rem", outline: "none", padding: "0.4rem 0.6rem" }}
+                            style={{ background: "rgba(0,0,0,0.28)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)", borderRadius: 8, color: "var(--oh-ink, #fff)", flex: 1, fontSize: "0.78rem", outline: "none", padding: "0.4rem 0.6rem" }}
                         />
                         {button("Offer", () => { if (text.trim()) { onAnswer?.("alternative", text.trim()); setText(""); } })}
                     </div>
@@ -812,13 +812,13 @@ const DemandCard = ({ demand, playerCountry, busy = false, onAnswer, onAcceptAlt
                         onChange={(event) => setText(event.target.value)}
                         placeholder="Revise your demand (or leave empty to insist on it)…"
                         disabled={busy}
-                        style={{ background: "rgba(0,0,0,0.28)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 8, color: "white", fontSize: "0.78rem", outline: "none", padding: "0.4rem 0.6rem" }}
+                        style={{ background: "rgba(0,0,0,0.28)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)", borderRadius: 8, color: "var(--oh-ink, #fff)", fontSize: "0.78rem", outline: "none", padding: "0.4rem 0.6rem" }}
                     />
                 </>
             )}
 
             {!settled && !myMovePuppet && !myMoveOverlord && (
-                <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.68rem" }}>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.68rem" }}>
                     {demand?.status === "countered"
                         ? `Waiting for ${demand?.by} to consider the alternative`
                         : `Waiting for ${demand?.target}'s answer`}
@@ -860,16 +860,16 @@ const MessageBubble = ({ msg, onRetry, compact = false, showTime = true }) => {
         <div style={{ position: "relative", maxWidth: isError ? "82%" : "min(70%, 42rem)", overflow: "visible" }}>
 
         {!isPlayer && !compact && (
-            <span style={{ display: "inline-flex", alignItems: "center", gap: ".34rem", fontSize: ".7rem", color: "rgba(255,255,255,.46)", marginBottom: ".28rem",
+            <span style={{ display: "inline-flex", alignItems: "center", gap: ".34rem", fontSize: ".7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", marginBottom: ".28rem",
                 // A phone's bubble is narrower than a long polity name on one
                 // line, which pushed the whole thread sideways.
                 whiteSpace: isMobile ? "normal" : "nowrap" }}>
-            {isError ? "⚠️ Error" : <><FlagImg url={flagUrl} alt={msg.speaker} size=".95em" /><strong style={{ fontWeight: 650, color: "rgba(255,255,255,.58)" }}>{msg.speaker}</strong></>}
+            {isError ? "⚠️ Error" : <><FlagImg url={flagUrl} alt={msg.speaker} size=".95em" /><strong style={{ fontWeight: 650, color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)" }}>{msg.speaker}</strong></>}
             </span>
         )}
 
         {isPlayer && msg.catchUpLabel && (
-            <div title={msg.catchUp || ""} style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.66rem", marginBottom: "0.25rem", textAlign: "right" }}>
+            <div title={msg.catchUp || ""} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.66rem", marginBottom: "0.25rem", textAlign: "right" }}>
                 ⏳ {msg.catchUpLabel}
             </div>
         )}
@@ -886,7 +886,7 @@ const MessageBubble = ({ msg, onRetry, compact = false, showTime = true }) => {
                 borderRadius: isPlayer ? "13px 13px 3px 13px" : "13px 13px 13px 3px",
                 backgroundColor: isPlayer ? "var(--oh-ui-active, rgba(59,130,246,.92))" : isError ? "rgba(239,68,68,0.16)" : `color-mix(in srgb, ${accentColor} 4%, var(--oh-ui-surface, rgba(35,35,39,0.96)))`,
                 fontSize: ".85rem", lineHeight: "1.5", whiteSpace: "pre-wrap", wordBreak: "break-word",
-                border: isPlayer ? "1px solid rgba(147,197,253,.2)" : isError ? "1px solid rgba(239,68,68,0.3)" : "1px solid rgba(255,255,255,.08)",
+                border: isPlayer ? "1px solid rgba(147,197,253,.2)" : isError ? "1px solid rgba(239,68,68,0.3)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
                 borderLeft: (!isPlayer && !isError) ? `2px solid color-mix(in srgb, ${accentColor} 72%, white 8%)` : undefined,
                 boxSizing: "border-box", boxShadow: "0 2px 10px rgba(0,0,0,.12)",
             }}>
@@ -895,8 +895,8 @@ const MessageBubble = ({ msg, onRetry, compact = false, showTime = true }) => {
             {!isError && hovered && (
                 <div style={{ position: "absolute", top: 0, bottom: 0, [isPlayer ? "right" : "left"]: "100%", [isPlayer ? "paddingRight" : "paddingLeft"]: ".35rem", paddingTop: ".2rem" }}>
                     <button type="button" className="oh-tap" onClick={copyMessage} title={copied ? "Copied" : "Copy message"} aria-label="Copy message" style={{
-                        width: "1.6rem", height: "1.6rem", borderRadius: 7, border: "1px solid rgba(255,255,255,.09)",
-                        background: "rgba(24,24,27,.94)", color: copied ? "#86efac" : "rgba(255,255,255,.46)",
+                        width: "1.6rem", height: "1.6rem", borderRadius: 7, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)",
+                        background: "color-mix(in srgb, var(--oh-paper, rgb(24,24,27)) 94%, transparent)", color: copied ? "#86efac" : "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)",
                         display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 4px 12px rgba(0,0,0,.2)",
                     }}>
                         <CopyIcon />
@@ -917,7 +917,7 @@ const MessageBubble = ({ msg, onRetry, compact = false, showTime = true }) => {
         )}
 
         {!isPlayer && showTime && msg.time && (
-            <span style={{ fontSize: ".63rem", color: "rgba(255,255,255,.27)", marginTop: ".28rem", display: "block" }}>
+            <span style={{ fontSize: ".63rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 27%, transparent)", marginTop: ".28rem", display: "block" }}>
             {formatGameDateReadable(msg.time, "MMM D, YYYY") || msg.time}
             </span>
         )}
@@ -934,9 +934,9 @@ const InstitutionRecord = ({ msg }) => {
     const text = established ? raw.replace(/\s+institutional channel established\.?$/i, " council opened.") : raw;
     return (
         <div style={{ display: "flex", justifyContent: "center", padding: ".12rem .75rem" }}>
-            <div style={{ maxWidth: "76%", display: "inline-flex", alignItems: "center", gap: ".45rem", border: "1px solid var(--oh-grey-border)", background: "rgba(255,255,255,.035)", borderRadius: 8, padding: ".34rem .58rem", color: "rgba(255,255,255,.58)", fontSize: ".6rem", lineHeight: 1.35 }}>
-                <span aria-hidden="true" style={{ color: "rgba(231,231,234,.72)", fontSize: ".72rem" }}>◇</span>
-                <span style={{ color: "rgba(231,231,234,.72)", fontSize: ".52rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Institution record</span>
+            <div style={{ maxWidth: "76%", display: "inline-flex", alignItems: "center", gap: ".45rem", border: "1px solid var(--oh-grey-border)", background: "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)", borderRadius: 8, padding: ".34rem .58rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: ".6rem", lineHeight: 1.35 }}>
+                <span aria-hidden="true" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: ".72rem" }}>◇</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: ".52rem", fontWeight: 800, letterSpacing: ".06em", textTransform: "uppercase", whiteSpace: "nowrap" }}>Institution record</span>
                 <span>{text}</span>
             </div>
         </div>
@@ -949,21 +949,21 @@ const TypingBubble = ({ speaker, code, hint = "", label = "Thinking" }) => {
     const flagUrl = useCountryFlagUrl({ code, name: speaker });
     return (
         <div style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.7rem", color: "rgba(255,255,255,0.4)", marginBottom: "0.25rem" }}><FlagImg url={flagUrl} alt={speaker} size="0.95em" /> {speaker}</span>
-        <div style={{ padding: "0.6rem 0.85rem", borderRadius: "12px 12px 12px 4px", backgroundColor: "rgba(255,255,255,0.08)", fontSize: "0.85rem" }}>
+        <span style={{ display: "inline-flex", alignItems: "center", gap: "0.3rem", fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", marginBottom: "0.25rem" }}><FlagImg url={flagUrl} alt={speaker} size="0.95em" /> {speaker}</span>
+        <div style={{ padding: "0.6rem 0.85rem", borderRadius: "12px 12px 12px 4px", backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", fontSize: "0.85rem" }}>
         <ThinkingDots label={label} />
         </div>
-        {hint && <span style={{ fontSize: "0.66rem", color: "rgba(255,255,255,0.32)", marginTop: "0.3rem" }}>{hint}</span>}
+        {hint && <span style={{ fontSize: "0.66rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)", marginTop: "0.3rem" }}>{hint}</span>}
         </div>
     );
 };
 
 const GroupThinkingBubble = ({ count = 0 }) => (
     <div data-diplomacy-group-thinking="true" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-    <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.42)", marginBottom: "0.25rem" }}>
+    <span style={{ fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginBottom: "0.25rem" }}>
         {count > 1 ? `${count} governments` : "Government"}
     </span>
-    <div style={{ display: "inline-flex", alignItems: "center", gap: ".55rem", padding: "0.6rem 0.85rem", borderRadius: "12px 12px 12px 4px", backgroundColor: "rgba(255,255,255,0.08)", fontSize: "0.78rem", color: "rgba(255,255,255,.58)" }}>
+    <div style={{ display: "inline-flex", alignItems: "center", gap: ".55rem", padding: "0.6rem 0.85rem", borderRadius: "12px 12px 12px 4px", backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", fontSize: "0.78rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)" }}>
         <span>Considering the reply</span><ThinkingDots />
     </div>
     </div>
@@ -971,10 +971,10 @@ const GroupThinkingBubble = ({ count = 0 }) => (
 
 const LifecycleThinkingBubble = ({ count = 0 }) => (
     <div data-lifecycle-group-thinking="true" style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}>
-    <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.42)", marginBottom: "0.25rem" }}>
+    <span style={{ fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginBottom: "0.25rem" }}>
         {count > 1 ? `${count} invited governments` : "Invited government"}
     </span>
-    <div style={{ display: "inline-flex", alignItems: "center", gap: ".55rem", padding: "0.6rem 0.85rem", borderRadius: "12px 12px 12px 4px", backgroundColor: "rgba(255,255,255,0.035)", border: "1px solid var(--oh-grey-border)", fontSize: "0.78rem", color: "rgba(255,255,255,.58)" }}>
+    <div style={{ display: "inline-flex", alignItems: "center", gap: ".55rem", padding: "0.6rem 0.85rem", borderRadius: "12px 12px 12px 4px", backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)", border: "1px solid var(--oh-grey-border)", fontSize: "0.78rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)" }}>
         <span>Considering membership</span><ThinkingDots />
     </div>
     </div>
@@ -993,18 +993,18 @@ const lifecycleOutcomePresentation = (entry = {}) => {
 const LifecycleOutcomePanel = ({ cases = [], institution = null, concluded = false, onViewInstitution = null }) => {
     if (!cases.length) return null;
     return (
-        <div data-lifecycle-outcome-panel="true" style={{ marginBottom: ".45rem", padding: ".55rem .62rem", border: `1px solid ${concluded ? "rgba(34,197,94,.2)" : "var(--oh-grey-border)"}`, borderRadius: 9, background: concluded ? "rgba(34,197,94,.045)" : "rgba(255,255,255,.025)" }}>
+        <div data-lifecycle-outcome-panel="true" style={{ marginBottom: ".45rem", padding: ".55rem .62rem", border: `1px solid ${concluded ? "rgba(34,197,94,.2)" : "var(--oh-grey-border)"}`, borderRadius: 9, background: concluded ? "rgba(34,197,94,.045)" : "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)" }}>
             <div style={{ display: "flex", alignItems: "center", gap: ".55rem", flexWrap: "wrap" }}>
                 <div style={{ flex: "1 1 15rem", minWidth: 0 }}>
                     <div style={{ fontSize: ".56rem", fontWeight: 850, color: concluded ? "#bbf7d0" : "var(--oh-grey-text)" }}>{concluded ? "Membership negotiation concluded" : "Membership responses"}</div>
-                    {concluded && institution?.status && <div style={{ marginTop: ".14rem", fontSize: ".51rem", color: "rgba(255,255,255,.4)" }}>{institution.name || "Institution"} is now {String(institution.status).replace(/[-_]/g, " ")}.</div>}
+                    {concluded && institution?.status && <div style={{ marginTop: ".14rem", fontSize: ".51rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>{institution.name || "Institution"} is now {String(institution.status).replace(/[-_]/g, " ")}.</div>}
                 </div>
-                {concluded && onViewInstitution && <button type="button" className="oh-tap-row" onClick={onViewInstitution} style={{ border: "1px solid var(--oh-grey-border)", borderRadius: 8, background: "rgba(255,255,255,.055)", color: "var(--oh-grey-text)", padding: ".28rem .46rem", fontSize: ".54rem", fontWeight: 760, cursor: "pointer" }}>View institution →</button>}
+                {concluded && onViewInstitution && <button type="button" className="oh-tap-row" onClick={onViewInstitution} style={{ border: "1px solid var(--oh-grey-border)", borderRadius: 8, background: "color-mix(in srgb, var(--oh-ink, #fff) 5.5%, transparent)", color: "var(--oh-grey-text)", padding: ".28rem .46rem", fontSize: ".54rem", fontWeight: 760, cursor: "pointer" }}>View institution →</button>}
             </div>
             <div style={{ display: "flex", flexDirection: "column", gap: ".3rem", marginTop: ".45rem" }}>
                 {cases.map((entry) => {
                     const presentation = lifecycleOutcomePresentation(entry);
-                    return <div key={entry.id || entry.polity} style={{ display: "flex", alignItems: "center", gap: ".45rem", minWidth: 0 }}><span style={{ flex: 1, minWidth: 0, fontSize: ".56rem", color: "rgba(255,255,255,.62)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{entry.polity || "Government"}</span><InstitutionPill tone={presentation.tone}>{presentation.label}</InstitutionPill></div>;
+                    return <div key={entry.id || entry.polity} style={{ display: "flex", alignItems: "center", gap: ".45rem", minWidth: 0 }}><span style={{ flex: 1, minWidth: 0, fontSize: ".56rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{entry.polity || "Government"}</span><InstitutionPill tone={presentation.tone}>{presentation.label}</InstitutionPill></div>;
                 })}
             </div>
         </div>
@@ -1037,13 +1037,13 @@ const CountryTile = ({ country, code, flagUrl, isSelected, onToggle }) => {
             border: isSelected
             ? "1px solid rgba(59,130,246,0.6)"
             : hovered
-            ? "1px solid rgba(255,255,255,0.15)"
-            : "1px solid rgba(255,255,255,0.07)",
+            ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)"
+            : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
             background: isSelected
             ? "rgba(59,130,246,0.18)"
             : hovered
-            ? "rgba(255,255,255,0.07)"
-            : "rgba(255,255,255,0.04)",
+            ? "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"
+            : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
             cursor: "pointer",
             transition: "all 0.12s ease",
             fontFamily: "sans-serif",
@@ -1053,10 +1053,10 @@ const CountryTile = ({ country, code, flagUrl, isSelected, onToggle }) => {
         }}
         >
         {isSelected && (
-            <div style={{ position: "absolute", top: "0.3rem", right: "0.3rem", width: "14px", height: "14px", borderRadius: "50%", background: "#3b82f6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.55rem", color: "white", fontWeight: 700 }}>✓</div>
+            <div style={{ position: "absolute", top: "0.3rem", right: "0.3rem", width: "14px", height: "14px", borderRadius: "50%", background: "#3b82f6", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "0.55rem", color: "var(--oh-ink, #fff)", fontWeight: 700 }}>✓</div>
         )}
         <FlagImg url={flagUrl} alt={country} width="2.3rem" height="1.6rem" />
-        <span style={{ fontSize: "0.72rem", color: "rgba(255,255,255,0.8)", textAlign: "center", lineHeight: 1.3 }}>{shortName}</span>
+        <span style={{ fontSize: "0.72rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", textAlign: "center", lineHeight: 1.3 }}>{shortName}</span>
         </button>
     );
 };
@@ -1091,20 +1091,20 @@ const CountrySelectorModal = ({
         : single ? [{ name, code }] : [...prev, { name, code }]);
 
     return (
-        <div style={{ position: "absolute", inset: 0, backgroundColor: "rgba(24,24,27,0.98)", borderRadius: "16px", display: "flex", flexDirection: "column", zIndex: 10 }}>
+        <div style={{ position: "absolute", inset: 0, backgroundColor: "color-mix(in srgb, var(--oh-paper, rgb(24,24,27)) 98%, transparent)", borderRadius: "16px", display: "flex", flexDirection: "column", zIndex: 10 }}>
         <div style={{ padding: "1.1rem 1.25rem 0.6rem", flexShrink: 0 }}>
         <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between" }}>
         <div>
-        <div style={{ fontWeight: 700, fontSize: "1.05rem", color: "white" }}>{title}</div>
-        <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.4)", marginTop: "0.2rem" }}>{subtitle}</div>
+        <div style={{ fontWeight: 700, fontSize: "1.05rem", color: "var(--oh-ink, #fff)" }}>{title}</div>
+        <div style={{ fontSize: "0.78rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", marginTop: "0.2rem" }}>{subtitle}</div>
         </div>
-        <button className="oh-tap" aria-label="Close" onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,0.5)", fontSize: "1.1rem", padding: "0.1rem 0.3rem", borderRadius: "6px", lineHeight: 1 }}
-        onMouseEnter={e => { e.currentTarget.style.color = "white"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
-        onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; e.currentTarget.style.background = "none"; }}>✕</button>
+        <button className="oh-tap" aria-label="Close" onClick={onCancel} style={{ background: "none", border: "none", cursor: "pointer", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "1.1rem", padding: "0.1rem 0.3rem", borderRadius: "6px", lineHeight: 1 }}
+        onMouseEnter={e => { e.currentTarget.style.color = "white"; e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"; }}
+        onMouseLeave={e => { e.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)"; e.currentTarget.style.background = "none"; }}>✕</button>
         </div>
-        <div style={{ marginTop: "0.85rem", padding: "0.65rem 0.9rem", borderRadius: "10px", backgroundColor: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)" }}>
-        <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "rgba(255,255,255,0.8)" }}>{selectedLabel}{single ? "" : ` (${selected.length})`}:</div>
-        <div style={{ fontSize: "0.78rem", color: "rgba(255,255,255,0.35)", marginTop: "0.2rem", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.4rem" }}>
+        <div style={{ marginTop: "0.85rem", padding: "0.65rem 0.9rem", borderRadius: "10px", backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }}>
+        <div style={{ fontSize: "0.8rem", fontWeight: 600, color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)" }}>{selectedLabel}{single ? "" : ` (${selected.length})`}:</div>
+        <div style={{ fontSize: "0.78rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", marginTop: "0.2rem", display: "flex", flexWrap: "wrap", alignItems: "center", gap: "0.4rem" }}>
         {selected.length === 0 ? emptyLabel : selected.map((c, i) => (
             <span key={c.name} style={{ display: "inline-flex", alignItems: "center", gap: "0.25rem" }}>
             <FlagImg url={selectedFlagUrls[c.name]} alt={c.name} size="0.9em" />{c.name}{i < selected.length - 1 ? "," : ""}
@@ -1113,25 +1113,25 @@ const CountrySelectorModal = ({
         </div>
         </div>
         <div style={{ position: "relative", display: "flex", alignItems: "center", marginTop: "0.75rem" }}>
-        <span style={{ position: "absolute", left: "0.75rem", color: "rgba(255,255,255,0.35)", display: "flex", pointerEvents: "none" }}><SearchIcon /></span>
+        <span style={{ position: "absolute", left: "0.75rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", display: "flex", pointerEvents: "none" }}><SearchIcon /></span>
         <input type="text" placeholder="Search countries..." value={search} onChange={e => setSearch(e.target.value)}
-        style={{ width: "100%", padding: "0.55rem 0.85rem 0.55rem 2.2rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.05)", color: "white", fontSize: "0.82rem", outline: "none", boxSizing: "border-box", fontFamily: "sans-serif" }}
-        onFocus={e => e.target.style.borderColor = "rgba(255,255,255,0.25)"}
-        onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.12)"} />
+        style={{ width: "100%", padding: "0.55rem 0.85rem 0.55rem 2.2rem", borderRadius: "10px", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", color: "var(--oh-ink, #fff)", fontSize: "0.82rem", outline: "none", boxSizing: "border-box", fontFamily: "sans-serif" }}
+        onFocus={e => e.target.style.borderColor = "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)"}
+        onBlur={e => e.target.style.borderColor = "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"} />
         </div>
         </div>
         <div style={{ flex: 1, overflowY: "auto", scrollbarWidth: "none", padding: "0.5rem 1rem", display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gridAutoRows: "5.5rem", gap: "0.5rem", alignContent: "start" }}>
-        {loading && <p style={{ gridColumn: "1/-1", color: "rgba(255,255,255,0.35)", fontSize: "0.82rem", fontStyle: "italic", textAlign: "center" }}>Loading countries…</p>}
+        {loading && <p style={{ gridColumn: "1/-1", color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.82rem", fontStyle: "italic", textAlign: "center" }}>Loading countries…</p>}
         {filtered.map(c => (
             <CountryTile key={c.name} country={c.name} code={c.code} flagUrl={filteredFlagUrls[c.name] ?? null} isSelected={isSelectedName(c.name)} onToggle={() => toggle(c)} />
         ))}
         </div>
-        <div style={{ padding: "0.75rem 1rem", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", gap: "0.5rem", flexShrink: 0 }}>
-        <button className="oh-tap-row" onClick={onCancel} style={{ flex: 1, padding: "0.65rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.8)", fontSize: "0.85rem", fontWeight: 500, cursor: "pointer", fontFamily: "sans-serif" }}
-        onMouseEnter={e => e.currentTarget.style.background = "rgba(255,255,255,0.1)"}
-        onMouseLeave={e => e.currentTarget.style.background = "rgba(255,255,255,0.06)"}>Cancel</button>
+        <div style={{ padding: "0.75rem 1rem", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "flex", gap: "0.5rem", flexShrink: 0 }}>
+        <button className="oh-tap-row" onClick={onCancel} style={{ flex: 1, padding: "0.65rem", borderRadius: "10px", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", fontSize: "0.85rem", fontWeight: 500, cursor: "pointer", fontFamily: "sans-serif" }}
+        onMouseEnter={e => e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)"}
+        onMouseLeave={e => e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"}>Cancel</button>
         <button className="oh-tap-row" onClick={() => selected.length > 0 && onStart(selected)} disabled={selected.length === 0}
-        style={{ flex: 2, padding: "0.65rem", borderRadius: "10px", border: "none", background: selected.length > 0 ? "rgba(255,255,255,0.28)" : "rgba(59,130,246,0.3)", color: "white", fontSize: "0.85rem", fontWeight: 600, cursor: selected.length > 0 ? "pointer" : "not-allowed", fontFamily: "sans-serif" }}
+        style={{ flex: 2, padding: "0.65rem", borderRadius: "10px", border: "none", background: selected.length > 0 ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "rgba(59,130,246,0.3)", color: "var(--oh-ink, #fff)", fontSize: "0.85rem", fontWeight: 600, cursor: selected.length > 0 ? "pointer" : "not-allowed", fontFamily: "sans-serif" }}
         onMouseEnter={e => { if (selected.length > 0) e.currentTarget.style.background = "#2563eb"; }}
         onMouseLeave={e => { if (selected.length > 0) e.currentTarget.style.background = "#3b82f6"; }}>
         {confirmLabel(selected.length)}
@@ -2204,22 +2204,22 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
             {isInstitutionCouncil ? (!embeddedInstitution ? (
                 <>
                 {/* Institutional councils are canonical records and intentionally expose no delete control. */}
-                <div style={{ display: "flex", alignItems: "center", gap: ".75rem", padding: ".75rem 1rem", borderBottom: "1px solid rgba(255,255,255,.07)", flexShrink: 0 }}>
-                    <button className="oh-tap" onClick={onBack} aria-label="Back to institution" style={{ background: "none", border: 0, color: "rgba(255,255,255,.55)", cursor: "pointer", display: "flex", padding: ".22rem", borderRadius: 6 }}><BackIcon /></button>
+                <div style={{ display: "flex", alignItems: "center", gap: ".75rem", padding: ".75rem 1rem", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", flexShrink: 0 }}>
+                    <button className="oh-tap" onClick={onBack} aria-label="Back to institution" style={{ background: "none", border: 0, color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", display: "flex", padding: ".22rem", borderRadius: 6 }}><BackIcon /></button>
                     {institution && <InstitutionEmblem institution={institution} size={48} />}
                     <div style={{ minWidth: 0, flex: 1 }}>
                         <div style={{ display: "flex", alignItems: "center", gap: ".45rem" }}>
                             <strong style={{ fontSize: ".94rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{institution?.name || chat.title || "Institution council"}</strong>
                             {institution?.status && <InstitutionPill tone={String(institution.status).toLowerCase() === "active" ? "good" : "neutral"}>{institution.status}</InstitutionPill>}
                         </div>
-                        <div style={{ marginTop: ".12rem", fontSize: ".56rem", color: "rgba(255,255,255,.38)" }}>
+                        <div style={{ marginTop: ".12rem", fontSize: ".56rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)" }}>
                             {String(institution?.kind || "institution").replace(/[-_]/g, " ")}{institution?.shortName ? ` · ${institution.shortName}` : ""}{institution?.foundedDate ? ` · founded ${institution.foundedDate}` : ""}
                         </div>
                     </div>
                     <button className="oh-tap" onClick={() => onToggleRead?.()} title={unread ? "Mark as read" : "Mark as unread"} aria-label={unread ? "Mark as read" : "Mark as unread"} style={{ display: "flex", alignItems: "center", background: "none", border: "1px solid transparent", cursor: "pointer", color: "rgba(147,197,253,.78)", padding: ".3rem", borderRadius: 6 }}><EnvelopeIcon filled={unread} /></button>
                 </div>
                 {institutionView && <div style={{ padding: ".55rem 1rem", flexShrink: 0 }}><InstitutionFacts view={institutionView} /></div>}
-                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: ".15rem", padding: "0 .7rem", borderBottom: "1px solid rgba(255,255,255,.06)", flexShrink: 0 }}>
+                <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: ".15rem", padding: "0 .7rem", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", flexShrink: 0 }}>
                     {[
                         ["council", "Council"],
                         ["agenda", `Agenda${institutionView?.activeProposals?.length ? ` (${institutionView.activeProposals.length})` : ""}`],
@@ -2227,7 +2227,7 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                         ["charter", "Charter"],
                         ["members", "Members"],
                         ["documents", "Documents"],
-                    ].map(([key, label]) => <button key={key} className="oh-tap-row" onClick={() => key !== "council" && onInstitutionNavigate?.(key)} style={{ border: 0, borderBottom: `2px solid ${key === "council" ? "rgba(231,231,234,.72)" : "transparent"}`, background: "transparent", color: key === "council" ? "var(--oh-grey-text)" : "rgba(255,255,255,.48)", padding: ".48rem .58rem .56rem", fontSize: ".61rem", fontWeight: 760, cursor: key === "council" ? "default" : "pointer" }}>{label}</button>)}
+                    ].map(([key, label]) => <button key={key} className="oh-tap-row" onClick={() => key !== "council" && onInstitutionNavigate?.(key)} style={{ border: 0, borderBottom: `2px solid ${key === "council" ? "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)" : "transparent"}`, background: "transparent", color: key === "council" ? "var(--oh-grey-text)" : "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", padding: ".48rem .58rem .56rem", fontSize: ".61rem", fontWeight: 760, cursor: key === "council" ? "default" : "pointer" }}>{label}</button>)}
                 </div>
                 {institutionPendingActions > 0 && <button type="button" className="oh-tap-row" onClick={() => onInstitutionNavigate?.("agenda")} style={{ margin: ".65rem 1rem 0", padding: ".58rem .7rem", display: "flex", alignItems: "center", gap: ".7rem", border: "1px solid rgba(245,158,11,.28)", borderRadius: 10, background: "rgba(245,158,11,.08)", color: "#fde68a", cursor: "pointer", textAlign: "left", flexShrink: 0 }}>
                     <span style={{ flex: 1 }}><span style={{ display: "block", fontSize: ".52rem", fontWeight: 850, letterSpacing: ".07em", textTransform: "uppercase", color: "rgba(253,230,138,.7)" }}>Action required</span><span style={{ display: "block", marginTop: ".12rem", fontSize: ".62rem", fontWeight: 700 }}>{institutionPendingBallots ? `${institutionPendingBallots} ballot${institutionPendingBallots === 1 ? "" : "s"} awaiting you` : ""}{institutionPendingBallots && institutionPendingAmendments ? " · " : ""}{institutionPendingAmendments ? `${institutionPendingAmendments} amendment review${institutionPendingAmendments === 1 ? "" : "s"}` : ""}</span></span>
@@ -2239,7 +2239,7 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                     // On touch the gaps close up too: four thumb-sized buttons
                     // .72rem apart left a phone's thread title under 60px.
                     gap: isTouch ? ".35rem" : ".72rem", padding: isTouch ? ".35rem 1rem" : ".72rem 1rem", borderBottom: "1px solid var(--oh-ui-line, rgba(255,255,255,.07))", background: "var(--oh-ui-header, rgba(15,15,18,.26))", flexShrink: 0 }}>
-                <button className="oh-tap" onClick={onBack} aria-label="Back to diplomacy" style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,.58)", display: "flex", padding: ".26rem", borderRadius: 7 }}><BackIcon /></button>
+                <button className="oh-tap" onClick={onBack} aria-label="Back to diplomacy" style={{ background: "none", border: "none", cursor: "pointer", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", display: "flex", padding: ".26rem", borderRadius: 7 }}><BackIcon /></button>
                 <div style={{ display: "inline-flex", alignItems: "center", minWidth: headerCountries.length > 1 ? "2.5rem" : "1.55rem", paddingRight: headerCountries.length > 1 ? ".2rem" : 0, flexShrink: 0 }}>
                     {headerCountries.map((country, index) => (
                         <span key={`${country.name}-${country.code || index}`} style={{ display: "inline-flex", marginLeft: index ? "-.38rem" : 0, zIndex: headerCountries.length - index, filter: "drop-shadow(0 1px 2px rgba(0,0,0,.45))" }}>
@@ -2260,29 +2260,29 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                                 }}
                                 onBlur={() => handleSaveTitle()}
                                 maxLength={60}
-                                style={{ background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "6px", color: "white", fontSize: ".88rem", fontWeight: 700, padding: ".18rem .45rem", width: "100%", maxWidth: "18rem", outline: "none", fontFamily: "sans-serif" }}
+                                style={{ background: "rgba(0,0,0,0.35)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", borderRadius: "6px", color: "var(--oh-ink, #fff)", fontSize: ".88rem", fontWeight: 700, padding: ".18rem .45rem", width: "100%", maxWidth: "18rem", outline: "none", fontFamily: "sans-serif" }}
                             />
-                            <button className="oh-tap-row" onClick={() => handleSaveTitle()} style={{ background: "rgba(59,130,246,0.25)", border: "1px solid rgba(59,130,246,0.5)", color: "#93c5fd", borderRadius: "6px", fontSize: ".62rem", padding: ".22rem .45rem", cursor: "pointer", fontWeight: 700 }}>Save</button>
+                            <button className="oh-tap-row" onClick={() => handleSaveTitle()} style={{ background: "rgba(59,130,246,0.25)", border: "1px solid rgba(59,130,246,0.5)", color: "var(--oh-link, #93c5fd)", borderRadius: "6px", fontSize: ".62rem", padding: ".22rem .45rem", cursor: "pointer", fontWeight: 700 }}>Save</button>
                         </div>
                     ) : (
                         <div style={{ display: "flex", alignItems: "center", gap: ".4rem" }}>
-                            <div style={{ fontWeight: 750, fontSize: ".93rem", color: "rgba(255,255,255,.95)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{displayThreadTitle}</div>
+                            <div style={{ fontWeight: 750, fontSize: ".93rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 95%, transparent)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{displayThreadTitle}</div>
                             {!isInstitutional && !isLifecycleConversation && (
                                 <button
                                     className="oh-tap"
                                     onClick={() => { setTitleDraft(displayThreadTitle); setIsEditingTitle(true); }}
                                     title="Edit group title"
                                     aria-label="Edit group title"
-                                    style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,.4)", display: "flex", alignItems: "center", padding: ".15rem", borderRadius: 4 }}
+                                    style={{ background: "none", border: "none", cursor: "pointer", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", display: "flex", alignItems: "center", padding: ".15rem", borderRadius: 4 }}
                                     onMouseEnter={(e) => e.currentTarget.style.color = "white"}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = "rgba(255,255,255,.4)"}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)"}
                                 >
                                     <EditPencilIcon />
                                 </button>
                             )}
                         </div>
                     )}
-                    <div style={{ marginTop: ".12rem", color: "rgba(255,255,255,.34)", fontSize: ".62rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    <div style={{ marginTop: ".12rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: ".62rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {isLifecycleConversation ? (lifecycleNegotiationConcluded ? "Institution membership negotiation · concluded" : "Institution membership negotiation") : isGroup ? `${participantCount}-party diplomatic channel` : "Direct diplomatic channel"}
                     </div>
                 </div>
@@ -2292,22 +2292,22 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                         onClick={() => setShowAddMemberModal(true)}
                         title="Add country to conversation"
                         aria-label="Add country to conversation"
-                        style={{ display: "flex", alignItems: "center", gap: ".25rem", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.14)", cursor: "pointer", color: "rgba(255,255,255,0.85)", padding: ".26rem .48rem", borderRadius: 7, fontSize: ".68rem", fontWeight: 700, fontFamily: "sans-serif" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.12)"; e.currentTarget.style.color = "white"; }}
-                        onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.color = "rgba(255,255,255,0.85)"; }}
+                        style={{ display: "flex", alignItems: "center", gap: ".25rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)", cursor: "pointer", color: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)", padding: ".26rem .48rem", borderRadius: 7, fontSize: ".68rem", fontWeight: 700, fontFamily: "sans-serif" }}
+                        onMouseEnter={(e) => { e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"; e.currentTarget.style.color = "white"; }}
+                        onMouseLeave={(e) => { e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; e.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)"; }}
                     >
                         <PlusIcon /> Add Country
                     </button>
                 )}
                 <button className="oh-tap" onClick={() => onToggleRead?.()} title={unread ? "Mark as read" : "Mark as unread"} aria-label={unread ? "Mark as read" : "Mark as unread"} style={{ display: "flex", alignItems: "center", background: "none", border: "1px solid transparent", cursor: "pointer", color: "rgba(96,165,250,.7)", padding: ".3rem", borderRadius: 7, lineHeight: 1 }}><EnvelopeIcon filled={unread} /></button>
                 <button className="oh-tap" title={confirmingDelete ? "Click again to delete this chat" : "Delete chat"} aria-label={confirmingDelete ? "Confirm deleting this chat" : "Delete chat"} onClick={() => { if (confirmingDelete) { onDelete?.(); } else { setConfirmingDelete(true); } }} onBlur={() => setConfirmingDelete(false)} style={{ display: "flex", alignItems: "center", gap: ".3rem", background: confirmingDelete ? "rgba(239,68,68,.18)" : "none", border: `1px solid ${confirmingDelete ? "rgba(239,68,68,.55)" : "transparent"}`, cursor: "pointer", color: confirmingDelete ? "#fca5a5" : "rgba(239,68,68,.62)", fontSize: ".72rem", fontWeight: 600, fontFamily: "sans-serif", padding: confirmingDelete ? ".25rem .5rem" : ".3rem", borderRadius: 7, lineHeight: 1 }}>{confirmingDelete ? "Delete?" : <TrashIcon />}</button>
-                <button className="oh-tap" onClick={onBack} aria-label="Close conversation" style={{ background: "none", border: "none", cursor: "pointer", color: "rgba(255,255,255,.4)", fontSize: "1rem", lineHeight: 1, padding: ".28rem .34rem", borderRadius: 7 }}>✕</button>
+                <button className="oh-tap" onClick={onBack} aria-label="Close conversation" style={{ background: "none", border: "none", cursor: "pointer", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "1rem", lineHeight: 1, padding: ".28rem .34rem", borderRadius: 7 }}>✕</button>
                 </div>
             )}
 
             <div ref={messagesScrollRef} data-institution-council-scroll={isInstitutionCouncil ? "messages" : undefined} style={{ flex: 1, minHeight: 0, overflowY: "auto", overflowX: "visible", scrollbarWidth: "none", padding: isInstitutionCouncil ? ".75rem" : "1rem 1.15rem", display: "flex", flexDirection: "column", gap: isInstitutionCouncil ? "1rem" : ".86rem" }}>
             {messages.length === 0 && !isLoading && (
-                <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.35)", fontStyle: "italic", textAlign: "center", marginTop: "2rem" }}>
+                <p style={{ fontSize: "0.85rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontStyle: "italic", textAlign: "center", marginTop: "2rem" }}>
                 {isInstitutionCouncil ? "The council floor is quiet. Address the institution when you are ready." : isLifecycleConversation ? "The accession table is open." : "Begin the diplomatic conversation."}
                 </p>
             )}
@@ -2318,10 +2318,10 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                     onClick={() => setVisibleMessageLimit((current) => current + CHAT_RENDER_WINDOW_STEP)}
                     style={{
                         alignSelf: "center",
-                        background: "rgba(255,255,255,0.04)",
-                        border: "1px solid rgba(255,255,255,0.09)",
+                        background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                        border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)",
                         borderRadius: "999px",
-                        color: "rgba(255,255,255,0.58)",
+                        color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)",
                         cursor: "pointer",
                         fontSize: "0.68rem",
                         padding: "0.35rem 0.65rem",
@@ -2385,43 +2385,43 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
             <div ref={messagesEndRef} />
             </div>
 
-            {lifecycleTerminal ? (                <div data-lifecycle-terminal-history="true" style={{ padding: ".62rem 1rem .76rem", borderTop: "1px solid rgba(255,255,255,0.08)", background: "rgba(13,13,16,.46)", flexShrink: 0 }}>
+            {lifecycleTerminal ? (                <div data-lifecycle-terminal-history="true" style={{ padding: ".62rem 1rem .76rem", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", background: "color-mix(in srgb, var(--oh-paper, rgb(13,13,16)) 46%, transparent)", flexShrink: 0 }}>
                     <LifecycleOutcomePanel cases={lifecycleState.cases} institution={lifecycleState.institution} concluded onViewInstitution={onInstitutionNavigate ? () => onInstitutionNavigate("members") : null} />
                 </div>
             ) : isAdvisorDesk ? (
-                <div data-advisor-desk="true" style={{ padding: ".62rem 1rem .76rem", borderTop: "1px solid rgba(255,255,255,0.08)", background: "rgba(13,13,16,.46)", color: "rgba(255,255,255,.5)", fontSize: ".66rem", lineHeight: 1.45, flexShrink: 0 }}>
+                <div data-advisor-desk="true" style={{ padding: ".62rem 1rem .76rem", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", background: "color-mix(in srgb, var(--oh-paper, rgb(13,13,16)) 46%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: ".66rem", lineHeight: 1.45, flexShrink: 0 }}>
                     Your advisor brings you what your government learns in secret. Act on it with your orders.
                 </div>
             ) : !isLoading ? (
-                <div data-diplomacy-composer="modern" style={{ padding: isInstitutionCouncil ? ".65rem 1rem .8rem" : ".72rem 1rem .82rem", borderTop: "1px solid rgba(255,255,255,0.08)", background: isInstitutionCouncil ? "transparent" : "var(--oh-ui-header, rgba(13,13,16,.56))", flexShrink: 0 }}>
+                <div data-diplomacy-composer="modern" style={{ padding: isInstitutionCouncil ? ".65rem 1rem .8rem" : ".72rem 1rem .82rem", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", background: isInstitutionCouncil ? "transparent" : "var(--oh-ui-header, rgba(13,13,16,.56))", flexShrink: 0 }}>
                 {isInstitutionCouncil && <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: ".6rem", marginBottom: ".38rem" }}>
-                    <span style={{ fontSize: ".52rem", fontWeight: 850, letterSpacing: ".07em", color: "rgba(255,255,255,.4)", textTransform: "uppercase" }}>Council message</span>
-                    <button type="button" className="oh-tap-row" onClick={() => onInstitutionNavigate?.("agenda")} style={{ border: 0, background: "transparent", color: "rgba(231,231,234,.72)", cursor: "pointer", fontSize: ".58rem", fontWeight: 800 }}>Formal business →</button>
+                    <span style={{ fontSize: ".52rem", fontWeight: 850, letterSpacing: ".07em", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", textTransform: "uppercase" }}>Council message</span>
+                    <button type="button" className="oh-tap-row" onClick={() => onInstitutionNavigate?.("agenda")} style={{ border: 0, background: "transparent", color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", cursor: "pointer", fontSize: ".58rem", fontWeight: 800 }}>Formal business →</button>
                 </div>}
                 {isLifecycleConversation && !lifecycleRevealInProgress && lifecycleHasRecordedResponse && <LifecycleOutcomePanel cases={lifecycleState.cases} institution={lifecycleState.institution} concluded={lifecycleTerminal || lifecycleNegotiationConcluded} onViewInstitution={onInstitutionNavigate ? () => onInstitutionNavigate("members") : null} />}
-                {isLifecycleConversation && !lifecycleTerminal && <div data-institution-lifecycle-negotiation="true" style={{ marginBottom: ".45rem", padding: ".48rem .58rem", border: "1px solid var(--oh-grey-border)", borderRadius: 9, background: "rgba(255,255,255,.03)", display: "flex", alignItems: "center", gap: ".55rem", flexWrap: "wrap" }}>
-                    <div style={{ flex: "1 1 18rem", minWidth: 0 }}><div style={{ fontSize: ".55rem", fontWeight: 820, color: "var(--oh-grey-text)" }}>{isInstitutional ? "Institution accession hearing" : "Institution membership negotiation"}</div><div style={{ marginTop: ".13rem", fontSize: ".51rem", lineHeight: 1.35, color: "rgba(255,255,255,.38)" }}>{playerLifecycleCase ? "This invitation requires your government's explicit decision. The AI cannot accept, reject or alter membership for you." : isInstitutional ? "The application is now before the institution's canonical voters. Their positions should follow current PWv2, relations, charter obligations and political fit; native governance records every formal ballot." : "The invited government decides from current PWv2, relations, strategic fit and the institution's charter. A diplomatic invitation is not membership."}</div></div>
+                {isLifecycleConversation && !lifecycleTerminal && <div data-institution-lifecycle-negotiation="true" style={{ marginBottom: ".45rem", padding: ".48rem .58rem", border: "1px solid var(--oh-grey-border)", borderRadius: 9, background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", display: "flex", alignItems: "center", gap: ".55rem", flexWrap: "wrap" }}>
+                    <div style={{ flex: "1 1 18rem", minWidth: 0 }}><div style={{ fontSize: ".55rem", fontWeight: 820, color: "var(--oh-grey-text)" }}>{isInstitutional ? "Institution accession hearing" : "Institution membership negotiation"}</div><div style={{ marginTop: ".13rem", fontSize: ".51rem", lineHeight: 1.35, color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)" }}>{playerLifecycleCase ? "This invitation requires your government's explicit decision. The AI cannot accept, reject or alter membership for you." : isInstitutional ? "The application is now before the institution's canonical voters. Their positions should follow current PWv2, relations, charter obligations and political fit; native governance records every formal ballot." : "The invited government decides from current PWv2, relations, strategic fit and the institution's charter. A diplomatic invitation is not membership."}</div></div>
                     {playerLifecycleCase ? <div data-player-lifecycle-chat-controls="true" style={{ display: "flex", gap: ".28rem", flexWrap: "wrap" }}>
                         <button type="button" className="oh-tap-row" disabled={isLoading} onClick={() => handlePlayerLifecycleDecision("accept")} style={{ border: "1px solid rgba(34,197,94,.25)", borderRadius: 8, background: "rgba(34,197,94,.09)", color: "#bbf7d0", padding: ".3rem .46rem", fontSize: ".54rem", fontWeight: 760, cursor: isLoading ? "wait" : "pointer" }}>Accept</button>
-                        <button type="button" className="oh-tap-row" disabled={isLoading} onClick={() => handlePlayerLifecycleDecision("seek-observer")} style={{ border: "1px solid var(--oh-grey-border)", borderRadius: 8, background: "rgba(255,255,255,.055)", color: "var(--oh-grey-text)", padding: ".3rem .46rem", fontSize: ".54rem", cursor: isLoading ? "wait" : "pointer" }}>Observer instead</button>
+                        <button type="button" className="oh-tap-row" disabled={isLoading} onClick={() => handlePlayerLifecycleDecision("seek-observer")} style={{ border: "1px solid var(--oh-grey-border)", borderRadius: 8, background: "color-mix(in srgb, var(--oh-ink, #fff) 5.5%, transparent)", color: "var(--oh-grey-text)", padding: ".3rem .46rem", fontSize: ".54rem", cursor: isLoading ? "wait" : "pointer" }}>Observer instead</button>
                         <button type="button" className="oh-tap-row" disabled={isLoading} onClick={() => handlePlayerLifecycleDecision("delay")} style={{ border: "1px solid rgba(245,158,11,.2)", borderRadius: 8, background: "rgba(245,158,11,.07)", color: "#fde68a", padding: ".3rem .46rem", fontSize: ".54rem", cursor: isLoading ? "wait" : "pointer" }}>Later</button>
                         <button type="button" className="oh-tap-row" disabled={isLoading} onClick={() => handlePlayerLifecycleDecision("reject")} style={{ border: "1px solid rgba(239,68,68,.2)", borderRadius: 8, background: "rgba(239,68,68,.07)", color: "#fca5a5", padding: ".3rem .46rem", fontSize: ".54rem", cursor: isLoading ? "wait" : "pointer" }}>Reject</button>
                     </div> : isInstitutional && !lifecycleTerminal ? <button type="button" className="oh-tap-row" disabled={isLoading} onClick={handleLifecycleContinue} style={{ border: "1px solid var(--oh-grey-border-strong)", borderRadius: 8, background: "var(--oh-grey-raised)", color: "var(--oh-grey-text)", padding: ".3rem .48rem", fontSize: ".55rem", fontWeight: 760, cursor: isLoading ? "wait" : "pointer", whiteSpace: "nowrap" }}>Continue hearing →</button> : lifecycleCanRequestResponse ? <button type="button" className="oh-tap-row" disabled={isLoading} onClick={handleLifecycleContinue} style={{ border: "1px solid var(--oh-grey-border-strong)", borderRadius: 8, background: "var(--oh-grey-raised)", color: "var(--oh-grey-text)", padding: ".3rem .48rem", fontSize: ".55rem", fontWeight: 760, cursor: isLoading ? "wait" : "pointer", whiteSpace: "nowrap" }}>Request response →</button> : null}
                 </div>}
-                {canCallChatVote && pollComposerOpen && <div data-player-chat-poll-composer="true" style={{ marginBottom: ".5rem", padding: ".55rem .62rem", border: "1px solid rgba(255,255,255,.1)", borderRadius: 10, background: "rgba(255,255,255,.03)" }}>
+                {canCallChatVote && pollComposerOpen && <div data-player-chat-poll-composer="true" style={{ marginBottom: ".5rem", padding: ".55rem .62rem", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10, background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)" }}>
                     <div style={{ fontSize: ".56rem", fontWeight: 820, color: "var(--oh-grey-text)" }}>Call a conversational vote</div>
-                    <div style={{ marginTop: ".12rem", fontSize: ".51rem", lineHeight: 1.35, color: "rgba(255,255,255,.38)" }}>Recorded in this diplomatic thread. This does not create institutional law or a formal institution ballot.</div>
-                    <input value={pollQuestion} onChange={(event) => { setPollQuestion(event.target.value); setPollError(""); }} maxLength={500} placeholder="What should this group decide?" style={{ width: "100%", boxSizing: "border-box", marginTop: ".45rem", border: "1px solid rgba(255,255,255,.12)", borderRadius: 8, background: "rgba(0,0,0,.2)", color: "white", padding: ".42rem .5rem", fontSize: ".68rem" }} />
-                    <textarea value={pollOptionsText} onChange={(event) => { setPollOptionsText(event.target.value); setPollError(""); }} rows={3} maxLength={1200} placeholder={"One option per line\nYes\nNo"} style={{ width: "100%", boxSizing: "border-box", marginTop: ".38rem", border: "1px solid rgba(255,255,255,.12)", borderRadius: 8, background: "rgba(0,0,0,.2)", color: "white", padding: ".42rem .5rem", fontSize: ".64rem", fontFamily: "inherit", resize: "vertical" }} />
+                    <div style={{ marginTop: ".12rem", fontSize: ".51rem", lineHeight: 1.35, color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)" }}>Recorded in this diplomatic thread. This does not create institutional law or a formal institution ballot.</div>
+                    <input value={pollQuestion} onChange={(event) => { setPollQuestion(event.target.value); setPollError(""); }} maxLength={500} placeholder="What should this group decide?" style={{ width: "100%", boxSizing: "border-box", marginTop: ".45rem", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: 8, background: "rgba(0,0,0,.2)", color: "var(--oh-ink, #fff)", padding: ".42rem .5rem", fontSize: ".68rem" }} />
+                    <textarea value={pollOptionsText} onChange={(event) => { setPollOptionsText(event.target.value); setPollError(""); }} rows={3} maxLength={1200} placeholder={"One option per line\nYes\nNo"} style={{ width: "100%", boxSizing: "border-box", marginTop: ".38rem", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: 8, background: "rgba(0,0,0,.2)", color: "var(--oh-ink, #fff)", padding: ".42rem .5rem", fontSize: ".64rem", fontFamily: "inherit", resize: "vertical" }} />
                     {pollError && <div style={{ marginTop: ".3rem", color: "#fca5a5", fontSize: ".56rem" }}>{pollError}</div>}
                     <div style={{ display: "flex", justifyContent: "flex-end", gap: ".35rem", marginTop: ".42rem" }}>
-                        <button type="button" className="oh-tap-row" onClick={() => { setPollComposerOpen(false); setPollError(""); }} style={{ border: "1px solid rgba(255,255,255,.1)", borderRadius: 8, background: "transparent", color: "rgba(255,255,255,.58)", padding: ".3rem .48rem", fontSize: ".58rem", cursor: "pointer" }}>Cancel</button>
-                        <button type="button" className="oh-tap-row" onClick={handlePlayerCreatePoll} disabled={isLoading} style={{ border: "1px solid rgba(59,130,246,.35)", borderRadius: 8, background: "rgba(59,130,246,.13)", color: "#bfdbfe", padding: ".3rem .52rem", fontSize: ".58rem", fontWeight: 780, cursor: isLoading ? "wait" : "pointer" }}>Open vote</button>
+                        <button type="button" className="oh-tap-row" onClick={() => { setPollComposerOpen(false); setPollError(""); }} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 8, background: "transparent", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", padding: ".3rem .48rem", fontSize: ".58rem", cursor: "pointer" }}>Cancel</button>
+                        <button type="button" className="oh-tap-row" onClick={handlePlayerCreatePoll} disabled={isLoading} style={{ border: "1px solid rgba(59,130,246,.35)", borderRadius: 8, background: "rgba(59,130,246,.13)", color: "var(--oh-link, #bfdbfe)", padding: ".3rem .52rem", fontSize: ".58rem", fontWeight: 780, cursor: isLoading ? "wait" : "pointer" }}>Open vote</button>
                     </div>
                 </div>}
                 {isGroup && !isInstitutional && !isLifecycleConversation && counterparts.length > 0 && (
                     <div style={{ display: "flex", alignItems: "center", gap: ".35rem", marginBottom: ".45rem", overflowX: "auto", scrollbarWidth: "none", flexWrap: "wrap" }}>
-                        <span style={{ fontSize: ".54rem", color: "rgba(255,255,255,.38)", fontWeight: 700, marginRight: ".1rem" }}>Tag:</span>
+                        <span style={{ fontSize: ".54rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontWeight: 700, marginRight: ".1rem" }}>Tag:</span>
                         {counterparts.map((cp) => (
                             <button
                                 key={cp.name}
@@ -2433,11 +2433,11 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                                     if (composerRef.current) composerRef.current.focus();
                                 }}
                                 title={`Direct message to ${cp.name} in this group`}
-                                style={{ display: "inline-flex", alignItems: "center", gap: ".22rem", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "999px", padding: ".18rem .45rem", fontSize: ".58rem", color: "rgba(255,255,255,0.85)", cursor: "pointer", fontFamily: "sans-serif" }}
+                                style={{ display: "inline-flex", alignItems: "center", gap: ".22rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: "999px", padding: ".18rem .45rem", fontSize: ".58rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)", cursor: "pointer", fontFamily: "sans-serif" }}
                                 onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(59,130,246,0.2)"; e.currentTarget.style.borderColor = "rgba(59,130,246,0.5)"; }}
-                                onMouseLeave={(e) => { e.currentTarget.style.background = "rgba(255,255,255,0.06)"; e.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; e.currentTarget.style.borderColor = "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"; }}
                             >
-                                <span style={{ color: "#60a5fa", fontWeight: 700 }}>@</span>
+                                <span style={{ color: "var(--oh-link, #60a5fa)", fontWeight: 700 }}>@</span>
                                 <span>{cp.name}</span>
                             </button>
                         ))}
@@ -2446,10 +2446,10 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                 {canProposePeace && peaceFormOpen && <PeaceTermsForm viewer={playerCountry} enemy={peaceCounterpart?.name} busy={isLoading} onSend={proposePeaceHere} onCancel={() => setPeaceFormOpen(false)} />}
                 <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
                     {canProposePeace && (
-                        <button type="button" className="oh-tap" onClick={() => setPeaceFormOpen((open) => !open)} aria-pressed={peaceFormOpen} title={`Propose peace to ${peaceCounterpart?.name}`} style={{ background: peaceFormOpen ? "rgba(43,193,243,.16)" : "rgba(255,255,255,0.05)", border: `1px solid ${peaceFormOpen ? "rgba(43,193,243,.6)" : "rgba(255,255,255,0.15)"}`, borderRadius: "10px", color: peaceFormOpen ? "#2bc1f3" : "rgba(255,255,255,0.7)", cursor: "pointer", flexShrink: 0, fontFamily: "sans-serif", fontSize: ".68rem", fontWeight: 760, height: "2.5rem", padding: "0 .62rem" }}>Peace</button>
+                        <button type="button" className="oh-tap" onClick={() => setPeaceFormOpen((open) => !open)} aria-pressed={peaceFormOpen} title={`Propose peace to ${peaceCounterpart?.name}`} style={{ background: peaceFormOpen ? "rgba(43,193,243,.16)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: `1px solid ${peaceFormOpen ? "rgba(43,193,243,.6)" : "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)"}`, borderRadius: "10px", color: peaceFormOpen ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", flexShrink: 0, fontFamily: "sans-serif", fontSize: ".68rem", fontWeight: 760, height: "2.5rem", padding: "0 .62rem" }}>Peace</button>
                     )}
                     {canCallChatVote && (
-                        <button type="button" className="oh-tap" onClick={() => { setPollComposerOpen((open) => !open); setPollError(""); }} aria-pressed={pollComposerOpen} title="Call a binding conversational vote in this group chat" style={{ background: pollComposerOpen ? "rgba(59,130,246,.2)" : "rgba(255,255,255,0.05)", border: `1px solid ${pollComposerOpen ? "rgba(96,165,250,.6)" : "rgba(255,255,255,0.15)"}`, borderRadius: "10px", color: pollComposerOpen ? "#bfdbfe" : "rgba(255,255,255,0.7)", cursor: "pointer", flexShrink: 0, fontFamily: "sans-serif", fontSize: ".68rem", fontWeight: 760, height: "2.5rem", padding: "0 .62rem" }}>Vote</button>
+                        <button type="button" className="oh-tap" onClick={() => { setPollComposerOpen((open) => !open); setPollError(""); }} aria-pressed={pollComposerOpen} title="Call a binding conversational vote in this group chat" style={{ background: pollComposerOpen ? "rgba(59,130,246,.2)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: `1px solid ${pollComposerOpen ? "rgba(96,165,250,.6)" : "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)"}`, borderRadius: "10px", color: pollComposerOpen ? "#bfdbfe" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", flexShrink: 0, fontFamily: "sans-serif", fontSize: ".68rem", fontWeight: 760, height: "2.5rem", padding: "0 .62rem" }}>Vote</button>
                     )}
                     {canDemand && (
                         <button
@@ -2458,7 +2458,7 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                         onClick={() => setMakeDemand((on) => !on)}
                         aria-pressed={makeDemand}
                         title={makeDemand ? "This message is a demand. Click to send it as an ordinary message." : `Make this message a demand of ${countries[0]?.name}`}
-                        style={{ background: makeDemand ? "rgba(234,179,8,0.22)" : "rgba(255,255,255,0.05)", border: `1px solid ${makeDemand ? "rgba(234,179,8,0.7)" : "rgba(255,255,255,0.15)"}`, borderRadius: "10px", color: makeDemand ? "rgb(250,204,21)" : "rgba(255,255,255,0.7)", cursor: "pointer", flexShrink: 0, fontFamily: "sans-serif", fontSize: "0.72rem", fontWeight: 700, height: "2.5rem", padding: "0 0.6rem" }}
+                        style={{ background: makeDemand ? "rgba(234,179,8,0.22)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: `1px solid ${makeDemand ? "rgba(234,179,8,0.7)" : "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)"}`, borderRadius: "10px", color: makeDemand ? "rgb(250,204,21)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", flexShrink: 0, fontFamily: "sans-serif", fontSize: "0.72rem", fontWeight: 700, height: "2.5rem", padding: "0 0.6rem" }}
                         >{makeDemand ? "⚑ Demand" : "⚑"}</button>
                     )}
                     <textarea
@@ -2474,17 +2474,17 @@ const ConversationView = ({ chat, playerCountry, gameDate, world = {}, onDelete,
                     // pushed the send button out of the bottom. There it stops at a
                     // quarter of the visible height (never under one line) and
                     // scrolls past that.
-                    style={{ flex: 1, backgroundColor: isInstitutionCouncil ? "rgba(0,0,0,0.2)" : "rgba(9,9,12,.58)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "12px", color: "white", fontSize: "0.875rem", padding: ".62rem .78rem", resize: "none", outline: "none", fontFamily: "sans-serif", lineHeight: "1.5", maxHeight: isTouch ? `max(2.75rem, min(12rem, calc(${APP_HEIGHT} / 4)))` : "12rem", overflowY: "auto", scrollbarWidth: "thin", scrollbarColor: "rgba(255,255,255,0.22) transparent", boxShadow: "inset 0 1px 0 rgba(255,255,255,.025)", transition: "border-color 0.2s, background-color .2s" }}
-                    onFocus={e => e.target.style.borderColor = isInstitutionCouncil ? "rgba(255,255,255,.42)" : "rgba(59,130,246,0.6)"}
-                    onBlur={e => e.target.style.borderColor = "rgba(255,255,255,0.15)"}
+                    style={{ flex: 1, backgroundColor: isInstitutionCouncil ? "rgba(0,0,0,0.2)" : "color-mix(in srgb, var(--oh-paper, rgb(9,9,12)) 58%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: "12px", color: "var(--oh-ink, #fff)", fontSize: "0.875rem", padding: ".62rem .78rem", resize: "none", outline: "none", fontFamily: "sans-serif", lineHeight: "1.5", maxHeight: isTouch ? `max(2.75rem, min(12rem, calc(${APP_HEIGHT} / 4)))` : "12rem", overflowY: "auto", scrollbarWidth: "thin", scrollbarColor: "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent) transparent", boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", transition: "border-color 0.2s, background-color .2s" }}
+                    onFocus={e => e.target.style.borderColor = isInstitutionCouncil ? "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)" : "rgba(59,130,246,0.6)"}
+                    onBlur={e => e.target.style.borderColor = "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)"}
                     />
                     {/* An inline min-width beats the class's, so the icon-only
                         button is widened to a thumb here, not by oh-tap. */}
                     <button className="oh-tap" aria-label="Send message" onClick={handlePlayerSubmit} disabled={!playerInput.trim()}
-                    style={{ backgroundColor: playerInput.trim() ? (isInstitutionCouncil ? "var(--oh-grey-raised)" : "#3b82f6") : (isInstitutionCouncil ? "rgba(255,255,255,.04)" : "rgba(59,130,246,0.3)"), border: isInstitutionCouncil ? "1px solid var(--oh-grey-border-strong)" : "none", borderRadius: "10px", minWidth: isInstitutionCouncil ? "4.3rem" : isTouch ? "2.75rem" : "2.5rem", height: "2.5rem", padding: isInstitutionCouncil ? "0 .7rem" : 0, display: "flex", alignItems: "center", justifyContent: "center", cursor: playerInput.trim() ? "pointer" : "not-allowed", flexShrink: 0, fontSize: isInstitutionCouncil ? ".66rem" : "1rem", fontWeight: 800, color: "white", transition: "background-color 0.2s" }}
+                    style={{ backgroundColor: playerInput.trim() ? (isInstitutionCouncil ? "var(--oh-grey-raised)" : "#3b82f6") : (isInstitutionCouncil ? "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)" : "rgba(59,130,246,0.3)"), border: isInstitutionCouncil ? "1px solid var(--oh-grey-border-strong)" : "none", borderRadius: "10px", minWidth: isInstitutionCouncil ? "4.3rem" : isTouch ? "2.75rem" : "2.5rem", height: "2.5rem", padding: isInstitutionCouncil ? "0 .7rem" : 0, display: "flex", alignItems: "center", justifyContent: "center", cursor: playerInput.trim() ? "pointer" : "not-allowed", flexShrink: 0, fontSize: isInstitutionCouncil ? ".66rem" : "1rem", fontWeight: 800, color: "var(--oh-ink, #fff)", transition: "background-color 0.2s" }}
                     >{isInstitutionCouncil ? "Send ↗" : <SendIcon />}</button>
                 </div>
-                <div style={{ marginTop: ".28rem", fontSize: isInstitutionCouncil ? ".5rem" : ".54rem", color: "rgba(255,255,255,.26)" }}>Enter to send · Shift+Enter for a new line</div>
+                <div style={{ marginTop: ".28rem", fontSize: isInstitutionCouncil ? ".5rem" : ".54rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 26%, transparent)" }}>Enter to send · Shift+Enter for a new line</div>
                 </div>
             ) : null}
 
@@ -2532,11 +2532,11 @@ const formatChatDateLabel = (value) => {
 
 const ChatDateSeparator = ({ value }) => (
     <div style={{ display: "flex", alignItems: "center", gap: "0.65rem", margin: "0.15rem 0 0.05rem" }}>
-        <div style={{ height: "1px", flex: 1, background: "rgba(255,255,255,0.08)" }} />
-        <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.32)", whiteSpace: "nowrap", fontWeight: 600 }}>
+        <div style={{ height: "1px", flex: 1, background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" }} />
+        <span style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)", whiteSpace: "nowrap", fontWeight: 600 }}>
             {formatChatDateLabel(value)}
         </span>
-        <div style={{ height: "1px", flex: 1, background: "rgba(255,255,255,0.08)" }} />
+        <div style={{ height: "1px", flex: 1, background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" }} />
     </div>
 );
 
@@ -2826,7 +2826,7 @@ const groupChatsByDate = (orderedList) => {
 };
 
 const ChatGroupHeader = ({ label }) => (
-    <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.05em", margin: "0.7rem 0 0.15rem", padding: "0 0.15rem", textTransform: "uppercase" }}>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.05em", margin: "0.7rem 0 0.15rem", padding: "0 0.15rem", textTransform: "uppercase" }}>
     {label}
     </div>
 );
@@ -2839,10 +2839,10 @@ const ChatGroupHeader = ({ label }) => (
 // those merely COULD produce a chat, and saying so for the length of every jump
 // made the indicator meaningless.
 const GeneratingBanner = () => (
-    <div style={{ alignItems: "center", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "10px", display: "flex", gap: "0.55rem", padding: "0.6rem 0.8rem" }}>
+    <div style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: "10px", display: "flex", gap: "0.55rem", padding: "0.6rem 0.8rem" }}>
     <span style={{ flexShrink: 0, fontSize: "1rem" }}>🖊</span>
-    <span style={{ color: "#f4f4f5", fontSize: "0.78rem", fontWeight: 600 }}>
-    Diplomacy in progress<PulsingDots /><span style={{ color: "rgba(255,255,255,0.4)", fontWeight: 400 }}> — a country may be reaching out</span>
+    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "0.78rem", fontWeight: 600 }}>
+    Diplomacy in progress<PulsingDots /><span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontWeight: 400 }}> — a country may be reaching out</span>
     </span>
     </div>
 );
@@ -2916,16 +2916,16 @@ const ChatListItem = ({ chat, playerCountry, onClick, onDelete, onToggleRead, un
             </div>
             <div style={{ flex: 1, minWidth: 0 }}>
                 <div style={{ display: "flex", alignItems: "baseline", gap: ".48rem", minWidth: 0 }}>
-                    <div style={{ flex: 1, minWidth: 0, fontSize: ".84rem", fontWeight: unread ? 740 : 650, color: unread ? "#fff" : "rgba(255,255,255,.9)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{names}</div>
-                    <span style={{ flexShrink: 0, fontSize: ".59rem", color: chatMarker ? "rgba(234,179,8,.9)" : "rgba(255,255,255,.25)", textTransform: "uppercase", letterSpacing: ".045em" }}>{chatMarker || channelMeta}</span>
+                    <div style={{ flex: 1, minWidth: 0, fontSize: ".84rem", fontWeight: unread ? 740 : 650, color: unread ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{names}</div>
+                    <span style={{ flexShrink: 0, fontSize: ".59rem", color: chatMarker ? "rgba(234,179,8,.9)" : "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", textTransform: "uppercase", letterSpacing: ".045em" }}>{chatMarker || channelMeta}</span>
                 </div>
-                <div style={{ marginTop: ".17rem", fontSize: ".74rem", color: unread ? "rgba(255,255,255,.59)" : "rgba(255,255,255,.38)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
-                    {speaker && counterparts.length > 1 && <span style={{ color: "rgba(255,255,255,.5)", fontWeight: 600 }}>{speaker}: </span>}{preview}
+                <div style={{ marginTop: ".17rem", fontSize: ".74rem", color: unread ? "color-mix(in srgb, var(--oh-ink, #fff) 59%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {speaker && counterparts.length > 1 && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontWeight: 600 }}>{speaker}: </span>}{preview}
                 </div>
             </div>
         </button>
         <div style={{ position: "absolute", top: "50%", right: ".72rem", transform: "translateY(-50%)", display: "flex", alignItems: "center", gap: ".28rem" }}>
-            {!showActions && <span aria-hidden="true" style={{ color: "rgba(255,255,255,.2)", fontSize: "1rem", lineHeight: 1 }}>›</span>}
+            {!showActions && <span aria-hidden="true" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", fontSize: "1rem", lineHeight: 1 }}>›</span>}
             {showActions && (
                 <>
                 <button className="oh-tap" onClick={e => { e.stopPropagation(); onToggleRead?.(); }} title={unread ? "Mark as read" : "Mark as unread"} aria-label={unread ? "Mark as read" : "Mark as unread"}
@@ -2933,7 +2933,7 @@ const ChatListItem = ({ chat, playerCountry, onClick, onDelete, onToggleRead, un
                     <EnvelopeIcon filled={unread} />
                 </button>
                 <button className="oh-tap" onClick={e => { e.stopPropagation(); if (confirming) onDelete(); else setConfirming(true); }} title={confirming ? "Click again to delete this chat" : "Delete chat"} aria-label={confirming ? "Confirm deleting this chat" : "Delete chat"}
-                style={{ display: "flex", alignItems: "center", gap: ".28rem", background: confirming ? "rgba(239,68,68,.18)" : "var(--oh-ui-overlay-strong, rgba(24,24,27,.86))", border: `1px solid ${confirming ? "rgba(239,68,68,.55)" : "rgba(255,255,255,.08)"}`, cursor: "pointer", color: confirming ? "#fca5a5" : "rgba(239,68,68,.68)", fontSize: ".68rem", fontWeight: 650, padding: confirming ? ".3rem .48rem" : ".3rem", borderRadius: 7, lineHeight: 1 }}>
+                style={{ display: "flex", alignItems: "center", gap: ".28rem", background: confirming ? "rgba(239,68,68,.18)" : "var(--oh-ui-overlay-strong, rgba(24,24,27,.86))", border: `1px solid ${confirming ? "rgba(239,68,68,.55)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"}`, cursor: "pointer", color: confirming ? "#fca5a5" : "rgba(239,68,68,.68)", fontSize: ".68rem", fontWeight: 650, padding: confirming ? ".3rem .48rem" : ".3rem", borderRadius: 7, lineHeight: 1 }}>
                     {confirming ? "Delete?" : <TrashIcon />}
                 </button>
                 </>
@@ -2980,19 +2980,19 @@ export const requestDiplomaticChat = (target, { draft = "" } = {}) => {
 
 const spyBtn = (accent) => ({
     padding: "0.35rem 0.6rem", borderRadius: "8px", fontSize: "0.72rem", fontWeight: 600, cursor: "pointer", fontFamily: "sans-serif",
-    border: "1px solid " + (accent ? "rgba(255,255,255,0.23)" : "rgba(255,255,255,0.12)"),
-    background: accent ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.06)", color: accent ? "#f4f4f5" : "rgba(255,255,255,0.8)",
+    border: "1px solid " + (accent ? "color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"),
+    background: accent ? "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", color: accent ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)",
 });
 
 const ClarityMeter = ({ clarity }) => {
     const pct = Math.round(clarity * 100);
     return (
         <div title="How much of the intercept your service could decode">
-        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.68rem", color: "rgba(255,255,255,0.5)", marginBottom: "0.2rem" }}>
-        <span>Signal clarity</span><span data-no-translate style={{ color: "#e4e4e7", fontWeight: 700 }}>{pct}%</span>
+        <div style={{ display: "flex", justifyContent: "space-between", fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", marginBottom: "0.2rem" }}>
+        <span>Signal clarity</span><span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", fontWeight: 700 }}>{pct}%</span>
         </div>
-        <div style={{ height: "0.3rem", borderRadius: "999px", background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
-        <div style={{ width: pct + "%", height: "100%", background: "rgba(231,231,234,0.7)" }} />
+        <div style={{ height: "0.3rem", borderRadius: "999px", background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", overflow: "hidden" }}>
+        <div style={{ width: pct + "%", height: "100%", background: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }} />
         </div>
         </div>
     );
@@ -3013,11 +3013,11 @@ const InterceptView = ({ target, exchange, clarity, seal, onBack }) => {
     const shown = useMemo(() => redactExchange(opened ?? { ...exchange, messages: [] }, clarity), [opened, exchange, clarity]);
     return (
         <>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.85rem 1rem 0.6rem", borderBottom: "1px solid rgba(255,255,255,0.07)", flexShrink: 0 }}>
-        <button className="oh-tap" onClick={onBack} aria-label="Back" style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", padding: "0.2rem", display: "flex" }}><BackIcon /></button>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.6rem", padding: "0.85rem 1rem 0.6rem", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", flexShrink: 0 }}>
+        <button className="oh-tap" onClick={onBack} aria-label="Back" style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", padding: "0.2rem", display: "flex" }}><BackIcon /></button>
         <div style={{ minWidth: 0, flex: 1 }}>
         <div style={{ fontWeight: 700, fontSize: "0.9rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>🕵 {target} ↔ {exchange.counterpart}</div>
-        <div style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.5)" }}>{exchange.subject}{exchange.date ? " · " + exchange.date : ""}</div>
+        <div style={{ fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>{exchange.subject}{exchange.date ? " · " + exchange.date : ""}</div>
         </div>
         </div>
         <div style={{ padding: "0.6rem 1rem 0.2rem", flexShrink: 0 }}><ClarityMeter clarity={clarity} /></div>
@@ -3026,15 +3026,15 @@ const InterceptView = ({ target, exchange, clarity, seal, onBack }) => {
             const mine = message.speaker === target;
             return (
                 <div key={index} style={{ alignSelf: mine ? "flex-start" : "flex-end", maxWidth: "88%" }}>
-                <div style={{ fontSize: "0.65rem", color: "rgba(255,255,255,0.45)", marginBottom: "0.15rem", textAlign: mine ? "left" : "right" }}>{message.speaker}</div>
+                <div style={{ fontSize: "0.65rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", marginBottom: "0.15rem", textAlign: mine ? "left" : "right" }}>{message.speaker}</div>
                 <div data-no-translate style={{ padding: "0.55rem 0.75rem", borderRadius: "12px", fontSize: "0.82rem", lineHeight: 1.45, fontFamily: "ui-monospace, Consolas, monospace", letterSpacing: "0.01em", userSelect: "none",
-                    background: mine ? "rgba(255,255,255,0.09)" : "rgba(255,255,255,0.07)", border: "1px solid rgba(255,255,255,0.08)", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                    background: mine ? "color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
                 {message.text}
                 </div>
                 </div>
             );
         })}
-        <div style={{ fontSize: "0.66rem", color: "rgba(255,255,255,0.35)", fontStyle: "italic", marginTop: "0.4rem", textAlign: "center" }}>
+        <div style={{ fontSize: "0.66rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontStyle: "italic", marginTop: "0.4rem", textAlign: "center" }}>
         Improve your intelligence service to decode more of this exchange.
         </div>
         </div>
@@ -3046,7 +3046,7 @@ const intelCard = ({ tone = "neutral" } = {}) => {
     const tones = {
         green: { bg: "rgba(34,197,94,.09)", border: "rgba(34,197,94,.25)", value: "#86efac" },
         amber: { bg: "rgba(245,158,11,.09)", border: "rgba(245,158,11,.25)", value: "#fde68a" },
-        neutral: { bg: "rgba(255,255,255,.035)", border: "rgba(255,255,255,.09)", value: "rgba(255,255,255,.86)" },
+        neutral: { bg: "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)", border: "color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)", value: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)" },
     };
     return tones[tone] || tones.neutral;
 };
@@ -3055,9 +3055,9 @@ const IntelligenceStatCard = ({ label, value, hint = "", tone = "neutral" }) => 
     const colors = intelCard({ tone });
     return (
         <div style={{ minWidth: 0, padding: ".7rem .8rem", borderRadius: 10, background: colors.bg, border: `1px solid ${colors.border}` }}>
-            <div style={{ fontSize: ".58rem", letterSpacing: ".08em", textTransform: "uppercase", color: "rgba(255,255,255,.38)", fontWeight: 750 }}>{label}</div>
+            <div style={{ fontSize: ".58rem", letterSpacing: ".08em", textTransform: "uppercase", color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontWeight: 750 }}>{label}</div>
             <div style={{ marginTop: ".22rem", fontSize: ".9rem", fontWeight: 800, color: colors.value }}>{value}</div>
-            {hint && <div style={{ marginTop: ".2rem", fontSize: ".6rem", color: "rgba(255,255,255,.34)", lineHeight: 1.35 }}>{hint}</div>}
+            {hint && <div style={{ marginTop: ".2rem", fontSize: ".6rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", lineHeight: 1.35 }}>{hint}</div>}
         </div>
     );
 };
@@ -3108,17 +3108,17 @@ const officeholderLabel = (holder) => {
 };
 
 const PublicPoliticalPicture = ({ profile }) => {
-    if (!profile) return <div style={{ color: "rgba(255,255,255,.35)", fontSize: ".7rem" }}>No structured political profile is currently available.</div>;
+    if (!profile) return <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: ".7rem" }}>No structured political profile is currently available.</div>;
     const government = profile.government || {};
     const leader = officeholderLabel(profile.leader || government.headOfState || government.headOfGovernment);
     const descriptors = [profile.politicalSystem?.label || profile.politicalSystem?.type, government.form, government.ideology, ...(profile.tags || [])].filter(Boolean);
     const goals = Array.isArray(profile.goals) ? profile.goals.slice(0, 4) : [];
     return (
-        <div style={{ fontSize: ".68rem", lineHeight: 1.5, color: "rgba(255,255,255,.67)" }}>
+        <div style={{ fontSize: ".68rem", lineHeight: 1.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 67%, transparent)" }}>
             {descriptors.length > 0 && <div>{descriptors.join(", ")}</div>}
-            {leader && <div style={{ marginTop: ".2rem", color: "rgba(255,255,255,.52)" }}>Leadership: {leader}</div>}
+            {leader && <div style={{ marginTop: ".2rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 52%, transparent)" }}>Leadership: {leader}</div>}
             {government.headOfGovernment && officeholderLabel(government.headOfGovernment) !== leader && (
-                <div style={{ color: "rgba(255,255,255,.45)" }}>Head of government: {officeholderLabel(government.headOfGovernment)}</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>Head of government: {officeholderLabel(government.headOfGovernment)}</div>
             )}
             {goals.length > 0 && <div style={{ marginTop: ".35rem" }}>{goals.map((goal) => <div key={goal}>- {goal}</div>)}</div>}
         </div>
@@ -3129,12 +3129,12 @@ const IntelligenceCountryHeader = ({ country, subtitle = "" }) => {
     const flagUrl = useCountryFlagUrl({ code: country?.code, name: country?.name });
     return (
         <div style={{ display: "flex", alignItems: "center", gap: ".65rem", minWidth: 0 }}>
-            <div style={{ width: "2.6rem", height: "1.75rem", borderRadius: 5, overflow: "hidden", background: "rgba(255,255,255,.05)", border: "1px solid rgba(255,255,255,.1)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: "2.6rem", height: "1.75rem", borderRadius: 5, overflow: "hidden", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", flexShrink: 0, display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {flagUrl ? <FlagImg url={flagUrl} alt="" width="100%" height="100%" /> : <span style={{ fontSize: "1rem" }}>🏳</span>}
             </div>
             <div style={{ minWidth: 0 }}>
                 <div style={{ fontWeight: 800, fontSize: ".95rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{country?.name || "Unknown polity"}</div>
-                {subtitle && <div style={{ marginTop: ".1rem", fontSize: ".61rem", color: "rgba(255,255,255,.38)" }}>{subtitle}</div>}
+                {subtitle && <div style={{ marginTop: ".1rem", fontSize: ".61rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)" }}>{subtitle}</div>}
             </div>
         </div>
     );
@@ -3143,23 +3143,23 @@ const IntelligenceCountryHeader = ({ country, subtitle = "" }) => {
 const IntelligenceAssessmentPanel = ({ assessment }) => {
     if (!assessment) {
         return (
-            <div style={{ color: "rgba(255,255,255,.34)", fontSize: ".68rem", lineHeight: 1.5 }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: ".68rem", lineHeight: 1.5 }}>
                 No private political assessment is available. Only public information is shown.
             </div>
         );
     }
     return (
-        <div style={{ fontSize: ".68rem", lineHeight: 1.5, color: "rgba(255,255,255,.66)" }}>
+        <div style={{ fontSize: ".68rem", lineHeight: 1.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 66%, transparent)" }}>
             {assessment.summary && <div>{assessment.summary}</div>}
             {(assessment.confidence || assessment.source || assessment.gatheredAt) && (
-                <div style={{ marginTop: ".35rem", color: "rgba(255,255,255,.42)", fontSize: ".61rem" }}>
+                <div style={{ marginTop: ".35rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: ".61rem" }}>
                     {[assessment.confidence && `${assessment.confidence} confidence`, assessment.source, assessment.gatheredAt].filter(Boolean).join(" · ")}
                 </div>
             )}
             {Array.isArray(assessment.findings) && assessment.findings.length > 0 && (
                 <div style={{ marginTop: ".4rem", display: "flex", flexDirection: "column", gap: ".22rem" }}>
                     {assessment.findings.slice(0, 6).map((finding, index) => (
-                        <div key={`${finding.topic || "finding"}-${index}`}>- {finding.topic ? <><strong style={{ color: "rgba(255,255,255,.78)" }}>{finding.topic}: </strong>{finding.text}</> : finding.text}</div>
+                        <div key={`${finding.topic || "finding"}-${index}`}>- {finding.topic ? <><strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)" }}>{finding.topic}: </strong>{finding.text}</> : finding.text}</div>
                     ))}
                 </div>
             )}
@@ -3219,7 +3219,7 @@ const operationOutcomeText = (record) => {
 const operationTone = (record) => {
     if (record.outcome === "success" && !record.caught) return "#86efac";
     if (record.caught) return "#fca5a5";
-    return "rgba(255,255,255,.55)";
+    return "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)";
 };
 
 const NetworkOrders = ({ spy, myIntel, targetIntel, draft, onDraft, onFocus, onOrder, onCancel, inputStyle }) => {
@@ -3230,23 +3230,23 @@ const NetworkOrders = ({ spy, myIntel, targetIntel, draft, onDraft, onFocus, onO
     const capture = operationCaptureChance(kind, myIntel, targetIntel, { succeeded: true, assets });
     const selectStyle = { ...inputStyle, width: "auto", flexShrink: 0, cursor: "pointer" };
     return (
-        <div style={{ marginTop: ".5rem", paddingTop: ".5rem", borderTop: "1px solid rgba(255,255,255,.06)", display: "flex", flexDirection: "column", gap: ".42rem" }}>
-            <label style={{ display: "flex", alignItems: "center", gap: ".45rem", fontSize: ".62rem", color: "rgba(255,255,255,.5)" }}>
+        <div style={{ marginTop: ".5rem", paddingTop: ".5rem", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", display: "flex", flexDirection: "column", gap: ".42rem" }}>
+            <label style={{ display: "flex", alignItems: "center", gap: ".45rem", fontSize: ".62rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>
                 <span style={{ flexShrink: 0 }}>Collect on</span>
                 <select value={spy.focus || "diplomacy"} onChange={(e) => onFocus(e.target.value)} style={selectStyle}>
                     {COLLECTION_FOCI.map((focus) => <option key={focus} value={focus}>{FOCUS_LABELS[focus]}</option>)}
                 </select>
             </label>
             {assets > 0 && (
-                <div style={{ fontSize: ".6rem", color: "rgba(255,255,255,.45)" }}>
+                <div style={{ fontSize: ".6rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>
                     Recruited sources: <span data-no-translate>{spy.assets.map((asset) => asset.who).join(" · ")}</span>
                 </div>
             )}
             {spy.mission ? (
                 <div style={{ display: "flex", alignItems: "center", gap: ".5rem", padding: ".42rem .5rem", borderRadius: 7, background: "rgba(245,158,11,.07)", border: "1px solid rgba(245,158,11,.22)" }}>
-                    <div style={{ flex: 1, minWidth: 0, fontSize: ".62rem", lineHeight: 1.45, color: "rgba(255,255,255,.7)" }}>
+                    <div style={{ flex: 1, minWidth: 0, fontSize: ".62rem", lineHeight: 1.45, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
                         <strong style={{ color: "#fde68a" }}>{OPERATION_LABELS[spy.mission.kind]}</strong>{" — "}<span data-no-translate>{spy.mission.instructions}</span>
-                        <div style={{ color: "rgba(255,255,255,.4)" }}>Carried out during the next time skip.</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>Carried out during the next time skip.</div>
                     </div>
                     <button className="oh-tap-row" onClick={onCancel} style={spyBtn(false)}>Cancel order</button>
                 </div>
@@ -3266,10 +3266,10 @@ const NetworkOrders = ({ spy, myIntel, targetIntel, draft, onDraft, onFocus, onO
                         />
                         <button className="oh-tap-row" onClick={onOrder} disabled={!text.trim()} style={{ ...spyBtn(true), ...(text.trim() ? {} : { opacity: .45, cursor: "default" }) }}>Give the order</button>
                     </div>
-                    <div style={{ display: "flex", gap: ".3rem", flexWrap: "wrap", fontSize: ".58rem", color: "rgba(255,255,255,.38)" }}>
-                        <span>Odds of success:</span><strong style={{ color: "rgba(255,255,255,.62)" }}>{successLabel(success)}</strong>
+                    <div style={{ display: "flex", gap: ".3rem", flexWrap: "wrap", fontSize: ".58rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)" }}>
+                        <span>Odds of success:</span><strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)" }}>{successLabel(success)}</strong>
                         <span>·</span>
-                        <span>Risk of capture:</span><strong style={{ color: "rgba(255,255,255,.62)" }}>{captureLabel(capture)}</strong>
+                        <span>Risk of capture:</span><strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)" }}>{captureLabel(capture)}</strong>
                     </div>
                 </>
             )}
@@ -3429,7 +3429,7 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
     const candidates = pickableCountries(countryRows, landHolders)
         .filter((country) => !spies.some((spy) => sameCountry(spy.target, country.name)));
     const storyOf = (spy) => (storyDraft[spy.id] !== undefined ? storyDraft[spy.id] : spy.coverStory);
-    const inputStyle = { width: "100%", boxSizing: "border-box", padding: "0.45rem 0.6rem", borderRadius: "8px", border: "1px solid rgba(255,255,255,0.12)", background: "rgba(0,0,0,0.25)", color: "white", fontSize: "0.76rem", fontFamily: "sans-serif" };
+    const inputStyle = { width: "100%", boxSizing: "border-box", padding: "0.45rem 0.6rem", borderRadius: "8px", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", background: "rgba(0,0,0,0.25)", color: "var(--oh-ink, #fff)", fontSize: "0.76rem", fontFamily: "sans-serif" };
     const full = spies.length >= MAX_ACTIVE_SPIES;
     const assessedEntries = Object.entries(openedAssessments).filter(([, entry]) => entry?.politicalAssessment);
     const interceptedDocuments = readableReports.filter((report) => report.interceptedBy?.some((name) => sameCountry(name, playerCountry)));
@@ -3467,8 +3467,8 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
     const selectedDiplomaticLabel = diplomaticKnowledgeLabel(selectedRawEntry, selectedClarity, Boolean(selectedSpy));
     const selectedSourceLabel = sourceQualityLabel(selectedAssessment?.confidence, selectedClarity, Boolean(selectedSpy));
 
-    const panel = { border: "1px solid rgba(255,255,255,.08)", borderRadius: 10, background: "var(--oh-ui-overlay-card, rgba(255,255,255,.025))" };
-    const subhead = { fontSize: ".58rem", letterSpacing: ".09em", textTransform: "uppercase", color: "rgba(255,255,255,.37)", fontWeight: 800 };
+    const panel = { border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 10, background: "var(--oh-ui-overlay-card, rgba(255,255,255,.025))" };
+    const subhead = { fontSize: ".58rem", letterSpacing: ".09em", textTransform: "uppercase", color: "color-mix(in srgb, var(--oh-ink, #fff) 37%, transparent)", fontWeight: 800 };
     const navItems = [["overview", "Overview"], ["countries", "Countries"], ["operations", "Operations"], ["reports", "Reports"]];
 
     const renderCounterintelCase = (spy) => (
@@ -3476,7 +3476,7 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
             <div style={{ display: "flex", alignItems: "center", gap: ".55rem" }}>
                 <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ fontSize: ".77rem", fontWeight: 750 }}>{spy.status === "discovered" ? "🕵️ " : "🎭 "}{spy.owner}</div>
-                    <div style={{ marginTop: ".12rem", fontSize: ".6rem", color: "rgba(255,255,255,.4)" }}>
+                    <div style={{ marginTop: ".12rem", fontSize: ".6rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>
                         {spy.status === "discovered" ? "agent in custody — decide what to do" : `double agent since ${spy.turnedAt || "capture"} — ${spy.owner} still trusts them`}
                     </div>
                 </div>
@@ -3502,9 +3502,9 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
             <CountrySelectorModal countries={candidates} loading={loadingCountries} onStart={handleDeploy} onCancel={() => setChoosing(false)} single title="Deploy a Network" subtitle="Choose a country for a persistent HUMINT network" selectedLabel="Target" emptyLabel="No target chosen yet" confirmLabel={(n) => (n === 0 ? "Choose a target" : "Deploy the network")} />
         </Presence>
         <div data-intelligence-workspace="restored" style={{ flex: 1, minHeight: 0, display: "flex", flexDirection: "column" }}>
-            <div style={{ display: "flex", gap: ".35rem", alignItems: "center", padding: ".65rem 1rem .55rem", borderBottom: "1px solid rgba(255,255,255,.06)", flexShrink: 0 }}>
+            <div style={{ display: "flex", gap: ".35rem", alignItems: "center", padding: ".65rem 1rem .55rem", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", flexShrink: 0 }}>
                 {navItems.map(([key, label]) => (
-                    <button key={key} className="oh-tap-row" onClick={() => setSection(key)} style={{ padding: isMobile ? ".35rem .5rem" : ".35rem .75rem", border: 0, borderBottom: section === key ? "2px solid rgba(231,231,234,.72)" : "2px solid transparent", background: "transparent", color: section === key ? "white" : "rgba(255,255,255,.46)", fontSize: ".72rem", fontWeight: 750, cursor: "pointer", fontFamily: "sans-serif" }}>{label}</button>
+                    <button key={key} className="oh-tap-row" onClick={() => setSection(key)} style={{ padding: isMobile ? ".35rem .5rem" : ".35rem .75rem", border: 0, borderBottom: section === key ? "2px solid color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)" : "2px solid transparent", background: "transparent", color: section === key ? "white" : "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", fontSize: ".72rem", fontWeight: 750, cursor: "pointer", fontFamily: "sans-serif" }}>{label}</button>
                 ))}
             </div>
 
@@ -3520,18 +3520,18 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
                         <div style={{ ...panel, padding: ".7rem .8rem" }}>
                             <div style={{ fontSize: ".75rem", fontWeight: 750 }}>Strategic warnings</div>
                             <div style={{ marginTop: ".55rem", display: "flex", flexDirection: "column", gap: ".3rem" }}>
-                                {warnings.length ? warnings.slice(0, 6).map((warning) => <div key={warning} style={{ fontSize: ".65rem", lineHeight: 1.45, color: "rgba(255,255,255,.52)" }}>• {warning}</div>) : <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.34)" }}>No immediate intelligence warnings. This does not imply the absence of undiscovered activity.</div>}
+                                {warnings.length ? warnings.slice(0, 6).map((warning) => <div key={warning} style={{ fontSize: ".65rem", lineHeight: 1.45, color: "color-mix(in srgb, var(--oh-ink, #fff) 52%, transparent)" }}>• {warning}</div>) : <div style={{ fontSize: ".65rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>No immediate intelligence warnings. This does not imply the absence of undiscovered activity.</div>}
                             </div>
                         </div>
                         <div style={{ ...panel, padding: ".7rem .8rem" }}>
                             <div style={{ fontSize: ".75rem", fontWeight: 750 }}>Recent intelligence</div>
                             <div style={{ marginTop: ".45rem", display: "flex", flexDirection: "column", gap: ".38rem" }}>
                                 {recentItems.length ? recentItems.slice(0, 4).map((item, index) => (
-                                    <button key={`${item.kind}-${item.title}-${index}`} className="oh-tap-row" onClick={() => { if (item.kind === "intercept") setOpen({ target: item.target, exchange: item.exchange }); else if (item.kind === "assessment") { setSelectedCountry(item.target); setSection("countries"); } else if (item.kind === "operation") setSection("operations"); else { setExpandedReport(item.report?.id || ""); setSection("reports"); } }} style={{ padding: ".42rem .5rem", borderRadius: 7, border: "1px solid rgba(255,255,255,.06)", background: "rgba(255,255,255,.02)", color: "white", cursor: "pointer", textAlign: "left", fontFamily: "sans-serif" }}>
-                                        <div style={{ display: "flex", gap: ".45rem", alignItems: "baseline" }}><strong style={{ fontSize: ".65rem", flex: 1 }}>{item.title}</strong>{item.meta && <span style={{ fontSize: ".55rem", color: "rgba(255,255,255,.3)" }}>{item.meta}</span>}</div>
-                                        <div style={{ marginTop: ".15rem", fontSize: ".59rem", color: "rgba(255,255,255,.4)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.text}</div>
+                                    <button key={`${item.kind}-${item.title}-${index}`} className="oh-tap-row" onClick={() => { if (item.kind === "intercept") setOpen({ target: item.target, exchange: item.exchange }); else if (item.kind === "assessment") { setSelectedCountry(item.target); setSection("countries"); } else if (item.kind === "operation") setSection("operations"); else { setExpandedReport(item.report?.id || ""); setSection("reports"); } }} style={{ padding: ".42rem .5rem", borderRadius: 7, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", background: "color-mix(in srgb, var(--oh-ink, #fff) 2%, transparent)", color: "var(--oh-ink, #fff)", cursor: "pointer", textAlign: "left", fontFamily: "sans-serif" }}>
+                                        <div style={{ display: "flex", gap: ".45rem", alignItems: "baseline" }}><strong style={{ fontSize: ".65rem", flex: 1 }}>{item.title}</strong>{item.meta && <span style={{ fontSize: ".55rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)" }}>{item.meta}</span>}</div>
+                                        <div style={{ marginTop: ".15rem", fontSize: ".59rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.text}</div>
                                     </button>
-                                )) : <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.34)" }}>No private reporting has been collected yet. Deploy a network to begin receiving intelligence.</div>}
+                                )) : <div style={{ fontSize: ".65rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>No private reporting has been collected yet. Deploy a network to begin receiving intelligence.</div>}
                             </div>
                         </div>
                     </div>
@@ -3547,7 +3547,7 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
                                 const active = sameCountry(country.name, selectedCountryRecord?.name);
                                 const network = spies.some((spy) => sameCountry(spy.target, country.name));
                                 return (
-                                    <button key={country.name} className="oh-tap-row" onClick={() => setSelectedCountry(country.name)} style={{ display: "flex", alignItems: "center", gap: ".45rem", padding: ".48rem .55rem", borderRadius: 7, border: `1px solid ${active ? "var(--oh-grey-border-strong)" : "transparent"}`, background: active ? "var(--oh-grey-selected)" : "transparent", color: "white", fontFamily: "sans-serif", textAlign: "left", cursor: "pointer" }}>
+                                    <button key={country.name} className="oh-tap-row" onClick={() => setSelectedCountry(country.name)} style={{ display: "flex", alignItems: "center", gap: ".45rem", padding: ".48rem .55rem", borderRadius: 7, border: `1px solid ${active ? "var(--oh-grey-border-strong)" : "transparent"}`, background: active ? "var(--oh-grey-selected)" : "transparent", color: "var(--oh-ink, #fff)", fontFamily: "sans-serif", textAlign: "left", cursor: "pointer" }}>
                                         <span style={{ flex: 1, minWidth: 0, fontSize: ".68rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{country.name}</span>
                                         {network && <span title="Active intelligence network" style={{ width: ".38rem", height: ".38rem", borderRadius: "50%", background: "#4ade80", flexShrink: 0 }} />}
                                     </button>
@@ -3571,13 +3571,13 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
                             <div style={subhead}>Institutional position</div>
                             <div style={{ marginTop: ".42rem", display: "flex", flexDirection: "column", gap: ".3rem" }}>
                                 {selectedInstitutionPortfolio.length ? selectedInstitutionPortfolio.slice(0, 10).map(({ institution, member, history, cases }) => (
-                                    <div key={institution.id} style={{ display: "flex", alignItems: "center", gap: ".45rem", padding: ".38rem .45rem", borderRadius: 7, background: "var(--oh-ui-overlay-card, rgba(255,255,255,.025))", border: "1px solid rgba(255,255,255,.05)" }}>
-                                        <span style={{ flex: 1, minWidth: 0, fontSize: ".62rem", color: "rgba(255,255,255,.68)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{institution.name}</span>
-                                        <span style={{ fontSize: ".53rem", color: member ? "rgba(231,231,234,.68)" : "rgba(255,255,255,.35)", textTransform: "capitalize" }}>{member ? (member.role || member.status || "member") : "former / historical"}</span>
+                                    <div key={institution.id} style={{ display: "flex", alignItems: "center", gap: ".45rem", padding: ".38rem .45rem", borderRadius: 7, background: "var(--oh-ui-overlay-card, rgba(255,255,255,.025))", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)" }}>
+                                        <span style={{ flex: 1, minWidth: 0, fontSize: ".62rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{institution.name}</span>
+                                        <span style={{ fontSize: ".53rem", color: member ? "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", textTransform: "capitalize" }}>{member ? (member.role || member.status || "member") : "former / historical"}</span>
                                         {cases?.length ? <span style={{ fontSize: ".49rem", color: "#fde68a" }}>{cases.length} pending</span> : null}
-                                        {!member && history?.length ? <span style={{ fontSize: ".49rem", color: "rgba(255,255,255,.28)" }}>{history.at(-1)?.action || "history"}</span> : null}
+                                        {!member && history?.length ? <span style={{ fontSize: ".49rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" }}>{history.at(-1)?.action || "history"}</span> : null}
                                     </div>
-                                )) : <div style={{ fontSize: ".62rem", color: "rgba(255,255,255,.34)" }}>No current or publicly known institutional record.</div>}
+                                )) : <div style={{ fontSize: ".62rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>No current or publicly known institutional record.</div>}
                             </div>
                         </div>
                         <div style={{ ...panel, padding: ".65rem .7rem", marginTop: ".55rem" }}>
@@ -3590,14 +3590,14 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
 
             {section === "operations" && (
                 <div data-intelligence-section="operations" style={{ flex: 1, overflowY: "auto", scrollbarWidth: "none", padding: ".75rem .8rem", display: "flex", flexDirection: "column", gap: ".65rem" }}>
-                    <div style={{ ...panel, padding: ".55rem .7rem", background: "rgba(255,255,255,.035)", borderColor: "var(--oh-grey-border)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                        <div><div style={{ fontSize: ".72rem", fontWeight: 750 }}>Field networks</div><div style={{ fontSize: ".58rem", color: "rgba(255,255,255,.35)" }}>Persistent HUMINT networks also appear as covert Projects.</div></div>
+                    <div style={{ ...panel, padding: ".55rem .7rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)", borderColor: "var(--oh-grey-border)", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                        <div><div style={{ fontSize: ".72rem", fontWeight: 750 }}>Field networks</div><div style={{ fontSize: ".58rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)" }}>Persistent HUMINT networks also appear as covert Projects.</div></div>
                         <div style={{ fontSize: ".7rem", fontWeight: 800 }}>{spies.length}/{MAX_ACTIVE_SPIES}</div>
                     </div>
-                    {spies.length === 0 ? <div style={{ fontSize: ".68rem", color: "rgba(255,255,255,.34)", padding: ".25rem" }}>No networks are currently in the field.</div> : spies.map((spy) => (
+                    {spies.length === 0 ? <div style={{ fontSize: ".68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", padding: ".25rem" }}>No networks are currently in the field.</div> : spies.map((spy) => (
                         <div key={spy.id} style={{ ...panel, padding: ".55rem .7rem" }}>
                             <div style={{ display: "flex", alignItems: "center", gap: ".5rem" }}>
-                                <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: ".76rem", fontWeight: 750 }}>{spy.target}</div><div style={{ marginTop: ".12rem", fontSize: ".59rem", color: "rgba(255,255,255,.4)" }}>since {spy.deployedAt || "an earlier date"} · network {networkQualityLabel(signalClarity(myIntel, intelligenceOf(world, spy.target)), true).toLowerCase()}{spy.suspected ? " · source integrity concern" : ""}</div></div>
+                                <div style={{ flex: 1, minWidth: 0 }}><div style={{ fontSize: ".76rem", fontWeight: 750 }}>{spy.target}</div><div style={{ marginTop: ".12rem", fontSize: ".59rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>since {spy.deployedAt || "an earlier date"} · network {networkQualityLabel(signalClarity(myIntel, intelligenceOf(world, spy.target)), true).toLowerCase()}{spy.suspected ? " · source integrity concern" : ""}</div></div>
                                 <button className="oh-tap-row" onClick={() => { setSelectedCountry(spy.target); setSection("countries"); }} style={spyBtn(false)}>Dossier</button>
                                 <button className="oh-tap-row" onClick={() => handleRecall(spy)} style={spyBtn(false)}>Recall</button>
                             </div>
@@ -3615,7 +3615,7 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
                         </div>
                     ))}
                     {history.length > 0 && (
-                        <div style={{ display: "flex", flexDirection: "column", gap: ".2rem", fontSize: ".61rem", color: "rgba(255,255,255,.34)", fontStyle: "italic" }}>
+                        <div style={{ display: "flex", flexDirection: "column", gap: ".2rem", fontSize: ".61rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontStyle: "italic" }}>
                             {history.map((spy) => (
                                 <div key={spy.id}>
                                     {spy.status === "dead"
@@ -3630,16 +3630,16 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
                         <div key={`${record.spyId}-${record.id}-${record.round}`} style={{ ...panel, padding: ".5rem .65rem" }}>
                             <div style={{ display: "flex", gap: ".5rem", alignItems: "baseline" }}>
                                 <strong style={{ flex: 1, minWidth: 0, fontSize: ".66rem" }}>{OPERATION_LABELS[record.kind]} · {record.target}</strong>
-                                {record.date && <span style={{ fontSize: ".55rem", color: "rgba(255,255,255,.3)" }}>{record.date}</span>}
+                                {record.date && <span style={{ fontSize: ".55rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)" }}>{record.date}</span>}
                             </div>
-                            {record.instructions && <div data-no-translate style={{ marginTop: ".12rem", fontSize: ".6rem", color: "rgba(255,255,255,.45)" }}>{record.instructions}</div>}
+                            {record.instructions && <div data-no-translate style={{ marginTop: ".12rem", fontSize: ".6rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>{record.instructions}</div>}
                             <div style={{ marginTop: ".18rem", fontSize: ".6rem", color: operationTone(record) }}>{operationOutcomeText(record)}</div>
                         </div>
-                    )) : <div style={{ ...panel, padding: ".7rem", fontSize: ".66rem", color: "rgba(255,255,255,.34)" }}>No operations have been carried out yet. Give a network an order and it acts during the next time skip.</div>}
+                    )) : <div style={{ ...panel, padding: ".7rem", fontSize: ".66rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>No operations have been carried out yet. Give a network an order and it acts during the next time skip.</div>}
                     <div style={{ ...subhead, marginTop: ".15rem" }}>Counterintelligence cases</div>
-                    {visibleForeign.length ? visibleForeign.map(renderCounterintelCase) : <div style={{ ...panel, padding: ".7rem", fontSize: ".66rem", color: "rgba(255,255,255,.34)" }}>No detected foreign agents currently require action.</div>}
+                    {visibleForeign.length ? visibleForeign.map(renderCounterintelCase) : <div style={{ ...panel, padding: ".7rem", fontSize: ".66rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>No detected foreign agents currently require action.</div>}
                     {caughtUnknown.map((spy) => (
-                        <div key={spy.id} style={{ fontSize: ".61rem", color: "rgba(255,255,255,.34)", fontStyle: "italic" }}>
+                        <div key={spy.id} style={{ fontSize: ".61rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontStyle: "italic" }}>
                             {`A foreign agent caught${spy.exposedAt ? ` on ${spy.exposedAt}` : ""} died under interrogation. Who sent them was never learned.`}
                         </div>
                     ))}
@@ -3652,31 +3652,31 @@ const SpyView = ({ playerCountry, gameDate, countries, loadingCountries, panelOp
                 <div data-intelligence-section="reports" style={{ flex: 1, overflowY: "auto", scrollbarWidth: "none", padding: ".75rem .85rem", display: "flex", flexDirection: "column", gap: ".7rem" }}>
                     <div style={subhead}>Political assessments</div>
                     {assessedEntries.length ? assessedEntries.map(([target, entry]) => (
-                        <button key={`assessment-${target}`} className="oh-tap-row" onClick={() => { setSelectedCountry(target); setSection("countries"); }} style={{ ...panel, padding: ".6rem .7rem", color: "white", textAlign: "left", cursor: "pointer", fontFamily: "sans-serif" }}>
-                            <div style={{ display: "flex", gap: ".5rem", alignItems: "baseline" }}><strong style={{ flex: 1, fontSize: ".7rem" }}>{target}</strong><span style={{ fontSize: ".57rem", color: "rgba(255,255,255,.3)" }}>{entry.politicalAssessment?.gatheredAt || entry.gatheredAt || ""}</span></div>
-                            <div style={{ marginTop: ".2rem", fontSize: ".62rem", color: "rgba(255,255,255,.47)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{entry.politicalAssessment?.summary || "Political assessment on file"}</div>
+                        <button key={`assessment-${target}`} className="oh-tap-row" onClick={() => { setSelectedCountry(target); setSection("countries"); }} style={{ ...panel, padding: ".6rem .7rem", color: "var(--oh-ink, #fff)", textAlign: "left", cursor: "pointer", fontFamily: "sans-serif" }}>
+                            <div style={{ display: "flex", gap: ".5rem", alignItems: "baseline" }}><strong style={{ flex: 1, fontSize: ".7rem" }}>{target}</strong><span style={{ fontSize: ".57rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)" }}>{entry.politicalAssessment?.gatheredAt || entry.gatheredAt || ""}</span></div>
+                            <div style={{ marginTop: ".2rem", fontSize: ".62rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 47%, transparent)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{entry.politicalAssessment?.summary || "Political assessment on file"}</div>
                         </button>
-                    )) : <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.34)" }}>No private political assessments are currently on file.</div>}
+                    )) : <div style={{ fontSize: ".65rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>No private political assessments are currently on file.</div>}
 
                     <div style={{ ...subhead, marginTop: ".2rem" }}>Intercepted traffic</div>
                     {Object.values(intercepts).some((entry) => (entry?.exchanges || []).some((exchange) => !isDocumentExchange(exchange))) ? Object.entries(intercepts).flatMap(([target, entry]) => (entry.exchanges || []).filter((exchange) => !isDocumentExchange(exchange)).map((exchange) => (
-                        <button key={`${target}-${exchange.id}`} className="oh-tap-row" onClick={() => { setOpen({ target, exchange }); void ensureCountryAssessed(target, { reason: "intercept read" }); }} style={{ ...panel, padding: ".58rem .7rem", display: "flex", alignItems: "center", gap: ".55rem", color: "white", cursor: "pointer", textAlign: "left", fontFamily: "sans-serif" }}>
+                        <button key={`${target}-${exchange.id}`} className="oh-tap-row" onClick={() => { setOpen({ target, exchange }); void ensureCountryAssessed(target, { reason: "intercept read" }); }} style={{ ...panel, padding: ".58rem .7rem", display: "flex", alignItems: "center", gap: ".55rem", color: "var(--oh-ink, #fff)", cursor: "pointer", textAlign: "left", fontFamily: "sans-serif" }}>
                             <span aria-hidden="true" style={{ fontSize: ".9rem" }}>{isDocumentExchange(exchange) ? "📄" : "📡"}</span>
-                            <span style={{ flex: 1, minWidth: 0 }}><strong style={{ display: "block", fontSize: ".69rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{target} ↔ {exchange.counterpart}</strong><span style={{ display: "block", marginTop: ".1rem", fontSize: ".59rem", color: "rgba(255,255,255,.4)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{exchange.subject}{exchange.date ? ` · ${exchange.date}` : ""}</span></span>
+                            <span style={{ flex: 1, minWidth: 0 }}><strong style={{ display: "block", fontSize: ".69rem", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{target} ↔ {exchange.counterpart}</strong><span style={{ display: "block", marginTop: ".1rem", fontSize: ".59rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{exchange.subject}{exchange.date ? ` · ${exchange.date}` : ""}</span></span>
                         </button>
-                    ))) : <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.34)" }}>No intercepted diplomatic traffic is on file.</div>}
+                    ))) : <div style={{ fontSize: ".65rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>No intercepted diplomatic traffic is on file.</div>}
 
                     <div style={{ ...subhead, marginTop: ".2rem" }}>Documents on file</div>
                     {readableReports.length ? readableReports.map((report) => {
                         const openReport = expandedReport === report.id;
                         return (
-                            <button key={report.id} className="oh-tap-row" onClick={() => setExpandedReport(openReport ? "" : report.id)} style={{ ...panel, padding: ".6rem .7rem", color: "white", cursor: "pointer", textAlign: "left", fontFamily: "sans-serif" }}>
-                                <div style={{ display: "flex", gap: ".5rem", alignItems: "baseline" }}><strong style={{ flex: 1, fontSize: ".69rem" }}>{report.title}</strong><span style={{ fontSize: ".57rem", color: "rgba(255,255,255,.3)" }}>{report.dateline || report.createdDate || ""}</span></div>
-                                <div style={{ marginTop: ".15rem", fontSize: ".59rem", color: "rgba(255,255,255,.4)" }}>{report.from ? `From ${report.from} · ` : ""}{report.visibleTo === null ? "published" : report.interceptedBy?.some((name) => sameCountry(name, playerCountry)) && !report.visibleTo?.some((name) => sameCountry(name, playerCountry)) ? "intercepted copy" : "held by your government"}</div>
-                                {openReport && <div style={{ marginTop: ".5rem", paddingTop: ".45rem", borderTop: "1px solid rgba(255,255,255,.06)", fontSize: ".64rem", lineHeight: 1.55, color: "rgba(255,255,255,.62)", whiteSpace: "pre-wrap" }}>{report.body}</div>}
+                            <button key={report.id} className="oh-tap-row" onClick={() => setExpandedReport(openReport ? "" : report.id)} style={{ ...panel, padding: ".6rem .7rem", color: "var(--oh-ink, #fff)", cursor: "pointer", textAlign: "left", fontFamily: "sans-serif" }}>
+                                <div style={{ display: "flex", gap: ".5rem", alignItems: "baseline" }}><strong style={{ flex: 1, fontSize: ".69rem" }}>{report.title}</strong><span style={{ fontSize: ".57rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)" }}>{report.dateline || report.createdDate || ""}</span></div>
+                                <div style={{ marginTop: ".15rem", fontSize: ".59rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>{report.from ? `From ${report.from} · ` : ""}{report.visibleTo === null ? "published" : report.interceptedBy?.some((name) => sameCountry(name, playerCountry)) && !report.visibleTo?.some((name) => sameCountry(name, playerCountry)) ? "intercepted copy" : "held by your government"}</div>
+                                {openReport && <div style={{ marginTop: ".5rem", paddingTop: ".45rem", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", fontSize: ".64rem", lineHeight: 1.55, color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", whiteSpace: "pre-wrap" }}>{report.body}</div>}
                             </button>
                         );
-                    }) : <div style={{ fontSize: ".65rem", color: "rgba(255,255,255,.34)" }}>No readable government documents are currently on file.</div>}
+                    }) : <div style={{ fontSize: ".65rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>No readable government documents are currently on file.</div>}
                 </div>
             )}
         </div>
@@ -4376,7 +4376,7 @@ const ChatPanel = ({ isOpen, onClose, requestedCountry, requestedDraft = "", onC
                 frame), so the two meet with the same 0.5rem gap and never stack.
                 Nothing else is held back: the panel shrinks only once the drawer
                 would really reach it, not the moment the drawer opens. */}
-            <div style={{ position: "fixed", bottom: isOpen ? "4.25rem" : "-52rem", left: "0.5rem", width: "min(58rem, calc(100vw - 1rem - var(--oh-right-drawer-safe-offset, 0px)))", height: "min(50rem, calc(100vh - 8rem))", minHeight: "24rem", backgroundColor: "var(--oh-ui-overlay, rgba(24,24,27,0.95))", backdropFilter: "blur(8px)", borderRadius: "16px", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.1))", boxShadow: "-4px 0 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.06)", zIndex: 9998, overflow: "hidden", transition: "bottom 0.35s cubic-bezier(0.4,0,0.2,1),opacity 0.35s ease", opacity: isOpen ? 1 : 0, pointerEvents: isOpen ? "auto" : "none", fontFamily: "sans-serif", color: "white", display: "flex", flexDirection: "column",
+            <div style={{ position: "fixed", bottom: isOpen ? "4.25rem" : "-52rem", left: "0.5rem", width: "min(58rem, calc(100vw - 1rem - var(--oh-right-drawer-safe-offset, 0px)))", height: "min(50rem, calc(100vh - 8rem))", minHeight: "24rem", backgroundColor: "var(--oh-ui-overlay, rgba(24,24,27,0.95))", backdropFilter: "blur(8px)", borderRadius: "16px", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.1))", boxShadow: "-4px 0 24px rgba(0,0,0,0.4),inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", zIndex: 9998, overflow: "hidden", transition: "bottom 0.35s cubic-bezier(0.4,0,0.2,1),opacity 0.35s ease", opacity: isOpen ? 1 : 0, pointerEvents: isOpen ? "auto" : "none", fontFamily: "sans-serif", color: "var(--oh-ink, #fff)", display: "flex", flexDirection: "column",
                 ...(isTouch ? { width: `min(58rem, calc(100vw - 1.5rem - ${SAFE_LEFT} - ${SAFE_RIGHT}))`, height: `min(50rem, calc(${APP_HEIGHT} - 10.25rem - ${SAFE_TOP} - ${SAFE_BOTTOM}))`, minHeight: "10rem" } : {}) }}>
 
             {chatsLoadFailed ? (
@@ -4402,12 +4402,12 @@ const ChatPanel = ({ isOpen, onClose, requestedCountry, requestedDraft = "", onC
                             <div aria-hidden="true" style={{ width: "1.65rem", height: "1.65rem", borderRadius: 7, border: "1px solid var(--oh-grey-border-strong)", background: "var(--oh-grey-raised)", color: "var(--oh-grey-text)", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}><WorkspaceTabIcon type="contacts" size={15} /></div>
                             <div style={{ minWidth: 0 }}>
                                 <div style={{ fontSize: ".98rem", fontWeight: 800, lineHeight: 1.1 }}>Diplomacy</div>
-                                <div style={{ marginTop: ".13rem", fontSize: ".56rem", color: "rgba(255,255,255,.32)" }}>Conversations, institutions and statecraft</div>
+                                <div style={{ marginTop: ".13rem", fontSize: ".56rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)" }}>Conversations, institutions and statecraft</div>
                             </div>
                         </div>
-                        <button className="oh-tap" aria-label="Close diplomacy panel" onClick={onClose} style={{ background: "none", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: "1.1rem", lineHeight: 1, padding: "0.15rem 0.3rem", borderRadius: "6px" }}
-                        onMouseEnter={e => { e.currentTarget.style.color = "white"; e.currentTarget.style.background = "rgba(255,255,255,0.08)"; }}
-                        onMouseLeave={e => { e.currentTarget.style.color = "rgba(255,255,255,0.5)"; e.currentTarget.style.background = "none"; }}>✕</button>
+                        <button className="oh-tap" aria-label="Close diplomacy panel" onClick={onClose} style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", cursor: "pointer", fontSize: "1.1rem", lineHeight: 1, padding: "0.15rem 0.3rem", borderRadius: "6px" }}
+                        onMouseEnter={e => { e.currentTarget.style.color = "white"; e.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"; }}
+                        onMouseLeave={e => { e.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)"; e.currentTarget.style.background = "none"; }}>✕</button>
                     </div>
                     {/* Three tabs are wider than a phone's header: there they
                         stay one row that scrolls sideways, not two. */}
@@ -4417,10 +4417,10 @@ const ChatPanel = ({ isOpen, onClose, requestedCountry, requestedDraft = "", onC
                             ["institutions", "institutions", "Institutions", institutionUnreadCount],
                             ...(espionageOn ? [["spy", "intelligence", "Intelligence", 0]] : []),
                         ].map(([key, iconType, label, count]) => (
-                            <button key={key} className="oh-tap-row" onClick={() => setView(key)} style={{ flex: "0 0 auto", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: ".38rem", padding: isTouch ? ".3rem .58rem" : ".34rem .68rem", borderRadius: "8px", fontSize: ".72rem", fontWeight: 750, cursor: "pointer", fontFamily: "sans-serif", border: "1px solid " + (currentView === key ? "var(--oh-grey-border-strong)" : "var(--oh-ui-line, rgba(255,255,255,.07))"), background: currentView === key ? "var(--oh-ui-active, var(--oh-grey-selected))" : "var(--oh-ui-overlay-card, rgba(255,255,255,.025))", color: currentView === key ? "white" : "rgba(255,255,255,0.48)" }}>
+                            <button key={key} className="oh-tap-row" onClick={() => setView(key)} style={{ flex: "0 0 auto", whiteSpace: "nowrap", display: "flex", alignItems: "center", gap: ".38rem", padding: isTouch ? ".3rem .58rem" : ".34rem .68rem", borderRadius: "8px", fontSize: ".72rem", fontWeight: 750, cursor: "pointer", fontFamily: "sans-serif", border: "1px solid " + (currentView === key ? "var(--oh-grey-border-strong)" : "var(--oh-ui-line, rgba(255,255,255,.07))"), background: currentView === key ? "var(--oh-ui-active, var(--oh-grey-selected))" : "var(--oh-ui-overlay-card, rgba(255,255,255,.025))", color: currentView === key ? "white" : "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)" }}>
                                 <span aria-hidden="true" style={{ display: "inline-flex", opacity: .8 }}><WorkspaceTabIcon type={iconType} size={13} /></span>
                                 <span>{label}</span>
-                                {Number(count) > 0 && <span style={{ minWidth: "1.05rem", height: "1.05rem", padding: "0 .25rem", borderRadius: 999, display: "inline-flex", alignItems: "center", justifyContent: "center", background: currentView === key ? "rgba(255,255,255,.14)" : "rgba(96,165,250,.16)", color: currentView === key ? "#fff" : "#93c5fd", fontSize: ".57rem", fontWeight: 800 }}>{count}</span>}
+                                {Number(count) > 0 && <span style={{ minWidth: "1.05rem", height: "1.05rem", padding: "0 .25rem", borderRadius: 999, display: "inline-flex", alignItems: "center", justifyContent: "center", background: currentView === key ? "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)" : "rgba(96,165,250,.16)", color: currentView === key ? "var(--oh-ink, #fff)" : "var(--oh-link, #93c5fd)", fontSize: ".57rem", fontWeight: 800 }}>{count}</span>}
                             </button>
                         ))}
                     </div>
@@ -4469,8 +4469,8 @@ const ChatPanel = ({ isOpen, onClose, requestedCountry, requestedDraft = "", onC
                     has no chat read/unread notion, so it sits inside this branch
                     rather than above the tab switch. */}
                 {openChats.length > 0 && (
-                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem", padding: "0.55rem 1.25rem", borderBottom: "1px solid rgba(255,255,255,0.06)", flexShrink: 0 }}>
-                    <button className="oh-tap-row" onClick={() => setShowUnreadOnly(v => !v)} style={{ alignItems: "center", background: showUnreadOnly ? "var(--oh-ui-active, rgba(96,165,250,0.18))" : "var(--oh-ui-overlay-card, rgba(255,255,255,0.05))", border: `1px solid ${showUnreadOnly ? "var(--oh-ui-accent, rgba(96,165,250,0.5))" : "var(--oh-ui-line, rgba(255,255,255,0.12))"}`, borderRadius: "999px", color: showUnreadOnly ? "var(--oh-ui-accent, #93c5fd)" : "rgba(255,255,255,0.6)", cursor: "pointer", display: "flex", fontFamily: "sans-serif", fontSize: "0.72rem", fontWeight: 600, gap: "0.3rem", padding: "0.28rem 0.65rem", transition: "all 0.12s ease" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem", padding: "0.55rem 1.25rem", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", flexShrink: 0 }}>
+                    <button className="oh-tap-row" onClick={() => setShowUnreadOnly(v => !v)} style={{ alignItems: "center", background: showUnreadOnly ? "var(--oh-ui-active, rgba(96,165,250,0.18))" : "var(--oh-ui-overlay-card, rgba(255,255,255,0.05))", border: `1px solid ${showUnreadOnly ? "var(--oh-ui-accent, rgba(96,165,250,0.5))" : "var(--oh-ui-line, rgba(255,255,255,0.12))"}`, borderRadius: "999px", color: showUnreadOnly ? "var(--oh-ui-accent, #93c5fd)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", display: "flex", fontFamily: "sans-serif", fontSize: "0.72rem", fontWeight: 600, gap: "0.3rem", padding: "0.28rem 0.65rem", transition: "all 0.12s ease" }}>
                     {showUnreadOnly && <span style={{ width: "0.4rem", height: "0.4rem", borderRadius: "50%", background: "#60a5fa" }} />}
                     Unread{unreadIds.size > 0 ? ` (${unreadIds.size})` : ""}
                     </button>
@@ -4486,11 +4486,11 @@ const ChatPanel = ({ isOpen, onClose, requestedCountry, requestedDraft = "", onC
                 <div style={{ flex: 1, overflowY: "auto", scrollbarWidth: "none", padding: "0.75rem 1rem", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                 {isGenerating && <GeneratingBanner />}
                 {openChats.length === 0 ? (
-                    <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.25)", fontSize: "0.82rem", fontStyle: "italic", textAlign: "center", padding: "2rem" }}>
+                    <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", fontSize: "0.82rem", fontStyle: "italic", textAlign: "center", padding: "2rem" }}>
                     No diplomatic conversations yet.<br />Start one below.
                     </div>
                 ) : visibleChats.length === 0 ? (
-                    <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", color: "rgba(255,255,255,0.25)", fontSize: "0.82rem", fontStyle: "italic", textAlign: "center", padding: "2rem" }}>
+                    <div style={{ flex: 1, display: "flex", alignItems: "center", justifyContent: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", fontSize: "0.82rem", fontStyle: "italic", textAlign: "center", padding: "2rem" }}>
                     No unread chats — you're all caught up.
                     </div>
                 ) : groupedChats.map((group, index) => (
@@ -4500,8 +4500,8 @@ const ChatPanel = ({ isOpen, onClose, requestedCountry, requestedDraft = "", onC
                     </React.Fragment>
                 ))}
                 </div>
-                <div style={{ padding: "0.75rem 1rem", borderTop: "1px solid rgba(255,255,255,0.07)", flexShrink: 0 }}>
-                <button className="oh-tap-row" onClick={() => setShowSelector(true)} style={{ width: "100%", padding: "0.7rem", borderRadius: "10px", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.12))", background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.07))", color: "rgba(255,255,255,0.85)", fontSize: "0.85rem", fontWeight: 500, cursor: "pointer", fontFamily: "sans-serif" }}
+                <div style={{ padding: "0.75rem 1rem", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", flexShrink: 0 }}>
+                <button className="oh-tap-row" onClick={() => setShowSelector(true)} style={{ width: "100%", padding: "0.7rem", borderRadius: "10px", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.12))", background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.07))", color: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)", fontSize: "0.85rem", fontWeight: 500, cursor: "pointer", fontFamily: "sans-serif" }}
                 onMouseEnter={e => e.currentTarget.style.background = "var(--oh-ui-hover, rgba(255,255,255,0.12))"}
                 onMouseLeave={e => e.currentTarget.style.background = "var(--oh-ui-overlay-card, rgba(255,255,255,0.07))"}>Start New Chat</button>
                 </div>
@@ -5115,12 +5115,12 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                             position: "relative",
                             width: "100%",
                             textAlign: "left",
-                            border: "1px solid rgba(230,230,233,0.20)",
+                            border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)",
                             borderRadius: "14px",
-                            background: "rgba(30,30,33,0.67)",
+                            background: "color-mix(in srgb, var(--oh-paper, rgb(30,30,33)) 67%, transparent)",
                             backdropFilter: "blur(26px) saturate(1.35)",
                             WebkitBackdropFilter: "blur(26px) saturate(1.35)",
-                            color: "white",
+                            color: "var(--oh-ink, #fff)",
                             // Room for the ✕, which is thumb-sized on touch.
                             padding: isTouch ? "0.75rem 3.3rem 0.75rem 0.85rem" : "0.75rem 2.35rem 0.75rem 0.85rem",
                             boxShadow: "0 14px 38px rgba(0,0,0,0.42)",
@@ -5145,9 +5145,9 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                 width: "1.55rem",
                                 height: "1.55rem",
                                 borderRadius: "7px",
-                                border: "1px solid rgba(255,255,255,0.10)",
-                                background: "rgba(255,255,255,0.06)",
-                                color: "rgba(255,255,255,0.72)",
+                                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+                                background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                                color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
                                 display: "flex",
                                 alignItems: "center",
                                 justifyContent: "center",
@@ -5157,12 +5157,12 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                 padding: 0,
                             }}
                             onMouseEnter={(event) => {
-                                event.currentTarget.style.background = "rgba(255,255,255,0.12)";
+                                event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)";
                                 event.currentTarget.style.color = "white";
                             }}
                             onMouseLeave={(event) => {
-                                event.currentTarget.style.background = "rgba(255,255,255,0.06)";
-                                event.currentTarget.style.color = "rgba(255,255,255,0.72)";
+                                event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)";
+                                event.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)";
                             }}
                         >
                             ✕
@@ -5171,7 +5171,7 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                         <div style={{ fontSize: "0.78rem", fontWeight: 800, marginBottom: "0.25rem" }}>
                             💬 {item.sender}
                         </div>
-                        <div style={{ fontSize: "0.74rem", lineHeight: 1.35, color: "rgba(255,255,255,0.72)" }}>
+                        <div style={{ fontSize: "0.74rem", lineHeight: 1.35, color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)" }}>
                             {item.preview}
                         </div>
                     </div>
@@ -5214,12 +5214,12 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                     : `min(27rem, calc(${APP_HEIGHT} - 7rem))`,
                                 overflowY: "auto",
                                 borderRadius: "16px",
-                                border: "1px solid rgba(230,230,233,0.18)",
-                                background: "rgba(29,29,32,0.69)",
+                                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)",
+                                background: "color-mix(in srgb, var(--oh-paper, rgb(29,29,32)) 69%, transparent)",
                                 backdropFilter: "blur(28px) saturate(1.38)",
                                 WebkitBackdropFilter: "blur(28px) saturate(1.38)",
-                                boxShadow: "0 18px 50px rgba(0,0,0,0.38), inset 0 1px 0 rgba(255,255,255,0.08)",
-                                color: "white",
+                                boxShadow: "0 18px 50px rgba(0,0,0,0.38), inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+                                color: "var(--oh-ink, #fff)",
                             }}
                         >
                             <div
@@ -5231,8 +5231,8 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                     alignItems: "center",
                                     gap: "0.45rem",
                                     padding: "0.65rem 0.75rem",
-                                    borderBottom: "1px solid rgba(255,255,255,0.08)",
-                                    background: "rgba(27,27,30,0.76)",
+                                    borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+                                    background: "color-mix(in srgb, var(--oh-paper, rgb(27,27,30)) 76%, transparent)",
                                     backdropFilter: "blur(18px)",
                                     WebkitBackdropFilter: "blur(18px)",
                                 }}
@@ -5245,7 +5245,7 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                     onClick={toggleSound}
                                     title={soundEnabled ? "Mute diplomacy notification sound" : "Enable diplomacy notification sound"}
                                     aria-label={soundEnabled ? "Mute diplomacy notification sound" : "Enable diplomacy notification sound"}
-                                    style={{ border: "none", background: "transparent", color: "rgba(255,255,255,0.72)", cursor: "pointer", fontSize: "0.82rem" }}
+                                    style={{ border: "none", background: "transparent", color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", cursor: "pointer", fontSize: "0.82rem" }}
                                 >
                                     {soundEnabled ? "🔊" : "🔇"}
                                 </button>
@@ -5256,7 +5256,7 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                     style={{
                                         border: "none",
                                         background: "transparent",
-                                        color: desktopPermission === "granted" ? "#86efac" : "rgba(255,255,255,0.55)",
+                                        color: desktopPermission === "granted" ? "#86efac" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)",
                                         cursor: desktopPermission === "unsupported" ? "default" : "pointer",
                                         fontSize: "0.68rem",
                                     }}
@@ -5283,9 +5283,9 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                     style={{
                                         width: "100%",
                                         border: "none",
-                                        borderBottom: "1px solid rgba(255,255,255,0.07)",
+                                        borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
                                         background: "transparent",
-                                        color: "white",
+                                        color: "var(--oh-ink, #fff)",
                                         padding: "0.7rem 0.8rem",
                                         textAlign: "left",
                                         cursor: item.chatId ? "pointer" : "default",
@@ -5293,10 +5293,10 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                                     }}
                                 >
                                     <div style={{ fontSize: "0.76rem", fontWeight: 750 }}>{item.sender}</div>
-                                    <div style={{ marginTop: "0.2rem", fontSize: "0.7rem", lineHeight: 1.35, color: "rgba(255,255,255,0.62)" }}>
+                                    <div style={{ marginTop: "0.2rem", fontSize: "0.7rem", lineHeight: 1.35, color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)" }}>
                                         {item.preview}
                                     </div>
-                                    <div style={{ marginTop: "0.25rem", fontSize: "0.62rem", color: "rgba(255,255,255,0.32)" }}>
+                                    <div style={{ marginTop: "0.25rem", fontSize: "0.62rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)" }}>
                                         {item.gameDate ? formatChatDateLabel(item.gameDate) : new Date(item.at).toLocaleTimeString()}
                                     </div>
                                 </button>
@@ -5313,12 +5313,12 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                             height: "2.5rem",
                             padding: "0 0.65rem",
                             borderRadius: "10px",
-                            border: "1px solid rgba(230,230,233,0.20)",
-                            background: "rgba(32,32,35,0.67)",
+                            border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)",
+                            background: "color-mix(in srgb, var(--oh-paper, rgb(32,32,35)) 67%, transparent)",
                             backdropFilter: "blur(24px) saturate(1.35)",
                             WebkitBackdropFilter: "blur(24px) saturate(1.35)",
-                            color: "white",
-                            boxShadow: "0 8px 24px rgba(0,0,0,0.32), inset 0 1px 0 rgba(255,255,255,0.08)",
+                            color: "var(--oh-ink, #fff)",
+                            boxShadow: "0 8px 24px rgba(0,0,0,0.32), inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
                             cursor: "pointer",
                             fontFamily: "sans-serif",
                             fontWeight: 800,
@@ -5348,8 +5348,8 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                 : "var(--oh-ui-glass-chip, rgba(255,255,255,0.04))",
                 border: isOpen ? "1px solid var(--oh-ui-glass-active-line, rgba(96,165,250,0.34))" : "1px solid var(--oh-ui-glass-line, rgba(255,255,255,0.1))",
                 borderRadius: "10px",
-                boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
-                color: "white",
+                boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+                color: "var(--oh-ink, #fff)",
                 cursor: "pointer",
                 display: "flex",
                 fontFamily: "inherit",
@@ -5370,11 +5370,11 @@ const Chat = ({ hovered, setHovered, isOpen, onToggle }) => {
                     // Replaces the numeric badge (rather than sitting beside it) so
                     // the icon says one thing at a time; the count returns on its
                     // own once generation ends and the next 15s poll catches it.
-                    <span style={{ position: "absolute", top: "-0.55rem", right: "-0.8rem", minWidth: "1.05rem", height: "1.05rem", padding: "0 0.3rem", borderRadius: "999px", background: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.35)", color: "white", fontSize: "0.68rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1, boxShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
+                    <span style={{ position: "absolute", top: "-0.55rem", right: "-0.8rem", minWidth: "1.05rem", height: "1.05rem", padding: "0 0.3rem", borderRadius: "999px", background: "rgba(0,0,0,0.35)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", color: "var(--oh-ink, #fff)", fontSize: "0.68rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1, boxShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
                         <PulsingDots />
                     </span>
                 ) : unseenCount > 0 && (
-                    <span style={{ position: "absolute", top: "-0.55rem", right: "-0.8rem", minWidth: "1.05rem", height: "1.05rem", padding: "0 0.2rem", borderRadius: "999px", background: "#dc2626", border: "1px solid rgba(255,255,255,0.35)", color: "white", fontSize: "0.62rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1, boxShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
+                    <span style={{ position: "absolute", top: "-0.55rem", right: "-0.8rem", minWidth: "1.05rem", height: "1.05rem", padding: "0 0.2rem", borderRadius: "999px", background: "#dc2626", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", color: "var(--oh-ink, #fff)", fontSize: "0.62rem", fontWeight: 700, display: "flex", alignItems: "center", justifyContent: "center", lineHeight: 1, boxShadow: "0 1px 4px rgba(0,0,0,0.5)" }}>
                         {unseenCount > 9 ? "9+" : unseenCount}
                     </span>
                 ))}
@@ -5408,7 +5408,7 @@ const Toolbar = memo(({ onOpenAdvisor, activePanel, onTogglePanel, mapRef, actio
     // the game's social media feature is on (server/gameFeatures.js).
     const dock = useDockGeometry();
     return (
-        <div style={{ position: "fixed", bottom: `calc(${DOCK_BOTTOM_REM}rem + ${SAFE_BOTTOM})`, left: `calc(${DOCK_LEFT_REM}rem + ${SAFE_LEFT})`, height: `${DOCK_HEIGHT_REM}rem`, width: dock.width, gap: `${DOCK_GAP_REM}rem`, padding: "0 0.1rem", backgroundColor: "var(--oh-hud-bg)", backdropFilter: "var(--oh-hud-blur)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", color: "white", fontFamily: "sans-serif", borderRadius: "14px", border: "1px solid var(--oh-hud-border)", boxShadow: "var(--oh-hud-shadow-soft)" }}>
+        <div style={{ position: "fixed", bottom: `calc(${DOCK_BOTTOM_REM}rem + ${SAFE_BOTTOM})`, left: `calc(${DOCK_LEFT_REM}rem + ${SAFE_LEFT})`, height: `${DOCK_HEIGHT_REM}rem`, width: dock.width, gap: `${DOCK_GAP_REM}rem`, padding: "0 0.1rem", backgroundColor: "var(--oh-hud-bg)", backdropFilter: "var(--oh-hud-blur)", zIndex: 9999, display: "flex", alignItems: "center", justifyContent: "center", color: "var(--oh-ink, #fff)", fontFamily: "sans-serif", borderRadius: "14px", border: "1px solid var(--oh-hud-border)", boxShadow: "var(--oh-hud-shadow-soft)" }}>
         <Chat hovered={canHover && hoveredChat} setHovered={setHoveredChat} isOpen={activePanel === "chat"} onToggle={() => onTogglePanel("chat")} />
         {/* Projects & Operations is the Actions panel's second tab (actions.jsx);
             the advisor opens it there with actionsTab. */}

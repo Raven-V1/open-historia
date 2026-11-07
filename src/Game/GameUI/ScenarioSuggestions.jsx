@@ -52,18 +52,18 @@ import { languageDisplayName } from "../../runtime/i18n.js";
 // ---- looks (the library's own) -------------------------------------------------
 
 const cardStyle = {
-  background: "rgba(255,255,255,0.03)",
-  border: "1px solid rgba(255,255,255,0.08)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
   borderRadius: "18px",
   marginBottom: "0.95rem",
   padding: "0.9rem",
 };
 const buttonStyle = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "9px",
-  color: "rgba(246,246,248,0.92)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.8rem",
@@ -73,10 +73,10 @@ const buttonStyle = {
   minHeight: "2.1rem",
   padding: "0 0.9rem",
 };
-const primaryButtonStyle = { ...buttonStyle, background: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 22%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 50%, transparent)", color: "#fff" };
-const quietTextStyle = { color: "rgba(255,255,255,0.58)", fontSize: "0.78rem", lineHeight: 1.5 };
+const primaryButtonStyle = { ...buttonStyle, background: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 22%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 50%, transparent)", color: "var(--oh-ink, #fff)" };
+const quietTextStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.78rem", lineHeight: 1.5 };
 const labelStyle = {
-  color: "rgba(255,255,255,0.72)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
   display: "block",
   fontSize: "0.72rem",
   fontWeight: 700,
@@ -85,11 +85,11 @@ const labelStyle = {
   textTransform: "uppercase",
 };
 const inputStyle = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "12px",
   boxSizing: "border-box",
-  color: "#f8fafc",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "inherit",
   fontSize: "0.88rem",
   outline: "none",
@@ -101,7 +101,7 @@ const tapFit = (style, touch) => (touch ? { ...style, minHeight: undefined } : s
 const STATUS_COLORS = {
   conflict: { background: "rgba(245,158,11,0.14)", border: "rgba(245,158,11,0.45)", color: "#fbbf24" },
   applied: { background: "rgba(34,197,94,0.12)", border: "rgba(34,197,94,0.4)", color: "#86efac" },
-  missing: { background: "rgba(148,163,184,0.12)", border: "rgba(148,163,184,0.4)", color: "#cbd5e1" },
+  missing: { background: "rgba(148,163,184,0.12)", border: "rgba(148,163,184,0.4)", color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)" },
 };
 const Badge = ({ kind, children, title }) => {
   const colors = STATUS_COLORS[kind] ?? STATUS_COLORS.missing;
@@ -195,7 +195,7 @@ const TrackedText = ({ before, after }) => {
             ? { background: "rgba(34,197,94,0.18)", color: "#bbf7d0", textDecoration: "underline" }
             : part.type === "del"
               ? { background: "rgba(248,113,113,0.16)", color: "#fecaca", textDecoration: "line-through" }
-              : { color: "rgba(255,255,255,0.78)" }}
+              : { color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)" }}
         >
           {part.text}
         </span>
@@ -262,9 +262,9 @@ const DetailValue = ({ change, coverBefore }) => {
         <div style={quietTextStyle}>{text}</div>
         {paths.slice(0, POLITICS_PATHS_SHOWN).map((entry) => (
           <div data-no-translate key={entry.path} style={{ fontSize: "0.76rem", lineHeight: 1.45, overflowWrap: "anywhere" }}>
-            <span style={{ color: "rgba(255,255,255,0.55)" }}>{entry.path}: </span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>{entry.path}: </span>
             <span style={{ color: "#fecaca", textDecoration: "line-through" }}>{politicsValueText(entry.from)}</span>
-            <span style={{ color: "rgba(255,255,255,0.5)" }}> → </span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}> → </span>
             <span style={{ color: "#bbf7d0" }}>{politicsValueText(entry.to)}</span>
           </div>
         ))}
@@ -304,21 +304,21 @@ const DetailValue = ({ change, coverBefore }) => {
       <div style={{ display: "grid", gap: "0.2rem" }}>
         {louder.map((situation) => (
           <div key={`volume-${situation}`} style={{ fontSize: "0.76rem", lineHeight: 1.45, overflowWrap: "anywhere" }}>
-            <span style={{ color: "rgba(255,255,255,0.55)" }}>{MUSIC_SITUATION_LABELS[situation]}</span>
-            <span data-no-translate style={{ color: "rgba(255,255,255,0.55)" }}>{", "}</span>
-            <span style={{ color: "rgba(255,255,255,0.55)" }}>{"Volume"}</span>
-            <span data-no-translate style={{ color: "rgba(255,255,255,0.55)" }}>{": "}</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>{MUSIC_SITUATION_LABELS[situation]}</span>
+            <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>{", "}</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>{"Volume"}</span>
+            <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>{": "}</span>
             <span data-no-translate style={{ color: "#fecaca", textDecoration: "line-through" }}>{`${volumeBefore[situation]}%`}</span>
-            <span data-no-translate style={{ color: "rgba(255,255,255,0.5)" }}>{" → "}</span>
+            <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>{" → "}</span>
             <span data-no-translate style={{ color: "#bbf7d0" }}>{`${volumeAfter[situation]}%`}</span>
           </div>
         ))}
         {changed.map((situation) => (
           <div key={situation} style={{ fontSize: "0.76rem", lineHeight: 1.45, overflowWrap: "anywhere" }}>
-            <span style={{ color: "rgba(255,255,255,0.55)" }}>{MUSIC_SITUATION_LABELS[situation]}</span>
-            <span data-no-translate style={{ color: "rgba(255,255,255,0.55)" }}>{": "}</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>{MUSIC_SITUATION_LABELS[situation]}</span>
+            <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>{": "}</span>
             <span data-no-translate style={{ color: "#fecaca", textDecoration: "line-through" }}>{idsOf(before, situation) || "—"}</span>
-            <span data-no-translate style={{ color: "rgba(255,255,255,0.5)" }}>{" → "}</span>
+            <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>{" → "}</span>
             <span data-no-translate style={{ color: "#bbf7d0" }}>{idsOf(after, situation) || "—"}</span>
           </div>
         ))}
@@ -330,7 +330,7 @@ const DetailValue = ({ change, coverBefore }) => {
     <div data-no-translate style={{ alignItems: "center", display: "flex", flexWrap: "wrap", fontSize: "0.8rem", gap: "0.45rem" }}>
       {color.test(String(change.from ?? "")) && <span style={{ background: change.from, borderRadius: 4, display: "inline-block", height: 14, width: 14 }} />}
       <span style={{ color: "#fecaca", textDecoration: "line-through" }}>{valueText(change.from)}</span>
-      <span style={{ color: "rgba(255,255,255,0.5)" }}>→</span>
+      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>→</span>
       {color.test(String(change.to ?? "")) && <span style={{ background: change.to, borderRadius: 4, display: "inline-block", height: 14, width: 14 }} />}
       <span style={{ color: "#bbf7d0" }}>{valueText(change.to)}</span>
     </div>
@@ -340,11 +340,11 @@ const DetailValue = ({ change, coverBefore }) => {
 const DetailChangeRow = ({ change, status, decision, canUndo = true, busy, readOnly, onAccept, onReject, onUndo, coverBefore, touch }) => {
   const label = describeDetailChange(change);
   return (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, display: "grid", gap: "0.45rem", padding: "0.65rem 0.75rem" }}>
+    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: 14, display: "grid", gap: "0.45rem", padding: "0.65rem 0.75rem" }}>
       <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
-        <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>{label.tab}</span>
+        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.05em", textTransform: "uppercase" }}>{label.tab}</span>
         <span style={{ fontSize: "0.86rem", fontWeight: 700 }}>{label.title}</span>
-        {label.detail ? <span style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.8rem" }}>{label.detail}</span> : null}
+        {label.detail ? <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.8rem" }}>{label.detail}</span> : null}
         <span style={{ flex: 1 }} />
         {!readOnly && status === "conflict" && !decision && (
           <Badge kind="conflict" title="You changed this after you posted the scenario. Accepting replaces your version.">You changed this too</Badge>
@@ -356,7 +356,7 @@ const DetailChangeRow = ({ change, status, decision, canUndo = true, busy, readO
         <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
           {decision ? (
             <>
-              <span style={{ color: decision === "accepted" ? "#86efac" : "rgba(255,255,255,0.55)", fontSize: "0.78rem", fontWeight: 700 }}>
+              <span style={{ color: decision === "accepted" ? "#86efac" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.78rem", fontWeight: 700 }}>
                 {decision === "accepted" ? "Accepted" : "Rejected"}
               </span>
               {canUndo
@@ -410,12 +410,12 @@ const MapChangeSummary = ({ changes, decided = null }) => {
           <div key={section.id} style={{ display: "grid", gap: "0.1rem" }}>
             <div style={{ display: "flex", fontSize: "0.82rem", gap: "0.5rem", justifyContent: "space-between" }}>
               <span>{MAP_SECTION_LABELS[section.id]}</span>
-              <span style={{ color: "rgba(255,255,255,0.6)" }}>
+              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)" }}>
                 {decided ? `${entry.decided} of ${entry.total} decided` : entry.total === 1 ? "1 change" : `${entry.total} changes`}
               </span>
             </div>
             {regions && (regions.merged > 0 || regions.reshaped > 0 || regions.added > 0) && (
-              <div style={{ color: "rgba(255,255,255,0.55)", display: "flex", flexWrap: "wrap", fontSize: "0.76rem", gap: "0 0.6rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", display: "flex", flexWrap: "wrap", fontSize: "0.76rem", gap: "0 0.6rem" }}>
                 {regions.merged > 0 && <span>{regions.merged === 1 ? "1 region merged into others" : `${regions.merged} regions merged into others`}</span>}
                 {regions.reshaped > 0 && <span>{regions.reshaped === 1 ? "1 region reshaped" : `${regions.reshaped} regions reshaped`}</span>}
                 {regions.added > 0 && <span>{regions.added === 1 ? "1 new region" : `${regions.added} new regions`}</span>}
@@ -444,17 +444,17 @@ const DialogFrame = ({ title, subtitle, onClose, children, footer }) => {
         aria-modal="true"
         style={{
           background: "var(--oh-ui-surface, #1b1b1e)",
-          border: "1px solid rgba(255,255,255,0.12)",
+          border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
           borderRadius: isMobile ? 0 : 22,
           boxShadow: "0 24px 64px rgba(0,0,0,0.55)",
-          color: "#fff",
+          color: "var(--oh-ink, #fff)",
           display: "flex",
           flexDirection: "column",
           maxHeight: isMobile ? APP_HEIGHT : `calc(${APP_HEIGHT} - 3rem)`,
           width: isMobile ? "100%" : "min(46rem, calc(100vw - 2rem))",
         }}
       >
-        <div style={{ alignItems: "flex-start", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", gap: "0.8rem", padding: "1rem 1.1rem 0.85rem" }}>
+        <div style={{ alignItems: "flex-start", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "flex", gap: "0.8rem", padding: "1rem 1.1rem 0.85rem" }}>
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ fontSize: "1.2rem", fontWeight: 800, letterSpacing: "-0.02em" }}>{title}</div>
             {subtitle ? <div style={{ ...quietTextStyle, marginTop: "0.2rem" }}>{subtitle}</div> : null}
@@ -462,7 +462,7 @@ const DialogFrame = ({ title, subtitle, onClose, children, footer }) => {
           <button type="button" aria-label="Close" className="oh-tap" onClick={onClose} style={{ ...buttonStyle, minWidth: "2.2rem", padding: 0 }}>✕</button>
         </div>
         <div style={{ display: "grid", gap: "0.8rem", overflowY: "auto", padding: "1rem 1.1rem" }}>{children}</div>
-        {footer ? <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", flexWrap: "wrap", gap: "0.5rem", padding: "0.8rem 1.1rem" }}>{footer}</div> : null}
+        {footer ? <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "flex", flexWrap: "wrap", gap: "0.5rem", padding: "0.8rem 1.1rem" }}>{footer}</div> : null}
       </div>
     </div>
   );
@@ -628,7 +628,7 @@ export const SuggestChangesDialog = ({ scenario, onClose, onUpdate = null }) => 
       )}
       {phase === "sent" && sent && (
         <>
-          <ol style={{ ...quietTextStyle, color: "rgba(255,255,255,0.82)", display: "grid", gap: "0.35rem", margin: 0, paddingLeft: "1.2rem" }}>
+          <ol style={{ ...quietTextStyle, color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", display: "grid", gap: "0.35rem", margin: 0, paddingLeft: "1.2rem" }}>
             <li>{`The file ${sent.fileName} was saved.`}</li>
             <li>
               {sent.openedPost
@@ -882,7 +882,7 @@ export const SuggestionReviewDialog = ({ scenario, source, onClose, onReviewMap,
             <a href={source.ref.url} target="_blank" rel="noopener noreferrer" style={{ color: "#7dd3fc", fontSize: "0.8rem" }}>View the comment on GitHub ↗</a>
           )}
           {note && (
-            <div data-no-translate style={{ borderLeft: "3px solid rgba(255,255,255,0.25)", color: "rgba(255,255,255,0.82)", fontSize: "0.84rem", lineHeight: 1.5, padding: "0.1rem 0 0.1rem 0.7rem", whiteSpace: "pre-wrap" }}>
+            <div data-no-translate style={{ borderLeft: "3px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: "0.84rem", lineHeight: 1.5, padding: "0.1rem 0 0.1rem 0.7rem", whiteSpace: "pre-wrap" }}>
               {note}
             </div>
           )}
@@ -1133,7 +1133,7 @@ export const SuggestionCountBadge = ({ count, onClick }) => {
       type="button"
       onClick={onClick}
       title="People have suggested changes to this scenario"
-      style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 22%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 55%, transparent)", borderRadius: 999, color: "#fff", cursor: "pointer", display: "inline-flex", fontSize: "0.7rem", fontWeight: 700, gap: "0.3rem", padding: "0.3rem 0.6rem", position: "relative", zIndex: 3 }}
+      style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 22%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 55%, transparent)", borderRadius: 999, color: "var(--oh-ink, #fff)", cursor: "pointer", display: "inline-flex", fontSize: "0.7rem", fontWeight: 700, gap: "0.3rem", padding: "0.3rem 0.6rem", position: "relative", zIndex: 3 }}
     >
       {count === 1 ? "💬 1 suggestion" : `💬 ${count} suggestions`}
     </button>

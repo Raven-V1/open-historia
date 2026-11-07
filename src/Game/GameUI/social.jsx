@@ -632,7 +632,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
     : {
       ...rising,
       backdropFilter: "blur(8px)",
-      backgroundColor: "rgba(11, 11, 13, 0.97)",
+      backgroundColor: "color-mix(in srgb, var(--oh-paper, rgb(11,11,13)) 97%, transparent)",
       border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
       borderRadius: "16px",
       boxShadow: "-4px 0 24px rgba(0,0,0,0.4), inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
@@ -771,7 +771,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
                     onClick={() => setQuoting(null)}
                     aria-label="Remove the quote"
                     title="Remove the quote"
-                    style={{ alignItems: "center", background: "#18181b", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)", borderRadius: "999px", color: INK_SOFT, cursor: "pointer", display: "flex", height: "1.4rem", justifyContent: "center", padding: 0, position: "absolute", right: "-0.35rem", top: "0.2rem", width: "1.4rem" }}
+                    style={{ alignItems: "center", background: "var(--oh-paper, #18181b)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)", borderRadius: "999px", color: INK_SOFT, cursor: "pointer", display: "flex", height: "1.4rem", justifyContent: "center", padding: 0, position: "absolute", right: "-0.35rem", top: "0.2rem", width: "1.4rem" }}
                   >
                     <CloseIcon />
                   </button>
@@ -898,7 +898,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
                 <span style={{ display: "inline-flex", position: "relative" }}>
                   <Icon />
                   {count > 0 && (
-                    <span data-no-translate style={{ alignItems: "center", background: ACCENT, border: `1.5px solid ${framed ? SCREEN : "#18181b"}`, borderRadius: 999, color: "#06171d", display: "inline-flex", fontSize: ".55rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", minWidth: "1.05rem", padding: "0 .2rem", position: "absolute", right: "-0.6rem", top: "-0.4rem" }}>
+                    <span data-no-translate style={{ alignItems: "center", background: ACCENT, border: `1.5px solid ${framed ? SCREEN : "var(--oh-paper, #18181b)"}`, borderRadius: 999, color: "#06171d", display: "inline-flex", fontSize: ".55rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", minWidth: "1.05rem", padding: "0 .2rem", position: "absolute", right: "-0.6rem", top: "-0.4rem" }}>
                       {count > 9 ? "9+" : count}
                     </span>
                   )}

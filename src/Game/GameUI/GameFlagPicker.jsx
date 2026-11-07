@@ -44,10 +44,10 @@ const fileToScaledDataUrl = (file) => new Promise((resolve, reject) => {
 });
 
 const buttonStyle = {
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.14)",
+    background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
     borderRadius: 9,
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     cursor: "pointer",
     fontFamily: "sans-serif",
     fontSize: "0.8rem",
@@ -57,9 +57,9 @@ const buttonStyle = {
 
 const searchInputStyle = {
     background: "rgba(0,0,0,0.3)",
-    border: "1px solid rgba(255,255,255,0.14)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
     borderRadius: 9,
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     fontFamily: "sans-serif",
     fontSize: "0.8rem",
     minWidth: "10rem",
@@ -72,10 +72,10 @@ const FlagCard = ({ imageUrl, label, meta, onClick, selected = false }) => (
         type="button"
         onClick={onClick}
         style={{
-            background: selected ? "rgba(0,0,0,0.28)" : "rgba(255,255,255,0.04)",
-            border: selected ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.1)",
+            background: selected ? "rgba(0,0,0,0.28)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+            border: selected ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
             borderRadius: 10,
-            color: "white",
+            color: "var(--oh-ink, #fff)",
             cursor: "pointer",
             display: "flex",
             flexDirection: "column",
@@ -87,10 +87,10 @@ const FlagCard = ({ imageUrl, label, meta, onClick, selected = false }) => (
         }}
     >
         <div style={{ width: "100%", aspectRatio: "3 / 2", borderRadius: 7, overflow: "hidden", background: "rgba(0,0,0,0.25)", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {imageUrl ? <img src={bundledFlagUrl(imageUrl)} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /> : <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.72rem" }}>No preview</span>}
+            {imageUrl ? <img src={bundledFlagUrl(imageUrl)} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} /> : <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)", fontSize: "0.72rem" }}>No preview</span>}
         </div>
         <div style={{ fontSize: "0.75rem", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis" }}>{label}</div>
-        {meta && <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.66rem", overflow: "hidden", textOverflow: "ellipsis" }}>{meta}</div>}
+        {meta && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.66rem", overflow: "hidden", textOverflow: "ellipsis" }}>{meta}</div>}
     </button>
 );
 
@@ -102,10 +102,10 @@ const PackCard = ({ post, onClick }) => {
             type="button"
             onClick={onClick}
             style={{
-                background: "rgba(255,255,255,0.04)",
-                border: "1px solid rgba(255,255,255,0.1)",
+                background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
                 borderRadius: 10,
-                color: "white",
+                color: "var(--oh-ink, #fff)",
                 cursor: "pointer",
                 display: "flex",
                 flexDirection: "column",
@@ -116,21 +116,21 @@ const PackCard = ({ post, onClick }) => {
                 textAlign: "left",
             }}
         >
-            <div style={{ position: "relative", width: "100%", aspectRatio: "3 / 2", borderRadius: 7, overflow: "hidden", background: "rgba(38,38,42,0.9)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ position: "relative", width: "100%", aspectRatio: "3 / 2", borderRadius: 7, overflow: "hidden", background: "color-mix(in srgb, var(--oh-paper, rgb(38,38,42)) 90%, transparent)", display: "flex", alignItems: "center", justifyContent: "center" }}>
                 {/* The scenario's cover, from its checked copy in the hub's
                     releases (communityFlags.js pictureUrl). */}
                 {post?.pictureUrl ? (
                     <img src={post.pictureUrl} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", opacity: 0.78 }} />
                 ) : (
-                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", color: "rgba(255,255,255,0.68)" }}>
+                    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "0.2rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)" }}>
                         <span style={{ fontSize: "1.6rem", lineHeight: 1 }}>▦</span>
                         <span style={{ fontSize: "0.62rem", fontWeight: 800, letterSpacing: "0.08em" }}>FLAG PACK</span>
                     </div>
                 )}
-                <span style={{ position: "absolute", top: 7, right: 7, padding: "0.2rem 0.38rem", borderRadius: 999, background: "rgba(15,23,42,0.9)", border: "1px solid rgba(255,255,255,0.23)", color: "#f4f4f5", fontSize: "0.58rem", fontWeight: 800, letterSpacing: "0.06em" }}>PACK</span>
+                <span style={{ position: "absolute", top: 7, right: 7, padding: "0.2rem 0.38rem", borderRadius: 999, background: "rgba(15,23,42,0.9)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "0.58rem", fontWeight: 800, letterSpacing: "0.06em" }}>PACK</span>
             </div>
             <div style={{ fontSize: "0.75rem", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis" }}>{post?.title || "Scenario flag pack"}</div>
-            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.66rem", overflow: "hidden", textOverflow: "ellipsis" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.66rem", overflow: "hidden", textOverflow: "ellipsis" }}>
                 {count > 0 ? `${count} flag${count === 1 ? "" : "s"}` : "Scenario flag pack"}{author ? ` · by ${author}` : ""}
             </div>
         </button>
@@ -334,7 +334,7 @@ const GameFlagPicker = ({ isOpen, polity, world, onClose, onApplied }) => {
     if (!isOpen) return null;
 
     const noMatches = (
-        <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.8rem" }}>
             No flags match “{query}”.
         </div>
     );
@@ -342,22 +342,22 @@ const GameFlagPicker = ({ isOpen, polity, world, onClose, onApplied }) => {
     return createPortal(
         // Padded clear of the notch and the home indicator (every inset is 0 on
         // a desktop); on a phone the card may use the whole visible height.
-        <div style={{ position: "fixed", inset: 0, zIndex: 12050, background: "rgba(2,6,23,0.78)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", padding: `calc(1rem + ${SAFE_TOP}) calc(1rem + ${SAFE_RIGHT}) calc(1rem + ${SAFE_BOTTOM}) calc(1rem + ${SAFE_LEFT})` }}>
-            <div style={{ width: "min(56rem, 96vw)", maxHeight: isMobile ? `calc(${APP_HEIGHT} - 2rem - ${SAFE_TOP} - ${SAFE_BOTTOM})` : "88vh", display: "flex", flexDirection: "column", background: "rgba(16,18,24,0.99)", border: "1px solid rgba(255,255,255,0.13)", borderRadius: 16, boxShadow: "0 24px 70px rgba(0,0,0,0.6)", overflow: "hidden", color: "white", fontFamily: "sans-serif" }}>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", padding: "1rem 1.1rem", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-                    {current.imageUrl ? <img src={bundledFlagUrl(current.imageUrl)} alt="" style={{ width: 46, height: 29, objectFit: "cover", borderRadius: 4, boxShadow: "0 0 0 1px rgba(255,255,255,0.18)" }} /> : <div style={{ width: 46, height: 29, borderRadius: 4, border: "1px solid rgba(255,255,255,0.18)" }} />}
+        <div style={{ position: "fixed", inset: 0, zIndex: 12050, background: "color-mix(in srgb, var(--oh-paper, rgb(2,6,23)) 78%, transparent)", backdropFilter: "blur(8px)", display: "flex", alignItems: "center", justifyContent: "center", padding: `calc(1rem + ${SAFE_TOP}) calc(1rem + ${SAFE_RIGHT}) calc(1rem + ${SAFE_BOTTOM}) calc(1rem + ${SAFE_LEFT})` }}>
+            <div style={{ width: "min(56rem, 96vw)", maxHeight: isMobile ? `calc(${APP_HEIGHT} - 2rem - ${SAFE_TOP} - ${SAFE_BOTTOM})` : "88vh", display: "flex", flexDirection: "column", background: "color-mix(in srgb, var(--oh-paper, rgb(16,18,24)) 99%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)", borderRadius: 16, boxShadow: "0 24px 70px rgba(0,0,0,0.6)", overflow: "hidden", color: "var(--oh-ink, #fff)", fontFamily: "sans-serif" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.8rem", padding: "1rem 1.1rem", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" }}>
+                    {current.imageUrl ? <img src={bundledFlagUrl(current.imageUrl)} alt="" style={{ width: 46, height: 29, objectFit: "cover", borderRadius: 4, boxShadow: "0 0 0 1px color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)" }} /> : <div style={{ width: 46, height: 29, borderRadius: 4, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)" }} />}
                     <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ fontWeight: 800, fontSize: "1rem" }}>Change flag</div>
-                        <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.75rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{polity?.name || polity?.polityKey || polity?.code}</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.75rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{polity?.name || polity?.polityKey || polity?.code}</div>
                     </div>
                     <button type="button" className="oh-tap" aria-label="Close flag picker" onClick={onClose} style={{ ...buttonStyle, padding: "0.35rem 0.55rem", fontSize: "1rem", background: "transparent" }}>✕</button>
                 </div>
 
                 {/* On a phone the tabs, the search and the two actions take as many
                     lines as they need, and the search stretches across its own. */}
-                <div style={{ display: "flex", alignItems: "center", flexWrap: isMobile ? "wrap" : undefined, gap: "0.5rem", padding: "0.75rem 1rem", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+                <div style={{ display: "flex", alignItems: "center", flexWrap: isMobile ? "wrap" : undefined, gap: "0.5rem", padding: "0.75rem 1rem", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)" }}>
                     {[{ id: "game", label: "In this game" }, { id: "community", label: "Community" }].map((entry) => (
-                        <button key={entry.id} type="button" className="oh-tap-row" onClick={() => { setTab(entry.id); setQuery(""); if (entry.id !== "community") closeCommunityPack(); }} style={{ ...buttonStyle, background: tab === entry.id ? "rgba(255,255,255,0.14)" : buttonStyle.background, borderColor: tab === entry.id ? "rgba(255,255,255,0.28)" : buttonStyle.border.split(" ").at(-1) }}>
+                        <button key={entry.id} type="button" className="oh-tap-row" onClick={() => { setTab(entry.id); setQuery(""); if (entry.id !== "community") closeCommunityPack(); }} style={{ ...buttonStyle, background: tab === entry.id ? "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)" : buttonStyle.background, borderColor: tab === entry.id ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : buttonStyle.border.split(" ").at(-1) }}>
                             {entry.label}
                         </button>
                     ))}
@@ -381,11 +381,11 @@ const GameFlagPicker = ({ isOpen, polity, world, onClose, onApplied }) => {
                 <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "1rem", scrollbarWidth: "thin" }}>
                     {tab === "game" ? (
                         <>
-                            <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.76rem", marginBottom: "0.75rem" }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.76rem", marginBottom: "0.75rem" }}>
                                 Reuse any flag already stored in this campaign. Choosing one copies the image to this polity's stable lineage; renaming the polity later will not detach it.
                             </div>
                             {filteredExisting.stored === 0 ? (
-                                <div style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.8rem" }}>No custom flags are stored in this campaign yet.</div>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.8rem" }}>No custom flags are stored in this campaign yet.</div>
                             ) : filteredExisting.choices.length === 0 ? noMatches : (
                                 <>
                                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(130px, 1fr))", gap: "0.75rem" }}>
@@ -394,7 +394,7 @@ const GameFlagPicker = ({ isOpen, polity, world, onClose, onApplied }) => {
                                         ))}
                                     </div>
                                     {filteredExisting.choices.length > GAME_FLAG_LIMIT && (
-                                        <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.76rem", marginTop: "0.75rem" }}>
+                                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.76rem", marginTop: "0.75rem" }}>
                                             {`Showing ${GAME_FLAG_LIMIT} of ${filteredExisting.choices.length} flags. Search to narrow the list.`}
                                         </div>
                                     )}
@@ -407,7 +407,7 @@ const GameFlagPicker = ({ isOpen, polity, world, onClose, onApplied }) => {
                                 <button type="button" className="oh-tap-row" onClick={closeCommunityPack} style={{ ...buttonStyle, padding: "0.45rem 0.65rem" }}>← Community</button>
                                 <div style={{ minWidth: 0 }}>
                                     <div style={{ fontWeight: 800, fontSize: "0.92rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{communityPack.title || "Scenario flag pack"}</div>
-                                    <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.7rem", marginTop: "0.15rem" }}>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.7rem", marginTop: "0.15rem" }}>
                                         {communityPackState === "ready"
                                             ? `${communityPackFlags.length} custom flag${communityPackFlags.length === 1 ? "" : "s"}`
                                             : Number(communityPack.flagCount || 0) > 0
@@ -419,14 +419,14 @@ const GameFlagPicker = ({ isOpen, polity, world, onClose, onApplied }) => {
                             </div>
 
                             {communityPackState === "loading" ? (
-                                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.8rem" }}>Loading this scenario's flags…</div>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.8rem" }}>Loading this scenario's flags…</div>
                             ) : communityPackState === "error" ? (
                                 <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.7rem 0.8rem", borderRadius: 8, background: "rgba(239,68,68,0.1)", border: "1px solid rgba(239,68,68,0.3)", color: "#fca5a5", fontSize: "0.78rem" }}>
                                     <span style={{ flex: 1 }}>{communityPackError || "This flag pack could not be loaded."}</span>
                                     <button type="button" className="oh-tap-row" onClick={() => openCommunityPack(communityPack)} style={{ ...buttonStyle, padding: "0.38rem 0.6rem" }}>Retry</button>
                                 </div>
                             ) : communityPackFlags.length === 0 ? (
-                                <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem" }}>This scenario pack does not contain any custom flag images that can be selected individually.</div>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.8rem" }}>This scenario pack does not contain any custom flag images that can be selected individually.</div>
                             ) : filteredCommunityPackFlags.length === 0 ? noMatches : (
                                 <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(145px, 1fr))", gap: "0.75rem" }}>
                                     {filteredCommunityPackFlags.map((flag, index) => (
@@ -443,14 +443,14 @@ const GameFlagPicker = ({ isOpen, polity, world, onClose, onApplied }) => {
                             )}
                         </>
                     ) : communityState === "loading" ? (
-                        <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.8rem" }}>Loading community flags…</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.8rem" }}>Loading community flags…</div>
                     ) : communityState === "error" ? (
-                        <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.8rem" }}>Community flags could not be loaded.</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.8rem" }}>Community flags could not be loaded.</div>
                     ) : community.length === 0 ? (
-                        <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.8rem" }}>No community flags or scenario flag packs are available right now.</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.8rem" }}>No community flags or scenario flag packs are available right now.</div>
                     ) : filteredCommunity.length === 0 ? noMatches : (
                         <>
-                            <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.76rem", marginBottom: "0.75rem" }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.76rem", marginBottom: "0.75rem" }}>
                                 Choose a shared flag directly, or open a scenario flag pack to pick one of its flags without importing the scenario.
                             </div>
                             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(145px, 1fr))", gap: "0.75rem" }}>

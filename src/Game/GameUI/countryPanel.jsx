@@ -47,15 +47,15 @@ const CountryPanel = ({ open, onClose, width, onResize, onResizeEnd, mapRef, req
       // clear of it (every inset is 0 on a desktop).
       ...(isMobile
         ? { left: 0, paddingTop: SAFE_TOP, paddingBottom: SAFE_BOTTOM, paddingLeft: SAFE_LEFT, paddingRight: SAFE_RIGHT, boxSizing: "border-box" }
-        : { width: `calc(${width || COUNTRY_PANEL_WIDTH} + ${SAFE_RIGHT})`, paddingTop: SAFE_TOP, paddingBottom: SAFE_BOTTOM, paddingRight: SAFE_RIGHT, boxSizing: "border-box", borderLeft: "1px solid rgba(255,255,255,0.1)" }),
-      backgroundColor: "rgba(24, 24, 27, 0.95)",
+        : { width: `calc(${width || COUNTRY_PANEL_WIDTH} + ${SAFE_RIGHT})`, paddingTop: SAFE_TOP, paddingBottom: SAFE_BOTTOM, paddingRight: SAFE_RIGHT, boxSizing: "border-box", borderLeft: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }),
+      backgroundColor: "color-mix(in srgb, var(--oh-paper, rgb(24,24,27)) 95%, transparent)",
       backdropFilter: "blur(8px)",
       zIndex: isMobile ? 10040 : 9997,
       boxShadow: open ? "-4px 0 24px rgba(0,0,0,0.4)" : "none",
       transition: `transform ${ADVISOR_SLIDE}, box-shadow ${ADVISOR_SLIDE}`,
       display: "flex",
       flexDirection: "column",
-      color: "white",
+      color: "var(--oh-ink, #fff)",
       fontFamily: "sans-serif",
       overflow: "hidden",
     }}>
@@ -76,13 +76,13 @@ const CountryPanel = ({ open, onClose, width, onResize, onResizeEnd, mapRef, req
             width: "3px", height: "42px", borderRadius: "2px",
             backgroundColor: isResizing
               ? "rgba(96,165,250,0.95)"
-              : handleHover ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.22)",
+              : handleHover ? "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)",
             transition: "background-color 0.15s",
           }} />
         </div>
       )}
 
-      <div className="oh-country-dossier-toolbar" style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.1)", display: "flex", gap: "0.55rem", padding: "0.65rem 0.8rem" }}>
+      <div className="oh-country-dossier-toolbar" style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", display: "flex", gap: "0.55rem", padding: "0.65rem 0.8rem" }}>
         <span aria-hidden="true" style={{ color: "var(--oh-ui-accent, #8ecbe8)", fontSize: "1.1rem", lineHeight: 1 }}>◈</span>
         <div style={{ minWidth: 0 }}>
           <div style={{ color: "var(--oh-ui-text, #d7e5f0)", fontSize: "0.72rem", fontWeight: 850, letterSpacing: "0.13em", textTransform: "uppercase" }}>Country</div>
@@ -94,7 +94,7 @@ const CountryPanel = ({ open, onClose, width, onResize, onResizeEnd, mapRef, req
           onClick={onClose}
           title="Close country panel"
           aria-label="Close country panel"
-          style={{ background: "none", border: "none", color: "rgba(255,255,255,0.55)", cursor: "pointer", fontSize: "1.35rem", lineHeight: 1, padding: "0 0 0 0.5rem", display: "flex", alignItems: "center" }}
+          style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", fontSize: "1.35rem", lineHeight: 1, padding: "0 0 0 0.5rem", display: "flex", alignItems: "center" }}
         >✕</button>
       </div>
 

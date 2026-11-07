@@ -68,7 +68,7 @@ const EyeOffIcon = ({ size = 18 }) => (
 );
 
 const buttonStyle = {
-  border: "1px solid rgba(255,255,255,0.12)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
   borderRadius: "10px",
   cursor: "pointer",
   fontFamily: "inherit",
@@ -81,13 +81,13 @@ const primaryButtonStyle = {
   ...buttonStyle,
   background: "rgba(59,130,246,0.22)",
   border: "1px solid rgba(96,165,250,0.4)",
-  color: "#dbeafe",
+  color: "var(--oh-link, #dbeafe)",
 };
 
 const quietButtonStyle = {
   ...buttonStyle,
-  background: "rgba(255,255,255,0.05)",
-  color: "rgba(255,255,255,0.78)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)",
 };
 
 const linkButtonStyle = {
@@ -102,7 +102,7 @@ const linkButtonStyle = {
 };
 
 const labelStyle = {
-  color: "rgba(255,255,255,0.72)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
   display: "block",
   fontSize: "0.72rem",
   fontWeight: 700,
@@ -113,17 +113,17 @@ const labelStyle = {
 
 const inputStyle = {
   background: "rgba(0,0,0,0.35)",
-  border: "1px solid rgba(255,255,255,0.14)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
   borderRadius: "8px",
   boxSizing: "border-box",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "inherit",
   fontSize: "0.86rem",
   padding: "0.55rem 0.65rem",
   width: "100%",
 };
 
-const helperStyle = { color: "rgba(255,255,255,0.45)", fontSize: "0.7rem", lineHeight: 1.45, marginTop: "0.3rem" };
+const helperStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.7rem", lineHeight: 1.45, marginTop: "0.3rem" };
 
 // The tutorial's place on the card: a button until it is pressed, the YouTube
 // player after. Nothing is asked of YouTube before the press, and the button
@@ -146,7 +146,7 @@ const TutorialVideo = () => {
         <button
           type="button"
           onClick={() => setPlaying(true)}
-          style={{ alignItems: "center", background: "transparent", border: 0, color: "rgba(255,255,255,0.86)", cursor: "pointer", display: "flex", fontFamily: "inherit", fontSize: "0.82rem", fontWeight: 750, gap: "0.5rem", height: "100%", justifyContent: "center", padding: "0.6rem", width: "100%" }}
+          style={{ alignItems: "center", background: "transparent", border: 0, color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", cursor: "pointer", display: "flex", fontFamily: "inherit", fontSize: "0.82rem", fontWeight: 750, gap: "0.5rem", height: "100%", justifyContent: "center", padding: "0.6rem", width: "100%" }}
         >
           <span aria-hidden="true">▶</span>
           <span>{"Play the video (loads YouTube)"}</span>
@@ -234,7 +234,7 @@ export const ApiSetupPrompt = ({ providerLabel = "the selected provider", missin
           border: "1px solid var(--oh-hud-border)",
           borderRadius: "16px",
           boxShadow: "var(--oh-hud-shadow)",
-          color: "white",
+          color: "var(--oh-ink, #fff)",
           fontFamily: "sans-serif",
           maxHeight: `calc(${APP_HEIGHT} - 2rem - ${SAFE_TOP} - ${SAFE_BOTTOM})`,
           overflowY: "auto",
@@ -251,7 +251,7 @@ export const ApiSetupPrompt = ({ providerLabel = "the selected provider", missin
               onClick={onDismiss}
               aria-label="Not now"
               title="Not now"
-              style={{ background: "none", border: "none", color: "rgba(255,255,255,0.55)", cursor: "pointer", display: "flex", flexShrink: 0, fontSize: "1.1rem", lineHeight: 1, margin: "-0.6rem -0.7rem 0 0", padding: "0.15rem 0.3rem" }}
+              style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", display: "flex", flexShrink: 0, fontSize: "1.1rem", lineHeight: 1, margin: "-0.6rem -0.7rem 0 0", padding: "0.15rem 0.3rem" }}
             >
               ✕
             </button>
@@ -259,15 +259,15 @@ export const ApiSetupPrompt = ({ providerLabel = "the selected provider", missin
         ) : (
           <div style={{ fontSize: "1.05rem", fontWeight: 900 }}>Set up your AI provider</div>
         )}
-        <div style={{ color: "rgba(255,255,255,0.64)", fontSize: "0.8rem", lineHeight: 1.55, marginTop: "0.5rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 64%, transparent)", fontSize: "0.8rem", lineHeight: 1.55, marginTop: "0.5rem" }}>
           Open Historia writes every turn, advisor reply and diplomatic message with an AI model, and {providerLabel} has {missing} missing.
           Until it is set, time skips fall back to canned events and the advisor cannot answer. Paste your details below and you are ready to play.
         </div>
 
         <div
           style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.09)",
+            background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)",
             borderRadius: "12px",
             marginTop: "0.9rem",
             padding: "0.8rem 0.9rem",
@@ -276,7 +276,7 @@ export const ApiSetupPrompt = ({ providerLabel = "the selected provider", missin
           <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "space-between" }}>
             <div>
               <div style={{ fontSize: "0.86rem", fontWeight: 800 }}>New to API keys?</div>
-              <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.15rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.15rem" }}>
                 A Gemini key is free. The video walks through getting one; the button opens the page where it is made.
               </div>
             </div>
@@ -289,7 +289,7 @@ export const ApiSetupPrompt = ({ providerLabel = "the selected provider", missin
               {online ? (
                 <TutorialVideo />
               ) : (
-                <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: "10px", color: "rgba(255,255,255,0.6)", fontSize: "0.74rem", lineHeight: 1.45, padding: "0.8rem 0.9rem" }}>
+                <div style={{ background: "rgba(0,0,0,0.3)", borderRadius: "10px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.74rem", lineHeight: 1.45, padding: "0.8rem 0.9rem" }}>
                   The video needs an internet connection. It plays here as soon as you are back online, and so does getting a key.
                 </div>
               )}
@@ -299,7 +299,7 @@ export const ApiSetupPrompt = ({ providerLabel = "the selected provider", missin
                 <a href={TUTORIAL_VIDEO_URL} target="_blank" rel="noopener noreferrer" className="oh-tap-row" style={{ color: "rgba(147,197,253,0.9)", fontSize: "0.7rem", ...(isTouch ? { alignItems: "center", display: "inline-flex" } : null) }}>
                   Watch on YouTube ↗
                 </a>
-                <button type="button" className="oh-tap-row" onClick={() => setShowTutorial(false)} style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.45)", cursor: "pointer", fontSize: "0.7rem", padding: 0 }}>
+                <button type="button" className="oh-tap-row" onClick={() => setShowTutorial(false)} style={{ background: "transparent", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", cursor: "pointer", fontSize: "0.7rem", padding: 0 }}>
                   Hide the video
                 </button>
               </div>

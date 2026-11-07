@@ -33,6 +33,12 @@
 :root[data-oh-ui-theme='carbon-dark'] {
   color-scheme: dark;
 }
+:root[data-oh-ui-theme='carbon-dark'] select {
+  color-scheme: dark;
+}
+:root[data-oh-ui-theme='carbon-light'] select {
+  color-scheme: light;
+}
 
 :root[data-oh-ui-theme='carbon-light'] {
   @include theme.theme(themes.$g10);
@@ -97,6 +103,8 @@
   // original and the other themes, which never set this, keep the white.
   --oh-ink: var(--cds-text-primary);
   --oh-link: var(--cds-link-primary);
+  // The dark panel fills (opaque or translucent) of popups, cards and sheets.
+  --oh-paper: var(--cds-layer-01);
   --oh-ui-glass-pill: var(--cds-layer-01);
   --oh-ui-glass-chip: var(--cds-layer-02);
   --oh-ui-glass-line: var(--cds-border-subtle-01);
@@ -164,5 +172,23 @@
     [style*='border-radius: #{$r}px'] {
       border-radius: 0 !important;
     }
+  }
+}
+
+// The system-drawn list of a <select> takes the theme's layer and text (styles.css
+// forces a dark list with light text for the original interface).
+:root[data-oh-ui-theme^='carbon'] {
+  select {
+    color-scheme: normal;
+  }
+
+  select option,
+  select optgroup {
+    background-color: var(--cds-layer-01) !important;
+    color: var(--cds-text-primary) !important;
+  }
+
+  select option:disabled {
+    color: var(--cds-text-disabled) !important;
   }
 }

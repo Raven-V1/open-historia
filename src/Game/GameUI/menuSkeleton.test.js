@@ -69,7 +69,7 @@ test("the real cards are the size the outlines say", () => {
   }
   assert.match(hub, /aspectRatio: "16 \/ 9",/);
   assert.match(hub, /const ScenarioCover = \(\{ post, borderRadius = "10px", marginBottom \}\) =>/);
-  assert.match(hub, /borderRadius: "16px",\s+boxShadow: "0 14px 32px rgba\(0,0,0,0\.45\)",\s+boxSizing: "border-box",\s+color: "#fff",\s+display: "flex",\s+flexDirection: "column",\s+flex: `0 0 \$\{CARD_WIDTH\}`,\s+gap: "0\.55rem",\s+maxWidth: CARD_WIDTH,\s+minWidth: 0,\s+padding: "0\.9rem",/);
+  assert.match(hub, /borderRadius: "16px",\s+boxShadow: "0 14px 32px rgba\(0,0,0,0\.45\)",\s+boxSizing: "border-box",\s+color: "var\(--oh-ink, #fff\)",\s+display: "flex",\s+flexDirection: "column",\s+flex: `0 0 \$\{CARD_WIDTH\}`,\s+gap: "0\.55rem",\s+maxWidth: CARD_WIDTH,\s+minWidth: 0,\s+padding: "0\.9rem",/);
   assert.match(hub, /<div style=\{\{ display: "grid", gap: "0\.8rem", gridTemplateColumns: COMMUNITY_GRID_TEMPLATE, paddingBottom: "0\.35rem" \}\}>/);
 });
 

@@ -17,10 +17,10 @@ const clean = (value) => String(value ?? "").trim();
 
 const buttonStyle = (accent = false) => ({
   alignItems: "center",
-  background: accent ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.06)",
-  border: `1px solid ${accent ? "rgba(255,255,255,0.21)" : "rgba(255,255,255,0.09)"}`,
+  background: accent ? "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: `1px solid ${accent ? "color-mix(in srgb, var(--oh-ink, #fff) 21%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)"}`,
   borderRadius: "9px",
-  color: "rgba(255,255,255,0.88)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.72rem",
@@ -41,10 +41,10 @@ const touchFit = (style, touch, { icon = false } = {}) => {
 };
 
 const inputStyle = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "9px",
-  color: "#f8fafc",
+  color: "var(--oh-ink, #fff)",
   fontSize: "0.78rem",
   outline: "none",
   padding: "0.56rem 0.62rem",
@@ -52,7 +52,7 @@ const inputStyle = {
 };
 
 const labelStyle = {
-  color: "rgba(255,255,255,0.48)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)",
   display: "block",
   fontSize: "0.58rem",
   fontWeight: 800,
@@ -68,7 +68,7 @@ const statsEditorControlCss = `
   .oh-stats-sheet-editor select,
   .oh-stats-sheet-editor textarea {
     background-color: #20242b !important;
-    border-color: rgba(255,255,255,0.13) !important;
+    border-color: color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent) !important;
     color: #f8fafc !important;
     -webkit-text-fill-color: #f8fafc !important;
     caret-color: #f8fafc;
@@ -96,7 +96,7 @@ const statsEditorControlCss = `
   .oh-stats-sheet-editor input:focus,
   .oh-stats-sheet-editor select:focus,
   .oh-stats-sheet-editor textarea:focus {
-    border-color: rgba(255,255,255,0.28) !important;
+    border-color: color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent) !important;
     box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
   }
 
@@ -118,7 +118,7 @@ const statsEditorControlCss = `
 
   .oh-stats-sheet-editor input[type="color"] {
     background-color: #20242b !important;
-    border-color: rgba(255,255,255,0.13) !important;
+    border-color: color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent) !important;
     color-scheme: dark;
   }
 
@@ -187,20 +187,20 @@ const StatPreview = ({ stat, minWidth = 0 }) => (
   <div style={{ flex: "1 1 0", maxWidth: "100%", minWidth, overflow: "hidden" }}>
     <div style={{ alignItems: "center", display: "flex", gap: "0.4rem", minWidth: 0, overflow: "hidden" }}>
       <span aria-hidden="true" style={{ flex: "0 0 auto", fontSize: "0.9rem", width: "1.15rem" }}>{stat.icon || "◆"}</span>
-      <span style={{ color: "rgba(255,255,255,0.91)", flex: "1 1 8rem", fontSize: "0.76rem", fontWeight: 780, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{stat.label}</span>
-      <span style={{ color: "rgba(255,255,255,0.28)", flex: "0 1 7rem", fontFamily: "monospace", fontSize: "0.58rem", maxWidth: "35%", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{stat.key}</span>
-      <span style={{ color: "rgba(255,255,255,0.45)", flex: "0 1 auto", fontSize: "0.64rem", fontWeight: 800, marginLeft: "auto", maxWidth: "40%", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{compactPreviewValue(stat)}</span>    </div>
+      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 91%, transparent)", flex: "1 1 8rem", fontSize: "0.76rem", fontWeight: 780, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{stat.label}</span>
+      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", flex: "0 1 7rem", fontFamily: "monospace", fontSize: "0.58rem", maxWidth: "35%", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{stat.key}</span>
+      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", flex: "0 1 auto", fontSize: "0.64rem", fontWeight: 800, marginLeft: "auto", maxWidth: "40%", minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{compactPreviewValue(stat)}</span>    </div>
     {stat.kind === "index" && (
-      <div style={{ background: "rgba(255,255,255,0.09)", borderRadius: "999px", height: "5px", marginTop: "0.4rem", overflow: "hidden" }}>
-        <div style={{ background: stat.color || "rgba(255,255,255,0.22)", borderRadius: "999px", height: "100%", width: "67%" }} />
+      <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)", borderRadius: "999px", height: "5px", marginTop: "0.4rem", overflow: "hidden" }}>
+        <div style={{ background: stat.color || "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)", borderRadius: "999px", height: "100%", width: "67%" }} />
       </div>
     )}
-    {stat.description && <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.34rem", overflowWrap: "anywhere" }}>{stat.description}</div>}
+    {stat.description && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.34rem", overflowWrap: "anywhere" }}>{stat.description}</div>}
   </div>
 );
 
 const StatEditor = ({ stat, onPatch }) => (
-  <div className="oh-stats-stat-editor" style={{ borderTop: "1px solid rgba(255,255,255,0.07)", display: "grid", gap: "0.58rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(7rem, 100%), 1fr))", marginTop: "0.62rem", maxWidth: "100%", minWidth: 0, paddingTop: "0.62rem", width: "100%" }}>
+  <div className="oh-stats-stat-editor" style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "grid", gap: "0.58rem", gridTemplateColumns: "repeat(auto-fit, minmax(min(7rem, 100%), 1fr))", marginTop: "0.62rem", maxWidth: "100%", minWidth: 0, paddingTop: "0.62rem", width: "100%" }}>
     <div>
       <label style={labelStyle}>Name</label>
       <input value={stat.label} maxLength={60} onChange={(event) => onPatch({ label: event.target.value })} style={inputStyle} />
@@ -220,7 +220,7 @@ const StatEditor = ({ stat, onPatch }) => (
     </div>
     <div>
       <label style={labelStyle}>Colour</label>
-      <input type="color" value={stat.color || "#94a3b8"} onChange={(event) => onPatch({ color: event.target.value })} style={{ ...inputStyle, height: "2.25rem", padding: "0.16rem" }} />
+      <input type="color" value={stat.color || "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)"} onChange={(event) => onPatch({ color: event.target.value })} style={{ ...inputStyle, height: "2.25rem", padding: "0.16rem" }} />
     </div>
 
     {stat.kind !== "index" && (
@@ -238,7 +238,7 @@ const StatEditor = ({ stat, onPatch }) => (
           <input type="number" min="0" max="4" value={stat.decimals ?? 0} onChange={(event) => onPatch({ decimals: Number(event.target.value) })} style={inputStyle} />
         </div>
         <div style={{ alignItems: "flex-end", display: "flex" }}>
-          <label style={{ alignItems: "center", color: "rgba(255,255,255,0.58)", display: "flex", fontSize: "0.67rem", gap: "0.4rem", minHeight: "2.25rem" }}>
+          <label style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", display: "flex", fontSize: "0.67rem", gap: "0.4rem", minHeight: "2.25rem" }}>
             <input type="checkbox" checked={Boolean(stat.compact)} onChange={(event) => onPatch({ compact: event.target.checked })} /> Compact K/M/B/T
           </label>
         </div>
@@ -257,7 +257,7 @@ const StatEditor = ({ stat, onPatch }) => (
       <label style={labelStyle}>What it tracks / AI guidance</label>
       <textarea value={stat.description || ""} maxLength={360} rows={2} onChange={(event) => onPatch({ description: event.target.value })} placeholder="Explain what this value means in this scenario and what kinds of events should move it." style={{ ...inputStyle, resize: "vertical" }} />
     </div>
-    <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.6rem", gridColumn: "1 / -1", minWidth: 0, overflowWrap: "anywhere" }}>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)", fontSize: "0.6rem", gridColumn: "1 / -1", minWidth: 0, overflowWrap: "anywhere" }}>
       Machine key: <code>{stat.key}</code>{stat.isNew ? " · follows the name until the scenario is saved, then freezes" : " · frozen so renaming does not break campaign history"}
     </div>
   </div>
@@ -358,7 +358,7 @@ const StatsSheetEditor = ({ value, onChange }) => {
     const label = "New statistic";
     const key = uniqueKeyFor(label, sections);
     const draftId = `stat-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`;
-    const stat = { key, label, kind: "index", icon: "◆", color: "#94a3b8", description: "", decimals: 0, isNew: true, draftId };
+    const stat = { key, label, kind: "index", icon: "◆", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", description: "", decimals: 0, isNew: true, draftId };
     emitSections(sections.map((entry) => entry.key === sectionKey ? { ...entry, stats: [...entry.stats, stat] } : entry));
     setEditingStatKey(key);
   };
@@ -500,10 +500,10 @@ const StatsSheetEditor = ({ value, onChange }) => {
       {!custom && (
         // On a phone the button goes under the text instead of squeezing it
         // into a column a few words wide.
-        <div style={{ alignItems: "center", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", display: "flex", flexWrap: isMobile ? "wrap" : undefined, gap: "0.75rem", justifyContent: "space-between", padding: "0.75rem" }}>
+        <div style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "12px", display: "flex", flexWrap: isMobile ? "wrap" : undefined, gap: "0.75rem", justifyContent: "space-between", padding: "0.75rem" }}>
           <div>
             <div style={{ fontSize: "0.78rem", fontWeight: 820 }}>Standard National Stats sheet</div>
-            <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.64rem", lineHeight: 1.4, marginTop: "0.18rem" }}>Uses the current audited population/GDP engine, strategic indices, and modern economy fields.</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.64rem", lineHeight: 1.4, marginTop: "0.18rem" }}>Uses the current audited population/GDP engine, strategic indices, and modern economy fields.</div>
           </div>
           <button type="button" className="oh-tap-row" onClick={enableCustom} style={touchFit(buttonStyle(true), touch)}>Customize full sheet</button>
         </div>
@@ -533,11 +533,11 @@ const StatsSheetEditor = ({ value, onChange }) => {
               }
               setDragItem(null);
             }}
-            style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${dragItem?.sectionKey === section.key ? "rgba(255,255,255,0.23)" : "rgba(255,255,255,0.08)"}`, borderRadius: "13px", maxWidth: "100%", minWidth: 0, overflow: "hidden", width: "100%" }}
+            style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: `1px solid ${dragItem?.sectionKey === section.key ? "color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"}`, borderRadius: "13px", maxWidth: "100%", minWidth: 0, overflow: "hidden", width: "100%" }}
           >
             {/* On a touch screen the four buttons travel together, onto a line
                 of their own under the name when the row is too narrow. */}
-            <div style={{ alignItems: "center", background: "rgba(255,255,255,0.03)", display: "flex", flexWrap: touch ? "wrap" : undefined, gap: "0.5rem", maxWidth: "100%", minWidth: 0, padding: "0.62rem 0.65rem" }}>
+            <div style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", display: "flex", flexWrap: touch ? "wrap" : undefined, gap: "0.5rem", maxWidth: "100%", minWidth: 0, padding: "0.62rem 0.65rem" }}>
               {!touch && (
                 <button
                   type="button"
@@ -556,8 +556,8 @@ const StatsSheetEditor = ({ value, onChange }) => {
                 >☰</button>
               )}              <span style={{ fontSize: "0.9rem" }}>{section.icon || "◆"}</span>
               <div style={{ flex: 1, minWidth: touch ? "8rem" : 0 }}>
-                <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.72rem", fontWeight: 850, letterSpacing: "0.06em", overflow: "hidden", textOverflow: "ellipsis", textTransform: "uppercase", whiteSpace: "nowrap" }}>{section.label}</div>
-                <div style={{ color: "rgba(255,255,255,0.28)", fontFamily: "monospace", fontSize: "0.56rem", marginTop: "0.1rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{section.key} · {section.stats.length} stat{section.stats.length === 1 ? "" : "s"}</div>              </div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.72rem", fontWeight: 850, letterSpacing: "0.06em", overflow: "hidden", textOverflow: "ellipsis", textTransform: "uppercase", whiteSpace: "nowrap" }}>{section.label}</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", fontFamily: "monospace", fontSize: "0.56rem", marginTop: "0.1rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{section.key} · {section.stats.length} stat{section.stats.length === 1 ? "" : "s"}</div>              </div>
               {touch ? (
                 <div style={{ display: "flex", flex: "0 0 auto", gap: "0.32rem", marginLeft: "auto" }}>
                   <button type="button" className="oh-tap" aria-label={`Move section ${section.label} up`} title="Move up" disabled={sectionIndex === 0} onClick={() => moveSectionBy(sectionIndex, -1)} style={touchFit({ ...buttonStyle(false), minWidth: "2rem", opacity: sectionIndex === 0 ? 0.4 : 1, padding: 0 }, touch, { icon: true })}>▲</button>
@@ -567,7 +567,7 @@ const StatsSheetEditor = ({ value, onChange }) => {
               ) : sectionActions}            </div>
 
             {sectionEditing && (
-              <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", display: "grid", gap: "0.55rem", gridTemplateColumns: "minmax(0,1fr) 5rem", padding: "0.62rem" }}>
+              <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", display: "grid", gap: "0.55rem", gridTemplateColumns: "minmax(0,1fr) 5rem", padding: "0.62rem" }}>
                 <div>
                   <label style={labelStyle}>Section name</label>
                   <input value={section.label} maxLength={60} onChange={(event) => patchSection(section.key, { label: event.target.value })} style={inputStyle} />
@@ -576,7 +576,7 @@ const StatsSheetEditor = ({ value, onChange }) => {
                   <label style={labelStyle}>Icon</label>
                   <input value={section.icon || ""} maxLength={8} onChange={(event) => patchSection(section.key, { icon: event.target.value })} style={{ ...inputStyle, textAlign: "center" }} />
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.6rem", gridColumn: "1 / -1" }}>Section key: <code>{section.key}</code></div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)", fontSize: "0.6rem", gridColumn: "1 / -1" }}>Section key: <code>{section.key}</code></div>
               </div>
             )}
 
@@ -600,7 +600,7 @@ const StatsSheetEditor = ({ value, onChange }) => {
                       }
                       setDragItem(null);
                     }}
-                    style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${dragItem?.statKey === stat.key ? "rgba(255,255,255,0.24)" : "rgba(255,255,255,0.07)"}`, borderRadius: "11px", maxWidth: "100%", minWidth: 0, padding: "0.6rem" }}
+                    style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: `1px solid ${dragItem?.statKey === stat.key ? "color-mix(in srgb, var(--oh-ink, #fff) 24%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"}`, borderRadius: "11px", maxWidth: "100%", minWidth: 0, padding: "0.6rem" }}
                   >
                     {/* On a touch screen, where a phone has no room for the preview and
                         four buttons side by side, the buttons drop under it together. */}
@@ -650,7 +650,7 @@ const StatsSheetEditor = ({ value, onChange }) => {
             <button type="button" className="oh-tap-row" onClick={addSection} disabled={sections.length >= MAX_STAT_SECTIONS || totalStats >= MAX_CUSTOM_STATS} style={touchFit({ ...buttonStyle(true), opacity: sections.length >= MAX_STAT_SECTIONS || totalStats >= MAX_CUSTOM_STATS ? 0.45 : 1 }, touch)}>+ Add section</button>
             <button type="button" className="oh-tap-row" onClick={useStandard} style={touchFit(buttonStyle(false), touch)}>Use standard sheet</button>
           </div>
-          <span style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.61rem" }}>{sections.length}/{MAX_STAT_SECTIONS} sections · {totalStats}/{MAX_CUSTOM_STATS} stats</span>
+          <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.61rem" }}>{sections.length}/{MAX_STAT_SECTIONS} sections · {totalStats}/{MAX_CUSTOM_STATS} stats</span>
         </div>
       )}
     </div>

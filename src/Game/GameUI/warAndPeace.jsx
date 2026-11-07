@@ -93,8 +93,8 @@ export const TermsText = ({ terms }) => {
 };
 
 const buttonStyle = (primary) => ({
-  backgroundColor: primary ? "#2bc1f3" : "rgba(255,255,255,0.06)",
-  border: `1px solid ${primary ? "#2bc1f3" : "rgba(255,255,255,0.18)"}`,
+  backgroundColor: primary ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: `1px solid ${primary ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)"}`,
   borderRadius: "8px",
   color: primary ? "#04141a" : "#e7e9ea",
   cursor: "pointer",
@@ -140,7 +140,7 @@ export const CallToArmsCard = ({ call, viewer }) => {
           <button type="button" className="oh-tap" disabled={busy} onClick={() => act("refuse")} style={buttonStyle(false)}>Break the treaty</button>
         </div>
       ) : (
-        <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.68rem", fontWeight: 700 }}>{CALL_STATUS_TEXT[call?.status] ?? ""}</span>
+        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.68rem", fontWeight: 700 }}>{CALL_STATUS_TEXT[call?.status] ?? ""}</span>
       )}
     </div>
   );
@@ -173,12 +173,12 @@ export const PeaceOfferCard = ({ offer, viewer }) => {
   };
   const state = open ? (mine ? "Waiting for their answer" : "") : OFFER_STATUS_TEXT[offer?.status] ?? "";
   return (
-    <div role="group" data-peace-offer={offer?.id} style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${open && toMe ? "rgba(43,193,243,0.55)" : "rgba(255,255,255,0.14)"}`, borderRadius: "12px", color: "#e7e9ea", display: "flex", flexDirection: "column", gap: "0.4rem", fontSize: "0.78rem", lineHeight: 1.4, margin: "0.35rem 0", opacity: open ? 1 : 0.72, padding: "0.7rem 0.85rem" }}>
-      <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.64rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+    <div role="group" data-peace-offer={offer?.id} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: `1px solid ${open && toMe ? "rgba(43,193,243,0.55)" : "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)"}`, borderRadius: "12px", color: "#e7e9ea", display: "flex", flexDirection: "column", gap: "0.4rem", fontSize: "0.78rem", lineHeight: 1.4, margin: "0.35rem 0", opacity: open ? 1 : 0.72, padding: "0.7rem 0.85rem" }}>
+      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.64rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>
         {mine ? <>Your terms of peace · <span data-no-translate>{offer?.to}</span></> : <>Peace offered · <span data-no-translate>{offer?.from}</span></>}
         {state ? <> · {state}</> : null}
       </span>
-      <div style={{ color: "rgba(255,255,255,0.85)" }}><TermsText terms={offer?.terms} /></div>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)" }}><TermsText terms={offer?.terms} /></div>
       {error ? <div role="alert" style={{ color: "#fca5a5" }}>{error}</div> : null}
       {open && toMe ? (
         <div style={{ display: "flex", gap: "0.5rem" }}>
@@ -204,7 +204,7 @@ const paymentOf = (key, mine, theirs) => {
   return { payer, receiver, share: heavy ? 0.03 : 0.01, years: heavy ? 10 : 5 };
 };
 
-const fieldStyle = { backgroundColor: "rgba(0,0,0,0.35)", border: "1px solid rgba(255,255,255,0.16)", borderRadius: "6px", color: "#e7e9ea", fontSize: "0.66rem", padding: "0.3rem 0.4rem", width: "100%" };
+const fieldStyle = { backgroundColor: "rgba(0,0,0,0.35)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)", borderRadius: "6px", color: "#e7e9ea", fontSize: "0.66rem", padding: "0.3rem 0.4rem", width: "100%" };
 
 // What becomes of the enemy country: "free" (nothing), "annex" (all its land is
 // the player's), or a kind of puppet of the player's (runtime/puppets.js).
@@ -259,9 +259,9 @@ export const PeaceTermsForm = ({ viewer, enemy, busy = false, onSend, onCancel }
     if (error) setSaid(refusalText(error));
   };
   return (
-    <div data-peace-terms-form="true" style={{ marginBottom: ".5rem", padding: ".55rem .62rem", border: "1px solid rgba(255,255,255,.1)", borderRadius: 10, background: "rgba(255,255,255,.03)", display: "flex", flexDirection: "column", gap: ".38rem" }}>
+    <div data-peace-terms-form="true" style={{ marginBottom: ".5rem", padding: ".55rem .62rem", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10, background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", display: "flex", flexDirection: "column", gap: ".38rem" }}>
       <div style={{ fontSize: ".56rem", fontWeight: 820, color: "var(--oh-grey-text)" }}>Propose peace</div>
-      <div style={{ fontSize: ".51rem", lineHeight: 1.35, color: "rgba(255,255,255,.38)" }}>Your terms are sent in this chat. Their leader answers them in the reply: accepts, declines or offers other terms.</div>
+      <div style={{ fontSize: ".51rem", lineHeight: 1.35, color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)" }}>Your terms are sent in this chat. Their leader answers them in the reply: accepts, declines or offers other terms.</div>
       <select aria-label="The ground" value={territory} onChange={(event) => setTerritory(event.target.value)} style={fieldStyle}>
         <option value={TERRITORY_RESTORED}>The old borders: every region goes back</option>
         <option value={TERRITORY_AS_HELD}>Each side keeps the ground it holds</option>
@@ -277,8 +277,8 @@ export const PeaceTermsForm = ({ viewer, enemy, busy = false, onSend, onCancel }
       <textarea aria-label="Other conditions" placeholder="Any other conditions, a line each" rows={2} value={more} onChange={(event) => setMore(event.target.value)} style={{ ...fieldStyle, resize: "vertical" }} />
       {said ? <div role="status" style={{ color: "#fca5a5", fontSize: ".58rem" }}>{said}</div> : null}
       <div style={{ display: "flex", justifyContent: "flex-end", gap: ".35rem" }}>
-        <button type="button" className="oh-tap-row" onClick={() => onCancel?.()} style={{ border: "1px solid rgba(255,255,255,.1)", borderRadius: 8, background: "transparent", color: "rgba(255,255,255,.58)", padding: ".3rem .48rem", fontSize: ".58rem", cursor: "pointer" }}>Cancel</button>
-        <button type="button" className="oh-tap-row" disabled={sending || busy} onClick={put} style={{ border: "1px solid #2bc1f3", borderRadius: 8, background: "#2bc1f3", color: "#04141a", padding: ".3rem .52rem", fontSize: ".58rem", fontWeight: 800, cursor: sending || busy ? "wait" : "pointer" }}>Send terms</button>
+        <button type="button" className="oh-tap-row" onClick={() => onCancel?.()} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 8, background: "transparent", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", padding: ".3rem .48rem", fontSize: ".58rem", cursor: "pointer" }}>Cancel</button>
+        <button type="button" className="oh-tap-row" disabled={sending || busy} onClick={put} style={{ border: "1px solid #2bc1f3", borderRadius: 8, background: "#2bc1f3", color: "var(--oh-paper, #04141a)", padding: ".3rem .52rem", fontSize: ".58rem", fontWeight: 800, cursor: sending || busy ? "wait" : "pointer" }}>Send terms</button>
       </div>
     </div>
   );
@@ -318,7 +318,7 @@ export const PeaceControls = ({ war, world, viewer }) => {
   return (
     <div style={{ marginTop: "0.25rem" }}>
       {weary.length > 0 ? (
-        <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.61rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.61rem" }}>
           <span>War weariness: </span>
           {weary.map((entry, at) => (
             <React.Fragment key={entry.name}>
@@ -342,7 +342,7 @@ export const ReparationsNote = ({ world, target }) => {
   const rows = normalizeReparations(world?.reparations).filter((entry) => fold(entry.payer) === key || fold(entry.receiver) === key);
   if (rows.length === 0) return null;
   return (
-    <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.66rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: "0.66rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
       <div style={{ fontWeight: 800 }}>Reparations</div>
       {rows.map((entry) => {
         const years = Math.max(0, entry.days - entry.paidDays) / 365;

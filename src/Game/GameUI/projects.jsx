@@ -129,13 +129,13 @@ const buildCounterPrompt = (project, owner) => (owner
 const PANEL_HEIGHT = `min(calc(${APP_HEIGHT} - 9rem), max(calc(${APP_HEIGHT} - 16rem), 30rem))`;
 
 const STATUS_TONES = {
-  proposed: { label: "Proposed", color: "#93c5fd", bg: "rgba(59,130,246,0.16)" },
+  proposed: { label: "Proposed", color: "var(--oh-link, #93c5fd)", bg: "rgba(59,130,246,0.16)" },
   active: { label: "Active", color: "#4ade80", bg: "rgba(34,197,94,0.16)" },
   stalled: { label: "Stalled", color: "#fbbf24", bg: "rgba(245,158,11,0.18)" },
-  paused: { label: "Paused", color: "rgba(255,255,255,0.6)", bg: "rgba(255,255,255,0.08)" },
+  paused: { label: "Paused", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", bg: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" },
   complete: { label: "Complete", color: "#67e8f9", bg: "rgba(6,182,212,0.16)" },
   failed: { label: "Failed", color: "#f87171", bg: "rgba(239,68,68,0.18)" },
-  cancelled: { label: "Cancelled", color: "rgba(255,255,255,0.45)", bg: "rgba(255,255,255,0.06)" },
+  cancelled: { label: "Cancelled", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", bg: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)" },
 };
 
 const statusTone = (status) => STATUS_TONES[status] || STATUS_TONES.active;
@@ -144,7 +144,7 @@ const statusTone = (status) => STATUS_TONES[status] || STATUS_TONES.active;
 // programme at 80% is not doing well, and colouring it green would say it was.
 const progressColor = (project, flags) => {
   if (project.status === "complete") return "#22d3ee";
-  if (project.status === "failed" || project.status === "cancelled") return "rgba(255,255,255,0.25)";
+  if (project.status === "failed" || project.status === "cancelled") return "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)";
   if (flags.overdue) return "#ef4444";
   if (flags.stale || flags.milestoneMissed) return "#f59e0b";
   return "#22c55e";
@@ -163,7 +163,7 @@ const VERIFICATION_BADGE = {
 
 const cardStyle = {
   backgroundColor: "var(--oh-ui-surface, rgba(255,255,255,0.05))",
-  border: "1px solid rgba(255,255,255,0.08)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
   borderRadius: "12px",
   padding: "0.7rem 0.8rem",
 };
@@ -181,9 +181,9 @@ const chipBase = {
 
 const selectStyle = {
   backgroundColor: "var(--oh-ui-surface, rgba(255,255,255,0.06))",
-  border: "1px solid rgba(255,255,255,0.12)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
   borderRadius: "8px",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "sans-serif",
   fontSize: "0.72rem",
   outline: "none",
@@ -192,9 +192,9 @@ const selectStyle = {
 
 const ghostButtonStyle = {
   background: "var(--oh-ui-raised, rgba(255,255,255,0.06))",
-  border: "1px solid rgba(255,255,255,0.12)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
   borderRadius: "8px",
-  color: "rgba(255,255,255,0.85)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)",
   cursor: "pointer",
   fontFamily: "sans-serif",
   fontSize: "0.7rem",
@@ -206,7 +206,7 @@ const ghostButtonStyle = {
 // Reused from stats.jsx's Bar — a 6px pill track with a coloured fill that
 // animates its width.
 const Bar = ({ value, color }) => (
-  <div style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "999px", height: "6px", overflow: "hidden" }}>
+  <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "999px", height: "6px", overflow: "hidden" }}>
     <div style={{
       backgroundColor: color,
       borderRadius: "999px",
@@ -245,9 +245,9 @@ const Chip = ({ active, children, onClick, title }) => (
     onClick={onClick}
     style={{
       ...chipBase,
-      background: active ? "rgba(0,0,0,0.39)" : "rgba(255,255,255,0.05)",
-      border: `1px solid ${active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.1)"}`,
-      color: active ? "#f4f4f5" : "rgba(255,255,255,0.6)",
+      background: active ? "rgba(0,0,0,0.39)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+      border: `1px solid ${active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)"}`,
+      color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)",
     }}
   >
     {children}
@@ -292,9 +292,9 @@ const OwnerBadge = ({ flagUrl, mine, name }) => {
       <span style={{
         alignItems: "center",
         backgroundColor: "rgba(59,130,246,0.16)",
-        border: "1px solid rgba(255,255,255,0.12)",
+        border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
         borderRadius: "3px",
-        color: "#93c5fd",
+        color: "var(--oh-link, #93c5fd)",
         display: "flex",
         flexShrink: 0,
         fontSize: "0.5rem",
@@ -318,7 +318,7 @@ const OwnerBadge = ({ flagUrl, mine, name }) => {
         data-no-translate
         title={name}
         style={{
-          color: mine ? "rgba(255,255,255,0.55)" : "rgba(253,186,116,0.85)",
+          color: mine ? "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" : "rgba(253,186,116,0.85)",
           fontSize: "0.68rem",
           overflow: "hidden",
           textOverflow: "ellipsis",
@@ -346,7 +346,7 @@ const PRIORITY_OPTIONS = [
 
 const PRIORITY_PILL = {
   high: { bg: "rgba(245,158,11,0.16)", color: "#fcd34d", label: "High" },
-  low: { bg: "rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.5)", label: "Low" },
+  low: { bg: "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", label: "Low" },
 };
 
 // A three-segment control rather than a <select>: there are exactly three values,
@@ -368,9 +368,9 @@ const PrioritySwitch = ({ busy, onSelect, value }) => (
           onClick={() => onSelect(option.key)}
           style={{
             ...ghostButtonStyle,
-            background: active ? "rgba(0,0,0,0.39)" : "rgba(255,255,255,0.06)",
-            border: `1px solid ${active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.12)"}`,
-            color: active ? "#f4f4f5" : "rgba(255,255,255,0.5)",
+            background: active ? "rgba(0,0,0,0.39)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+            border: `1px solid ${active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"}`,
+            color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)",
             cursor: busy ? "default" : "pointer",
             opacity: busy ? 0.5 : 1,
             padding: "0.3rem 0.45rem",
@@ -465,7 +465,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
             </Pill>
           )}
           {flags.ongoing && (
-            <Pill color="rgba(255,255,255,0.55)" bg="rgba(255,255,255,0.08)" title="A standing effort with no planned end">
+            <Pill color="color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" bg="color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" title="A standing effort with no planned end">
               Ongoing
             </Pill>
           )}
@@ -484,7 +484,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
       )}
 
       {project.summary && (
-        <p style={{ color: "rgba(255,255,255,0.72)", fontSize: "0.75rem", lineHeight: 1.45, margin: "0.4rem 0 0" }}>
+        <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: "0.75rem", lineHeight: 1.45, margin: "0.4rem 0 0" }}>
           {project.summary}
         </p>
       )}
@@ -496,9 +496,9 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
               key={tag}
               data-no-translate
               style={{
-                backgroundColor: "rgba(255,255,255,0.06)",
+                backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
                 borderRadius: "999px",
-                color: "rgba(255,255,255,0.5)",
+                color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)",
                 fontSize: "0.62rem",
                 padding: "0.1rem 0.4rem",
               }}
@@ -511,7 +511,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
 
       <div style={{ marginTop: "0.55rem" }}>
         <div style={{
-          color: "rgba(255,255,255,0.45)",
+          color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)",
           display: "flex",
           fontSize: "0.65rem",
           justifyContent: "space-between",
@@ -525,11 +525,11 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
       </div>
 
       {flags.nextMilestone && (
-        <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.7rem", marginTop: "0.45rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.7rem", marginTop: "0.45rem" }}>
           {flags.nextMilestone.repeat ? "↻" : "▸"} Next: {flags.nextMilestone.title}
           {flags.nextMilestone.date ? ` — ${(formatGameDateReadable(flags.nextMilestone.date) || flags.nextMilestone.date)}` : ""}
           {flags.nextMilestone.repeat && (
-            <span style={{ color: "rgba(255,255,255,0.35)" }}>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)" }}>
               {" "}({flags.nextMilestone.repeat}
               {flags.nextMilestone.completedCount > 0 ? `, done ${flags.nextMilestone.completedCount}×` : ""})
             </span>
@@ -538,7 +538,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
       )}
 
       {project.lastUpdate && (
-        <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.7rem", fontStyle: "italic", marginTop: "0.35rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", fontStyle: "italic", marginTop: "0.35rem" }}>
           {project.lastUpdate}
         </div>
       )}
@@ -568,8 +568,8 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
               about our sources and not about their shipyard. */}
           {flags.stale && (
             <Pill
-              color="rgba(255,255,255,0.55)"
-              bg="rgba(255,255,255,0.07)"
+              color="color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)"
+              bg="color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"
               title={mine
                 ? "No progress reported for several rounds"
                 : "Nothing has reached us about this for several rounds"}
@@ -588,8 +588,8 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
           onClick={() => onAskAdvisor(mine
             ? buildBriefPrompt(project)
             : buildForeignBriefPrompt(project, ownerLabel))}
-          onMouseEnter={(event) => { event.currentTarget.style.background = "rgba(255,255,255,0.09)"; }}
-          onMouseLeave={(event) => { event.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+          onMouseEnter={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)"; }}
+          onMouseLeave={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; }}
         >
           🧭 {mine ? "Ask advisor" : "What do we know?"}
         </button>
@@ -604,7 +604,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
             style={ghostButtonStyle}
             onClick={() => onAskAdvisor(buildCounterPrompt(project, ownerLabel))}
             onMouseEnter={(event) => { event.currentTarget.style.background = "rgba(249,115,22,0.25)"; }}
-            onMouseLeave={(event) => { event.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+            onMouseLeave={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; }}
           >
             ⚖ Our options
           </button>
@@ -616,7 +616,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
             style={ghostButtonStyle}
             onClick={() => onShowOnMap(project)}
             onMouseEnter={(event) => { event.currentTarget.style.background = "rgba(59,130,246,0.25)"; }}
-            onMouseLeave={(event) => { event.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+            onMouseLeave={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; }}
           >
             📍 Show on map
           </button>
@@ -627,8 +627,8 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
             className="oh-tap-row"
             style={ghostButtonStyle}
             onClick={() => onToggleExpand(project.id)}
-            onMouseEnter={(event) => { event.currentTarget.style.background = "rgba(255,255,255,0.12)"; }}
-            onMouseLeave={(event) => { event.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+            onMouseEnter={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"; }}
+            onMouseLeave={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; }}
           >
             {expanded ? "▾" : "▸"} Activity ({project.eventIds.length})
           </button>
@@ -640,8 +640,8 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
           programme has no controls for anyone and needs no note about it. */}
       {!mine && open && (
         <div style={{
-          borderTop: "1px solid rgba(255,255,255,0.07)",
-          color: "rgba(255,255,255,0.38)",
+          borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
+          color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)",
           fontSize: "0.66rem",
           lineHeight: 1.45,
           marginTop: "0.6rem",
@@ -659,7 +659,7 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
       {open && mine && (
         <div style={{
           alignItems: "center",
-          borderTop: "1px solid rgba(255,255,255,0.07)",
+          borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
           display: "flex",
           flexWrap: "wrap",
           gap: "0.35rem",
@@ -686,9 +686,9 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
             onBlur={() => setConfirmingAbandon(false)}
             style={{
               ...ghostButtonStyle,
-              background: confirmingAbandon ? "rgba(239,68,68,0.25)" : "rgba(255,255,255,0.06)",
-              border: `1px solid ${confirmingAbandon ? "rgba(239,68,68,0.6)" : "rgba(255,255,255,0.12)"}`,
-              color: confirmingAbandon ? "#fca5a5" : "rgba(255,255,255,0.55)",
+              background: confirmingAbandon ? "rgba(239,68,68,0.25)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+              border: `1px solid ${confirmingAbandon ? "rgba(239,68,68,0.6)" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"}`,
+              color: confirmingAbandon ? "#fca5a5" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)",
               cursor: busy ? "default" : "pointer",
               opacity: busy ? 0.5 : 1,
             }}
@@ -699,15 +699,15 @@ const ProjectCard = memo(({ project, gameDate, round, eventTitles, expanded, bus
       )}
 
       {expanded && (
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: "0.6rem", paddingTop: "0.5rem" }}>
+        <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", marginTop: "0.6rem", paddingTop: "0.5rem" }}>
           {activity.length === 0 ? (
-            <div style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.68rem", fontStyle: "italic" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.68rem", fontStyle: "italic" }}>
               The events behind this are no longer in the log.
             </div>
           ) : activity.map(({ id, entry }) => (
             <div key={id} style={{ display: "flex", fontSize: "0.68rem", gap: "0.5rem", marginBottom: "0.25rem" }}>
-              <span data-no-translate style={{ color: "rgba(255,255,255,0.35)", flexShrink: 0 }}>{entry.date || "—"}</span>
-              <span style={{ color: "rgba(255,255,255,0.65)" }}>{entry.title}</span>
+              <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", flexShrink: 0 }}>{entry.date || "—"}</span>
+              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)" }}>{entry.title}</span>
             </div>
           ))}
         </div>
@@ -752,7 +752,7 @@ const TAG_ITEM_SELECTOR = "[role=\"menuitemcheckbox\"]";
 
 const tagMenuBoxStyle = {
   backgroundColor: "var(--oh-ui-surface, #1b1b1e)",
-  border: "1px solid rgba(255,255,255,0.14)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
   borderRadius: "10px",
   boxShadow: "0 12px 30px rgba(0,0,0,0.5)",
   display: "flex",
@@ -800,7 +800,7 @@ const TagTick = ({ checked }) => (
     style={{
       alignItems: "center",
       backgroundColor: checked ? "#2bc1f3" : "transparent",
-      border: `1px solid ${checked ? "#2bc1f3" : "rgba(255,255,255,0.32)"}`,
+      border: `1px solid ${checked ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)"}`,
       borderRadius: "4px",
       color: "#0e0e10",
       display: "flex",
@@ -822,7 +822,7 @@ const TagTick = ({ checked }) => (
 // Attached only where a pointer can hover (useCanHover): a tap fires mouseenter
 // and nothing fires mouseleave after it, so on a phone the last tag tapped
 // would stay lit as though it meant something.
-const lightTagRow = (event) => { event.currentTarget.style.background = "rgba(255,255,255,0.07)"; };
+const lightTagRow = (event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"; };
 const dimTagRow = (event) => { event.currentTarget.style.background = "transparent"; };
 
 // What the open menu holds. A component of its own so that it exists only
@@ -880,7 +880,7 @@ const TagMenuBody = ({ id, maxHeight, onClear, onToggle, selected, tags }) => {
 
   return (
     <div id={id} style={{ ...tagMenuBoxStyle, maxHeight }}>
-      <div style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", flexShrink: 0, gap: "0.35rem", padding: "0.35rem" }}>
+      <div style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "flex", flexShrink: 0, gap: "0.35rem", padding: "0.35rem" }}>
         {searchable && (
           <input
             ref={searchRef}
@@ -894,14 +894,14 @@ const TagMenuBody = ({ id, maxHeight, onClear, onToggle, selected, tags }) => {
               tagItems()[0]?.focus();
             }}
             onFocus={(event) => { event.currentTarget.style.borderColor = "rgba(43,193,243,0.6)"; }}
-            onBlur={(event) => { event.currentTarget.style.borderColor = "rgba(255,255,255,0.12)"; }}
+            onBlur={(event) => { event.currentTarget.style.borderColor = "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"; }}
             placeholder="Find a tag…"
             aria-label="Find a tag…"
             style={{
-              backgroundColor: "rgba(255,255,255,0.06)",
-              border: "1px solid rgba(255,255,255,0.12)",
+              backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+              border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
               borderRadius: "8px",
-              color: "white",
+              color: "var(--oh-ink, #fff)",
               flex: 1,
               fontFamily: "sans-serif",
               fontSize: "0.72rem",
@@ -952,7 +952,7 @@ const TagMenuBody = ({ id, maxHeight, onClear, onToggle, selected, tags }) => {
             // The end of the list is not a reason to start scrolling the board.
             overscrollBehavior: "contain",
             padding: "0.3rem",
-            scrollbarColor: "rgba(255,255,255,0.22) transparent",
+            scrollbarColor: "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent) transparent",
             scrollbarWidth: "thin",
           }}
         >
@@ -973,7 +973,7 @@ const TagMenuBody = ({ id, maxHeight, onClear, onToggle, selected, tags }) => {
                   background: "transparent",
                   border: "none",
                   borderRadius: "7px",
-                  color: checked ? "#f4f4f5" : "rgba(255,255,255,0.68)",
+                  color: checked ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)",
                   cursor: "pointer",
                   display: "flex",
                   fontFamily: "sans-serif",
@@ -993,7 +993,7 @@ const TagMenuBody = ({ id, maxHeight, onClear, onToggle, selected, tags }) => {
           })}
         </div>
       ) : (
-        <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.72rem", fontStyle: "italic", padding: "0.75rem 0.6rem", textAlign: "center" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.72rem", fontStyle: "italic", padding: "0.75rem 0.6rem", textAlign: "center" }}>
           Nothing matched the search.
         </div>
       )}
@@ -1065,9 +1065,9 @@ const TagMenu = ({ maxHeight, onClear, onOpenChange, onToggle, open, selected, t
         style={{
           ...chipBase,
           alignItems: "center",
-          background: lit ? "rgba(0,0,0,0.39)" : "rgba(255,255,255,0.05)",
-          border: `1px solid ${lit ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.1)"}`,
-          color: lit ? "#f4f4f5" : "rgba(255,255,255,0.6)",
+          background: lit ? "rgba(0,0,0,0.39)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+          border: `1px solid ${lit ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)"}`,
+          color: lit ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)",
           display: "inline-flex",
           gap: "0.3rem",
         }}
@@ -1429,14 +1429,14 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
           desktop it is not there as far as layout goes (display: contents),
           so its children keep the panel's indentation. */}
       <div style={scrollAsOne
-        ? { display: "flex", flex: 1, flexDirection: "column", minHeight: 0, overflowY: "auto", scrollbarWidth: "thin", scrollbarColor: "rgba(255,255,255,0.22) transparent" }
+        ? { display: "flex", flex: 1, flexDirection: "column", minHeight: 0, overflowY: "auto", scrollbarWidth: "thin", scrollbarColor: "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent) transparent" }
         : { display: "contents" }}
       >
       {!isEmptyBoard && (
-        <div style={{ borderBottom: "1px solid rgba(255,255,255,0.07)", padding: "0.6rem 1rem 0.7rem" }}>
+        <div style={{ borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", padding: "0.6rem 1rem 0.7rem" }}>
           <div style={{ position: "relative" }}>
             <span style={{
-              color: "rgba(255,255,255,0.35)",
+              color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)",
               display: "flex",
               left: "0.55rem",
               position: "absolute",
@@ -1452,10 +1452,10 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
               placeholder="Search projects…"
               data-no-translate
               style={{
-                backgroundColor: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.12)",
+                backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
                 borderRadius: "9px",
-                color: "white",
+                color: "var(--oh-ink, #fff)",
                 fontFamily: "sans-serif",
                 fontSize: "0.75rem",
                 outline: "none",
@@ -1475,7 +1475,7 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
               data-no-translate
             >
               {PROJECT_SORTS.map((sort) => (
-                <option key={sort.key} value={sort.key} style={{ backgroundColor: "#18181b" }}>
+                <option key={sort.key} value={sort.key} style={{ backgroundColor: "var(--oh-paper, #18181b)" }}>
                   {sort.label}
                 </option>
               ))}
@@ -1538,9 +1538,9 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
         </div>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem", ...(scrollAsOne ? { flexShrink: 0 } : { flex: 1, overflowY: "auto", scrollbarWidth: "thin", scrollbarColor: "rgba(255,255,255,0.22) transparent" }), padding: "0.75rem 1rem 1rem" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: "0.55rem", ...(scrollAsOne ? { flexShrink: 0 } : { flex: 1, overflowY: "auto", scrollbarWidth: "thin", scrollbarColor: "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent) transparent" }), padding: "0.75rem 1rem 1rem" }}>
         {!hasLoaded && (
-          <div style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.75rem", padding: "1rem 0", textAlign: "center" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.75rem", padding: "1rem 0", textAlign: "center" }}>
             Loading…
           </div>
         )}
@@ -1550,17 +1550,17 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
             prompt carries that history, so it can reconstruct the board. */}
         {isEmptyBoard && (
           <div style={{
-            border: "1px dashed rgba(255,255,255,0.15)",
+            border: "1px dashed color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)",
             borderRadius: "12px",
             padding: "1.1rem 1rem",
             textAlign: "center",
           }}
           >
             <div style={{ fontSize: "1.5rem", marginBottom: "0.4rem" }}>🗂</div>
-            <div style={{ color: "rgba(255,255,255,0.75)", fontSize: "0.8rem", fontWeight: 600 }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)", fontSize: "0.8rem", fontWeight: 600 }}>
               Nothing on the board yet
             </div>
-            <p style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", lineHeight: 1.5, margin: "0.4rem 0 0.85rem" }}>
+            <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", lineHeight: 1.5, margin: "0.4rem 0 0.85rem" }}>
               Projects and operations are opened by your advisor and by what happens in the world —
               you don&apos;t add them by hand. If you already have efforts under way, ask your advisor
               to put them on the board.
@@ -1570,10 +1570,10 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
               className="oh-tap-row"
               onClick={() => askAdvisor(uiString(PROJECTS_BACKFILL_PROMPT))}
               style={{
-                background: "rgba(255,255,255,0.06)",
-                border: "1px solid rgba(255,255,255,0.25)",
+                background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)",
                 borderRadius: "10px",
-                color: "white",
+                color: "var(--oh-ink, #fff)",
                 cursor: "pointer",
                 fontFamily: "sans-serif",
                 fontSize: "0.75rem",
@@ -1588,9 +1588,9 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
 
         {hasLoaded && projects.length > 0 && visible.length === 0 && (
           <div style={{
-            border: "1px dashed rgba(255,255,255,0.14)",
+            border: "1px dashed color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
             borderRadius: "10px",
-            color: "rgba(255,255,255,0.4)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)",
             fontSize: "0.73rem",
             fontStyle: "italic",
             padding: "0.9rem",
@@ -1612,7 +1612,7 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
                   style={{
                     background: "none",
                     border: "none",
-                    color: "#e4e4e7",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)",
                     cursor: "pointer",
                     font: "inherit",
                     padding: 0,
@@ -1657,8 +1657,8 @@ const ProjectsBoard = ({ isOpen, onOpenAdvisor, mapRef }) => {
             className="oh-tap-row"
             onClick={() => askAdvisor(uiString(PROJECTS_BACKFILL_PROMPT))}
             style={{ ...ghostButtonStyle, marginTop: "0.2rem", padding: "0.45rem" }}
-            onMouseEnter={(event) => { event.currentTarget.style.background = "rgba(255,255,255,0.07)"; }}
-            onMouseLeave={(event) => { event.currentTarget.style.background = "rgba(255,255,255,0.06)"; }}
+            onMouseEnter={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"; }}
+            onMouseLeave={(event) => { event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)"; }}
           >
             🧭 Ask the advisor to review or extend the board
           </button>

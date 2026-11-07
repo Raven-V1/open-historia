@@ -25,7 +25,7 @@ const ScriptedEventsCheck = ({ text, currentDate, includeOrigin, isGame }) => {
     : "This date is before the scenario starts, so no time skip will reach it.";
   return (
     <div style={{ display: "grid", gap: "0.3rem", marginTop: "0.35rem" }}>
-      <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.74rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.74rem" }}>
         {count === 1 ? "1 beat recognised" : `${count} beats recognised`}
       </div>
       {ignored.map((entry, index) => (
@@ -33,7 +33,7 @@ const ScriptedEventsCheck = ({ text, currentDate, includeOrigin, isGame }) => {
           <div style={{ color: "#fde68a", fontSize: "0.72rem" }}>
             {entry.problem === "passed" ? passedReason : IGNORED_LINE_REASONS[entry.problem]}
           </div>
-          <div data-no-translate style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.72rem", overflowWrap: "anywhere" }}>{entry.line}</div>
+          <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.72rem", overflowWrap: "anywhere" }}>{entry.line}</div>
         </div>
       ))}
     </div>
@@ -81,15 +81,15 @@ const FeaturesSectionEditor = ({ kind, features, scenarioFeatures, world, onChan
 
   const choice = (active) => ({
     ...styles.actionButtonStyle,
-    background: active ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.04)",
-    borderColor: active ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.1)",
+    background: active ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+    borderColor: active ? "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
     minHeight: touch ? undefined : "2rem",
     padding: "0 0.7rem",
   });
 
   return (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
-      <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.82rem", lineHeight: 1.5, marginBottom: "0.85rem" }}>
+    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.82rem", lineHeight: 1.5, marginBottom: "0.85rem" }}>
         {isGame
           ? "What this game plays with. Anything left on the scenario default follows the scenario, including changes made to it later; On and Off are this game's own choice."
           : "What games made from this scenario play with. Each game can override these in its own editor."}
@@ -102,11 +102,11 @@ const FeaturesSectionEditor = ({ kind, features, scenarioFeatures, world, onChan
             : override.enabled === undefined ? "default" : override.enabled ? "on" : "off";
           const scenarioSays = base[definition.key].enabled ? "On" : "Off";
           return (
-            <div key={definition.key} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", padding: "0.72rem 0.78rem" }}>
+            <div key={definition.key} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "14px", padding: "0.72rem 0.78rem" }}>
               <div style={{ alignItems: "flex-start", display: "flex", flexWrap: "wrap", gap: "0.6rem", justifyContent: "space-between" }}>
                 <div style={{ flex: "1 1 14rem", minWidth: 0 }}>
                   <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>{definition.label}</div>
-                  <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.78rem", lineHeight: 1.45, marginTop: "0.15rem" }}>{definition.description}</div>
+                  <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.78rem", lineHeight: 1.45, marginTop: "0.15rem" }}>{definition.description}</div>
                 </div>
 {/* A feature with no on/off (Player focus) is a choice, not a switch. */}
                 {definition.toggleable !== false && (
@@ -156,7 +156,7 @@ const FeaturesSectionEditor = ({ kind, features, scenarioFeatures, world, onChan
                             onUseScenarioDefault={() => setFeature(definition.key, { [setting.key]: undefined })}
                             onStartOverride={() => setFeature(definition.key, { [setting.key]: cloneScenario() })}
                           />
-                          <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", marginTop: "0.3rem" }}>{setting.description}</div>
+                          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.72rem", marginTop: "0.3rem" }}>{setting.description}</div>
                         </div>
                       );
                     }
@@ -181,7 +181,7 @@ const FeaturesSectionEditor = ({ kind, features, scenarioFeatures, world, onChan
                               <button type="button" className="oh-tap-row" style={choice(state === "off")} onClick={() => setFeature(definition.key, { [setting.key]: false })}>Off</button>
                             </div>
                           </div>
-                          <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", marginTop: "0.3rem" }}>{setting.description}</div>
+                          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.72rem", marginTop: "0.3rem" }}>{setting.description}</div>
                         </div>
                       );
                     }
@@ -214,7 +214,7 @@ const FeaturesSectionEditor = ({ kind, features, scenarioFeatures, world, onChan
                               </button>
                             ))}
                           </div>
-                          <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", marginTop: "0.3rem" }}>
+                          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.72rem", marginTop: "0.3rem" }}>
                             {shown?.description ? `${shown.label}: ${shown.description} ` : ""}{setting.description}
                           </div>
                         </div>
@@ -246,7 +246,7 @@ const FeaturesSectionEditor = ({ kind, features, scenarioFeatures, world, onChan
                           />
                           {isGame && (
                             <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "0.3rem" }}>
-                              <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.74rem" }}>
+                              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.74rem" }}>
                                 {overridden ? "This game's own rules replace the scenario's." : "Following the scenario"}
                               </span>
                               {overridden && (
@@ -264,7 +264,7 @@ const FeaturesSectionEditor = ({ kind, features, scenarioFeatures, world, onChan
                               isGame={isGame}
                             />
                           )}
-                          <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", marginTop: "0.3rem" }}>{setting.description}</div>
+                          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.72rem", marginTop: "0.3rem" }}>{setting.description}</div>
                         </div>
                       );
                     }
@@ -301,9 +301,9 @@ const FeaturesSectionEditor = ({ kind, features, scenarioFeatures, world, onChan
                               else if (overridden && effective[definition.key][setting.key] !== override[setting.key]) setFeature(definition.key, { [setting.key]: effective[definition.key][setting.key] });
                             }}
                           />
-                          <span style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.8rem" }}>{setting.unit}</span>
+                          <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.8rem" }}>{setting.unit}</span>
                           {isGame && (
-                            <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.74rem" }}>
+                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.74rem" }}>
                               {overridden ? `Scenario default: ${base[definition.key][setting.key]}` : "Following the scenario"}
                             </span>
                           )}
@@ -313,7 +313,7 @@ const FeaturesSectionEditor = ({ kind, features, scenarioFeatures, world, onChan
                             </button>
                           )}
                         </div>
-                        <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", marginTop: "0.3rem" }}>{setting.description}</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.72rem", marginTop: "0.3rem" }}>{setting.description}</div>
                       </div>
                     );
                   })}

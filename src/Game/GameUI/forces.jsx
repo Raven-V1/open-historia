@@ -76,12 +76,12 @@ const STATUS_LABEL = {
 };
 
 const surface = {
-  backgroundColor: "rgba(24, 24, 27, 0.92)",
+  backgroundColor: "color-mix(in srgb, var(--oh-paper, rgb(24,24,27)) 92%, transparent)",
   backdropFilter: "blur(6px)",
   WebkitBackdropFilter: "blur(6px)",
-  border: "1px solid rgba(255,255,255,0.12)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
   borderRadius: "12px",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "sans-serif",
   boxShadow: "0 8px 32px rgba(0,0,0,0.4)",
 };
@@ -104,12 +104,12 @@ const UnitRow = ({ unit, dimmed, onClick }) => (
       gap: "8px",
       flex: 1,
       minWidth: 0,
-      background: "rgba(255,255,255,0.04)",
-      border: "1px solid rgba(255,255,255,0.08)",
+      background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+      border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
       borderRadius: "8px",
       padding: "6px 8px",
       cursor: "pointer",
-      color: "white",
+      color: "var(--oh-ink, #fff)",
       textAlign: "left",
       opacity: dimmed ? 0.65 : 1,
     }}
@@ -119,7 +119,7 @@ const UnitRow = ({ unit, dimmed, onClick }) => (
       <div style={{ fontSize: "12px", fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
         {unit.name}
       </div>
-      <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.55)" }}>
+      <div style={{ fontSize: "10px", color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" }}>
         {TYPE_LABEL[unit.type] ?? unit.type} · {polityDisplayName(unit.ownerCode)} · {unitActivity(unit)}
       </div>
     </div>
@@ -133,17 +133,17 @@ const fieldStyle = {
   width: "100%",
   boxSizing: "border-box",
   background: "rgba(0,0,0,0.3)",
-  color: "white",
-  border: "1px solid rgba(255,255,255,0.15)",
+  color: "var(--oh-ink, #fff)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)",
   borderRadius: "6px",
   padding: "4px",
   fontSize: "12px",
 };
 const smallButtonStyle = {
-  background: "rgba(255,255,255,0.08)",
-  border: "1px solid rgba(255,255,255,0.15)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)",
   borderRadius: "6px",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: "11px",
   padding: "4px 8px",
@@ -185,7 +185,7 @@ const UnitEditor = ({ unit, onPlace, onClose }) => {
   };
 
   return (
-    <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "8px", padding: "8px", margin: "-2px 0 7px", display: "flex", flexDirection: "column", gap: "5px" }}>
+    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", borderRadius: "8px", padding: "8px", margin: "-2px 0 7px", display: "flex", flexDirection: "column", gap: "5px" }}>
       <input className="oh-tap-row" type="text" value={name} aria-label="Unit name" onChange={(e) => setName(e.target.value)} style={fieldStyle} />
       <div style={{ display: "flex", gap: "5px" }}>
         <select className="oh-tap-row" value={type} aria-label="Unit type" onChange={(e) => setType(e.target.value)} style={{ ...fieldStyle, flex: 1 }}>
@@ -377,9 +377,9 @@ export const ForcesPanel = ({ mapRef, topOffset = "0px", open = false, onToggle 
             onClick={() => clearInteractionMode()}
             style={{
               background: "rgba(220,70,70,0.25)",
-              border: "1px solid rgba(255,255,255,0.15)",
+              border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)",
               borderRadius: "6px",
-              color: "white",
+              color: "var(--oh-ink, #fff)",
               cursor: "pointer",
               fontSize: "11px",
               padding: "3px 9px",
@@ -413,7 +413,7 @@ export const ForcesPanel = ({ mapRef, topOffset = "0px", open = false, onToggle 
               className="oh-tap"
               onClick={() => setOpen(false)}
               aria-label="Close forces"
-              style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: "14px" }}
+              style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", fontSize: "14px" }}
             >
               ✕
             </button>
@@ -424,14 +424,14 @@ export const ForcesPanel = ({ mapRef, topOffset = "0px", open = false, onToggle 
               children keep the panel's indentation. */}
           <div style={scrollAsOne ? { flex: 1, minHeight: 0, overflowY: "auto" } : { display: "contents" }}>
           {/* Deploy controls */}
-          <div style={{ background: "rgba(255,255,255,0.05)", borderRadius: "8px", padding: "8px", marginBottom: "10px" }}>
-            <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)", marginBottom: "6px" }}>Deploy a unit</div>
+          <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", borderRadius: "8px", padding: "8px", marginBottom: "10px" }}>
+            <div style={{ fontSize: "11px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", marginBottom: "6px" }}>Deploy a unit</div>
             <div style={{ display: "flex", gap: "5px", marginBottom: "6px" }}>
               <select
                 className="oh-tap-row"
                 value={deployType}
                 onChange={(e) => setDeployType(e.target.value)}
-                style={{ flex: 1, background: "rgba(0,0,0,0.3)", color: "white", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "6px", padding: "4px", fontSize: "12px" }}
+                style={{ flex: 1, background: "rgba(0,0,0,0.3)", color: "var(--oh-ink, #fff)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: "6px", padding: "4px", fontSize: "12px" }}
               >
                 {availableTypes.map((t) => (
                   <option key={t} value={t} style={{ color: "black" }}>
@@ -447,7 +447,7 @@ export const ForcesPanel = ({ mapRef, topOffset = "0px", open = false, onToggle 
                 value={deployStrength}
                 onChange={(e) => setDeployStrength(e.target.value)}
                 title="Strength, as a percentage of the formation's established strength"
-                style={{ width: "4rem", background: "rgba(0,0,0,0.3)", color: "white", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "6px", padding: "4px", fontSize: "12px" }}
+                style={{ width: "4rem", background: "rgba(0,0,0,0.3)", color: "var(--oh-ink, #fff)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: "6px", padding: "4px", fontSize: "12px" }}
               />
             </div>
             <input
@@ -456,7 +456,7 @@ export const ForcesPanel = ({ mapRef, topOffset = "0px", open = false, onToggle 
               value={deployName}
               placeholder="Unit name (optional)"
               onChange={(e) => setDeployName(e.target.value)}
-              style={{ width: "100%", boxSizing: "border-box", background: "rgba(0,0,0,0.3)", color: "white", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "6px", padding: "4px", fontSize: "12px", marginBottom: "6px" }}
+              style={{ width: "100%", boxSizing: "border-box", background: "rgba(0,0,0,0.3)", color: "var(--oh-ink, #fff)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: "6px", padding: "4px", fontSize: "12px", marginBottom: "6px" }}
             />
             {/* What the formation actually IS. A counter that only says "Naval, 78%"
                 tells the player nothing; "1 aircraft carrier, 2 frigates" does. */}
@@ -466,29 +466,29 @@ export const ForcesPanel = ({ mapRef, topOffset = "0px", open = false, onToggle 
               value={deployComposition}
               placeholder="Composition, e.g. 2 frigates (optional)"
               onChange={(e) => setDeployComposition(e.target.value)}
-              style={{ width: "100%", boxSizing: "border-box", background: "rgba(0,0,0,0.3)", color: "white", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "6px", padding: "4px", fontSize: "12px", marginBottom: "6px" }}
+              style={{ width: "100%", boxSizing: "border-box", background: "rgba(0,0,0,0.3)", color: "var(--oh-ink, #fff)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: "6px", padding: "4px", fontSize: "12px", marginBottom: "6px" }}
             />
             <button
               className="oh-tap-row"
               onClick={startDeploy}
               disabled={turnRunning}
-              style={{ width: "100%", background: "rgba(59,130,246,0.35)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "6px", color: turnRunning ? "rgba(255,255,255,0.4)" : "white", cursor: turnRunning ? "not-allowed" : "pointer", fontSize: "12px", fontWeight: 600, padding: "6px 0" }}
+              style={{ width: "100%", background: "rgba(59,130,246,0.35)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: "6px", color: turnRunning ? "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" : "white", cursor: turnRunning ? "not-allowed" : "pointer", fontSize: "12px", fontWeight: 600, padding: "6px 0" }}
             >
               Place on map →
             </button>
             {turnRunning && (
-              <div style={{ fontSize: "10px", color: "rgba(255,255,255,0.45)", marginTop: "5px" }}>
+              <div style={{ fontSize: "10px", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", marginTop: "5px" }}>
                 {TURN_RUNNING_NOTE}
               </div>
             )}
           </div>
 
           <div style={scrollAsOne ? undefined : { overflowY: "auto", flex: 1 }}>
-            <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)", margin: "0 0 5px" }}>
+            <div style={{ fontSize: "11px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", margin: "0 0 5px" }}>
               Your units ({myUnits.length})
             </div>
             {myUnits.length === 0 && (
-              <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.35)", marginBottom: "8px" }}>
+              <div style={{ fontSize: "11px", color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", marginBottom: "8px" }}>
                 None yet — deploy a unit above, or jump time to let the war unfold.
               </div>
             )}
@@ -496,7 +496,7 @@ export const ForcesPanel = ({ mapRef, topOffset = "0px", open = false, onToggle 
 
             {otherUnits.length > 0 && (
               <>
-                <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)", margin: "8px 0 5px" }}>
+                <div style={{ fontSize: "11px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", margin: "8px 0 5px" }}>
                   Other forces ({otherUnits.length})
                 </div>
                 {otherUnits.map((u) => renderUnit(u, true))}

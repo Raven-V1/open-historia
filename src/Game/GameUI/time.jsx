@@ -140,7 +140,7 @@ const ensureTimelineStyles = () => {
     }
 
     .timeline-markdown code {
-        background: rgba(20,20,23,0.55);
+        background: color-mix(in srgb, var(--oh-paper, rgb(20,20,23)) 55%, transparent);
         border-radius: 4px;
         padding: 0.05rem 0.32rem;
     }
@@ -914,7 +914,7 @@ const InteractiveOfferStrip = () => {
                 <div style={{ color: "#fde047", fontSize: "0.74rem", fontWeight: 800 }}>⚡ Interactive event</div>
                 <div style={{ color: "rgba(254,249,195,0.72)", fontSize: "0.68rem", lineHeight: 1.4 }}>Play this moment out as a scene: you make the moves, and how it ends goes into the record.</div>
             </div>
-            <button type="button" className="oh-tap-row" onClick={openInteractiveEvent} style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "#1c1917", cursor: "pointer", fontSize: "0.72rem", fontWeight: 800, padding: "0.4rem 0.75rem" }}>
+            <button type="button" className="oh-tap-row" onClick={openInteractiveEvent} style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "var(--oh-paper, #1c1917)", cursor: "pointer", fontSize: "0.72rem", fontWeight: 800, padding: "0.4rem 0.75rem" }}>
                 Play it out
             </button>
             <button type="button" className="oh-tap-row" onClick={letPass} disabled={passing} title="Let the moment pass as it happened — free" style={{ ...ghostButtonStyle, opacity: passing ? 0.6 : 1, padding: "0.4rem 0.75rem" }}>
@@ -1594,7 +1594,7 @@ const TimelineSkipPanel = ({
                 type="button"
                 className="oh-tap-row"
                 onClick={openInteractiveEvent}
-                style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "#1c1917", cursor: "pointer", display: "block", fontSize: "0.72rem", fontWeight: 800, margin: "0.4rem auto 0", padding: "0.3rem 0.7rem" }}
+                style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "var(--oh-paper, #1c1917)", cursor: "pointer", display: "block", fontSize: "0.72rem", fontWeight: 800, margin: "0.4rem auto 0", padding: "0.3rem 0.7rem" }}
                 >
                 Return to the scene
                 </button>
@@ -1609,7 +1609,7 @@ const TimelineSkipPanel = ({
                 type="button"
                 className="oh-tap-row"
                 onClick={openInteractiveEvent}
-                style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "#1c1917", cursor: "pointer", display: "block", fontSize: "0.72rem", fontWeight: 800, margin: "0.4rem auto 0", padding: "0.3rem 0.7rem" }}
+                style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "var(--oh-paper, #1c1917)", cursor: "pointer", display: "block", fontSize: "0.72rem", fontWeight: 800, margin: "0.4rem auto 0", padding: "0.3rem 0.7rem" }}
                 >
                 Play it out
                 </button>

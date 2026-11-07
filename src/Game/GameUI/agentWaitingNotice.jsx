@@ -40,7 +40,7 @@ const noticeStyle = {
   border: "1px solid rgba(96,165,250,0.32)",
   backgroundColor: "var(--oh-ui-overlay-strong, rgba(16,21,24,0.96))",
   boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-  color: "#dbeafe",
+  color: "var(--oh-link, #dbeafe)",
   fontFamily: "sans-serif",
   fontSize: "0.8rem",
   lineHeight: 1.45,
@@ -51,10 +51,10 @@ const noticeStyle = {
 const phoneNoticeStyle = { top: "4.75rem", width: "max-content" };
 
 export const AGENT_BUTTON_STYLE = {
-  background: "rgba(255,255,255,0.08)",
-  border: "1px solid rgba(255,255,255,0.18)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)",
   borderRadius: "8px",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: "0.74rem",
   padding: "0.28rem 0.7rem",
@@ -75,7 +75,7 @@ export const AgentWaitingNotice = () => {
   const canPassOn = agentHasEntryBelow();
   return (
     <div role="status" aria-live="polite" style={{ ...noticeStyle, ...(isMobile ? phoneNoticeStyle : null) }}>
-      <span aria-hidden="true" style={{ color: "#93c5fd", fontWeight: 800 }}>⏳</span>
+      <span aria-hidden="true" style={{ color: "var(--oh-link, #93c5fd)", fontWeight: 800 }}>⏳</span>
       <span style={{ display: "flex", flexDirection: "column", flex: "1 1 14rem", minWidth: 0 }}>
         {kinds.map((kind) => <span key={kind}>{WAITING_TEXTS[kind]}</span>)}
       </span>

@@ -34,18 +34,18 @@ import { isFallbackListConfigured } from "../AI/providerConfig.js";
 import { askCreatorsAI } from "../AI/scenarioTranslation.js";
 
 const cardStyle = {
-  background: "rgba(255,255,255,0.03)",
-  border: "1px solid rgba(255,255,255,0.08)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
   borderRadius: "18px",
   marginBottom: "0.95rem",
   padding: "0.9rem",
 };
 const buttonStyle = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.12)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
   borderRadius: "9px",
-  color: "rgba(246,246,248,0.92)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.76rem",
@@ -56,25 +56,25 @@ const buttonStyle = {
   padding: "0 0.8rem",
 };
 // A little brighter than its neighbours, and still grey: no blue buttons here.
-const primaryButtonStyle = { ...buttonStyle, background: "rgba(255,255,255,0.14)", borderColor: "rgba(255,255,255,0.3)", color: "#ffffff" };
+const primaryButtonStyle = { ...buttonStyle, background: "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)", color: "var(--oh-ink, #fff)" };
 const inputStyle = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "10px",
   boxSizing: "border-box",
-  color: "#f8fafc",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "inherit",
   fontSize: "0.8rem",
   outline: "none",
   padding: "0.5rem 0.6rem",
   width: "100%",
 };
-const quietStyle = { color: "rgba(255,255,255,0.58)", fontSize: "0.76rem", lineHeight: 1.5 };
-const titleStyle = { color: "#fff", fontSize: "0.86rem", fontWeight: 800, marginBottom: "0.5rem" };
+const quietStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.76rem", lineHeight: 1.5 };
+const titleStyle = { color: "var(--oh-ink, #fff)", fontSize: "0.86rem", fontWeight: 800, marginBottom: "0.5rem" };
 const rowStyle = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.03)",
-  border: "1px solid rgba(255,255,255,0.07)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
   borderRadius: "12px",
   display: "flex",
   flexWrap: "wrap",
@@ -106,7 +106,7 @@ const LanguageRow = ({ code, name, coverage, editing, onEdit, onRemove, touch })
     <div style={{ flex: "1 1 10rem", minWidth: 0 }}>
       <div data-no-translate style={{ fontSize: "0.84rem", fontWeight: 700 }}>{name}</div>
       {coverage ? (
-        <div style={{ ...quietStyle, color: coverage.missing ? "#fde68a" : "rgba(255,255,255,0.58)" }}>
+        <div style={{ ...quietStyle, color: coverage.missing ? "#fde68a" : "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)" }}>
           {coverage.missing ? `${coverage.done} of ${coverage.total} strings` : "Up to date"}
         </div>
       ) : null}

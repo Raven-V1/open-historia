@@ -204,8 +204,8 @@ const countryStatsTrackingIntervalLabel = (months) => {
 };
 
 const refreshMenuButtonStyle = {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.14)",
+    background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
     borderRadius: "8px",
     color: "#e7e7e9",
     cursor: "pointer",
@@ -215,7 +215,7 @@ const refreshMenuButtonStyle = {
 };
 
 const refreshMenuHintStyle = {
-    color: "rgba(255,255,255,0.42)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)",
     fontSize: "0.64rem",
     lineHeight: 1.4,
     marginTop: "0.25rem",
@@ -244,7 +244,7 @@ const cardStyle = {
 };
 
 const Bar = ({ value, color }) => (
-    <div style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "999px", height: "6px", overflow: "hidden" }}>
+    <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "999px", height: "6px", overflow: "hidden" }}>
     <div style={{ backgroundColor: color, borderRadius: "999px", height: "100%", width: `${clamp01(value)}%`, transition: "width 0.4s" }} />
     </div>
 );
@@ -331,11 +331,11 @@ const customMetricUnitLabel = (stat) => {
 
 const EconomyCard = ({ label, value, sub, tone }) => (
     <div className="oh-country-economic-datum" style={{ ...cardStyle, background: "none", border: 0, borderBottom: "1px solid rgba(156,188,211,0.13)", borderRadius: 0, padding: "0.64rem 0.48rem" }}>
-    <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginBottom: "0.3rem", textTransform: "uppercase" }}>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginBottom: "0.3rem", textTransform: "uppercase" }}>
     {label}
     </div>
     <div data-no-translate style={{ color: tone, fontSize: "1.05rem", fontWeight: 800 }}>{compactEconomyValue(value) || "—"}</div>
-    {sub && <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.68rem", marginTop: "0.15rem" }}>{sub}</div>}
+    {sub && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.68rem", marginTop: "0.15rem" }}>{sub}</div>}
     </div>
 );
 
@@ -346,12 +346,12 @@ const IndexMetricCard = ({ icon = "", label, value, color = "#a1a1aa" }) => {
     const bounded = clamp01(numeric);
     return (
         <div className="oh-country-index-datum" style={{ ...cardStyle, background: "none", border: 0, borderBottom: "1px solid rgba(156,188,211,0.13)", borderRadius: 0, minWidth: 0, padding: "0.6rem 0.48rem" }}>
-            <div style={{ color: "rgba(255,255,255,0.72)", fontSize: "0.7rem", minHeight: "1.9em", overflowWrap: "anywhere" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: "0.7rem", minHeight: "1.9em", overflowWrap: "anywhere" }}>
                 {icon} {label}
             </div>
             <div data-no-translate style={{ fontSize: "1.12rem", fontWeight: 800, margin: "0.25rem 0 0.5rem" }}>
                 {Number.isFinite(numeric) ? bounded : "—"}
-                {Number.isFinite(numeric) && <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.62rem", fontWeight: 600 }}> / 100</span>}
+                {Number.isFinite(numeric) && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.62rem", fontWeight: 600 }}> / 100</span>}
             </div>
             <Bar value={Number.isFinite(numeric) ? bounded : 0} color={color} />
         </div>
@@ -366,7 +366,7 @@ const CustomStatCard = ({ stat, value }) => {
     }
     return (
         <div className="oh-country-economic-datum" style={{ ...cardStyle, background: "none", border: 0, borderBottom: "1px solid rgba(156,188,211,0.13)", borderRadius: 0, padding: "0.64rem 0.48rem" }}>
-            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.05em", marginBottom: "0.3rem", textTransform: "uppercase" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.05em", marginBottom: "0.3rem", textTransform: "uppercase" }}>
                 {stat.icon} {stat.label}
             </div>
             <div data-no-translate style={{ color: stat.color || "#e7e7e9", fontSize: "1.05rem", fontWeight: 800, overflowWrap: "anywhere" }}>
@@ -442,7 +442,7 @@ const MILITARY_FIGURE_LABELS = Object.freeze({
 });
 const MILITARY_FIGURE_ORDER = Object.freeze(["quality", "technology", "spending", "manpowerShare", "weariness", "resources", "land", "sea", "air"]);
 const MILITARY_OWN_COLOR = "#2bc1f3";
-const MILITARY_SHARED_COLOR = "rgba(255,255,255,0.32)";
+const MILITARY_SHARED_COLOR = "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)";
 const MILITARY_WEARY_COLOR = "#f59e0b";
 
 // Where every country stands on each figure, for the hairline on its bar (none
@@ -452,9 +452,9 @@ const MILITARY_FIGURE_MARKS = Object.freeze({ quality: 50, technology: 50, spend
 
 // A figure's bar, 0 to 100, and a hairline where every country stands.
 const MilitaryBar = ({ value, mark, color }) => (
-    <div style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "999px", height: "6px", overflow: "hidden", position: "relative" }}>
+    <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "999px", height: "6px", overflow: "hidden", position: "relative" }}>
     <div style={{ backgroundColor: color, borderRadius: "999px", height: "100%", width: `${clamp01(value)}%` }} />
-    {mark !== undefined && <div style={{ backgroundColor: "rgba(255,255,255,0.55)", height: "100%", left: `${clamp01(mark)}%`, position: "absolute", top: 0, width: "1px" }} />}
+    {mark !== undefined && <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", height: "100%", left: `${clamp01(mark)}%`, position: "absolute", top: 0, width: "1px" }} />}
     </div>
 );
 
@@ -478,7 +478,7 @@ const MilitaryCard = ({ world, country, style }) => {
     return (
         <div style={{ ...cardStyle, ...style }}>
             <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "0.2rem" }}>
-                <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                     Military power
                 </span>
                 <span data-no-translate style={{ fontSize: "1.05rem", fontWeight: 800 }}>{power}</span>
@@ -491,25 +491,25 @@ const MilitaryCard = ({ world, country, style }) => {
                     const text = key === "manpowerShare" ? `${Math.round(value * 10) / 10}%` : `${Math.round(value)}/100`;
                     return (
                         <div key={key} style={{ alignItems: "center", display: "grid", gap: "0.5rem", gridTemplateColumns: "6.4rem minmax(0, 1fr) 3.2rem" }}>
-                            <span style={{ color: own[key] ? "rgba(255,255,255,0.85)" : "rgba(255,255,255,0.6)", fontSize: "0.72rem" }}>{MILITARY_FIGURE_LABELS[key]}</span>
+                            <span style={{ color: own[key] ? "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.72rem" }}>{MILITARY_FIGURE_LABELS[key]}</span>
                             <MilitaryBar value={value} mark={MILITARY_FIGURE_MARKS[key]} color={color} />
                             <span data-no-translate style={{ fontSize: "0.72rem", fontVariantNumeric: "tabular-nums", fontWeight: 800, textAlign: "right" }}>{text}</span>
                         </div>
                     );
                 })}
             </div>
-            <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.55rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.55rem" }}>
                 {profile.counted
                     ? "In colour: its own figures. In grey: what every country has. The mark on a bar is where every country stands."
                     : "This scenario does not count countries' own military figures: every country fights with the same."}
             </div>
             {worn && (
-                <div data-oh-attrition="" style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
+                <div data-oh-attrition="" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
                     {`Lost to attrition, the weather and being cut off: ${worn.lastMen.toLocaleString()} men last turn, ${worn.warMen.toLocaleString()} in this war.`}
                 </div>
             )}
             {profile.supplied && profile.refill !== null && (
-                <div data-oh-war-resources-refill="" style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
+                <div data-oh-war-resources-refill="" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
                     {`Its economy refills its war resources by about ${profile.refill} a month, less under a blockade.`}
                 </div>
             )}
@@ -613,8 +613,8 @@ const RelationMeter = ({ score, tone }) => {
     const value = Math.max(-100, Math.min(100, Number(score) || 0));
     const width = `${Math.abs(value) / 2}%`;
     return (
-        <div aria-hidden="true" className="oh-country-relation-meter" style={{ backgroundColor: "rgba(255,255,255,0.1)", borderRadius: "999px", height: "3px", marginTop: "0.15rem", overflow: "hidden", position: "relative" }}>
-        <div style={{ backgroundColor: "rgba(255,255,255,0.22)", height: "100%", left: "50%", position: "absolute", top: 0, width: "1px" }} />
+        <div aria-hidden="true" className="oh-country-relation-meter" style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "999px", height: "3px", marginTop: "0.15rem", overflow: "hidden", position: "relative" }}>
+        <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)", height: "100%", left: "50%", position: "absolute", top: 0, width: "1px" }} />
         <div style={{ backgroundColor: tone, borderRadius: "999px", height: "100%", left: value >= 0 ? "50%" : `calc(50% - ${width})`, position: "absolute", top: 0, width }} />
         </div>
     );
@@ -633,19 +633,19 @@ const DiplomaticRelationRow = ({ relation, expanded, onToggle, onPick }) => {
                 onClick={onToggle}
                 aria-expanded={expanded}
                 aria-label={`Details for ${relation.counterpartName}`}
-                style={{ alignItems: "center", background: expanded ? "rgba(255,255,255,0.035)" : "none", border: 0, color: "inherit", cursor: "pointer", display: "flex", gap: "0.45rem", minHeight: "2.35rem", padding: "0.42rem 0.65rem", textAlign: "left", width: "100%" }}
+                style={{ alignItems: "center", background: expanded ? "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)" : "none", border: 0, color: "inherit", cursor: "pointer", display: "flex", gap: "0.45rem", minHeight: "2.35rem", padding: "0.42rem 0.65rem", textAlign: "left", width: "100%" }}
             >
-                <span title={relation.counterpartName} style={{ color: "rgba(255,255,255,0.9)", flex: 1, fontSize: "0.73rem", fontWeight: 750, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{relation.counterpartName}</span>
+                <span title={relation.counterpartName} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", flex: 1, fontSize: "0.73rem", fontWeight: 750, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{relation.counterpartName}</span>
                 <span className="oh-country-relation-signal">
                     <span data-no-translate style={{ color: tone, fontSize: "0.81rem", fontVariantNumeric: "tabular-nums", fontWeight: 850 }}>{hasScore ? formatRelationScore(relation.score) : "—"}</span>
                     {hasScore && <RelationMeter score={relation.score} tone={tone} />}
                 </span>
                 <span style={{ ...statusBadgeStyle(tone), justifyContent: "center", minWidth: "3.9rem" }}>{hasScore ? prettyToken(relation.displayStatus) : "Unrated"}</span>
-                <span aria-hidden="true" style={{ color: "rgba(255,255,255,0.45)", flexShrink: 0, fontSize: "0.8rem", transform: expanded ? "rotate(180deg)" : "none" }}>⌄</span>
+                <span aria-hidden="true" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", flexShrink: 0, fontSize: "0.8rem", transform: expanded ? "rotate(180deg)" : "none" }}>⌄</span>
             </button>
             {expanded && (
                 <div className="oh-country-relation-detail" style={{ background: "rgba(0,0,0,0.14)", padding: "0.55rem 0.7rem 0.65rem" }}>
-                    <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.66rem", lineHeight: 1.5, overflowWrap: "anywhere" }}>{relation.summary || "Tracked bilateral relationship."}</div>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.66rem", lineHeight: 1.5, overflowWrap: "anywhere" }}>{relation.summary || "Tracked bilateral relationship."}</div>
                     {onPick && relation.counterpart && (
                         <button type="button" className="oh-tap-row" onClick={() => onPick(relation.counterpart)} style={{ background: "none", border: 0, color: "#93c5fd", cursor: "pointer", fontSize: "0.68rem", fontWeight: 750, marginTop: "0.5rem", padding: 0, textAlign: "left" }}>Inspect country ›</button>
                     )}
@@ -712,14 +712,14 @@ const GroupsOnTerritory = ({ world, targetCountry, isPlayer, mapRef }) => {
                 disabled={!canShow}
                 onClick={() => show(row.bounds)}
                 title={canShow ? "Show on the map" : undefined}
-                style={{ alignItems: "flex-start", background: "none", border: "none", borderTop: index ? "1px solid rgba(255,255,255,0.07)" : "none", color: "inherit", cursor: canShow ? "pointer" : "default", display: "flex", gap: "0.55rem", padding: "0.55rem 0.65rem", textAlign: "left", width: "100%" }}
+                style={{ alignItems: "flex-start", background: "none", border: "none", borderTop: index ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)" : "none", color: "inherit", cursor: canShow ? "pointer" : "default", display: "flex", gap: "0.55rem", padding: "0.55rem 0.65rem", textAlign: "left", width: "100%" }}
                 >
                 <span aria-hidden="true" style={{ background: row.color, borderRadius: "2px", boxShadow: "0 0 0 1px rgba(0,0,0,0.55)", flexShrink: 0, height: "10px", marginTop: "0.2rem", width: "10px" }} />
                 <span style={{ flex: 1, minWidth: 0 }}>
-                <span style={{ color: "rgba(255,255,255,0.88)", display: "block", fontSize: "0.74rem", fontWeight: 750, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.name}</span>
-                <span style={{ color: "rgba(255,255,255,0.45)", display: "block", fontSize: "0.62rem", marginTop: "0.12rem" }}>{held}</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", display: "block", fontSize: "0.74rem", fontWeight: 750, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.name}</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", display: "block", fontSize: "0.62rem", marginTop: "0.12rem" }}>{held}</span>
                 {row.description && (
-                    <span style={{ WebkitBoxOrient: "vertical", WebkitLineClamp: 2, color: "rgba(255,255,255,0.38)", display: "-webkit-box", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.2rem", overflow: "hidden" }}>{row.description}</span>
+                    <span style={{ WebkitBoxOrient: "vertical", WebkitLineClamp: 2, color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", display: "-webkit-box", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.2rem", overflow: "hidden" }}>{row.description}</span>
                 )}
                 </span>
                 {row.own && isPlayer && <span style={statusBadgeStyle("#2bc1f3")}>Our group</span>}
@@ -855,17 +855,17 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
         {diplomacy.subordination && (
             <section data-oh-edge-bar className="oh-country-ledger-section" style={{ borderLeft: "3px solid #d6b878", padding: "0.15rem 0.65rem 0.45rem" }}>
             <div className="oh-country-ledger-header">Subordination</div>
-            <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.78rem", fontWeight: 850, marginTop: "0.28rem" }}>{diplomacy.subordination.headline}</div>
-            <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.66rem", lineHeight: 1.45, marginTop: "0.22rem" }}>{diplomacy.subordination.meaning}</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.78rem", fontWeight: 850, marginTop: "0.28rem" }}>{diplomacy.subordination.headline}</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.66rem", lineHeight: 1.45, marginTop: "0.22rem" }}>{diplomacy.subordination.meaning}</div>
             {diplomacy.subordination.facts.length > 0 && (
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.28rem", marginTop: "0.45rem" }}>
                 {diplomacy.subordination.facts.map((fact) => (
-                    <span key={fact} style={{ backgroundColor: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "999px", color: "rgba(255,255,255,0.68)", fontSize: "0.58rem", padding: "0.15rem 0.38rem" }}>{fact}</span>
+                    <span key={fact} style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "999px", color: "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)", fontSize: "0.58rem", padding: "0.15rem 0.38rem" }}>{fact}</span>
                 ))}
                 </div>
             )}
             {diplomacy.subordination.provenance && (
-                <div style={{ color: "rgba(255,255,255,0.36)", fontSize: "0.58rem", fontStyle: "italic", lineHeight: 1.4, marginTop: "0.4rem" }}>{diplomacy.subordination.provenance}</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 36%, transparent)", fontSize: "0.58rem", fontStyle: "italic", lineHeight: 1.4, marginTop: "0.4rem" }}>{diplomacy.subordination.provenance}</div>
             )}
             </section>
         )}
@@ -893,10 +893,10 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
                             style={{ background: "none", border: 0, color: "#c7dcff", cursor: "pointer", display: "block", fontSize: "0.72rem", fontWeight: 750, maxWidth: "100%", overflow: "hidden", padding: 0, textAlign: "left", textOverflow: "ellipsis", whiteSpace: "nowrap" }}
                         >{row.puppetName} ›</button>
                     ) : (
-                        <div style={{ color: "rgba(255,255,255,0.86)", fontSize: "0.72rem", fontWeight: 750, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.puppetName}</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", fontSize: "0.72rem", fontWeight: 750, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.puppetName}</div>
                     )}
                     {facts.length > 0 && (
-                        <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.6rem", lineHeight: 1.4, marginTop: "0.14rem" }}>{facts.join(" · ")}</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.6rem", lineHeight: 1.4, marginTop: "0.14rem" }}>{facts.join(" · ")}</div>
                     )}
                     </div>
                     <span style={statusBadgeStyle(row.secrecy === "covert" ? "#d4d4d8" : "#60a5fa")}>{prettyToken(row.kindLabel)}</span>
@@ -920,13 +920,13 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
                     placeholder="Find country or relation…"
                     value={relationSearch}
                     onChange={(event) => setRelationSearch(event.target.value)}
-                    style={{ background: "rgba(0,0,0,0.2)", border: "1px solid rgba(255,255,255,0.13)", borderRadius: "7px", color: "#f4f4f5", flex: 1, fontSize: "0.68rem", minHeight: "2rem", minWidth: 0, padding: "0.35rem 0.55rem" }}
+                    style={{ background: "rgba(0,0,0,0.2)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)", borderRadius: "7px", color: "#f4f4f5", flex: 1, fontSize: "0.68rem", minHeight: "2rem", minWidth: 0, padding: "0.35rem 0.55rem" }}
                 />
                 <select
                     aria-label="Sort bilateral relations"
                     value={relationSort}
                     onChange={(event) => setRelationSort(event.target.value)}
-                    style={{ background: "#242429", border: "1px solid rgba(255,255,255,0.13)", borderRadius: "7px", color: "#e4e4e7", cursor: "pointer", flexShrink: 0, fontSize: "0.66rem", minHeight: "2rem", maxWidth: "8.2rem", padding: "0.3rem" }}
+                    style={{ background: "var(--oh-paper, #242429)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)", borderRadius: "7px", color: "#e4e4e7", cursor: "pointer", flexShrink: 0, fontSize: "0.66rem", minHeight: "2rem", maxWidth: "8.2rem", padding: "0.3rem" }}
                 >
                     <option value="strongest">Strongest first</option>
                     <option value="weakest">Weakest first</option>
@@ -947,11 +947,11 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
             );
         })}
         {!diplomacy.relations.length ? (
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.45)", fontSize: "0.68rem", padding: "0.65rem" }}>
+            <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.68rem", padding: "0.65rem" }}>
                 No tracked bilateral relations. An absent record is not the same as explicit neutrality.
             </div>
         ) : visibleRelations.length === 0 && (
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.48)", fontSize: "0.68rem", padding: "0.65rem" }}>
+            <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.68rem", padding: "0.65rem" }}>
                 {`No relationships match the search. ${diplomacy.relations.length} records are still available.`}
             </div>
         )}
@@ -966,12 +966,12 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
                 <div data-country-record className="oh-country-agreement" key={agreement.id || `${agreement.title}-${index}`} style={{ padding: "0.62rem 0.15rem" }}>
                 <div style={{ alignItems: "flex-start", display: "flex", gap: "0.55rem", justifyContent: "space-between" }}>
                 <div style={{ minWidth: 0 }}>
-                <div style={{ color: "rgba(255,255,255,0.86)", fontSize: "0.72rem", fontWeight: 750 }}>{agreement.title || "Untitled agreement"}</div>
-                <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.61rem", marginTop: "0.14rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", fontSize: "0.72rem", fontWeight: 750 }}>{agreement.title || "Untitled agreement"}</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.61rem", marginTop: "0.14rem" }}>
                 {prettyToken(agreement.type || "other")} · {counterpartText}
                 </div>
                 {agreement.lastUpdatedDate && (
-                    <div style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.58rem", marginTop: "0.12rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", fontSize: "0.58rem", marginTop: "0.12rem" }}>
                     Updated {agreement.lastUpdatedDate}
                     </div>
                 )}
@@ -981,7 +981,7 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
                 </div>
             );
         }) : (
-            <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.68rem", padding: "0.7rem 0.15rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.68rem", padding: "0.7rem 0.15rem" }}>
             No canonical formal agreements involving this polity.
             </div>
         )}
@@ -998,19 +998,19 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
                 <div data-country-record key={war.id || `${war.title}-${index}`} style={{ borderBottom: "1px solid rgba(156,188,211,0.13)", padding: "0.7rem 0.2rem" }}>
                 <div style={{ alignItems: "flex-start", display: "flex", gap: "0.55rem", justifyContent: "space-between" }}>
                 <div style={{ minWidth: 0 }}>
-                <div style={{ color: "rgba(255,255,255,0.86)", fontSize: "0.72rem", fontWeight: 750 }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", fontSize: "0.72rem", fontWeight: 750 }}>
                 vs {war.opponents.length ? war.opponents.join(" · ") : "Unknown opponent"}
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.61rem", marginTop: "0.14rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.61rem", marginTop: "0.14rem" }}>
                 {war.title || "Canonical conflict"}{startedDate ? ` · since ${startedDate}` : ""}
                 </div>
                 {war.allies.length ? (
-                    <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.61rem", marginTop: "0.14rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.61rem", marginTop: "0.14rem" }}>
                     {`Fighting alongside ${war.allies.join(" · ")}`}
                     </div>
                 ) : null}
                 {war.causeText ? (
-                    <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.61rem", lineHeight: 1.35, marginTop: "0.14rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.61rem", lineHeight: 1.35, marginTop: "0.14rem" }}>
                     {`Why it began: ${war.causeText}`}
                     </div>
                 ) : null}
@@ -1034,7 +1034,7 @@ const DiplomacySection = ({ world, identity, targetCountry, viewerPolity, onPick
                 </div>
             );
         }) : (
-            <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.68rem", padding: "0.7rem 0.15rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.68rem", padding: "0.7rem 0.15rem" }}>
             No active or ceasefire canonical conflicts involving this polity.
             </div>
         )}
@@ -1128,7 +1128,7 @@ const advancedMetricGroupsFor = (indexRows = INDEX_ROWS, definition = null) => {
                 label: stat.label,
                 unit: customMetricUnit(stat),
                 unitLabel: customMetricUnitLabel(stat),
-                color: stat.color || "#a1a1aa",
+                color: stat.color || "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)",
                 format: (value) => formatCustomStatValue(stat, value),
                 bounded01: stat.kind === "index" || (Number(stat.minimum) === 0 && Number(stat.maximum) === 100),
                 nonNegative: Number.isFinite(Number(stat.minimum)) && Number(stat.minimum) >= 0,
@@ -1143,7 +1143,7 @@ const advancedMetricGroupsFor = (indexRows = INDEX_ROWS, definition = null) => {
             metrics: [
                 { key: "gdp", label: "GDP", unit: "gdp", color: "#34d399", format: formatEuroTotal },
                 { key: "gdpPerCapita", label: "GDP per capita", unit: "gdpPerCapita", color: "#e7e7e9", format: formatEuroPerCapita },
-                { key: "population", label: "Population", unit: "population", color: "#94a3b8", format: formatPopulation },
+                { key: "population", label: "Population", unit: "population", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", format: formatPopulation },
             ],
         },
         {
@@ -1153,8 +1153,8 @@ const advancedMetricGroupsFor = (indexRows = INDEX_ROWS, definition = null) => {
             metrics: [
                 { key: "gdpGrowth", label: "GDP growth", unit: "economicPercent", color: "#34d399", format: (value) => formatPercent(value, { signed: true }) },
                 { key: "inflation", label: "Inflation", unit: "economicPercent", color: "#f59e0b", format: formatPercent },
-                { key: "unemployment", label: "Unemployment", unit: "economicPercent", color: "#60a5fa", format: formatPercent },
-                { key: "publicDebt", label: "Public debt", unit: "economicPercent", color: "#94a3b8", format: formatPercent },
+                { key: "unemployment", label: "Unemployment", unit: "economicPercent", color: "var(--oh-link, #60a5fa)", format: formatPercent },
+                { key: "publicDebt", label: "Public debt", unit: "economicPercent", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", format: formatPercent },
                 { key: "budgetBalance", label: "Budget balance", unit: "economicPercent", color: "#f87171", format: (value) => formatPercent(value, { signed: true }) },
             ],
         },
@@ -1215,10 +1215,10 @@ const historyDateMs = (value) => {
 };
 
 const advancedRangeStyle = (active) => ({
-    backgroundColor: active ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.04)",
-    border: `1px solid ${active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.08)"}`,
+    backgroundColor: active ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+    border: `1px solid ${active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"}`,
     borderRadius: "7px",
-    color: active ? "#f4f4f5" : "rgba(255,255,255,0.5)",
+    color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)",
     cursor: "pointer",
     fontSize: "0.68rem",
     fontWeight: 800,
@@ -1236,7 +1236,7 @@ const AdvancedLineChart = ({ samples, metricKeys, metricsByKey, compact = false,
 
     if (!validSamples.length || !metrics.length) {
         return (
-            <div style={{ alignItems: "center", color: "rgba(255,255,255,0.38)", display: "flex", flex: 1, fontSize: "0.82rem", justifyContent: "center", minHeight: compact || fill ? "8rem" : "330px", textAlign: "center" }}>
+            <div style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", display: "flex", flex: 1, fontSize: "0.82rem", justifyContent: "center", minHeight: compact || fill ? "8rem" : "330px", textAlign: "center" }}>
                 No historical samples are available for this selection yet.
             </div>
         );
@@ -1298,13 +1298,13 @@ const AdvancedLineChart = ({ samples, metricKeys, metricsByKey, compact = false,
     return (
         <div style={{ minHeight: 0, position: "relative", width: "100%" }}>
             <svg aria-label="Historical statistics chart" role="img" viewBox={`0 0 ${width} ${height}`} style={{ display: "block", height: "auto", maxHeight: "58vh", minHeight: "340px", width: "100%", ...(compact ? { maxHeight: "none", minHeight: 0 } : fill ? { height: "100%", maxHeight: "none", minHeight: 0 } : null) }}>
-                <rect x={pad.left} y={pad.top} width={plotWidth} height={plotHeight} rx="10" fill="rgba(8,8,10,0.18)" stroke="rgba(255,255,255,0.06)" />
+                <rect x={pad.left} y={pad.top} width={plotWidth} height={plotHeight} rx="10" fill="rgba(8,8,10,0.18)" stroke="color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)" />
                 {yTicks.map((tick, index) => {
                     const y = pad.top + (plotHeight * index) / Math.max(1, yTicks.length - 1);
                     return (
                         <g key={`y-${index}`}>
-                            <line x1={pad.left} x2={width - pad.right} y1={y} y2={y} stroke="rgba(255,255,255,0.08)" strokeDasharray={index === yTicks.length - 1 ? "0" : "3 6"} />
-                            <text x={pad.left - 12} y={y + 4} textAnchor="end" fill="rgba(255,255,255,0.42)" fontSize="12" fontWeight="600">{axisFormat(tick)}</text>
+                            <line x1={pad.left} x2={width - pad.right} y1={y} y2={y} stroke="color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" strokeDasharray={index === yTicks.length - 1 ? "0" : "3 6"} />
+                            <text x={pad.left - 12} y={y + 4} textAnchor="end" fill="color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)" fontSize="12" fontWeight="600">{axisFormat(tick)}</text>
                         </g>
                     );
                 })}
@@ -1313,8 +1313,8 @@ const AdvancedLineChart = ({ samples, metricKeys, metricsByKey, compact = false,
                     const x = xFor(sample);
                     return (
                         <g key={`x-${sample.date}`}>
-                            <line x1={x} x2={x} y1={pad.top} y2={pad.top + plotHeight} stroke="rgba(255,255,255,0.05)" />
-                            <text x={x} y={height - 24} textAnchor="middle" fill="rgba(255,255,255,0.42)" fontSize="12" fontWeight="600">{formatHistoryDate(sample.date, { compact: true })}</text>
+                            <line x1={x} x2={x} y1={pad.top} y2={pad.top + plotHeight} stroke="color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)" />
+                            <text x={x} y={height - 24} textAnchor="middle" fill="color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)" fontSize="12" fontWeight="600">{formatHistoryDate(sample.date, { compact: true })}</text>
                         </g>
                     );
                 })}
@@ -1328,7 +1328,7 @@ const AdvancedLineChart = ({ samples, metricKeys, metricsByKey, compact = false,
                 }))}
                 {hovered && (
                     <>
-                        <line x1={hoverX} x2={hoverX} y1={pad.top} y2={pad.top + plotHeight} stroke="rgba(255,255,255,0.34)" strokeWidth="1" />
+                        <line x1={hoverX} x2={hoverX} y1={pad.top} y2={pad.top + plotHeight} stroke="color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" strokeWidth="1" />
                         {metrics.map((metric) => {
                             const value = Number(historyMetricValue(hovered, metric.key));
                             if (!Number.isFinite(value)) return null;
@@ -1344,18 +1344,18 @@ const AdvancedLineChart = ({ samples, metricKeys, metricsByKey, compact = false,
                     const right = index === validSamples.length - 1 ? width - pad.right : (x + next) / 2;
                     return <rect key={`hit-${sample.date}`} x={left} y={pad.top} width={Math.max(2, right - left)} height={plotHeight} fill="transparent" onMouseEnter={() => setHoverIndex(index)} onMouseMove={() => setHoverIndex(index)} onMouseLeave={() => setHoverIndex(null)} />;
                 })}
-                <text x={pad.left} y="18" fill="rgba(255,255,255,0.38)" fontSize="11" fontWeight="700" letterSpacing="1">{metrics[0]?.unitLabel || ADVANCED_UNIT_LABELS[unit] || "Value"}</text>
+                <text x={pad.left} y="18" fill="color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)" fontSize="11" fontWeight="700" letterSpacing="1">{metrics[0]?.unitLabel || ADVANCED_UNIT_LABELS[unit] || "Value"}</text>
             </svg>
             {hovered && (
-                <div style={{ backgroundColor: "rgba(16,16,18,0.96)", border: "1px solid rgba(148,163,184,0.22)", borderRadius: "10px", boxShadow: "0 12px 35px rgba(0,0,0,0.35)", left: `min(calc(${((hoverX / width) * 100).toFixed(2)}% + 10px), calc(100% - 190px))`, padding: "0.55rem 0.65rem", pointerEvents: "none", position: "absolute", top: "1.1rem", width: "180px", zIndex: 2 }}>
-                    <div data-no-translate style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.64rem", fontWeight: 800, letterSpacing: "0.04em", marginBottom: "0.45rem", textTransform: "uppercase" }}>{formatHistoryDate(hovered.date)}</div>
+                <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-paper, rgb(16,16,18)) 96%, transparent)", border: "1px solid rgba(148,163,184,0.22)", borderRadius: "10px", boxShadow: "0 12px 35px rgba(0,0,0,0.35)", left: `min(calc(${((hoverX / width) * 100).toFixed(2)}% + 10px), calc(100% - 190px))`, padding: "0.55rem 0.65rem", pointerEvents: "none", position: "absolute", top: "1.1rem", width: "180px", zIndex: 2 }}>
+                    <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.64rem", fontWeight: 800, letterSpacing: "0.04em", marginBottom: "0.45rem", textTransform: "uppercase" }}>{formatHistoryDate(hovered.date)}</div>
                     {metrics.map((metric) => {
                         const value = Number(historyMetricValue(hovered, metric.key));
                         if (!Number.isFinite(value)) return null;
                         return (
                             <div key={metric.key} style={{ alignItems: "center", display: "flex", gap: "0.45rem", justifyContent: "space-between", marginTop: "0.28rem" }}>
-                                <span style={{ alignItems: "center", color: "rgba(255,255,255,0.62)", display: "flex", fontSize: "0.66rem", gap: "0.35rem", minWidth: 0 }}><span style={{ backgroundColor: metric.color, borderRadius: "999px", height: "7px", width: "7px" }} />{metric.label}</span>
-                                <span data-no-translate style={{ color: "#fff", fontSize: "0.7rem", fontWeight: 850 }}>{metric.format(value)}</span>
+                                <span style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", display: "flex", fontSize: "0.66rem", gap: "0.35rem", minWidth: 0 }}><span style={{ backgroundColor: metric.color, borderRadius: "999px", height: "7px", width: "7px" }} />{metric.label}</span>
+                                <span data-no-translate style={{ color: "var(--oh-ink, #fff)", fontSize: "0.7rem", fontWeight: 850 }}>{metric.format(value)}</span>
                             </div>
                         );
                     })}
@@ -1449,20 +1449,20 @@ const AdvancedStatsModal = ({
             : "No history yet";
 
     return createPortal(
-        <div role="dialog" aria-modal="true" aria-label={`Advanced statistics for ${countryName}`} style={{ alignItems: "center", background: "rgba(6,6,7,0.8)", backdropFilter: "blur(10px)", display: "flex", inset: 0, justifyContent: "center", padding: isMobile ? 0 : "clamp(0.8rem, 2vw, 1.6rem)", position: "fixed", zIndex: 2147483000 }}>
-            <div style={{ background: "rgba(20,20,22,0.995)", border: "1px solid var(--oh-hud-border)", borderRadius: "18px", boxShadow: "var(--oh-hud-shadow)", display: "flex", flexDirection: "column", height: `min(880px, calc(${APP_HEIGHT} - 2.4rem))`, maxWidth: "1380px", minHeight: "580px", overflow: "hidden", width: "min(96vw, 1380px)", ...(isMobile ? phoneSheetStyle : fit ? { minHeight: 0 } : null) }}>
-                <div style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", gap: "0.75rem", padding: "0.85rem 1rem" }}>
-                    <div style={{ alignItems: "center", backgroundColor: "rgba(59,130,246,0.12)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "9px", display: "flex", flexShrink: 0, height: "2.25rem", justifyContent: "center", overflow: "hidden", width: "2.25rem" }}>
-                        {flagUrl ? <img alt="" src={bundledFlagUrl(flagUrl)} style={{ height: "100%", objectFit: "contain", width: "100%" }} /> : <span style={{ color: "#93c5fd", fontSize: "0.72rem", fontWeight: 900 }}>{flagFallback}</span>}
+        <div role="dialog" aria-modal="true" aria-label={`Advanced statistics for ${countryName}`} style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-paper, rgb(6,6,7)) 80%, transparent)", backdropFilter: "blur(10px)", display: "flex", inset: 0, justifyContent: "center", padding: isMobile ? 0 : "clamp(0.8rem, 2vw, 1.6rem)", position: "fixed", zIndex: 2147483000 }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-paper, rgb(20,20,22)) 99.5%, transparent)", border: "1px solid var(--oh-hud-border)", borderRadius: "18px", boxShadow: "var(--oh-hud-shadow)", display: "flex", flexDirection: "column", height: `min(880px, calc(${APP_HEIGHT} - 2.4rem))`, maxWidth: "1380px", minHeight: "580px", overflow: "hidden", width: "min(96vw, 1380px)", ...(isMobile ? phoneSheetStyle : fit ? { minHeight: 0 } : null) }}>
+                <div style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "flex", gap: "0.75rem", padding: "0.85rem 1rem" }}>
+                    <div style={{ alignItems: "center", backgroundColor: "rgba(59,130,246,0.12)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "9px", display: "flex", flexShrink: 0, height: "2.25rem", justifyContent: "center", overflow: "hidden", width: "2.25rem" }}>
+                        {flagUrl ? <img alt="" src={bundledFlagUrl(flagUrl)} style={{ height: "100%", objectFit: "contain", width: "100%" }} /> : <span style={{ color: "var(--oh-link, #93c5fd)", fontSize: "0.72rem", fontWeight: 900 }}>{flagFallback}</span>}
                     </div>
                     <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ alignItems: "baseline", display: "flex", flexWrap: "wrap", gap: "0.35rem 0.65rem" }}>
-                            <span style={{ color: "#f8fafc", fontSize: "1rem", fontWeight: 900 }}>Advanced Statistics</span>
-                            <span style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.76rem", fontWeight: 700 }}>{countryName}</span>
+                            <span style={{ color: "var(--oh-ink, #fff)", fontSize: "1rem", fontWeight: 900 }}>Advanced Statistics</span>
+                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.76rem", fontWeight: 700 }}>{countryName}</span>
                         </div>
-                        <div style={{ color: "rgba(255,255,255,0.32)", fontSize: "0.64rem", marginTop: "0.15rem" }}>{sampleSpan} · {visibleSamples.length} snapshot{visibleSamples.length === 1 ? "" : "s"}</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)", fontSize: "0.64rem", marginTop: "0.15rem" }}>{sampleSpan} · {visibleSamples.length} snapshot{visibleSamples.length === 1 ? "" : "s"}</div>
                     </div>
-                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Close advanced statistics" style={{ alignItems: "center", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "8px", color: "rgba(255,255,255,0.62)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2.25rem", justifyContent: "center", width: "2.25rem" }}>×</button>
+                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Close advanced statistics" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2.25rem", justifyContent: "center", width: "2.25rem" }}>×</button>
                 </div>
 
                 {/* On a phone one column that scrolls as a whole: the chart, its
@@ -1471,17 +1471,17 @@ const AdvancedStatsModal = ({
                     <div style={{ display: "flex", flexDirection: "column", minHeight: 0, padding: "1rem 1rem 0.9rem" }}>
                         <div style={{ alignItems: "flex-start", display: "flex", flexWrap: "wrap", gap: "0.55rem", justifyContent: "space-between", marginBottom: "0.35rem" }}>
                             <div>
-                                <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.82rem", fontWeight: 850 }}>{selectedMetrics.map((metric) => metric.label).join(" · ")}</div>
-                                <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.64rem", marginTop: "0.15rem" }}>{selectedMetrics[0]?.unitLabel || ADVANCED_UNIT_LABELS[selectedUnit] || "Value"}</div>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.82rem", fontWeight: 850 }}>{selectedMetrics.map((metric) => metric.label).join(" · ")}</div>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.64rem", marginTop: "0.15rem" }}>{selectedMetrics[0]?.unitLabel || ADVANCED_UNIT_LABELS[selectedUnit] || "Value"}</div>
                             </div>
                             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.55rem" }}>
-                                {selectedMetrics.map((metric) => <span key={metric.key} style={{ alignItems: "center", color: "rgba(255,255,255,0.58)", display: "inline-flex", fontSize: "0.63rem", gap: "0.3rem" }}><span style={{ backgroundColor: metric.color, borderRadius: "999px", height: "7px", width: "7px" }} />{metric.label}</span>)}
+                                {selectedMetrics.map((metric) => <span key={metric.key} style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", display: "inline-flex", fontSize: "0.63rem", gap: "0.3rem" }}><span style={{ backgroundColor: metric.color, borderRadius: "999px", height: "7px", width: "7px" }} />{metric.label}</span>)}
                             </div>
                         </div>
 
-                        <div style={{ background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", display: "flex", flex: 1, minHeight: isMobile ? "10rem" : fit ? 0 : "390px", overflow: "hidden", padding: "0.35rem" }}>
+                        <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "12px", display: "flex", flex: 1, minHeight: isMobile ? "10rem" : fit ? 0 : "390px", overflow: "hidden", padding: "0.35rem" }}>
                             {status === "loading" ? (
-                                <div style={{ alignItems: "center", color: "rgba(255,255,255,0.42)", display: "flex", flex: 1, fontSize: "0.82rem", justifyContent: "center" }}>Loading campaign history…</div>
+                                <div style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", display: "flex", flex: 1, fontSize: "0.82rem", justifyContent: "center" }}>Loading campaign history…</div>
                             ) : status === "error" ? (
                                 <div style={{ alignItems: "center", color: "#fca5a5", display: "flex", flex: 1, fontSize: "0.8rem", justifyContent: "center", padding: "2rem", textAlign: "center" }}>{error || "Historical Stats could not be loaded."}</div>
                             ) : (
@@ -1507,10 +1507,10 @@ const AdvancedStatsModal = ({
                                                         ? formatCompactNumber(delta)
                                                         : `${delta > 0 ? "+" : ""}${Math.round(delta * 10) / 10}${metric.unit === "index" ? "" : " pp"}`;
                                     return (
-                                        <div key={metric.key} style={{ backgroundColor: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "9px", minWidth: 0, padding: "0.55rem 0.65rem" }}>
-                                            <div style={{ color: "rgba(255,255,255,0.36)", fontSize: "0.55rem", fontWeight: 800, letterSpacing: "0.05em", overflow: "hidden", textOverflow: "ellipsis", textTransform: "uppercase", whiteSpace: "nowrap" }}>{metric.label}</div>
+                                        <div key={metric.key} style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "9px", minWidth: 0, padding: "0.55rem 0.65rem" }}>
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 36%, transparent)", fontSize: "0.55rem", fontWeight: 800, letterSpacing: "0.05em", overflow: "hidden", textOverflow: "ellipsis", textTransform: "uppercase", whiteSpace: "nowrap" }}>{metric.label}</div>
                                             <div data-no-translate style={{ color: metric.color, fontSize: "0.92rem", fontWeight: 900, marginTop: "0.16rem" }}>{metric.format(end)}</div>
-                                            <div style={{ color: delta == null ? "rgba(255,255,255,0.3)" : delta > 0 ? "#86efac" : delta < 0 ? "#fca5a5" : "rgba(255,255,255,0.42)", fontSize: "0.58rem", marginTop: "0.08rem" }}>{deltaText} over range</div>
+                                            <div style={{ color: delta == null ? "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)" : delta > 0 ? "#86efac" : delta < 0 ? "#fca5a5" : "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.58rem", marginTop: "0.08rem" }}>{deltaText} over range</div>
                                         </div>
                                     );
                                 })}
@@ -1518,28 +1518,28 @@ const AdvancedStatsModal = ({
                         )}
                     </div>
 
-                    <aside style={{ backgroundColor: "rgba(9,9,10,0.24)", borderLeft: "1px solid rgba(255,255,255,0.07)", minHeight: 0, overflowY: "auto", padding: "0.9rem 0.85rem 1rem", ...(isMobile ? { borderLeft: "none", borderTop: "1px solid rgba(255,255,255,0.07)", overflowY: "visible" } : null) }}>
-                        <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.58rem", fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase" }}>Time range</div>
+                    <aside style={{ backgroundColor: "rgba(9,9,10,0.24)", borderLeft: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", minHeight: 0, overflowY: "auto", padding: "0.9rem 0.85rem 1rem", ...(isMobile ? { borderLeft: "none", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", overflowY: "visible" } : null) }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.58rem", fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase" }}>Time range</div>
                         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem", marginTop: "0.5rem" }}>
                             {[['all', 'All'], ['1y', '1 year'], ['5y', '5 years'], ['10y', '10 years']].map(([key, label]) => <button key={key} type="button" className="oh-tap-row" onClick={() => setRange(key)} style={advancedRangeStyle(range === key)}>{label}</button>)}
                         </div>
 
                         <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginTop: "1rem" }}>
-                            <span style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.58rem", fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase" }}>Statistics</span>
+                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.58rem", fontWeight: 900, letterSpacing: "0.08em", textTransform: "uppercase" }}>Statistics</span>
                             <span style={{ color: "rgba(147,197,253,0.8)", fontSize: "0.58rem", fontWeight: 800 }}>Selected {metricKeys.length}/4</span>
                         </div>
-                        <div style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.58rem", lineHeight: 1.4, marginTop: "0.3rem" }}>Compatible metrics can share a chart. Choosing a different scale switches the graph automatically.</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", fontSize: "0.58rem", lineHeight: 1.4, marginTop: "0.3rem" }}>Compatible metrics can share a chart. Choosing a different scale switches the graph automatically.</div>
 
                         {metricGroups.map((group) => (
-                            <div key={group.key} style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: "0.75rem", paddingTop: "0.65rem" }}>
-                                <div style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.68rem", fontWeight: 850, marginBottom: "0.35rem" }}>{group.icon} {group.label}</div>
+                            <div key={group.key} style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", marginTop: "0.75rem", paddingTop: "0.65rem" }}>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.68rem", fontWeight: 850, marginBottom: "0.35rem" }}>{group.icon} {group.label}</div>
                                 <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
                                     {group.metrics.map((metric) => {
                                         const checked = metricKeys.includes(metric.key);
                                         const compatible = !selectedMetrics.length || selectedUnit === metric.unit || checked;
                                         return (
-                                            <button key={metric.key} type="button" className="oh-tap-row" onClick={() => toggleMetric(metric)} style={{ alignItems: "center", backgroundColor: checked ? `${metric.color}16` : "transparent", border: `1px solid ${checked ? `${metric.color}50` : "transparent"}`, borderRadius: "7px", color: checked ? "rgba(255,255,255,0.9)" : compatible ? "rgba(255,255,255,0.55)" : "rgba(255,255,255,0.32)", cursor: "pointer", display: "flex", fontSize: "0.66rem", fontWeight: checked ? 800 : 650, gap: "0.45rem", padding: "0.38rem 0.45rem", textAlign: "left", width: "100%" }}>
-                                                <span aria-hidden="true" style={{ alignItems: "center", backgroundColor: checked ? metric.color : "rgba(255,255,255,0.08)", border: `1px solid ${checked ? metric.color : "rgba(255,255,255,0.13)"}`, borderRadius: "4px", color: "#121214", display: "inline-flex", flexShrink: 0, fontSize: "0.55rem", fontWeight: 1000, height: "14px", justifyContent: "center", width: "14px" }}>{checked ? "✓" : ""}</span>
+                                            <button key={metric.key} type="button" className="oh-tap-row" onClick={() => toggleMetric(metric)} style={{ alignItems: "center", backgroundColor: checked ? `${metric.color}16` : "transparent", border: `1px solid ${checked ? `${metric.color}50` : "transparent"}`, borderRadius: "7px", color: checked ? "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)" : compatible ? "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)", cursor: "pointer", display: "flex", fontSize: "0.66rem", fontWeight: checked ? 800 : 650, gap: "0.45rem", padding: "0.38rem 0.45rem", textAlign: "left", width: "100%" }}>
+                                                <span aria-hidden="true" style={{ alignItems: "center", backgroundColor: checked ? metric.color : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: `1px solid ${checked ? metric.color : "color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)"}`, borderRadius: "4px", color: "var(--oh-paper, #121214)", display: "inline-flex", flexShrink: 0, fontSize: "0.55rem", fontWeight: 1000, height: "14px", justifyContent: "center", width: "14px" }}>{checked ? "✓" : ""}</span>
                                                 <span style={{ flex: 1, minWidth: 0 }}>{metric.label}</span>
                                             </button>
                                         );
@@ -1549,8 +1549,8 @@ const AdvancedStatsModal = ({
                         ))}
 
                         <div style={{ backgroundColor: "rgba(59,130,246,0.07)", border: "1px solid rgba(96,165,250,0.14)", borderRadius: "9px", marginTop: "0.85rem", padding: "0.6rem 0.65rem" }}>
-                            <div style={{ color: "#bfdbfe", fontSize: "0.63rem", fontWeight: 850 }}>Campaign history</div>
-                            <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.58rem", lineHeight: 1.45, marginTop: "0.2rem" }}>
+                            <div style={{ color: "var(--oh-link, #bfdbfe)", fontSize: "0.63rem", fontWeight: 850 }}>Campaign history</div>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.58rem", lineHeight: 1.45, marginTop: "0.2rem" }}>
                                 {persistentCount} permanent sample{persistentCount === 1 ? "" : "s"}{recoveredCount > 0 ? ` · ${recoveredCount} recovered from rollback snapshots` : ""}. A completed turn that changes these figures is recorded automatically.
                             </div>
                         </div>
@@ -1660,25 +1660,25 @@ const HistoricalTrackingModal = ({
     if (!open || typeof document === "undefined") return null;
 
     return createPortal(
-        <div role="dialog" aria-modal="true" aria-label="Historical statistics tracking settings" style={{ alignItems: "center", background: "rgba(6,6,7,0.8)", backdropFilter: "blur(10px)", display: "flex", inset: 0, justifyContent: "center", padding: isMobile ? 0 : "clamp(0.8rem, 2vw, 1.6rem)", position: "fixed", zIndex: 2147483000 }}>
-            <div style={{ background: "rgba(20,20,22,0.995)", border: "1px solid var(--oh-hud-border)", borderRadius: "18px", boxShadow: "var(--oh-hud-shadow)", display: "flex", flexDirection: "column", height: `min(760px, calc(${APP_HEIGHT} - 2.4rem))`, maxWidth: "980px", minHeight: "520px", overflow: "hidden", width: "min(94vw, 980px)", ...(isMobile ? phoneSheetStyle : fit ? { minHeight: 0 } : null) }}>
-                <div style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", gap: "0.8rem", justifyContent: "space-between", padding: "1rem 1.05rem 0.95rem" }}>
+        <div role="dialog" aria-modal="true" aria-label="Historical statistics tracking settings" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-paper, rgb(6,6,7)) 80%, transparent)", backdropFilter: "blur(10px)", display: "flex", inset: 0, justifyContent: "center", padding: isMobile ? 0 : "clamp(0.8rem, 2vw, 1.6rem)", position: "fixed", zIndex: 2147483000 }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-paper, rgb(20,20,22)) 99.5%, transparent)", border: "1px solid var(--oh-hud-border)", borderRadius: "18px", boxShadow: "var(--oh-hud-shadow)", display: "flex", flexDirection: "column", height: `min(760px, calc(${APP_HEIGHT} - 2.4rem))`, maxWidth: "980px", minHeight: "520px", overflow: "hidden", width: "min(94vw, 980px)", ...(isMobile ? phoneSheetStyle : fit ? { minHeight: 0 } : null) }}>
+                <div style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "flex", gap: "0.8rem", justifyContent: "space-between", padding: "1rem 1.05rem 0.95rem" }}>
                     <div style={{ alignItems: "center", display: "flex", gap: "0.8rem", minWidth: 0 }}>
                         <div style={{ alignItems: "center", backgroundColor: "rgba(234,179,8,0.12)", border: "1px solid rgba(250,204,21,0.22)", borderRadius: "12px", color: "#fbbf24", display: "inline-flex", flexShrink: 0, fontSize: "1.2rem", height: "2.5rem", justifyContent: "center", width: "2.5rem" }}>⚙</div>
                         <div style={{ minWidth: 0 }}>
-                            <div style={{ color: "#f8fafc", fontSize: "1.15rem", fontWeight: 850 }}>Historical tracking</div>
-                            <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.75rem", marginTop: "0.12rem" }}>
+                            <div style={{ color: "var(--oh-ink, #fff)", fontSize: "1.15rem", fontWeight: 850 }}>Historical tracking</div>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.75rem", marginTop: "0.12rem" }}>
                                 Choose how often Stats should re-check tracked countries, and which countries you want on your long-term graphs.
                             </div>
                         </div>
                     </div>
-                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Close historical tracking" style={{ alignItems: "center", backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", color: "rgba(255,255,255,0.75)", cursor: "pointer", display: "inline-flex", flexShrink: 0, fontSize: "1rem", height: "2.4rem", justifyContent: "center", width: "2.4rem" }}>×</button>
+                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Close historical tracking" style={{ alignItems: "center", backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "10px", color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)", cursor: "pointer", display: "inline-flex", flexShrink: 0, fontSize: "1rem", height: "2.4rem", justifyContent: "center", width: "2.4rem" }}>×</button>
                 </div>
 
                 <div style={{ display: "grid", flex: 1, gap: "1rem", gridTemplateColumns: "minmax(0, 1fr) minmax(280px, 330px)", minHeight: 0, padding: "1rem 1.05rem 1.05rem", ...(isMobile ? { display: "block", overflowY: "auto", padding: "0.85rem" } : null) }}>
                     <div style={{ minHeight: 0, overflow: isMobile ? "visible" : touch ? "auto" : "hidden", display: "flex", flexDirection: "column", gap: "0.9rem" }}>
-                        <div style={{ backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", padding: "0.85rem 0.9rem" }}>
-                            <div style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.78rem", fontWeight: 800, marginBottom: "0.5rem" }}>Auto-refresh cadence</div>
+                        <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "12px", padding: "0.85rem 0.9rem" }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", fontSize: "0.78rem", fontWeight: 800, marginBottom: "0.5rem" }}>Auto-refresh cadence</div>
                             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
                                 {COUNTRY_STATS_TRACKING_INTERVALS.map((months) => {
                                     const active = Number(settings?.intervalMonths) === months;
@@ -1689,10 +1689,10 @@ const HistoricalTrackingModal = ({
                                             className="oh-tap-row"
                                             onClick={() => setIntervalMonths(months)}
                                             style={{
-                                                backgroundColor: active ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.04)",
-                                                border: `1px solid ${active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.08)"}`,
+                                                backgroundColor: active ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                                                border: `1px solid ${active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"}`,
                                                 borderRadius: "999px",
-                                                color: active ? "#f4f4f5" : "rgba(255,255,255,0.68)",
+                                                color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)",
                                                 cursor: "pointer",
                                                 fontSize: "0.72rem",
                                                 fontWeight: active ? 800 : 700,
@@ -1704,17 +1704,17 @@ const HistoricalTrackingModal = ({
                                     );
                                 })}
                             </div>
-                            <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.68rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
-                                Current setting: <span style={{ color: "#dbeafe" }}>{countryStatsTrackingIntervalLabel(settings?.intervalMonths)}</span>.
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.68rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
+                                Current setting: <span style={{ color: "var(--oh-link, #dbeafe)" }}>{countryStatsTrackingIntervalLabel(settings?.intervalMonths)}</span>.
                                 {" "}Your country is automatically kept in the tracked list whenever auto-refresh is enabled.
                             </div>
                         </div>
 
-                        <div style={{ backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", padding: "0.85rem 0.9rem", display: "flex", flexDirection: "column", minHeight: fit ? "auto" : 0, flex: 1 }}>
+                        <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "12px", padding: "0.85rem 0.9rem", display: "flex", flexDirection: "column", minHeight: fit ? "auto" : 0, flex: 1 }}>
                             <div style={{ alignItems: "center", display: "flex", gap: "0.7rem", justifyContent: "space-between" }}>
                                 <div>
-                                    <div style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.78rem", fontWeight: 800 }}>Tracked countries</div>
-                                    <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.66rem", marginTop: "0.1rem" }}>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", fontSize: "0.78rem", fontWeight: 800 }}>Tracked countries</div>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.66rem", marginTop: "0.1rem" }}>
                                         Pick up to {COUNTRY_STATS_TRACKING_MAX_POLITIES} countries to keep historical charts rich without overloading the simulation.
                                     </div>
                                 </div>
@@ -1728,7 +1728,7 @@ const HistoricalTrackingModal = ({
                                 value={search}
                                 onChange={(event) => setSearch(event.target.value)}
                                 placeholder="Search countries..."
-                                style={{ backgroundColor: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "10px", color: "#fff", fontSize: "0.78rem", marginTop: "0.75rem", outline: "none", padding: "0.6rem 0.72rem" }}
+                                style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)", borderRadius: "10px", color: "var(--oh-ink, #fff)", fontSize: "0.78rem", marginTop: "0.75rem", outline: "none", padding: "0.6rem 0.72rem" }}
                             />
 
                             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem", marginTop: "0.7rem" }}>
@@ -1748,16 +1748,16 @@ const HistoricalTrackingModal = ({
                                             <span>{label}</span>
                                             {isPlayer && <span style={{ color: "#fbbf24", fontSize: "0.62rem", fontWeight: 800 }}>you</span>}
                                             {!sheetReady(key) && <span style={{ color: "#fbbf24", fontSize: "0.62rem", fontWeight: 800 }}>baseline needed</span>}
-                                            <span style={{ color: "rgba(255,255,255,0.45)" }}>×</span>
+                                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>×</span>
                                         </button>
                                     );
                                 })}
                                 {!trackedPolities.length && (
-                                    <div style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.68rem" }}>No countries tracked yet.</div>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.68rem" }}>No countries tracked yet.</div>
                                 )}
                             </div>
 
-                            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", display: "flex", flexDirection: "column", gap: "0.35rem", marginTop: "0.85rem", minHeight: 0, overflowY: "auto", paddingTop: "0.85rem", ...(fit ? { flex: "0 0 auto", maxHeight: `calc(${APP_HEIGHT} * 0.5)` } : null) }}>
+                            <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", display: "flex", flexDirection: "column", gap: "0.35rem", marginTop: "0.85rem", minHeight: 0, overflowY: "auto", paddingTop: "0.85rem", ...(fit ? { flex: "0 0 auto", maxHeight: `calc(${APP_HEIGHT} * 0.5)` } : null) }}>
                                 {filteredCandidates.map((row) => {
                                     const key = row.key;
                                     const tracked = trackedPolities.some((item) => lowerText(item) === lowerText(key));
@@ -1773,10 +1773,10 @@ const HistoricalTrackingModal = ({
                                             disabled={maxed}
                                             style={{
                                                 alignItems: "center",
-                                                backgroundColor: tracked ? "rgba(34,197,94,0.08)" : "rgba(255,255,255,0.02)",
-                                                border: `1px solid ${tracked ? "rgba(34,197,94,0.24)" : "rgba(255,255,255,0.07)"}`,
+                                                backgroundColor: tracked ? "rgba(34,197,94,0.08)" : "color-mix(in srgb, var(--oh-ink, #fff) 2%, transparent)",
+                                                border: `1px solid ${tracked ? "rgba(34,197,94,0.24)" : "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"}`,
                                                 borderRadius: "10px",
-                                                color: tracked ? "rgba(255,255,255,0.92)" : maxed ? "rgba(255,255,255,0.32)" : "rgba(255,255,255,0.7)",
+                                                color: tracked ? "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)" : maxed ? "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)",
                                                 cursor: maxed ? "not-allowed" : "pointer",
                                                 display: "flex",
                                                 justifyContent: "space-between",
@@ -1788,19 +1788,19 @@ const HistoricalTrackingModal = ({
                                         >
                                             <span style={{ minWidth: 0 }}>
                                                 <span style={{ alignItems: "center", display: "flex", gap: "0.4rem", minWidth: 0 }}>
-                                                    <span aria-hidden="true" style={{ alignItems: "center", backgroundColor: tracked ? "#22c55e" : "rgba(255,255,255,0.06)", border: `1px solid ${tracked ? "#22c55e" : "rgba(255,255,255,0.12)"}`, borderRadius: "4px", color: "#121214", display: "inline-flex", flexShrink: 0, fontSize: "0.55rem", fontWeight: 1000, height: "14px", justifyContent: "center", width: "14px" }}>{tracked ? "✓" : ""}</span>
+                                                    <span aria-hidden="true" style={{ alignItems: "center", backgroundColor: tracked ? "#22c55e" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: `1px solid ${tracked ? "#22c55e" : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)"}`, borderRadius: "4px", color: "var(--oh-paper, #121214)", display: "inline-flex", flexShrink: 0, fontSize: "0.55rem", fontWeight: 1000, height: "14px", justifyContent: "center", width: "14px" }}>{tracked ? "✓" : ""}</span>
                                                     <span style={{ fontSize: "0.74rem", fontWeight: tracked ? 800 : 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.label}</span>
                                                 </span>
-                                                <span style={{ alignItems: "center", color: "rgba(255,255,255,0.42)", display: "flex", flexWrap: "wrap", fontSize: "0.62rem", gap: "0.35rem", marginTop: "0.18rem" }}>
+                                                <span style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", display: "flex", flexWrap: "wrap", fontSize: "0.62rem", gap: "0.35rem", marginTop: "0.18rem" }}>
                                                     {isPlayer && <span style={{ color: "#fbbf24" }}>your country</span>}
-                                                    {isViewed && !isPlayer && <span style={{ color: "#93c5fd" }}>currently viewed</span>}
+                                                    {isViewed && !isPlayer && <span style={{ color: "var(--oh-link, #93c5fd)" }}>currently viewed</span>}
                                                     {!isPlayer && !isViewed && <span>{cleanText(key)}</span>}
                                                     <span style={{ color: sheetReady(key) ? "#86efac" : "#fbbf24" }}>
                                                         {sheetReady(key) ? "Stats ready" : "baseline needed"}
                                                     </span>
                                                 </span>
                                             </span>
-                                            <span style={{ color: tracked ? "#86efac" : "rgba(255,255,255,0.38)", flexShrink: 0, fontSize: "0.68rem", fontWeight: 800 }}>
+                                            <span style={{ color: tracked ? "#86efac" : "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", flexShrink: 0, fontSize: "0.68rem", fontWeight: 800 }}>
                                                 {tracked ? "Tracked" : maxed ? "Full" : "Add"}
                                             </span>
                                         </button>
@@ -1812,16 +1812,16 @@ const HistoricalTrackingModal = ({
 
                     <aside style={{ display: "flex", flexDirection: "column", gap: "0.9rem", minHeight: 0, ...(isMobile ? { marginTop: "0.9rem" } : fit ? { overflowY: "auto" } : null) }}>
                         <div style={{ backgroundColor: "rgba(59,130,246,0.07)", border: "1px solid rgba(96,165,250,0.14)", borderRadius: "12px", padding: "0.85rem 0.9rem" }}>
-                            <div style={{ color: "#bfdbfe", fontSize: "0.78rem", fontWeight: 850 }}>At a glance</div>
-                            <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.68rem", lineHeight: 1.5, marginTop: "0.3rem" }}>
-                                Auto-refresh is currently set to <span style={{ color: "#dbeafe" }}>{countryStatsTrackingIntervalLabel(settings?.intervalMonths)}</span>.
+                            <div style={{ color: "var(--oh-link, #bfdbfe)", fontSize: "0.78rem", fontWeight: 850 }}>At a glance</div>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.68rem", lineHeight: 1.5, marginTop: "0.3rem" }}>
+                                Auto-refresh is currently set to <span style={{ color: "var(--oh-link, #dbeafe)" }}>{countryStatsTrackingIntervalLabel(settings?.intervalMonths)}</span>.
                                 {" "}When tracked countries become due, Continuum refreshes all initialized sheets in one bounded AI batch after a completed turn. Countries marked <span style={{ color: "#fbbf24" }}>baseline needed</span> begin auto-refreshing after their first normal Stats sheet exists.
                             </div>
                         </div>
                         {trackedPolities.length > 0 && (
-                            <div style={{ backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", padding: "0.85rem 0.9rem" }}>
-                                <div style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.74rem", fontWeight: 800 }}>Refresh status</div>
-                                <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.67rem", lineHeight: 1.5, marginTop: "0.3rem" }}>
+                            <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "12px", padding: "0.85rem 0.9rem" }}>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", fontSize: "0.74rem", fontWeight: 800 }}>Refresh status</div>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.67rem", lineHeight: 1.5, marginTop: "0.3rem" }}>
                                     {refreshRecord.lastBatchDate
                                         ? `The last automatic refresh ran on ${formatGameDateReadable(refreshRecord.lastBatchDate)}.`
                                         : "No automatic refresh has run yet."}
@@ -1834,8 +1834,8 @@ const HistoricalTrackingModal = ({
                                         return (
                                             <div key={key} style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
                                                 <span style={{ minWidth: 0 }}>
-                                                    <span style={{ color: "rgba(255,255,255,0.82)", display: "block", fontSize: "0.7rem", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{label}</span>
-                                                    <span style={{ color: ready ? "rgba(255,255,255,0.42)" : "#fbbf24", display: "block", fontSize: "0.62rem" }}>
+                                                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", display: "block", fontSize: "0.7rem", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{label}</span>
+                                                    <span style={{ color: ready ? "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)" : "#fbbf24", display: "block", fontSize: "0.62rem" }}>
                                                         {!ready
                                                             ? "Needs a first reading"
                                                             : last
@@ -1858,14 +1858,14 @@ const HistoricalTrackingModal = ({
                                         );
                                     })}
                                 </div>
-                                <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.62rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.62rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
                                     A country without a complete Stats sheet is skipped by the automatic refresh. Assessing it opens its Stats, which builds the first sheet with one request.
                                 </div>
                             </div>
                         )}
-                        <div style={{ backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", padding: "0.85rem 0.9rem" }}>
-                            <div style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.74rem", fontWeight: 800 }}>Suggested approach</div>
-                            <ul style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.67rem", lineHeight: 1.5, margin: "0.5rem 0 0", paddingLeft: "1rem" }}>
+                        <div style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "12px", padding: "0.85rem 0.9rem" }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", fontSize: "0.74rem", fontWeight: 800 }}>Suggested approach</div>
+                            <ul style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.67rem", lineHeight: 1.5, margin: "0.5rem 0 0", paddingLeft: "1rem" }}>
                                 <li>Keep your country tracked.</li>
                                 <li>Add nearby powers or direct rivals.</li>
                                 <li>6 months is a good default.</li>
@@ -1873,7 +1873,7 @@ const HistoricalTrackingModal = ({
                             </ul>
                         </div>
                         <div style={{ marginTop: "auto", display: "flex", gap: "0.6rem" }}>
-                            <button type="button" className="oh-tap-row" onClick={onClose} style={{ backgroundColor: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "10px", color: "rgba(255,255,255,0.75)", cursor: "pointer", flex: 1, fontSize: "0.76rem", fontWeight: 800, padding: "0.7rem 0.85rem" }}>Done</button>
+                            <button type="button" className="oh-tap-row" onClick={onClose} style={{ backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "10px", color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)", cursor: "pointer", flex: 1, fontSize: "0.76rem", fontWeight: 800, padding: "0.7rem 0.85rem" }}>Done</button>
                         </div>
                     </aside>
                 </div>
@@ -2006,10 +2006,10 @@ const RankingSection = ({ world, definition, index, playerCode, targetCountry, o
                 <button type="button" className="oh-tap-row" onClick={() => setShowAll(true)} style={{ ...refreshMenuButtonStyle, marginTop: "0.6rem", width: "100%" }}>Show every country</button>
             )}
             {ranking.rows.length === 0 && (
-                <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.76rem", marginTop: "0.8rem" }}>No country has this figure yet.</p>
+                <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.76rem", marginTop: "0.8rem" }}>No country has this figure yet.</p>
             )}
             {ranking.unranked > 0 && (
-                <p style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.7rem", lineHeight: 1.45, marginTop: "0.7rem" }}>
+                <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.7rem", lineHeight: 1.45, marginTop: "0.7rem" }}>
                     {metric.sheet
                         ? "Countries that have not been assessed are left out. Open a country's sheet, or track it, to add it here."
                         : metric.key === "military"
@@ -2791,7 +2791,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
         <div className="oh-country-dossier-scroll" style={{ flex: 1, overflowY: "auto", padding: "0 1rem 1.25rem", scrollbarWidth: "thin" }}>
 
         {!targetCountry && (
-            <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem" }}>
+            <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.85rem" }}>
             No active game. Start one to see national statistics.
             </p>
         )}
@@ -2823,11 +2823,11 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
             </div>
             {headerSheet && (
                 <>
-                <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.76rem", marginTop: "0.15rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: "0.76rem", marginTop: "0.15rem" }}>
                 {[headerSheet.capital, headerSheet.continent].filter(Boolean).join(" · ")}
                 </div>
                 {!publicPoliticalProfile && headerSheet.government && (
-                    <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", marginTop: "0.1rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", marginTop: "0.1rem" }}>
                     {headerSheet.government}
                     </div>
                 )}
@@ -2849,7 +2849,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                         </span>
                     )}
                     {politicalTags.map((tag) => (
-                        <span key={tag} style={{ background: "rgba(255,255,255,0.06)", border: "1px solid var(--oh-grey-border)", borderRadius: "999px", color: "rgba(255,255,255,0.76)", fontSize: "0.61rem", padding: "0.1rem 0.38rem" }}>{tag}</span>
+                        <span key={tag} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "1px solid var(--oh-grey-border)", borderRadius: "999px", color: "color-mix(in srgb, var(--oh-ink, #fff) 76%, transparent)", fontSize: "0.61rem", padding: "0.1rem 0.38rem" }}>{tag}</span>
                     ))}
                 </div>
             )}
@@ -2862,7 +2862,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 title="Refresh options"
                 aria-label="Refresh options"
                 aria-expanded={Boolean(refreshMenuStep)}
-                style={{ background: "none", border: "none", color: refreshMenuStep ? "#2bc1f3" : "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: "1rem", padding: 0 }}
+                style={{ background: "none", border: "none", color: refreshMenuStep ? "#2bc1f3" : "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", cursor: "pointer", fontSize: "1rem", padding: 0 }}
                 >↻</button>
             )}
             </div>
@@ -2902,7 +2902,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 )}
                 {!statSheetDefinition.custom && refreshMenuStep === "confirm" && (
                     <div>
-                    <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.74rem", lineHeight: 1.45 }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: "0.74rem", lineHeight: 1.45 }}>
                     Rebuild this country's baseline from scratch? It uses 1 request and replaces the current numbers.
                     </div>
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", marginTop: "0.45rem" }}>
@@ -2978,7 +2978,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
             )}
 
             {statsView === "economy" && !statSheetDefinitionError && state.status === "loading" && (
-                <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.82rem", marginTop: "1rem" }}>
+                <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.82rem", marginTop: "1rem" }}>
                 {state.waiting ? "Waiting for the world to finish updating, then compiling national statistics…" : "Compiling national statistics…"}
                 </p>
             )}
@@ -3012,7 +3012,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
             )}
 
             {statsView !== "economy" && !worldSnapshot && (
-                <p style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.76rem", marginTop: "1rem" }}>
+                <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.76rem", marginTop: "1rem" }}>
                 Loading diplomatic state…
                 </p>
             )}
@@ -3033,7 +3033,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 {/* National stability */}
                 <div style={{ ...cardStyle, marginTop: "1rem" }}>
                 <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "0.45rem" }}>
-                <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                 ⚠ National stability
                 </span>
                 <span data-no-translate style={{ fontSize: "0.85rem", fontWeight: 800 }}>
@@ -3056,14 +3056,14 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 {/* Population — whole polity plus core/integrated vs other territories. */}
                 <div className="oh-country-stat-category" style={{ ...sectionTitleStyle, margin: undefined }}>👥 Population</div>
                 <div style={cardStyle}>
-                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginBottom: "0.3rem", textTransform: "uppercase" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.62rem", fontWeight: 700, letterSpacing: "0.06em", marginBottom: "0.3rem", textTransform: "uppercase" }}>
                 Total population
                 </div>
                 <div data-no-translate style={{ color: "#e7e7e9", fontSize: "1.15rem", fontWeight: 800 }}>
                 {formatPopulation(totalPopulation)}
                 </div>
                 {populationScope && (
-                    <div data-no-translate style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.68rem", marginTop: "0.2rem" }}>
+                    <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.68rem", marginTop: "0.2rem" }}>
                     {populationScope}
                     </div>
                 )}
@@ -3095,14 +3095,14 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 />
                 </div>
                 {sheet.economy?.currency && (
-                    <div style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.66rem", marginTop: "0.45rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.66rem", marginTop: "0.45rem" }}>
                     Domestic currency: <span data-no-translate>{sheet.economy.currency}</span> · GDP accounting shown in 2026-EUR-equivalent values.
                     </div>
                 )}
 
                 {/* GDP breakdown */}
                 <div style={{ ...cardStyle, marginTop: "0.9rem" }}>
-                <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.74rem", marginBottom: "0.5rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: "0.74rem", marginBottom: "0.5rem" }}>
                 GDP breakdown
                 </div>
                 <div style={{ borderRadius: "999px", display: "flex", height: "10px", overflow: "hidden" }}>
@@ -3112,7 +3112,7 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 </div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem 0.8rem", marginTop: "0.5rem" }}>
                 {breakdown.map((part) => (
-                    <span key={part.key} style={{ alignItems: "center", color: "rgba(255,255,255,0.6)", display: "flex", fontSize: "0.68rem", gap: "0.3rem" }}>
+                    <span key={part.key} style={{ alignItems: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", display: "flex", fontSize: "0.68rem", gap: "0.3rem" }}>
                     <span style={{ backgroundColor: part.color, borderRadius: "2px", height: "7px", width: "7px" }} />
                     {part.label} <span data-no-translate>{part.value}%</span>
                     </span>
@@ -3135,13 +3135,13 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 <button
                 type="button"
                 onClick={() => setAdvancedOpen(true)}
-                style={{ alignItems: "center", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: "11px", color: "#e7e7ea", cursor: "pointer", display: "flex", gap: "0.65rem", justifyContent: "space-between", marginTop: "0.9rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
+                style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: "11px", color: "#e7e7ea", cursor: "pointer", display: "flex", gap: "0.65rem", justifyContent: "space-between", marginTop: "0.9rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
                 >
                     <span style={{ alignItems: "center", display: "flex", gap: "0.6rem", minWidth: 0 }}>
                         <span style={{ alignItems: "center", backgroundColor: "rgba(59,130,246,0.18)", border: "1px solid rgba(147,197,253,0.2)", borderRadius: "8px", display: "inline-flex", flexShrink: 0, fontSize: "1rem", height: "2rem", justifyContent: "center", width: "2rem" }}>📊</span>
                         <span style={{ minWidth: 0 }}>
                             <span style={{ display: "block", fontSize: "0.76rem", fontWeight: 850 }}>Advanced statistics</span>
-                            <span style={{ color: "rgba(255,255,255,0.42)", display: "block", fontSize: "0.62rem", marginTop: "0.08rem" }}>Explore campaign trends and historical snapshots</span>
+                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", display: "block", fontSize: "0.62rem", marginTop: "0.08rem" }}>Explore campaign trends and historical snapshots</span>
                         </span>
                     </span>
                     <span style={{ color: "rgba(147,197,253,0.75)", flexShrink: 0, fontSize: "1rem" }}>›</span>
@@ -3152,31 +3152,31 @@ const StatsPaneBody = ({ active, mapRef, requestedTarget = "", onConsumeTarget }
                 onClick={() => setTrackingOpen(true)}
                 disabled={turnRunning}
                 title={turnRunning ? TURN_RUNNING_NOTE : undefined}
-                style={{ alignItems: "center", background: "rgba(255,255,255,0.045)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "11px", color: "#e7e7e9", cursor: turnRunning ? "not-allowed" : "pointer", display: "flex", opacity: turnRunning ? 0.55 : 1, gap: "0.7rem", justifyContent: "space-between", marginTop: "0.55rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
+                style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "11px", color: "#e7e7e9", cursor: turnRunning ? "not-allowed" : "pointer", display: "flex", opacity: turnRunning ? 0.55 : 1, gap: "0.7rem", justifyContent: "space-between", marginTop: "0.55rem", padding: "0.72rem 0.8rem", textAlign: "left", width: "100%" }}
                 >
                     <span style={{ alignItems: "center", display: "flex", gap: "0.65rem", minWidth: 0 }}>
                         <span style={{ alignItems: "center", backgroundColor: "rgba(234,179,8,0.12)", border: "1px solid rgba(250,204,21,0.22)", borderRadius: "8px", color: "#fbbf24", display: "inline-flex", flexShrink: 0, fontSize: "0.98rem", height: "2rem", justifyContent: "center", width: "2rem" }}>⚙</span>
                         <span style={{ minWidth: 0 }}>
                             <span style={{ display: "block", fontSize: "0.75rem", fontWeight: 850 }}>Historical tracking</span>
-                            <span style={{ color: "rgba(255,255,255,0.46)", display: "block", fontSize: "0.62rem", marginTop: "0.08rem" }}>
+                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", display: "block", fontSize: "0.62rem", marginTop: "0.08rem" }}>
                                 Auto-refresh: {countryStatsTrackingIntervalLabel(trackingSettings.intervalMonths)} · Tracked: {trackingSettings.trackedPolities.length}/{COUNTRY_STATS_TRACKING_MAX_POLITIES}
                             </span>
-                            <span style={{ color: "rgba(255,255,255,0.34)", display: "block", fontSize: "0.6rem", marginTop: "0.14rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", display: "block", fontSize: "0.6rem", marginTop: "0.14rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                                 {trackingPreview}
                             </span>
                             {turnRunning && (
-                                <span style={{ color: "rgba(255,255,255,0.46)", display: "block", fontSize: "0.6rem", marginTop: "0.14rem" }}>
+                                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", display: "block", fontSize: "0.6rem", marginTop: "0.14rem" }}>
                                     {TURN_RUNNING_NOTE}
                                 </span>
                             )}
                         </span>
                     </span>
-                    <span style={{ color: "rgba(255,255,255,0.5)", flexShrink: 0, fontSize: "0.95rem" }}>›</span>
+                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", flexShrink: 0, fontSize: "0.95rem" }}>›</span>
                 </button>
                 </>
             )}
 
-            <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.7rem", marginTop: "1rem" }}>
+            <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.7rem", marginTop: "1rem" }}>
             Click any country on the map to inspect it, or open its card and choose Stats.
             </p>
             </div>

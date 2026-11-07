@@ -52,11 +52,11 @@ const MECHANIC_HINTS = Object.freeze({
 });
 
 const inputStyle = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "10px",
   boxSizing: "border-box",
-  color: "#f8fafc",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "inherit",
   fontSize: "0.78rem",
   outline: "none",
@@ -64,7 +64,7 @@ const inputStyle = {
   width: "100%",
 };
 const labelStyle = {
-  color: "rgba(255,255,255,0.58)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)",
   display: "block",
   fontSize: "0.63rem",
   fontWeight: 700,
@@ -72,13 +72,13 @@ const labelStyle = {
   marginBottom: "0.3rem",
   textTransform: "uppercase",
 };
-const hintStyle = { color: "rgba(255,255,255,0.5)", fontSize: "0.7rem", lineHeight: 1.5 };
+const hintStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", lineHeight: 1.5 };
 const switchStyle = (on) => ({
   alignItems: "center",
-  background: on ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.04)",
-  border: `1px solid ${on ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.08)"}`,
+  background: on ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: `1px solid ${on ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"}`,
   borderRadius: "999px",
-  color: on ? "#f4f4f5" : "rgba(255,255,255,0.55)",
+  color: on ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.7rem",
@@ -112,9 +112,9 @@ const WarOutcomes = ({ value, onChange, touch }) => {
       </div>
       {outcomes.map((rule, index) => (
         <div key={`${rule.winner}|${rule.loser}`} style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.3rem" }}>
-          <span data-no-translate style={{ color: "#f8fafc", fontSize: "0.78rem", fontWeight: 700 }}>{rule.winner}</span>
+          <span data-no-translate style={{ color: "var(--oh-ink, #fff)", fontSize: "0.78rem", fontWeight: 700 }}>{rule.winner}</span>
           <span style={hintStyle}>is meant to beat</span>
-          <span data-no-translate style={{ color: "#f8fafc", fontSize: "0.78rem", fontWeight: 700 }}>{rule.loser}</span>
+          <span data-no-translate style={{ color: "var(--oh-ink, #fff)", fontSize: "0.78rem", fontWeight: 700 }}>{rule.loser}</span>
           <button className="oh-tap" onClick={() => onChange(withoutWarOutcome(value, index))} style={touchFit(switchStyle(false), touch)} type="button">Remove</button>
         </div>
       ))}
@@ -168,8 +168,8 @@ const ScenarioWarSettings = ({ value, gameDate = "", onChange }) => {
   };
 
   return (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
-      <div style={{ color: "rgba(255,255,255,0.94)", fontSize: "0.95rem", fontWeight: 800 }}>How its wars are fought</div>
+    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", fontSize: "0.95rem", fontWeight: 800 }}>How its wars are fought</div>
       <div style={{ ...hintStyle, marginTop: "0.2rem" }}>
         For every war in a game of this scenario. A country may say otherwise for itself: its Military figures in the map editor&apos;s Countries panel. The Save button below saves these with the scenario.
       </div>

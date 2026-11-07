@@ -30,7 +30,7 @@ const noticeStyle = {
   border: "1px solid rgba(96,165,250,0.32)",
   backgroundColor: "var(--oh-ui-overlay-strong, rgba(16,21,24,0.96))",
   boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-  color: "#dbeafe",
+  color: "var(--oh-link, #dbeafe)",
   fontFamily: "sans-serif",
   fontSize: "0.76rem",
   lineHeight: 1.45,
@@ -75,14 +75,14 @@ export const FallbackSwitchNotice = () => {
     <div role="status" aria-live="polite" style={{ ...noticeStyle, flexDirection: "column", ...(isMobile ? phoneNoticeStyle : null) }}>
       {notices.map((notice) => (
         <div key={notice.id} style={{ display: "flex", gap: "0.6rem", alignItems: "flex-start", width: "100%" }}>
-          <span aria-hidden="true" style={{ color: "#93c5fd", fontWeight: 800 }}>↓</span>
+          <span aria-hidden="true" style={{ color: "var(--oh-link, #93c5fd)", fontWeight: 800 }}>↓</span>
           <span style={{ flex: 1 }}>{notice.message}</span>
           <button
             type="button"
             className="oh-tap"
             aria-label="Dismiss"
             onClick={() => setNotices((current) => current.filter((item) => item.id !== notice.id))}
-            style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.5)", cursor: "pointer", fontSize: "0.9rem", lineHeight: 1, padding: 0 }}
+            style={{ background: "transparent", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", cursor: "pointer", fontSize: "0.9rem", lineHeight: 1, padding: 0 }}
           >
             ×
           </button>

@@ -158,7 +158,7 @@ const WebGLWarningPopup = () => (
   >
     <div
       style={{
-        backgroundColor: "#1a1a1e",
+        backgroundColor: "var(--oh-paper, #1a1a1e)",
         border: "1px solid #e94560",
         borderRadius: "12px",
         padding: "2rem",

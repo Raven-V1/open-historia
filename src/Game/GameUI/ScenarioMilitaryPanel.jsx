@@ -23,10 +23,10 @@ import { nextMilitaryRequest, ratedKeys, scenarioMilitaryRoster, wantsMilitaryRa
 
 const buttonStyle = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "999px",
-  color: "rgba(246,246,248,0.92)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.76rem",
@@ -37,7 +37,7 @@ const buttonStyle = {
   padding: "0 0.8rem",
 };
 const primaryButtonStyle = { ...buttonStyle, background: "rgba(43,193,243,0.16)", borderColor: "rgba(43,193,243,0.4)", color: "#e0f6fe" };
-const hintStyle = { color: "rgba(255,255,255,0.5)", fontSize: "0.7rem", lineHeight: 1.5 };
+const hintStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", lineHeight: 1.5 };
 
 //   details           the scenario as the editor holds it; onDetailsChange(saved) after each batch is saved
 //   gameDate          the scenario's date; warSettings, how its wars are fought (its era)
@@ -106,8 +106,8 @@ const ScenarioMilitaryPanel = ({ details, onDetailsChange, gameDate = "", warSet
   };
 
   return (
-    <div data-oh-scenario-military="" style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
-      <div style={{ color: "rgba(255,255,255,0.94)", fontSize: "0.95rem", fontWeight: 800 }}>Countries' military figures</div>
+    <div data-oh-scenario-military="" style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", fontSize: "0.95rem", fontWeight: 800 }}>Countries' military figures</div>
       <div style={{ ...hintStyle, marginTop: "0.2rem" }}>
         The AI rates every country and group of this scenario against the others, twenty to a request: how well its soldiers fight, what they fight with, its army, navy and air force, what its forces have to spend, and its people where you gave none. What it says is saved with the scenario, and every game of it begins from it.
       </div>
@@ -115,7 +115,7 @@ const ScenarioMilitaryPanel = ({ details, onDetailsChange, gameDate = "", warSet
         A country you leave out is rated in the game, against the others, when it is first needed. You can change any country's figures in the map editor.
       </div>
       <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.5rem", marginTop: "0.8rem" }}>
-        <span style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.72rem", fontWeight: 700 }}>
+        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.72rem", fontWeight: 700 }}>
           {`${rated} of ${roster.length} have their figures.`}
         </span>
         {running ? (
@@ -127,7 +127,7 @@ const ScenarioMilitaryPanel = ({ details, onDetailsChange, gameDate = "", warSet
           </>
         )}
       </div>
-      {progress ? <div aria-live="polite" style={{ ...hintStyle, color: "rgba(255,255,255,0.72)", marginTop: "0.5rem" }}>{progress}</div> : null}
+      {progress ? <div aria-live="polite" style={{ ...hintStyle, color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", marginTop: "0.5rem" }}>{progress}</div> : null}
       {message ? <div aria-live="polite" style={{ ...hintStyle, marginTop: "0.5rem" }}>{message}</div> : null}
       {error ? <div role="alert" style={{ ...hintStyle, color: "#fca5a5", marginTop: "0.5rem" }}>{error}</div> : null}
     </div>

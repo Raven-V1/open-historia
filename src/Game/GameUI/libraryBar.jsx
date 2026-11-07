@@ -1090,7 +1090,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
         <div>
           <div
             style={{
-              color: "#fff",
+              color: "var(--oh-ink, #fff)",
               fontSize: "1.32rem",
               fontWeight: 800,
               letterSpacing: "-0.025em",
@@ -1102,7 +1102,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
           </div>
           <div
             style={{
-              color: "rgba(228,228,235,0.78)",
+              color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)",
               display: "-webkit-box",
               fontSize: "0.82rem",
               lineHeight: 1.45,
@@ -1120,7 +1120,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
           {scenario.subtitle && scenario.subtitle !== (scenario.heroSubtitle || scenario.description) && (
             <div
               style={{
-                color: "rgba(255,255,255,0.5)",
+                color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)",
                 display: "-webkit-box",
                 fontSize: "0.75rem",
                 marginBottom: "0.45rem",
@@ -1147,7 +1147,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 borderColor: updating || updateIsPrimary ? "#27a663dd" : `${scenario.accentColor}`,
                 borderRadius: "11px",
                 boxShadow: `0 3px 12px ${scenario.accentColor}33`,
-                color: "#fff",
+                color: "var(--oh-ink, #fff)",
                 cursor: updating ? "progress" : "pointer",
                 fontSize: "0.88rem",
                 fontWeight: 700,
@@ -1169,8 +1169,8 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 onClick={() => onEdit(scenario.id)}
                 style={touchFit({
                   ...themeButtonStyle,
-                  background: "rgba(255,255,255,0.06)",
-                  borderColor: "rgba(255,255,255,0.12)",
+                  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                  borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
                   borderRadius: "9px",
                   flex: 1,
                   fontSize: "0.78rem",
@@ -1186,8 +1186,8 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 onClick={() => onClone(scenario)}
                 style={touchFit({
                   ...themeButtonStyle,
-                  background: "rgba(255,255,255,0.06)",
-                  borderColor: "rgba(255,255,255,0.12)",
+                  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                  borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
                   borderRadius: "9px",
                   flex: 1.3,
                   fontSize: "0.78rem",
@@ -1224,7 +1224,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 <button
                   className="oh-tap-row"
                   onClick={() => onUpdate(scenario)}
-                  style={touchFit({ ...themeButtonStyle, background: "#1d7f4ccc", borderColor: "#27a663dd", color: "#fff", minHeight: "2rem", padding: "0 0.8rem" }, touch)}
+                  style={touchFit({ ...themeButtonStyle, background: "#1d7f4ccc", borderColor: "#27a663dd", color: "var(--oh-ink, #fff)", minHeight: "2rem", padding: "0 0.8rem" }, touch)}
                   type="button"
                 >
                   <ButtonIcon kind="update" /> Update
@@ -1375,7 +1375,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
       >
         <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.4rem", minWidth: 0 }}>
           <span style={{
-                background: active ? `${game.accentColor}cc` : "rgba(10,12,18,0.85)",
+                background: active ? `${game.accentColor}cc` : "color-mix(in srgb, var(--oh-paper, rgb(10,12,18)) 85%, transparent)",
                 border: "1px solid rgba(255,255,255,0.18)",
                 borderRadius: "999px",
                 color: "rgba(248,248,250,0.96)",
@@ -1393,7 +1393,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
           </span>
           <span
             style={{
-              background: "rgba(10,12,18,0.85)",
+              background: "color-mix(in srgb, var(--oh-paper, rgb(10,12,18)) 85%, transparent)",
               border: "1px solid rgba(255,255,255,0.12)",
               borderRadius: "999px",
               color: "rgba(255,255,255,0.85)",
@@ -1422,7 +1422,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
             onClick={() => setCardMenuOpen((open) => !open)}
             style={touchFit({
               ...themeButtonStyle,
-              background: cardMenuOpen ? "rgba(255,255,255,0.18)" : "rgba(10,12,18,0.85)",
+              background: cardMenuOpen ? "rgba(255,255,255,0.18)" : "color-mix(in srgb, var(--oh-paper, rgb(10,12,18)) 85%, transparent)",
               cursor: busy ? "progress" : "pointer",
               fontSize: "1.05rem",
               lineHeight: 1,
@@ -1511,28 +1511,28 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
         }}
       >
         <div>
-          <div style={{ color: "#fff", fontSize: isMobile ? "0.98rem" : "1.08rem", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.25, marginBottom: "0.45rem", overflowWrap: "break-word" }}>
+          <div style={{ color: "var(--oh-ink, #fff)", fontSize: isMobile ? "0.98rem" : "1.08rem", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.25, marginBottom: "0.45rem", overflowWrap: "break-word" }}>
             {game.name}
           </div>
           <div style={{ display: "grid", gap: "0.35rem", gridTemplateColumns: "1fr 1fr", marginBottom: "0.55rem" }}>
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", gridColumn: "1 / -1", minWidth: 0, padding: "0.35rem 0.55rem" }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Country"}</div>
-              <div style={{ color: "#fff", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={game.country || undefined}>{game.country || "No player country"}</div>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "10px", gridColumn: "1 / -1", minWidth: 0, padding: "0.35rem 0.55rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Country"}</div>
+              <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={game.country || undefined}>{game.country || "No player country"}</div>
             </div>
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", minWidth: 0, padding: "0.35rem 0.55rem" }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Date"}</div>
-              <div style={{ color: "#fff", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "10px", minWidth: 0, padding: "0.35rem 0.55rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Date"}</div>
+              <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {formatGameDateShort(game.currentDate, getStoredLanguage()) || game.currentDate || "No date"}
               </div>
             </div>
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", minWidth: 0, padding: "0.35rem 0.55rem" }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Round"}</div>
-              <div style={{ color: "#fff", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{game.round || 1}</div>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "10px", minWidth: 0, padding: "0.35rem 0.55rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Round"}</div>
+              <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{game.round || 1}</div>
             </div>
           </div>
           <div
             style={{
-              color: "rgba(228,228,235,0.78)",
+              color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)",
               display: "-webkit-box",
               fontSize: "0.8rem",
               lineHeight: 1.4,
@@ -1549,9 +1549,9 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
         <div>
           <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.6rem" }}>
             {[["Actions", game.pendingActions], ["Events", game.eventCount]].map(([label, count]) => (
-              <span key={label} style={{ alignItems: "center", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "rgba(255,255,255,0.6)", display: "inline-flex", fontSize: "0.72rem", gap: "0.35rem", padding: "0.2rem 0.5rem" }}>
+              <span key={label} style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", display: "inline-flex", fontSize: "0.72rem", gap: "0.35rem", padding: "0.2rem 0.5rem" }}>
                 {label}
-                <span style={{ color: "#fff", fontWeight: 700 }}>{count ?? 0}</span>
+                <span style={{ color: "var(--oh-ink, #fff)", fontWeight: 700 }}>{count ?? 0}</span>
               </span>
             ))}
           </div>
@@ -1561,11 +1561,11 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
               onClick={() => onActivate(game.id)}
               style={touchFit({
                 ...themeButtonStyle,
-                background: active ? "rgba(255,255,255,0.06)" : (game.accentColor || DEFAULT_ACCENT_COLOR),
-                borderColor: active ? "rgba(255,255,255,0.22)" : (game.accentColor || DEFAULT_ACCENT_COLOR),
+                background: active ? "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)" : (game.accentColor || DEFAULT_ACCENT_COLOR),
+                borderColor: active ? "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)" : (game.accentColor || DEFAULT_ACCENT_COLOR),
                 borderRadius: "11px",
                 boxShadow: active ? "none" : `0 3px 12px ${(game.accentColor || DEFAULT_ACCENT_COLOR)}33`,
-                color: "#fff",
+                color: "var(--oh-ink, #fff)",
                 fontSize: "0.88rem",
                 fontWeight: 700,
                 minHeight: "2.35rem",
@@ -1582,7 +1582,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
                   onClick={() => onArchive(game)}
                   style={touchFit({
                     ...themeButtonStyle,
-                    background: "rgba(255,255,255,0.06)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
                     flex: 1,
                     fontSize: "0.78rem",
                     minHeight: "2rem",

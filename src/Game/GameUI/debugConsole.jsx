@@ -64,7 +64,7 @@ const buttonStyle = {
     borderRadius: "8px",
     border: `1px solid ${COLORS.border}`,
     backgroundColor: "var(--oh-ui-raised, #262628)",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     fontSize: "0.72rem",
     fontWeight: 700,
     cursor: "pointer",
@@ -78,7 +78,7 @@ const selectStyle = {
     border: `1px solid ${COLORS.border}`,
     borderRadius: "6px",
     padding: "0.3rem 0.5rem",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     fontSize: "0.72rem",
     fontWeight: 700,
 };
@@ -98,7 +98,7 @@ const Card = ({ label, value, sub, accent }) => (
         backgroundColor: accent ? "var(--oh-ui-active, rgba(59,130,246,0.06))" : COLORS.raised,
     }}>
         <div style={{ fontSize: "0.6rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: COLORS.muted, marginBottom: "0.25rem" }}>{label}</div>
-        <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "white", lineHeight: 1 }}>{value}</div>
+        <div style={{ fontSize: "1.2rem", fontWeight: 800, color: "var(--oh-ink, #fff)", lineHeight: 1 }}>{value}</div>
         {sub && <div style={{ fontSize: "0.66rem", color: COLORS.muted, marginTop: "0.3rem" }}>{sub}</div>}
     </div>
 );
@@ -109,7 +109,7 @@ const Bar = ({ label, value, max, right, compact = false }) => (
     <div style={{ display: "flex", alignItems: "center", gap: "0.7rem", padding: "0.2rem 0", ...(compact ? { flexWrap: "wrap", rowGap: "0.2rem" } : null) }}>
         <div style={{ width: compact ? "100%" : "10rem", flexShrink: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", fontSize: "0.72rem", fontWeight: 700, color: COLORS.text }} title={label}>{label || "—"}</div>
         <div style={{ flex: 1, height: "1rem", backgroundColor: COLORS.bg, borderRadius: "4px", overflow: "hidden", border: `1px solid ${COLORS.border}` }}>
-            <div style={{ height: "100%", background: "rgba(231,231,234,0.65)", width: max > 0 ? `${Math.max(2, Math.round((value / max) * 100))}%` : "0%" }} />
+            <div style={{ height: "100%", background: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", width: max > 0 ? `${Math.max(2, Math.round((value / max) * 100))}%` : "0%" }} />
         </div>
         <div style={{ width: compact ? "auto" : "7rem", flexShrink: 0, textAlign: "right", fontSize: "0.72rem", fontWeight: 700, color: COLORS.muted, fontFamily: MONO }}>{right ?? fmtInt(value)}</div>
     </div>
@@ -315,7 +315,7 @@ const GenerationDetail = ({ record, onRate }) => {
     return (
         <div style={{ padding: "0.9rem", overflow: "auto", height: "100%", boxSizing: "border-box" }}>
             <div style={{ marginBottom: "0.7rem" }}>
-                <div style={{ fontSize: "0.9rem", fontWeight: 800, color: "white" }}>{record.taskKey || "direct"}</div>
+                <div style={{ fontSize: "0.9rem", fontWeight: 800, color: "var(--oh-ink, #fff)" }}>{record.taskKey || "direct"}</div>
                 <div style={{ fontSize: "0.66rem", color: COLORS.muted, fontFamily: MONO }}>
                     {fmtTime(record.startedAt)} · {record.provider || "?"} · {record.model || "?"} · attempt {record.attempt}/{record.maxAttempts}
                     {record.batch ? " · batch" : ""}
@@ -637,7 +637,7 @@ export const DebugConsole = ({ open, onClose }) => {
             <div style={{ width: "100%", height: "100%", maxWidth: "1600px", backgroundColor: COLORS.bg, border: `2px solid ${COLORS.border}`, borderRadius: "14px", boxShadow: "0 0 80px rgba(0,0,0,0.9)", display: "flex", flexDirection: "column", overflow: "hidden", ...(isMobile ? { border: "none", borderRadius: 0, boxShadow: "none", boxSizing: "border-box", paddingBottom: SAFE_BOTTOM, paddingLeft: SAFE_LEFT, paddingRight: SAFE_RIGHT, paddingTop: SAFE_TOP } : null) }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "0.6rem 1rem", backgroundColor: COLORS.raised, borderBottom: `2px solid ${COLORS.border}`, flexShrink: 0, ...(isMobile ? { flexWrap: "wrap", gap: "0.4rem", padding: "0.5rem 0.75rem" } : null) }}>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.7rem" }}>
-                        <span style={{ fontSize: "0.8rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "white" }}>AI debug console</span>
+                        <span style={{ fontSize: "0.8rem", fontWeight: 800, textTransform: "uppercase", letterSpacing: "0.1em", color: "var(--oh-ink, #fff)" }}>AI debug console</span>
                         <span style={{ fontSize: "0.66rem", fontWeight: 700, color: COLORS.muted, backgroundColor: COLORS.bg, border: `1px solid ${COLORS.border}`, padding: "0.1rem 0.5rem", borderRadius: "6px", fontFamily: MONO }}>
                             {records.length} generation{records.length === 1 ? "" : "s"}
                         </span>

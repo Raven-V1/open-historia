@@ -39,18 +39,18 @@ import {
 import { useHubMusic } from "../../runtime/useHubMusic.js";
 
 const cardStyle = {
-  background: "rgba(255,255,255,0.03)",
-  border: "1px solid rgba(255,255,255,0.08)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
   borderRadius: "18px",
   marginBottom: "0.95rem",
   padding: "0.9rem",
 };
 const buttonStyle = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.12)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
   borderRadius: "9px",
-  color: "rgba(246,246,248,0.92)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.76rem",
@@ -62,31 +62,31 @@ const buttonStyle = {
 };
 const iconButtonStyle = { ...buttonStyle, flex: "0 0 auto", minWidth: "2rem", padding: 0 };
 // A little brighter than its neighbours, and still grey: no blue buttons here.
-const primaryButtonStyle = { ...buttonStyle, background: "rgba(255,255,255,0.14)", borderColor: "rgba(255,255,255,0.3)", color: "#ffffff" };
+const primaryButtonStyle = { ...buttonStyle, background: "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)", color: "var(--oh-ink, #fff)" };
 const inputStyle = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "10px",
   boxSizing: "border-box",
-  color: "#f8fafc",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "inherit",
   fontSize: "0.8rem",
   outline: "none",
   padding: "0.6rem 0.66rem",
   width: "100%",
 };
-const quietStyle = { color: "rgba(255,255,255,0.58)", fontSize: "0.76rem", lineHeight: 1.5 };
+const quietStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.76rem", lineHeight: 1.5 };
 const rowStyle = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.03)",
-  border: "1px solid rgba(255,255,255,0.07)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
   borderRadius: "12px",
   display: "flex",
   gap: "0.5rem",
   padding: "0.45rem 0.55rem",
 };
 const trackNameStyle = { fontSize: "0.84rem", fontWeight: 700, overflowWrap: "anywhere" };
-const trackDetailStyle = { color: "rgba(255,255,255,0.58)", fontSize: "0.72rem", overflowWrap: "anywhere" };
+const trackDetailStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.72rem", overflowWrap: "anywhere" };
 
 // On a touch screen .oh-tap / .oh-tap-row (styles.css) make a control a
 // finger's size; the inline minimum would hold it smaller.
@@ -267,7 +267,7 @@ const TrackPicker = ({ situation, list, full, preview, onAdd, onClose, touch }) 
   const narrowed = HUB_MUSIC_TAG_KINDS.some((kind) => tags[kind]);
 
   return (
-    <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", display: "grid", gap: "0.45rem", marginTop: "0.7rem", paddingTop: "0.7rem" }}>
+    <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "grid", gap: "0.45rem", marginTop: "0.7rem", paddingTop: "0.7rem" }}>
       <div style={{ alignItems: "center", display: "flex", gap: "0.45rem" }}>
         <input
           aria-label="Search by name or composer"
@@ -312,7 +312,7 @@ const TrackPicker = ({ situation, list, full, preview, onAdd, onClose, touch }) 
                 aria-pressed={playing}
                 className="oh-tap"
                 onClick={() => preview.toggle(track)}
-                style={touchFit(playing ? { ...iconButtonStyle, background: "rgba(255,255,255,0.2)", borderColor: "rgba(255,255,255,0.4)", color: "#ffffff" } : iconButtonStyle, touch)}
+                style={touchFit(playing ? { ...iconButtonStyle, background: "color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", color: "var(--oh-ink, #fff)" } : iconButtonStyle, touch)}
                 title={playing ? "Stop the preview" : "Play a preview"}
                 type="button"
               >
@@ -370,7 +370,7 @@ const ScenarioMusicPanel = ({ music, onChange }) => {
   return (
     <>
       <div style={cardStyle}>
-        <div style={{ color: "rgba(255,255,255,0.92)", fontSize: "0.92rem", fontWeight: 800, marginBottom: "0.2rem" }}>{"Music"}</div>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)", fontSize: "0.92rem", fontWeight: 800, marginBottom: "0.2rem" }}>{"Music"}</div>
         <div style={quietStyle}>{"Scenario music comes from the community hub's list, which only its contributors can add to, so that every track is one the hub may share."}</div>
         <div style={{ ...quietStyle, marginTop: "0.3rem" }}>{"A situation with no tracks plays the game's own music."}</div>
         <div style={{ ...quietStyle, marginTop: "0.3rem" }}>{"A situation's volume is a share of the volume the player set, for whatever plays there."}</div>
@@ -384,11 +384,11 @@ const ScenarioMusicPanel = ({ music, onChange }) => {
         return (
           <div key={situation} style={cardStyle}>
             <div style={{ alignItems: "baseline", display: "flex", gap: "0.6rem", justifyContent: "space-between", marginBottom: "0.5rem" }}>
-              <div style={{ color: "rgba(255,255,255,0.92)", fontSize: "0.88rem", fontWeight: 800 }}>{MUSIC_SITUATION_LABELS[situation]}</div>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)", fontSize: "0.88rem", fontWeight: 800 }}>{MUSIC_SITUATION_LABELS[situation]}</div>
               <div data-no-translate style={trackDetailStyle}>{`${entries.length} / ${MAX_SCENARIO_MUSIC_TRACKS}`}</div>
             </div>
             <label style={{ alignItems: "center", display: "flex", gap: "0.6rem", justifyContent: "space-between", marginBottom: "0.55rem" }}>
-              <span style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.8rem" }}>{"Volume"}</span>
+              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.8rem" }}>{"Volume"}</span>
               <span style={{ alignItems: "center", display: "flex", gap: "0.55rem" }}>
                 <input
                   aria-label="Volume"

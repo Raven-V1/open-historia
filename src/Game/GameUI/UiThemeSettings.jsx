@@ -14,7 +14,7 @@ import {
 import "./uiThemeSettings.css";
 
 // Default restores each panel's own authored colors. This is only a preview swatch.
-const ORIGINAL_PREVIEW = { background: "#131315", surface: "#232327", accent: "#4B91FF" };
+const ORIGINAL_PREVIEW = { background: "var(--oh-paper, #131315)", surface: "var(--oh-paper, #232327)", accent: "#4B91FF" };
 
 const FIELDS = [
   { key: "background", label: "Background" },
