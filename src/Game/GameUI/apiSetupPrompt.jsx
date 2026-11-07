@@ -1,5 +1,6 @@
 import React, { useId, useMemo, useState } from "react";
 import UiIcon from "./carbonIcons.jsx";
+import { CarbonModal } from "./carbonControls.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -211,55 +212,15 @@ export const ApiSetupPrompt = ({ providerLabel = "the selected provider", missin
   };
 
   return (
-    <div
-      role="dialog"
-      aria-modal="true"
-      aria-label="Set up your AI provider"
-      style={{
-        alignItems: "center",
-        background: "rgba(0,0,0,0.42)",
-        backdropFilter: "blur(6px)",
-        WebkitBackdropFilter: "blur(6px)",
-        display: "flex",
-        inset: 0,
-        justifyContent: "center",
-        // Clear of a notch and a home indicator (the insets are 0 elsewhere).
-        padding: `calc(1rem + ${SAFE_TOP}) calc(1rem + ${SAFE_RIGHT}) calc(1rem + ${SAFE_BOTTOM}) calc(1rem + ${SAFE_LEFT})`,
-        position: "fixed",
-        zIndex: 10040,
-      }}
+    <CarbonModal
+      open
+      passiveModal
+      size="sm"
+      className="oh-api-modal"
+      modalHeading="Set up your AI provider"
+      onRequestClose={onDismiss}
+      preventCloseOnClickOutside
     >
-      <div
-        style={{
-          background: "var(--oh-ui-overlay-strong, rgba(32,32,35,0.965))",
-          border: "1px solid var(--oh-hud-border)",
-          borderRadius: "16px",
-          boxShadow: "var(--oh-hud-shadow)",
-          color: "var(--oh-ink, #fff)",
-          fontFamily: "sans-serif",
-          maxHeight: `calc(${APP_HEIGHT} - 2rem - ${SAFE_TOP} - ${SAFE_BOTTOM})`,
-          overflowY: "auto",
-          padding: "1.35rem 1.4rem 1.2rem",
-          width: "min(34rem, 100%)",
-        }}
-      >
-        {phone ? (
-          <div style={{ alignItems: "flex-start", display: "flex", gap: "0.75rem", justifyContent: "space-between" }}>
-            <div style={{ fontSize: "1.05rem", fontWeight: 900 }}>Set up your AI provider</div>
-            <button
-              type="button"
-              className="oh-tap"
-              onClick={onDismiss}
-              aria-label="Not now"
-              title="Not now"
-              style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", display: "flex", flexShrink: 0, fontSize: "1.1rem", lineHeight: 1, margin: "-0.6rem -0.7rem 0 0", padding: "0.15rem 0.3rem" }}
-            >
-              <UiIcon name="close" size={16} />
-            </button>
-          </div>
-        ) : (
-          <div style={{ fontSize: "1.05rem", fontWeight: 900 }}>Set up your AI provider</div>
-        )}
         <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 64%, transparent)", fontSize: "0.8rem", lineHeight: 1.55, marginTop: "0.5rem" }}>
           Open Historia writes every turn, advisor reply and diplomatic message with an AI model, and {providerLabel} has {missing} missing.
           Until it is set, time skips fall back to canned events and the advisor cannot answer. Paste your details below and you are ready to play.
@@ -452,8 +413,7 @@ export const ApiSetupPrompt = ({ providerLabel = "the selected provider", missin
             Save and play
           </button>
         </div>
-      </div>
-    </div>
+    </CarbonModal>
   );
 };
 

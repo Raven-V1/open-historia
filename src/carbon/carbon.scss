@@ -265,3 +265,8 @@
 .cds--list-box__menu {
   overflow-x: hidden;
 }
+
+// Above the game's own layers (the HUD, the panels), as its other dialogs are.
+.cds--modal {
+  z-index: 10040;
+}

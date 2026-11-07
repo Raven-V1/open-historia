@@ -739,6 +739,9 @@ const EyeOffIcon = ({ size = 18 }) => (
   </svg>
 );
 
+// Where this build's source is published (the AGPL requires it to be offered).
+const SOURCE_CODE_URL = "https://github.com/Raven-V1/open-historia";
+
 const SettingsInput = ({
     label,
     value,
@@ -2720,11 +2723,11 @@ const PrivacySection = ({ discordPresenceOn, onToggleDiscordPresence }) => {
 };
 
 const SETTINGS_SECTIONS = [
-    { key: "general", label: "General", icon: "◫", description: "Language, display, accessibility, sound and privacy" },
+    { key: "general", label: "General", icon: <UiIcon name="columns" size={16} />, description: "Language, display, accessibility, sound and privacy" },
     { key: "sound", label: "Sound", icon: <UiIcon name="music" size={16} />, description: "The game's music and sound effects." },
-    { key: "map", label: "Map", icon: "◇", description: "Basemap, labels, globe and camera" },
+    { key: "map", label: "Map", icon: <UiIcon name="map" size={16} />, description: "Basemap, labels, globe and camera" },
     { key: "ai", label: "AI", icon: <UiIcon name="ai" size={16} />, description: "Models, backups, keys and reasoning" },
-    { key: "advanced", label: "Advanced", icon: "⌘", description: "Per-task models and expert controls" },
+    { key: "advanced", label: "Advanced", icon: <UiIcon name="adjust" size={16} />, description: "Per-task models and expert controls" },
 ];
 
 // The small menu becoming the workspace. `fromRect` is the small menu's card
@@ -3412,7 +3415,7 @@ const SettingsMenu = ({
             <QuickMenuPanel title="Game" description="Campaign identity and management actions.">
                 <ContextSummaryCard context={context} />
                 {typeof onOpenGameManagement === "function" && (
-                    <QuickAction title="Game Management" description="Switch, duplicate, import or manage campaigns" symbol="▦" onClick={() => runAndClose(onOpenGameManagement)} />
+                    <QuickAction title="Game Management" description="Switch, duplicate, import or manage campaigns" symbol={<UiIcon name="grid" size={18} />} onClick={() => runAndClose(onOpenGameManagement)} />
                 )}
             </QuickMenuPanel>
         );
@@ -3420,11 +3423,11 @@ const SettingsMenu = ({
         panelContent = (
             <QuickMenuPanel title="Settings" description="Jump straight into the options category you want.">
                 <div style={grid}>
-                    <QuickAction title="General" description="Language, display, accessibility, sound and privacy" symbol="◫" onClick={() => openSettingsSection("general")} />
+                    <QuickAction title="General" description="Language, display, accessibility, sound and privacy" symbol={<UiIcon name="columns" size={18} />} onClick={() => openSettingsSection("general")} />
                     <QuickAction title="Sound" description="The game's music and sound effects." symbol={<UiIcon name="music" size={16} />} onClick={() => openSettingsSection("sound")} />
-                    <QuickAction title="Map" description="Basemap, labels, globe and camera" symbol="◇" onClick={() => openSettingsSection("map")} />
+                    <QuickAction title="Map" description="Basemap, labels, globe and camera" symbol={<UiIcon name="map" size={18} />} onClick={() => openSettingsSection("map")} />
                     <QuickAction title="AI" description="Models, backups, keys and reasoning" symbol={<UiIcon name="ai" size={16} />} onClick={() => openSettingsSection("ai")} />
-                    <QuickAction title="Advanced" description="Per-task models and expert controls" symbol="⌘" onClick={() => openSettingsSection("advanced")} />
+                    <QuickAction title="Advanced" description="Per-task models and expert controls" symbol={<UiIcon name="adjust" size={18} />} onClick={() => openSettingsSection("advanced")} />
                 </div>
             </QuickMenuPanel>
         );
@@ -3432,16 +3435,17 @@ const SettingsMenu = ({
         panelContent = (
             <QuickMenuPanel title="Help" description="Guides, bug reporting and community links.">
                 <div style={grid}>
-                    <QuickAction title="Wiki" description="How-to pages and setup help" symbol="?" href="/wiki/" />
+                    <QuickAction title="Wiki" description="How-to pages and setup help" symbol={<UiIcon name="help" size={18} />} href="/wiki/" />
                     <QuickAction
                         title={updateCheckResult.status === "checking" ? "Checking for updates…" : "Check for updates"}
                         description={appUpdateCheckDescription(updateCheckResult)}
-                        symbol="↻"
+                        symbol={<UiIcon name="renew" size={18} />}
                         tone="blue"
                         onClick={checkForUpdatesNow}
                     />
-                    {reportBugUrl && <QuickAction title="Report a Bug" description="Open the issue/report page" symbol="!" tone="amber" href={reportBugUrl} />}
-                    <QuickAction title="Privacy" description="What the game keeps and sends" symbol="§" href={PRIVACY_HREF} />
+                    {reportBugUrl && <QuickAction title="Report a Bug" description="Open the issue/report page" symbol={<UiIcon name="alert" size={18} />} tone="amber" href={reportBugUrl} />}
+                    <QuickAction title="Source code" description="The AGPL source of this build, for anyone to read" symbol={<UiIcon name="code" size={18} />} href={SOURCE_CODE_URL} />
+                    <QuickAction title="Privacy" description="What the game keeps and sends" symbol={<UiIcon name="policy" size={18} />} href={PRIVACY_HREF} />
                 </div>
                 <div style={{ alignItems: isMobile ? "stretch" : "center", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.55rem", justifyContent: "space-between" }}>
                     <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 24%, transparent)", fontSize: "0.6rem" }}>Community</span>
@@ -3454,15 +3458,15 @@ const SettingsMenu = ({
             <QuickMenuPanel title="Tools" description="High-frequency in-game tools should stay one click away.">
                 <div style={grid}>
                     {typeof onOpenCheats === "function" && (
-                        <QuickAction title="Cheats" description="Game master tools and world editing" symbol="⌁" tone="slate" onClick={() => runAndClose(onOpenCheats)} />
+                        <QuickAction title="Cheats" description="Game master tools and world editing" symbol={<UiIcon name="terminal" size={18} />} tone="slate" onClick={() => runAndClose(onOpenCheats)} />
                     )}
                     {typeof onOpenEvents === "function" && (
-                        <QuickAction title="Events / Timeline" description="Review the current turn and world history" symbol="◷" tone="blue" onClick={() => runAndClose(onOpenEvents)} />
+                        <QuickAction title="Events / Timeline" description="Review the current turn and world history" symbol={<UiIcon name="time" size={18} />} tone="blue" onClick={() => runAndClose(onOpenEvents)} />
                     )}
                     {/* This branch's own tool, in the same row: every AI call with its prompt,
                         answer and cost. Continuum has no counterpart. */}
                     {typeof onOpenDebugConsole === "function" && (
-                        <QuickAction title="AI debug console" description="Every AI call, its prompt, answer and cost" symbol="◈" onClick={() => runAndClose(onOpenDebugConsole)} />
+                        <QuickAction title="AI debug console" description="Every AI call, its prompt, answer and cost" symbol={<UiIcon name="debug" size={18} />} onClick={() => runAndClose(onOpenDebugConsole)} />
                     )}
                     {/* The last slot of the row is the community's: two half-width
                         tiles, each nothing but the brand's own mark on the brand's own

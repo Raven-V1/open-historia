@@ -54,6 +54,25 @@ import { RELEASES } from "./notesReleases.js";
 // make UPDATES, newest first by date.
 const NEW_UPDATES = [
   {
+    // This fork's redesign: the interface follows IBM's Carbon Design System (Carbon Dark and Carbon Light as themes of the
+    // existing theme system), icons replace the emoji, and Settings → Help links to the source.
+    id: "2026-11-carbon-look",
+    kind: "minor",
+    date: "2026-11-07",
+    banners: [
+      {
+        title: "A new look, in dark or light",
+        items: [
+          "The whole interface now follows IBM's Carbon Design System: flat panels, square corners and IBM Plex type.",
+          "Switch between Carbon Dark and Carbon Light with the button in the main menu, or in Settings under Interface appearance.",
+          "Switches, drop-downs, text fields and the language picker are Carbon's, and icons replace the emoji in the panels.",
+          "The original look and the other colour themes are still in Settings, and the map and the game itself are unchanged.",
+          "Settings → Help now links to the source code of this build.",
+        ],
+      },
+    ],
+  },
+  {
     // MapLibre 6.16 with the game's own changes (Open-Historia/maplibre-gl-js, OPEN-HISTORIA.md): placement paced, sources
     // sharing their tile walks, clipping masks kept, tiles stored compactly. Measured on the production builds with the CPU
     // slowed 6x: panning 24 to 46 fps with terrain, 29 to 49 without; memory 3.1 GB to 1.9 GB. The land mask waits until the

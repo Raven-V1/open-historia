@@ -67,6 +67,18 @@ import FaceDissatisfied from "@carbon/icons-react/es/FaceDissatisfied.js";
 import Fire from "@carbon/icons-react/es/Fire.js";
 import FaceDizzy from "@carbon/icons-react/es/FaceDizzy.js";
 import StarFilled from "@carbon/icons-react/es/StarFilled.js";
+import Help from "@carbon/icons-react/es/Help.js";
+import Renew from "@carbon/icons-react/es/Renew.js";
+import WarningAlt from "@carbon/icons-react/es/WarningAlt.js";
+import Policy from "@carbon/icons-react/es/Policy.js";
+import Code from "@carbon/icons-react/es/Code.js";
+import Terminal from "@carbon/icons-react/es/Terminal.js";
+import Events from "@carbon/icons-react/es/Events.js";
+import Debug from "@carbon/icons-react/es/Debug.js";
+import SettingsAdjust from "@carbon/icons-react/es/SettingsAdjust.js";
+import Grid from "@carbon/icons-react/es/Grid.js";
+import Table from "@carbon/icons-react/es/Table.js";
+import ColumnDependency from "@carbon/icons-react/es/ColumnDependency.js";
 
 const ICONS = {
   add: Add, anchor: Anchor, arrow: ArrowUpRight, building: Building, check: Checkmark, dot: CircleFilled,
@@ -112,6 +124,18 @@ const ICONS = {
   fire: Fire,
   faceDizzy: FaceDizzy,
   star: StarFilled,
+  help: Help,
+  renew: Renew,
+  alert: WarningAlt,
+  policy: Policy,
+  code: Code,
+  terminal: Terminal,
+  events: Events,
+  debug: Debug,
+  adjust: SettingsAdjust,
+  grid: Grid,
+  table: Table,
+  columns: ColumnDependency,
 };
 
 // A decorative icon that sits in a line of text. `name` is a key of ICONS.
