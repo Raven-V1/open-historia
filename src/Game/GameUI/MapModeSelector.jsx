@@ -1,5 +1,6 @@
 /*! Open Historia — Map Mode Selector & Legend © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { memo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { MAP_SETTING_KEYS, setMapSettingValue, useMapSettingValue } from "../../runtime/mapSettings.js";
 import { DIPLO_COLORS } from "../../runtime/diplomaticStance.js";
 import { SAFE_BOTTOM } from "../../runtime/mobileUi.js";
@@ -111,7 +112,7 @@ export const MapModeSelector = memo(function MapModeSelector({ dockStyle = DEFAU
                 lineHeight: 1,
               }}
             >
-              ✕
+              <UiIcon name="close" size={16} />
             </button>
           </div>
           {LEGEND_ITEMS.map((item) => (

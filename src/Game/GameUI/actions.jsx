@@ -1,5 +1,6 @@
 /*! Open Historia — portions (panel sizing on small screens) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, useCanHover, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { isComposerSendKey } from "../../runtime/composerKeys.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
@@ -321,7 +322,7 @@ const SuggestionCard = ({ topic, onQueue, queuedIds }) => (
             }}
             >
             <div style={{ fontSize: "0.76rem", fontWeight: 700 }}>
-            {isQueued ? `✓ Queued — ${action.title}` : action.title}
+            {isQueued ? <><UiIcon name="check" size={14} /> {`Queued — ${action.title}`}</> : action.title}
             </div>
             <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.74rem", lineHeight: "1.45", marginTop: "0.18rem" }}>
             {action.text}

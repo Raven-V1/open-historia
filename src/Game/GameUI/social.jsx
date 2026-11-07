@@ -23,6 +23,7 @@
 // dock as wide as the screen.
 
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 
 import { getNationFlags } from "../../runtime/assets.js";
 import { isComposerSendKey } from "../../runtime/composerKeys.js";
@@ -326,7 +327,7 @@ const PollCard = ({ poll }) => {
               <div aria-hidden="true" style={{ background: won ? "rgba(43,193,243,0.28)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", bottom: 0, left: 0, position: "absolute", top: 0, width: `${share}%` }} />
               <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between", padding: "0.42rem 0.6rem", position: "relative" }}>
                 <span data-no-translate style={{ color: INK, fontSize: "0.8rem", fontWeight: won ? 800 : 600, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  {won ? `✓ ${choice}` : choice}
+                  {won ? <><UiIcon name="check" size={14} /> {choice}</> : choice}
                 </span>
                 <span data-no-translate style={{ color: won ? ACCENT : INK_SOFT, flexShrink: 0, fontSize: "0.78rem", fontWeight: 800 }}>{`${share}%`}</span>
               </div>

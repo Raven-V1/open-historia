@@ -1,5 +1,6 @@
 /*! Open Historia — portions (mobile country/date row) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { memo, useEffect, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { JSON_URLS, getNationFlags } from "../../runtime/assets.js";
 import { isPolityLandless, readWorldState } from "../../runtime/gameState.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
@@ -46,7 +47,7 @@ const FallbackBadge = ({ label }) => (
         width: "100%",
     }}
     >
-    🏳️
+    <UiIcon name="flag" size={24} />
     </div>
 );
 

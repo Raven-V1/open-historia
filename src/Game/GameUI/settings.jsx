@@ -1,5 +1,6 @@
 /*! Open Historia — portions (reasoning toggle + small-screen menu) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { lazy, Suspense, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
 import { createPortal } from "react-dom";
@@ -1313,7 +1314,7 @@ const FallbackListSection = () => {
             <button type="button" className="oh-tap" onClick={() => moveEntry(entry.id, index + 1)} disabled={index === entries.length - 1} aria-label="Move down" title="Move down" style={{ ...rowButtonStyle, opacity: index === entries.length - 1 ? 0.4 : 1 }}>↓</button>
             <button type="button" className="oh-tap-row" onClick={() => setEditingId(editingId === entry.id ? null : entry.id)} style={rowButtonStyle}>{editingId === entry.id ? "Done" : "Edit"}</button>
             {entry.status.status !== "ready" && <button type="button" className="oh-tap-row" onClick={() => resetEntryState(entry.id)} title="Clear this status. Every call tries this model again either way." style={rowButtonStyle}>Reset</button>}
-            <button type="button" className="oh-tap" onClick={() => remove(entry)} aria-label="Remove" title="Remove from the list" style={rowButtonStyle}>✕</button>
+            <button type="button" className="oh-tap" onClick={() => remove(entry)} aria-label="Remove" title="Remove from the list" style={rowButtonStyle}><UiIcon name="close" size={14} /></button>
             </div>
             {editingId === entry.id && (
                 <div style={{ marginTop: "0.75rem" }}>
@@ -1387,7 +1388,7 @@ const ConnectionsSection = () => {
                 </div>
                 <div style={{ display: "flex", gap: "0.3rem", flexShrink: 0 }}>
                 <button type="button" className="oh-tap-row" onClick={() => setEditingId(editingId === connection.id ? null : connection.id)} style={rowButtonStyle}>{editingId === connection.id ? "Done" : "Edit"}</button>
-                <button type="button" className="oh-tap" onClick={() => remove(connection)} aria-label="Remove" title="Remove connection" style={rowButtonStyle}>✕</button>
+                <button type="button" className="oh-tap" onClick={() => remove(connection)} aria-label="Remove" title="Remove connection" style={rowButtonStyle}><UiIcon name="close" size={14} /></button>
                 </div>
                 </div>
                 {editingId === connection.id && (
@@ -1762,7 +1763,7 @@ const SettingsButton = ({ onToggle, topOffset = "0.5rem", hidden = false }) => {
             transition: "opacity 180ms ease 40ms",
         }}
         >
-        ☰
+        <UiIcon name="menu" size={20} />
         </button>
     );
 };
@@ -2235,10 +2236,10 @@ const DiagnosticsPanel = () => {
         disabled={copyState === "copying"}
         style={{ ...diagnosticsButton, flex: 1 }}
         >
-        {copyState === "copied" ? "✓ Copied!" : copyState === "failed" ? "Couldn't copy" : copyState === "copying" ? "Copying…" : "📋 Copy log"}
+        {copyState === "copied" ? <><UiIcon name="check" size={14} /> Copied!</> : copyState === "failed" ? "Couldn't copy" : copyState === "copying" ? "Copying…" : <><UiIcon name="copy" size={14} /> Copy log</>}
         </button>
         <button type="button" className="oh-tap-row" onClick={handleDownload} style={{ ...diagnosticsButton, flex: 1 }}>
-        💾 Save log file
+        <UiIcon name="save" size={14} /> Save log file
         </button>
         </div>
 
@@ -2262,8 +2263,8 @@ const DiagnosticsPanel = () => {
             : attachState.kind === "failed"
             ? "Couldn't save the game"
             : attachState.kind === "saved"
-            ? `✓ Saved ${enabled ? "log + " : ""}“${shortGameName(attachState.name)}” (${attachState.size})`
-            : enabled ? "💾 Save log file + game" : "💾 Save game"}
+            ? <><UiIcon name="check" size={14} /> {`Saved ${enabled ? "log + " : ""}“${shortGameName(attachState.name)}” (${attachState.size})`}</>
+            : enabled ? <><UiIcon name="save" size={14} /> Save log file + game</> : <><UiIcon name="save" size={14} /> Save game</>}
         </button>
         )}
 
@@ -2273,7 +2274,7 @@ const DiagnosticsPanel = () => {
         onClick={() => setViewing((value) => !value)}
         style={{ ...diagnosticsButton, width: "100%", marginBottom: "0.5rem" }}
         >
-        {viewing ? "Hide log" : "🔎 View log"}
+        {viewing ? "Hide log" : <><UiIcon name="search" size={14} /> View log</>}
         </button>
         {viewing && <DiagnosticsLogViewer />}
 
@@ -2809,9 +2810,9 @@ const PrivacySection = ({ discordPresenceOn, onToggleDiscordPresence }) => {
 
 const SETTINGS_SECTIONS = [
     { key: "general", label: "General", icon: "◫", description: "Language, display, accessibility, sound and privacy" },
-    { key: "sound", label: "Sound", icon: "♫", description: "The game's music and sound effects." },
+    { key: "sound", label: "Sound", icon: <UiIcon name="music" size={16} />, description: "The game's music and sound effects." },
     { key: "map", label: "Map", icon: "◇", description: "Basemap, labels, globe and camera" },
-    { key: "ai", label: "AI", icon: "✦", description: "Models, backups, keys and reasoning" },
+    { key: "ai", label: "AI", icon: <UiIcon name="ai" size={16} />, description: "Models, backups, keys and reasoning" },
     { key: "advanced", label: "Advanced", icon: "⌘", description: "Per-task models and expert controls" },
 ];
 
@@ -3126,7 +3127,7 @@ const SettingsWorkspace = ({
                 <SettingsSection title="Generation behavior" description="Bound model waiting behavior without changing the deterministic fallback path.">
                     {forGame ? <PlayerFocusSetting /> : (
                         <div style={{ ...helperStyle, marginBottom: "0.8rem" }}>
-                            Player focus is set for each game on its own: open the game, then ☰ → Settings → AI.
+                            Player focus is set for each game on its own: open the game, then Menu → Settings → AI.
                         </div>
                     )}
                     <Toggle label="Limit AI generation" enabled={mapSettings.limitAiGeneration} onToggle={() => updateMapSetting("limitAiGeneration", MAP_SETTING_KEYS.limitAiGeneration, !mapSettings.limitAiGeneration)} />
@@ -3233,7 +3234,7 @@ const SettingsWorkspace = ({
                         <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.66rem", marginTop: "0.12rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {forGame
                                 ? [context?.countryName ? `Playing as ${context.countryName}` : "", context?.date || ""].filter(Boolean).join(" · ") || "Game preferences"
-                                : "For every game. A game's own settings are in its ☰ menu."}
+                                : "For every game. A game's own settings are in its menu."}
                         </div>
                     </div>
                     <button type="button" className="oh-tap" onClick={onClose} aria-label="Close settings" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", display: "flex", fontSize: "1.1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>×</button>
@@ -3514,9 +3515,9 @@ const SettingsMenu = ({
             <QuickMenuPanel title="Settings" description="Jump straight into the options category you want.">
                 <div style={grid}>
                     <QuickAction title="General" description="Language, display, accessibility, sound and privacy" symbol="◫" onClick={() => openSettingsSection("general")} />
-                    <QuickAction title="Sound" description="The game's music and sound effects." symbol="♫" onClick={() => openSettingsSection("sound")} />
+                    <QuickAction title="Sound" description="The game's music and sound effects." symbol={<UiIcon name="music" size={16} />} onClick={() => openSettingsSection("sound")} />
                     <QuickAction title="Map" description="Basemap, labels, globe and camera" symbol="◇" onClick={() => openSettingsSection("map")} />
-                    <QuickAction title="AI" description="Models, backups, keys and reasoning" symbol="✦" onClick={() => openSettingsSection("ai")} />
+                    <QuickAction title="AI" description="Models, backups, keys and reasoning" symbol={<UiIcon name="ai" size={16} />} onClick={() => openSettingsSection("ai")} />
                     <QuickAction title="Advanced" description="Per-task models and expert controls" symbol="⌘" onClick={() => openSettingsSection("advanced")} />
                 </div>
             </QuickMenuPanel>

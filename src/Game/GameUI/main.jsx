@@ -1,5 +1,6 @@
 /*! Open Historia — portions (mobile HUD wiring + advisor/forces launchers) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { GenerationRatingToast } from "./generationRatingToast.jsx";
 import { SettingsButton, SettingsMenu } from "./settings";
 import { Presence } from "./presence.jsx";
@@ -178,7 +179,7 @@ const WebGLWarningPopup = () => (
           justifyContent: "center",
         }}
       >
-        ⚠️
+        <UiIcon name="warning" size={32} />
       </div>
       <h2 style={{ margin: "0 0 0.75rem", fontSize: "1.3rem", color: "#e94560" }}>
         WebGL Not Available

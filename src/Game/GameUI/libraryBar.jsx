@@ -1,5 +1,6 @@
 /*! Open Historia — portions (map-editor embed, apply-to-scenario, country picker) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, SCREEN_HEIGHT, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
 import { Presence } from "./presence.jsx";
@@ -1772,7 +1773,7 @@ const RecentlyDeletedRow = ({ kind, onChanged, trash }) => {
           </button>
         )}
         description={confirmEmpty ? question : description}
-        icon="🗑️"
+        icon={<UiIcon name="trash" size={16} />}
         title="Recently deleted"
       >
         {entries.map((entry) => (
@@ -2005,7 +2006,7 @@ const EditorDrawer = ({
           style={touchFit({ ...themeButtonStyle, background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", flex: isMobile ? "1 1 9rem" : undefined, width: isMobile ? undefined : "100%" }, touch)}
           type="button"
         >
-          🗺️ Open Map Editor
+          <UiIcon name="map" size={14} /> Open Map Editor
         </button>
       )}
       {kind === "scenario" && onSuggestChanges && record.hubOrigin && (
@@ -2287,7 +2288,7 @@ const EditorDrawer = ({
                         padding: "0 0.7rem",
                       }, touch)}
                     >
-                      {checked ? "✓ " : ""}
+                      {checked ? <UiIcon name="check" size={14} /> : null}
                       {UNIT_TYPE_LABELS[unitType] ?? unitType}
                     </button>
                   );
@@ -5368,7 +5369,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
             ) : (
               <>
                 {recentScenarios.length > 0 && (
-                  <MenuRow description="The scenarios behind your latest games and edits." icon="🕐" title="Recently Used">
+                  <MenuRow description="The scenarios behind your latest games and edits." icon={<UiIcon name="time" size={16} />} title="Recently Used">
                     {recentScenarios.map((scenario) => (
                       <ScenarioCard
                         key={scenario.id}

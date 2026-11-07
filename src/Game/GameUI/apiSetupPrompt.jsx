@@ -1,4 +1,5 @@
 import React, { useId, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -253,7 +254,7 @@ export const ApiSetupPrompt = ({ providerLabel = "the selected provider", missin
               title="Not now"
               style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", display: "flex", flexShrink: 0, fontSize: "1.1rem", lineHeight: 1, margin: "-0.6rem -0.7rem 0 0", padding: "0.15rem 0.3rem" }}
             >
-              ✕
+              <UiIcon name="close" size={16} />
             </button>
           </div>
         ) : (

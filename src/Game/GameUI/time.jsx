@@ -1,5 +1,6 @@
 /*! Open Historia — portions (defensive date rendering) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, useTouchPrimary } from "../../runtime/mobileUi.js";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
@@ -491,7 +492,7 @@ const StrikePill = ({ onWatch }) => (
         padding: "0.24rem 0.55rem",
     }}
     >
-    <span aria-hidden="true" style={{ opacity: 0.75 }}>➶</span>
+    <span aria-hidden="true" style={{ opacity: 0.75 }}><UiIcon name="arrow" size={14} /></span>
     Watch it on the map
     </button>
 );
@@ -646,7 +647,7 @@ const ghostButtonStyle = {
 // A chip is only ever a place the event named with its kind, something its
 // operations changed or a polity its structured fields name: a word in its
 // text that happens to be a place's name is not one.
-const LINK_GLYPHS = { polity: "⚑", region: "⌖", city: "●", unit: "⛊", structure: "▣", sea: "≈" };
+const LINK_GLYPHS = { polity: <UiIcon name="flag" size={14} />, region: <UiIcon name="location" size={14} />, city: <UiIcon name="dot" size={10} />, unit: <UiIcon name="cube" size={14} />, structure: <UiIcon name="building" size={14} />, sea: <UiIcon name="water" size={14} /> };
 
 const LinkPill = ({ link, onFocus }) => (
     <button
@@ -669,7 +670,7 @@ const LinkPill = ({ link, onFocus }) => (
         padding: "0.24rem 0.55rem",
     }}
     >
-    <span aria-hidden="true" style={{ opacity: 0.7 }}>{LINK_GLYPHS[link.kind] || "⌖"}</span>
+    <span aria-hidden="true" style={{ opacity: 0.7 }}>{LINK_GLYPHS[link.kind] || LINK_GLYPHS.region}</span>
     {link.label}
     </button>
 );
@@ -687,7 +688,7 @@ const EventDocument = ({ report }) => {
         onClick={() => setOpen((value) => !value)}
         style={{ alignItems: "center", background: "none", border: "none", color: "rgba(254,243,199,0.92)", cursor: "pointer", display: "flex", font: "inherit", fontSize: "0.74rem", fontWeight: 700, gap: "0.45rem", padding: "0.5rem 0.7rem", textAlign: "left", width: "100%" }}
         >
-        <span aria-hidden="true">📄</span>
+        <span aria-hidden="true"><UiIcon name="document" size={14} /></span>
         <span style={{ flex: 1, minWidth: 0 }}>{report.title}</span>
         <span style={{ color: "rgba(254,243,199,0.5)", flexShrink: 0, fontSize: "0.62rem", fontWeight: 600 }}>
         {report.visibleTo === null ? "Published" : "Our government's"}{report.dateline ? ` · ${report.dateline}` : ""} {open ? "▴" : "▾"}
@@ -911,7 +912,7 @@ const InteractiveOfferStrip = () => {
     return (
         <div style={{ alignItems: "center", background: "rgba(250,204,21,0.08)", border: "1px solid rgba(250,204,21,0.45)", borderRadius: "12px", display: "flex", flexWrap: "wrap", gap: "0.5rem", padding: "0.55rem 0.7rem" }}>
             <div style={{ flex: "1 1 12rem", minWidth: 0 }}>
-                <div style={{ color: "#fde047", fontSize: "0.74rem", fontWeight: 800 }}>⚡ Interactive event</div>
+                <div style={{ color: "#fde047", fontSize: "0.74rem", fontWeight: 800 }}><UiIcon name="flash" size={14} /> Interactive event</div>
                 <div style={{ color: "rgba(254,249,195,0.72)", fontSize: "0.68rem", lineHeight: 1.4 }}>Play this moment out as a scene: you make the moves, and how it ends goes into the record.</div>
             </div>
             <button type="button" className="oh-tap-row" onClick={openInteractiveEvent} style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "var(--oh-paper, #1c1917)", cursor: "pointer", fontSize: "0.72rem", fontWeight: 800, padding: "0.4rem 0.75rem" }}>
@@ -1589,7 +1590,7 @@ const TimelineSkipPanel = ({
         >
         {sceneInProgress && (
             <div style={{ background: "rgba(250,204,21,0.1)", border: "1px solid rgba(250,204,21,0.5)", borderRadius: "10px", color: "#fef08a", fontSize: "0.72rem", lineHeight: 1.45, marginBottom: "0.6rem", padding: "0.5rem 0.6rem", textAlign: "center", width: "12.5rem" }}>
-                ⚡ A scene is in progress. Time stands still until it ends or is set aside.
+                <UiIcon name="flash" size={14} /> A scene is in progress. Time stands still until it ends or is set aside.
                 <button
                 type="button"
                 className="oh-tap-row"
@@ -1604,7 +1605,7 @@ const TimelineSkipPanel = ({
             says so where the skip is pressed. */}
         {!sceneInProgress && offeredInteractive && (
             <div style={{ background: "rgba(250,204,21,0.07)", border: "1px solid rgba(250,204,21,0.35)", borderRadius: "10px", color: "#fef08a", fontSize: "0.72rem", lineHeight: 1.45, marginBottom: "0.6rem", padding: "0.5rem 0.6rem", textAlign: "center", width: "12.5rem" }}>
-                ⚡ An interactive event is on offer: <span data-no-translate style={{ fontWeight: 800 }}>{offeredInteractive.title}</span>. The next time skip lets it pass.
+                <UiIcon name="flash" size={14} /> An interactive event is on offer: <span data-no-translate style={{ fontWeight: 800 }}>{offeredInteractive.title}</span>. The next time skip lets it pass.
                 <button
                 type="button"
                 className="oh-tap-row"
@@ -2077,7 +2078,7 @@ const TimelineHistoryPanel = ({
     // fallback alone under the button's old label (runtime/saveDebugLog.js).
     const report = useFailureReportButton({
         buildIncident: () => buildDebugIncident?.() ?? null,
-        copyIdleLabel: "📋 Copy debugging message",
+        copyIdleLabel: <><UiIcon name="copy" size={14} /> Copy debugging message</>,
     });
     // idle | working — the undo runs without switching panels, so this button is
     // the only place the player can see that anything is happening.
@@ -2421,7 +2422,7 @@ const TimelineHistoryPanel = ({
                             cursor: intervening === "working" ? "default" : "pointer",
                         }}
                         >
-                        <span>{intervening === "working" ? "Stopping the round…" : "✋ Intervene here"}</span>
+                        <span>{intervening === "working" ? "Stopping the round…" : <><UiIcon name="stop" size={14} /> Intervene here</>}</span>
                         </button>
                     )
                 )}
