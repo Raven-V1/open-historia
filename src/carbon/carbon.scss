@@ -638,3 +638,20 @@
     color: #a2191f !important;
   }
 }
+
+// The interface is flat: Carbon's two visible fades (the bottom of a scrolling
+// dialog, the edges of a tab strip that scrolls) are turned off.
+.cds--modal-scroll-content,
+.cds--modal--slug .cds--modal-content.cds--modal-scroll-content,
+.cds--modal--decorator .cds--modal-content.cds--modal-scroll-content {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.cds--modal-content--overflow-indicator {
+  display: none;
+}
+.cds--tabs .cds--tab--overflow-nav-button::before,
+.cds--tabs .cds--tab--list-gradient_top,
+.cds--tabs .cds--tab--list-gradient_bottom {
+  background: none;
+}
