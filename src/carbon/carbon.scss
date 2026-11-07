@@ -156,9 +156,13 @@
   }
 
   [data-oh-edge-bar],
-  .oh-country-government,
-  .ohr-card {
+  .oh-country-government {
     border-left: 1px solid var(--cds-border-subtle-01) !important;
+  }
+
+  // The update notice's cards are dark artwork in both themes.
+  .ohr-card {
+    border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
   }
 }
 

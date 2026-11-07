@@ -505,7 +505,7 @@ export default function InstitutionAuthoringPanel({ details, onDetailsChange }) 
                   <div data-institution-unmatched-members="true" style={{ background: "rgba(245,158,11,0.07)", border: "1px solid rgba(245,158,11,0.24)", borderRadius: 10, color: "#fde68a", fontSize: "0.64rem", lineHeight: 1.45, marginTop: "0.55rem", padding: "0.5rem 0.6rem" }}>
                     {unmatched.size === 1
                       ? `${[...unmatched][0]} is not a polity in this scenario. Check the spelling: it is kept as written, and it will vote and count toward quorum as a member.`
-                      : `${unmatched.size} members, marked with a warning, are not polities in this scenario. Check the spelling: they are kept as written, and they will vote and count toward quorum as members.`}
+                      : `${unmatched.size} members, marked ⚠, are not polities in this scenario. Check the spelling: they are kept as written, and they will vote and count toward quorum as members.`}
                   </div>
                 )}
               </details>

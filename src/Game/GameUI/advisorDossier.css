@@ -146,7 +146,7 @@
 .oh-advisor-contact-select[aria-current="true"] {
   background: rgba(69, 137, 176, .17);
   border-left-color: var(--oh-advisor-accent);
-  color: #fff;
+  color: var(--oh-ink, #fff);
 }
 .oh-advisor-contact-name {
   display: block;
@@ -276,7 +276,7 @@
   font-size: .68rem;
   padding: .4rem .75rem;
 }
-.oh-advisor-message-history:hover { border-color: #779eb5; color: white; }
+.oh-advisor-message-history:hover { border-color: #779eb5; color: var(--oh-ink, #fff); }
 .oh-advisor-thinking {
   background: rgba(80, 128, 155, .1);
   border-left: 2px solid #538bad;
@@ -321,7 +321,7 @@
   background: transparent;
   border: 0;
   box-sizing: border-box;
-  color: #f0f6fa;
+  color: var(--oh-ink, #fff);
   flex: 1 1 auto;
   font-family: inherit;
   font-size: .85rem;
@@ -346,7 +346,7 @@
   background: var(--oh-ui-active, #326e93);
   border: 1px solid var(--oh-ui-accent, #4c94b9);
   border-radius: 6px;
-  color: #fff;
+  color: var(--oh-ink, #fff);
   cursor: pointer;
   display: flex;
   flex: 0 0 2.6rem;
@@ -384,7 +384,7 @@
   transition: background-color .15s, color .15s;
   width: 2rem;
 }
-.oh-advisor-mic:hover:not(:disabled) { background: rgba(255, 255, 255, .07); color: #f0f6fa; }
+.oh-advisor-mic:hover:not(:disabled) { background: color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent); color: var(--oh-ink, #fff); }
 .oh-advisor-mic:focus-visible { outline: 2px solid var(--oh-ui-accent, #a3def4); outline-offset: 1px; }
 .oh-advisor-mic[data-listening="true"] {
   background: rgba(43, 193, 243, .14);
@@ -421,7 +421,7 @@
 .oh-advisor-mic-actions { display: flex; gap: .45rem; justify-content: flex-end; margin-top: .5rem; }
 .oh-advisor-mic-button {
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, .25);
+  border: 1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent);
   border-radius: 6px;
   color: #e4e4e7;
   cursor: pointer;

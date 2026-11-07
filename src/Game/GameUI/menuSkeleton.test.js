@@ -124,7 +124,7 @@ test("the glimmer is a flat band carried across each card, and stands still unde
   assert.match(rule(".oh-skeleton"), /overflow: hidden;\s+position: relative;/);
   const band = rule(".oh-skeleton::after");
   assert.match(band, /animation: oh-skeleton-glimmer [\d.]+s ease-in-out infinite;/);
-  assert.match(band, /background: rgba\(255, 255, 255, 0\.0\d\);/);
+  assert.match(band, /background: color-mix\(in srgb, var\(--oh-ink, #fff\) \d+%, transparent\);/);
   assert.match(band, /pointer-events: none;/);
   // At rest it is off the card, to the left: where reduced motion leaves it.
   assert.match(band, /transform: translateX\(-100%\);/);

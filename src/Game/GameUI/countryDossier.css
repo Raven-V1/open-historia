@@ -472,7 +472,7 @@
   border-left: 1px solid rgba(143, 187, 212, .16);
 }
 .oh-country-ranking-summary-value {
-  color: #f0f6fa;
+  color: var(--oh-ink, #fff);
   font-size: 1.65rem;
   font-weight: 850;
   font-variant-numeric: tabular-nums;
@@ -583,7 +583,7 @@
 }
 .oh-country-ranking-row[aria-current="true"] .oh-country-ranking-name,
 .oh-country-ranking-row[aria-current="true"] .oh-country-ranking-value {
-  color: #fff;
+  color: var(--oh-ink, #fff);
 }
 @media (max-width: 375px) {
   .oh-country-ranking-row,

@@ -102,13 +102,13 @@ body {
 .startup-aurora-left {
   left: -8rem;
   top: -4rem;
-  background: rgba(255, 255, 255, 0.035);
+  background: color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent);
 }
 
 .startup-aurora-right {
   right: -8rem;
   bottom: -6rem;
-  background: rgba(255, 255, 255, 0.025);
+  background: color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent);
   animation-delay: -3s;
 }
 
@@ -149,7 +149,7 @@ body {
   position: absolute;
   inset: 0;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent);
 }
 
 .startup-orbit-ring-large {
@@ -158,7 +158,7 @@ body {
 
 .startup-orbit-ring-small {
   inset: 0.9rem;
-  border-color: rgba(255, 255, 255, 0.08);
+  border-color: color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent);
   animation: startupSpinReverse 10s linear infinite;
 }
 
@@ -230,7 +230,7 @@ body {
   margin-top: 0.7rem;
   overflow: hidden;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.08);
+  background: color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent);
 }
 
 .startup-progress-fill {
@@ -278,7 +278,7 @@ body {
   width: 0.65rem;
   height: 0.65rem;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
+  background: color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent);
   flex-shrink: 0;
 }
 
@@ -291,16 +291,16 @@ body {
 }
 
 .startup-step-active .startup-step-indicator {
-  background: rgba(255, 255, 255, 0.85);
+  background: color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent);
 }
 
 .startup-step-done {
   color: rgba(231, 231, 234, 0.8);
-  border-color: rgba(255, 255, 255, 0.14);
+  border-color: color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent);
 }
 
 .startup-step-done .startup-step-indicator {
-  background: rgba(255, 255, 255, 0.5);
+  background: color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent);
 }
 
 @keyframes startupSpin {
@@ -501,7 +501,7 @@ button:active:not(:disabled) {
 }
 .oh-skeleton::after {
   animation: oh-skeleton-glimmer 1.9s ease-in-out infinite;
-  background: rgba(255, 255, 255, 0.06);
+  background: color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent);
   bottom: 0;
   content: "";
   left: 0;
@@ -677,7 +677,7 @@ button:active:not(:disabled) {
   top: 0.75rem !important;
   left: 0.75rem !important;
   background: rgba(18, 20, 26, 0.75) !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border: 1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent) !important;
   border-radius: 8px !important;
   padding: 3px !important;
   display: flex !important;
@@ -685,8 +685,8 @@ button:active:not(:disabled) {
   gap: 2px !important;
 }
 .ol-zoom button {
-  background: rgba(255, 255, 255, 0.08) !important;
-  color: #fff !important;
+  background: color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent) !important;
+  color: var(--oh-ink, #fff) !important;
   border: none !important;
   border-radius: 6px !important;
   width: 28px !important;
@@ -700,6 +700,6 @@ button:active:not(:disabled) {
   transition: background 0.15s ease !important;
 }
 .ol-zoom button:hover {
-  background: rgba(255, 255, 255, 0.22) !important;
+  background: color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent) !important;
 }
 
