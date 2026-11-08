@@ -9,7 +9,7 @@ const field = {
 const subtle = { color: "#97acbd", fontSize: "0.68rem" };
 const button = {
   background: "#203648", border: "1px solid rgba(133, 191, 219, .2)",
-  borderRadius: 5, color: "#d8e5ee", cursor: "pointer",
+  borderRadius: 5, color: "var(--oh-ink, #d8e5ee)", cursor: "pointer",
   fontFamily: "inherit", fontSize: "0.72rem", padding: "0.4rem 0.55rem",
 };
 const blank = () => ({ name: "", title: "", personality: "", recipientType: ADVISOR_RECIPIENT_TYPES.MINISTER, binding: null, officeKey: "" });
@@ -187,7 +187,7 @@ export default function AdvisorRecipients({
               </label>
               <label style={subtle}>Personality and principles
                 <textarea style={{ ...field, minHeight: 64, resize: "vertical" }} maxLength={ADVISOR_PERSONALITY_MAX_CHARS} value={draft.personality} onChange={(event) => setDraft((old) => ({ ...old, personality: event.target.value }))} placeholder="e.g. meticulous, cautious with public spending, willing to disagree" />
-                <div data-no-translate style={{ color: draft.personality.length >= ADVISOR_PERSONALITY_MAX_CHARS ? "#f87171" : "rgba(255,255,255,0.5)", fontSize: "0.7rem", marginTop: "0.25rem", textAlign: "right" }}>
+                <div data-no-translate style={{ color: draft.personality.length >= ADVISOR_PERSONALITY_MAX_CHARS ? "#f87171" : "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", marginTop: "0.25rem", textAlign: "right" }}>
                   {draft.personality.length}/{ADVISOR_PERSONALITY_MAX_CHARS}
                 </div>
               </label>

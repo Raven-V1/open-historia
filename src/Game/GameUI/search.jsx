@@ -68,7 +68,7 @@ const ICON_GLOBE = (
     height="14"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="rgba(255,255,255,0.45)"
+    stroke="color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)"
     strokeWidth="2"
     strokeLinecap="round"
   >
@@ -84,7 +84,7 @@ const ICON_CITY = (
     height="14"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="rgba(255,255,255,0.45)"
+    stroke="color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)"
     strokeWidth="2"
     strokeLinecap="round"
   >
@@ -99,7 +99,7 @@ const ICON_PIN = (
     height="14"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="rgba(255,255,255,0.45)"
+    stroke="color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)"
     strokeWidth="2"
     strokeLinecap="round"
   >
@@ -114,7 +114,7 @@ const ICON_REGION = (
     height="14"
     viewBox="0 0 24 24"
     fill="none"
-    stroke="rgba(255,255,255,0.45)"
+    stroke="color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)"
     strokeWidth="2"
     strokeLinecap="round"
   >
@@ -393,7 +393,7 @@ const Search = memo(({ mapRef, besideWarRoom = false }) => {
         backdropFilter: "var(--oh-hud-blur)",
         border: "1px solid var(--oh-hud-border)",
         boxShadow: "var(--oh-hud-shadow-soft)",
-        color: "white",
+        color: "var(--oh-ink, #fff)",
         fontFamily: "sans-serif",
       }}
       onClick={!expanded ? () => {
@@ -428,7 +428,7 @@ const Search = memo(({ mapRef, besideWarRoom = false }) => {
             justifyContent: "center",
             flexShrink: 0,
             padding: 0,
-            color: status === "error" ? "#f87171" : "rgba(255,255,255,0.8)",
+            color: status === "error" ? "#f87171" : "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)",
             transition: "color 0.2s",
           }}
           title={expanded ? "Close" : "Search place"}
@@ -496,7 +496,7 @@ const Search = memo(({ mapRef, besideWarRoom = false }) => {
               cursor: "pointer",
               padding: "0 0.6rem",
               height: size,
-              color: query.trim() ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.2)",
+              color: query.trim() ? "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)",
               display: "flex",
               alignItems: "center",
               flexShrink: 0,
@@ -550,11 +550,11 @@ const Search = memo(({ mapRef, besideWarRoom = false }) => {
                 alignItems: "center",
                 gap: "0.55rem",
                 backgroundColor:
-                  index === selectedIndex ? "rgba(255,255,255,0.08)" : "transparent",
+                  index === selectedIndex ? "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" : "transparent",
                 opacity: suggestion.stale ? 0.5 : 1,
                 borderBottom:
                   index < suggestions.length - 1
-                    ? "1px solid rgba(255,255,255,0.05)"
+                    ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)"
                     : "none",
                 transition: "background-color 0.1s",
               }}
@@ -567,7 +567,7 @@ const Search = memo(({ mapRef, besideWarRoom = false }) => {
                 <div
                   style={{
                     fontSize: "0.82rem",
-                    color: "rgba(255,255,255,0.9)",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)",
                     whiteSpace: "nowrap",
                     overflow: "hidden",
                     textOverflow: "ellipsis",
@@ -580,7 +580,7 @@ const Search = memo(({ mapRef, besideWarRoom = false }) => {
                   <div
                     style={{
                       fontSize: "0.72rem",
-                      color: "rgba(255,255,255,0.4)",
+                      color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)",
                       whiteSpace: "nowrap",
                       overflow: "hidden",
                       textOverflow: "ellipsis",
@@ -600,8 +600,8 @@ const Search = memo(({ mapRef, besideWarRoom = false }) => {
                     fontWeight: 700,
                     letterSpacing: "0.06em",
                     textTransform: "uppercase",
-                    color: "rgba(255,255,255,0.45)",
-                    border: "1px solid rgba(255,255,255,0.18)",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)",
                     borderRadius: "999px",
                     padding: "1px 5px",
                   }}

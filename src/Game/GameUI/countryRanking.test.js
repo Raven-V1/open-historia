@@ -155,7 +155,7 @@ test("the tab opens on a figure a few countries have, so a game nobody has asses
 
 test("the tab is in the Stats pane, opens a country from a row, and asks no model for anything", () => {
   const pane = read("stats.jsx");
-  assert.ok(pane.includes(">🏆 Ranking</button>"));
+  assert.ok(pane.includes("<UiIcon name=\"trophy\" size={14} /> Ranking</button>"));
   assert.ok(pane.includes("aria-pressed={statsView === \"ranking\"}"));
   assert.ok(pane.includes("{statsView === \"ranking\" && (\n                <RankingSection"));
   assert.ok(pane.includes("onPick={setTargetCountry}"));

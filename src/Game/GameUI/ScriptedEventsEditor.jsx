@@ -1,5 +1,6 @@
 /*! Open Historia — structured scenario scripted-event authoring © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useEffect, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { createPortal } from "react-dom";
 import { INSTITUTION_MEMBER_STATUSES } from "../../runtime/institutions.js";
 import { PUPPET_KINDS, puppetKindLabel } from "../../runtime/puppets.js";
@@ -215,8 +216,8 @@ const ScriptedEventsEditor = ({
 
   if (isGame && !overridden) {
     return (
-      <div data-no-translate style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "10px", padding: "0.65rem" }}>
-        <div style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.76rem" }}>
+      <div data-no-translate style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "10px", padding: "0.65rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.76rem" }}>
           Following the scenario ({array(scenarioValue).length} scripted event{array(scenarioValue).length === 1 ? "" : "s"}).
         </div>
         <button type="button" className="oh-tap-row" style={{ ...buttonStyle(styles), marginTop: "0.45rem" }} onClick={onStartOverride}>
@@ -311,7 +312,7 @@ const ScriptedEventsEditor = ({
     const conditionMode = conditions.length ? rules.operator : "none";
 
     return (
-      <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", padding: "0.8rem" }}>
+      <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", padding: "0.8rem" }}>
         <div style={{ alignItems: "stretch", display: "flex", flexWrap: "wrap", gap: "0.45rem", minWidth: 0 }}>
           <div style={{ flex: "0 1 15rem", minWidth: "10rem" }}>
             <label style={styles.fieldLabelStyle}>Date</label>
@@ -347,8 +348,8 @@ const ScriptedEventsEditor = ({
           />
         </div>
 
-        <section style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", marginTop: "0.65rem", minWidth: 0, padding: "0.65rem" }}>
-          <div style={{ color: "rgba(255,255,255,0.66)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>Event wording</div>
+        <section style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "12px", marginTop: "0.65rem", minWidth: 0, padding: "0.65rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 66%, transparent)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>Event wording</div>
           <select
             aria-label="Event wording mode"
             style={{ ...selectStyle(styles), marginTop: "0.45rem", width: "min(100%, 24rem)" }}
@@ -358,16 +359,16 @@ const ScriptedEventsEditor = ({
             <option style={optionStyle} value="generated">Let the AI write it</option>
             <option style={optionStyle} value="exact">Use my exact wording</option>
           </select>
-          <div style={{ color: "rgba(255,255,255,0.43)", fontSize: "0.7rem", lineHeight: 1.45, marginTop: "0.4rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 43%, transparent)", fontSize: "0.7rem", lineHeight: 1.45, marginTop: "0.4rem" }}>
             {textModeOf(event) === "exact"
               ? "The timeline body uses these exact words. The AI can still supply canonical consequences such as Political World, map, institution, unit or Stats changes."
               : "This text tells the simulation what must happen. The AI writes the final timeline event in the campaign's context."}
           </div>
         </section>
 
-        <section style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", marginTop: "0.65rem", minWidth: 0, padding: "0.65rem" }}>
+        <section style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "12px", marginTop: "0.65rem", minWidth: 0, padding: "0.65rem" }}>
           <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.45rem", minWidth: 0 }}>
-            <span style={{ color: "rgba(255,255,255,0.64)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>Conditions</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 64%, transparent)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>Conditions</span>
             <select
               aria-label="Condition match rule"
               style={selectStyle(styles, { flex: "0 1 auto", minWidth: "10rem", width: "auto" })}
@@ -402,7 +403,7 @@ const ScriptedEventsEditor = ({
                   value={requiredCount}
                   onChange={(e) => patchRules(index, { requiredCount: Math.max(1, Math.min(conditions.length, Number(e.target.value) || 1)) })}
                 />
-                <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem" }}>of {conditions.length}</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.72rem" }}>of {conditions.length}</span>
               </>
             )}
             {conditionMode !== "none" && (
@@ -412,12 +413,12 @@ const ScriptedEventsEditor = ({
             )}
           </div>
 
-          <div style={{ color: "rgba(255,255,255,0.43)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.45rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 43%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.45rem" }}>
             Conditions are checked once when this date is reached. If they do not match, this event is skipped permanently rather than waiting for them to become true later.
           </div>
 
           {conditionMode === "none" ? (
-            <div style={{ color: "rgba(255,255,255,0.43)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.35rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 43%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.35rem" }}>
               No conditions - this event becomes eligible as soon as its date is reached. Chance is still rolled once below.
             </div>
           ) : (
@@ -427,7 +428,7 @@ const ScriptedEventsEditor = ({
                 const definition = CONDITION_BY_TYPE[type] || CONDITION_BY_TYPE.polity_exists;
                 const prefix = `scripted-${event?.id || index}-${conditionIndex}`;
                 return (
-                  <div key={`${event?.id || index}-condition-${conditionIndex}`} style={{ background: "rgba(0,0,0,0.14)", border: "1px solid rgba(255,255,255,0.055)", borderRadius: "9px", minWidth: 0, padding: "0.48rem" }}>
+                  <div key={`${event?.id || index}-condition-${conditionIndex}`} style={{ background: "rgba(0,0,0,0.14)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 5.5%, transparent)", borderRadius: "9px", minWidth: 0, padding: "0.48rem" }}>
                     <div style={{ alignItems: "stretch", display: "flex", flexWrap: "wrap", gap: "0.38rem", minWidth: 0 }}>
                       <select aria-label="Condition type" style={selectStyle(styles, { flex: "1.2 1 13rem", width: "auto" })} value={definition.type} onChange={(e) => setConditionType(index, conditionIndex, e.target.value)}>
                         {CONDITION_DEFINITIONS.map((entry) => <option key={entry.type} style={optionStyle} value={entry.type}>{entry.label}</option>)}
@@ -452,7 +453,7 @@ const ScriptedEventsEditor = ({
                           <div style={{ flex: "1 1 14rem", minWidth: 0 }}>
                             <select aria-label="Referenced scripted event" style={selectStyle(styles,{width:"100%"})} value={condition?.eventId || ""} onChange={(e) => patchCondition(index, conditionIndex, { eventId: e.target.value, outcomeId: "" })}>
                               <option style={optionStyle} value="">Select earlier event</option>
-                              {isFutureReference && <option style={optionStyle} value={referenced.id}>⚠ {eventTitle(referenced)} (not earlier)</option>}
+                              {isFutureReference && <option style={optionStyle} value={referenced.id}>{eventTitle(referenced)} (not earlier — check)</option>}
                               {prior.map(({ event: candidate }) => <option key={candidate.id} style={optionStyle} value={candidate.id}>{eventTitle(candidate)}</option>)}
                             </select>
                             {isFutureReference && <div style={{ color: "#fbbf24", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.2rem" }}>This dependency points to an event that has not resolved yet. Choose an earlier event or this condition will fail when checked.</div>}
@@ -467,7 +468,7 @@ const ScriptedEventsEditor = ({
                           <div style={{ flex: "1 1 14rem", minWidth: 0 }}>
                             <select aria-label="Referenced scripted outcome" style={selectStyle(styles,{width:"100%"})} value={condition?.outcomeId || ""} onChange={(e) => patchCondition(index, conditionIndex, { outcomeId: e.target.value })}>
                               <option style={optionStyle} value="">Select outcome</option>
-                              {missingOutcome && <option style={optionStyle} value={condition.outcomeId}>⚠ Missing outcome: {condition.outcomeId}</option>}
+                              {missingOutcome && <option style={optionStyle} value={condition.outcomeId}>Missing outcome: {condition.outcomeId}</option>}
                               {outcomes.map((outcome) => <option key={outcome.id} style={optionStyle} value={outcome.id}>{clean(outcome.title || outcome.text || outcome.id)}</option>)}
                             </select>
                             {missingOutcome && <div style={{ color: "#fbbf24", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.2rem" }}>The referenced outcome no longer exists. Pick another outcome before saving.</div>}
@@ -496,11 +497,11 @@ const ScriptedEventsEditor = ({
           )}
         </section>
 
-        <section data-scripted-event-outcomes="true" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", marginTop: "0.65rem", padding: "0.65rem" }}>
+        <section data-scripted-event-outcomes="true" style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "12px", marginTop: "0.65rem", padding: "0.65rem" }}>
           <div style={{ alignItems: "flex-start", display: "flex", flexWrap: "wrap", gap: "0.5rem", justifyContent: "space-between" }}>
             <div style={{ maxWidth: "48rem" }}>
-              <div style={{ color: "rgba(255,255,255,0.66)", fontSize: "0.72rem", fontWeight: 800, textTransform: "uppercase" }}>Possible outcomes - choose one</div>
-              <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.66rem", lineHeight: 1.45, marginTop: "0.16rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 66%, transparent)", fontSize: "0.72rem", fontWeight: 800, textTransform: "uppercase" }}>Possible outcomes - choose one</div>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.66rem", lineHeight: 1.45, marginTop: "0.16rem" }}>
                 Optional. If this event fires, the game picks exactly one outcome and remembers it permanently. Outcomes inherit the event wording mode above. <strong>Weight is relative, not a percentage:</strong> 3 / 1 / 1 means 60% / 20% / 20%.
               </div>
             </div>
@@ -514,14 +515,14 @@ const ScriptedEventsEditor = ({
               const chance = outcomeChanceText(event.outcomes, outcomeIndex);
               const hasText = Boolean(clean(outcome?.text));
               return (
-                <div key={outcome.id || outcomeIndex} style={{ border: "1px solid rgba(255,255,255,0.06)", borderRadius: "9px", padding: "0.55rem" }}>
+                <div key={outcome.id || outcomeIndex} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", borderRadius: "9px", padding: "0.55rem" }}>
                   <div style={{ display: "grid", gap: "0.45rem", gridTemplateColumns: "minmax(10rem, 1fr) minmax(7rem, 0.45fr) auto", alignItems: "end" }}>
                     <div>
-                      <label style={styles.fieldLabelStyle}>Outcome ID <span style={{ color: "rgba(255,255,255,0.35)", fontWeight: 500 }}>(advanced)</span></label>
+                      <label style={styles.fieldLabelStyle}>Outcome ID <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontWeight: 500 }}>(advanced)</span></label>
                       <input aria-label="Outcome id" style={styles.inputStyle} value={outcome.id || ""} onChange={(e) => { const rows=[...array(event.outcomes)]; rows[outcomeIndex]={...outcome,id:e.target.value}; patchEvent(index,{outcomes:rows}); }} placeholder="outcome-id" />
                     </div>
                     <div>
-                      <label style={styles.fieldLabelStyle}>Weight <span style={{ color: "rgba(255,255,255,0.35)", fontWeight: 500 }}>({chance} chance)</span></label>
+                      <label style={styles.fieldLabelStyle}>Weight <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontWeight: 500 }}>({chance} chance)</span></label>
                       <input aria-label="Outcome weight" title="Relative chance compared with the other outcomes. 0 means this outcome can never be selected." type="number" min="0" step="0.1" style={styles.inputStyle} value={outcome.weight ?? 1} onChange={(e) => { const rows=[...array(event.outcomes)]; rows[outcomeIndex]={...outcome,weight:Number(e.target.value)}; patchEvent(index,{outcomes:rows}); }} />
                     </div>
                     <button type="button" className="oh-tap-row" style={buttonStyle(styles,{color:"#fecaca"})} onClick={() => patchEvent(index,{outcomes:array(event.outcomes).filter((_,row)=>row!==outcomeIndex)})}>Remove</button>
@@ -537,11 +538,11 @@ const ScriptedEventsEditor = ({
           </div> : null}
         </section>
 
-        <section style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", marginTop: "0.65rem", padding: "0.65rem" }}>
+        <section style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "12px", marginTop: "0.65rem", padding: "0.65rem" }}>
           <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
             <div>
-              <div style={{ color: "rgba(255,255,255,0.66)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>Chance after conditions pass</div>
-              <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.66rem", marginTop: "0.16rem" }}>Rolled once when due, then persisted. No save/reload rerolls.</div>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 66%, transparent)", fontSize: "0.72rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>Chance after conditions pass</div>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.66rem", marginTop: "0.16rem" }}>Rolled once when due, then persisted. No save/reload rerolls.</div>
             </div>
             <div style={{ alignItems: "center", display: "flex", gap: "0.3rem" }}>
               <input
@@ -554,7 +555,7 @@ const ScriptedEventsEditor = ({
                 value={rules.percent}
                 onChange={(e) => patchRules(index, { percent: Math.max(0, Math.min(100, Number(e.target.value) || 0)) })}
               />
-              <span style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.76rem" }}>%</span>
+              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.76rem" }}>%</span>
             </div>
           </div>
           <input
@@ -580,19 +581,19 @@ const ScriptedEventsEditor = ({
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) setManagerOpen(false);
       }}
-      style={{ alignItems: "center", background: "rgba(6,6,7,0.78)", backdropFilter: "blur(14px)", display: "flex", inset: 0, justifyContent: "center", padding: "clamp(0.55rem, 2vw, 1.25rem)", position: "fixed", zIndex: 2147483200 }}
+      style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-paper, rgb(6,6,7)) 78%, transparent)", backdropFilter: "blur(14px)", display: "flex", inset: 0, justifyContent: "center", padding: "clamp(0.55rem, 2vw, 1.25rem)", position: "fixed", zIndex: 2147483200 }}
     >
-      <div style={{ background: "rgba(24,24,27,0.98)", border: "1px solid rgba(255,255,255,0.11)", borderRadius: "20px", boxShadow: "0 24px 70px rgba(0,0,0,0.5)", color: "#fff", display: "flex", flexDirection: "column", fontFamily: "sans-serif", maxHeight: "calc(100vh - 1.5rem)", minHeight: "min(42rem, calc(100vh - 1.5rem))", overflow: "hidden", width: "min(76rem, calc(100vw - 1.1rem))" }}>
-        <header style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.08)", display: "flex", gap: "0.8rem", justifyContent: "space-between", padding: "0.9rem 1rem" }}>
+      <div style={{ background: "color-mix(in srgb, var(--oh-paper, rgb(24,24,27)) 98%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 11%, transparent)", borderRadius: "20px", boxShadow: "0 24px 70px rgba(0,0,0,0.5)", color: "var(--oh-ink, #fff)", display: "flex", flexDirection: "column", fontFamily: "sans-serif", maxHeight: "calc(100vh - 1.5rem)", minHeight: "min(42rem, calc(100vh - 1.5rem))", overflow: "hidden", width: "min(76rem, calc(100vw - 1.1rem))" }}>
+        <header style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "flex", gap: "0.8rem", justifyContent: "space-between", padding: "0.9rem 1rem" }}>
           <div style={{ minWidth: 0 }}>
-            <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase" }}>Scenario authoring</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase" }}>Scenario authoring</div>
             <div style={{ fontSize: "1.15rem", fontWeight: 850, letterSpacing: "-0.025em", marginTop: "0.12rem" }}>Scripted Events</div>
-            <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.7rem", marginTop: "0.16rem" }}>{events.length} event{events.length === 1 ? "" : "s"} · {rangeText}</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.7rem", marginTop: "0.16rem" }}>{events.length} event{events.length === 1 ? "" : "s"} · {rangeText}</div>
           </div>
-          <button aria-label="Close scripted events manager" type="button" className="oh-tap" style={buttonStyle(styles, { background: "rgba(255,255,255,0.04)", fontSize: "1rem", minWidth: "2.35rem", padding: 0 })} onClick={() => setManagerOpen(false)}>×</button>
+          <button aria-label="Close scripted events manager" type="button" className="oh-tap" style={buttonStyle(styles, { background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", fontSize: "1rem", minWidth: "2.35rem", padding: 0 })} onClick={() => setManagerOpen(false)}>×</button>
         </header>
 
-        <div style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.07)", display: "flex", flexWrap: "wrap", gap: "0.5rem", padding: "0.7rem 1rem" }}>
+        <div style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "flex", flexWrap: "wrap", gap: "0.5rem", padding: "0.7rem 1rem" }}>
           <input aria-label="Search scripted events" placeholder="Search date or event text..." style={{ ...styles.inputStyle, boxSizing: "border-box", flex: "2 1 18rem", minWidth: "12rem" }} value={query} onChange={(event) => setQuery(event.target.value)} />
           <select aria-label="Filter scripted events" style={selectStyle(styles, { flex: "0 1 11rem", width: "auto" })} value={filterMode} onChange={(event) => setFilterMode(event.target.value)}>
             <option style={optionStyle} value="all">All events</option>
@@ -604,16 +605,16 @@ const ScriptedEventsEditor = ({
             <option style={optionStyle} value="asc">Date ↑</option>
             <option style={optionStyle} value="desc">Date ↓</option>
           </select>
-          <button type="button" className="oh-tap-row" style={buttonStyle(styles, { background: "rgba(255,255,255,0.09)" })} onClick={addEvent}>+ Add event</button>
+          <button type="button" className="oh-tap-row" style={buttonStyle(styles, { background: "color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)" })} onClick={addEvent}>+ Add event</button>
         </div>
 
         <div style={{ flex: 1, overflowY: "auto", padding: "0.75rem 1rem 1rem" }}>
-          <div style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "12px", color: "rgba(255,255,255,0.52)", fontSize: "0.7rem", lineHeight: 1.45, marginBottom: "0.65rem", padding: "0.55rem 0.65rem" }}>
+          <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "12px", color: "color-mix(in srgb, var(--oh-ink, #fff) 52%, transparent)", fontSize: "0.7rem", lineHeight: 1.45, marginBottom: "0.65rem", padding: "0.55rem 0.65rem" }}>
             Conditions are checked once when an event becomes due. If they pass, chance is rolled once and persisted. No conditions + 100% is the old Always behavior.
           </div>
 
           {visibleEvents.length === 0 ? (
-            <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.78rem", padding: "2rem 0", textAlign: "center" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.78rem", padding: "2rem 0", textAlign: "center" }}>
               {events.length ? "No scripted events match this view." : "No scripted events yet."}
             </div>
           ) : (
@@ -621,23 +622,23 @@ const ScriptedEventsEditor = ({
               {visibleEvents.map(({ event, index, key }) => {
                 const expanded = expandedKey === key;
                 return (
-                  <article key={key} style={{ background: expanded ? "rgba(255,255,255,0.045)" : "rgba(255,255,255,0.025)", border: `1px solid ${expanded ? "rgba(255,255,255,0.15)" : "rgba(255,255,255,0.075)"}`, borderRadius: "13px", overflow: "hidden" }}>
+                  <article key={key} style={{ background: expanded ? "color-mix(in srgb, var(--oh-ink, #fff) 4.5%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: `1px solid ${expanded ? "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 7.5%, transparent)"}`, borderRadius: "13px", overflow: "hidden" }}>
                     <button
                       type="button"
                       className="oh-tap-row"
                       aria-expanded={expanded}
                       onClick={() => setExpandedKey(expanded ? "" : key)}
-                      style={{ alignItems: "center", background: "transparent", border: 0, color: "#fff", cursor: "pointer", display: "grid", gap: "0.65rem", gridTemplateColumns: "auto minmax(0, 1fr) auto", padding: "0.7rem 0.8rem", textAlign: "left", width: "100%" }}
+                      style={{ alignItems: "center", background: "transparent", border: 0, color: "var(--oh-ink, #fff)", cursor: "pointer", display: "grid", gap: "0.65rem", gridTemplateColumns: "auto minmax(0, 1fr) auto", padding: "0.7rem 0.8rem", textAlign: "left", width: "100%" }}
                     >
-                      <span aria-hidden="true" style={{ color: "rgba(255,255,255,0.46)", fontSize: "0.75rem", transform: expanded ? "rotate(90deg)" : "none", transition: "transform 120ms ease" }}>▶</span>
+                      <span aria-hidden="true" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", fontSize: "0.75rem", transform: expanded ? "rotate(90deg)" : "none", transition: "transform 120ms ease" }}>▶</span>
                       <span style={{ minWidth: 0 }}>
                         <span style={{ alignItems: "baseline", display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
-                          <span style={{ color: "rgba(255,255,255,0.78)", fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace", fontSize: "0.68rem", fontWeight: 800 }}>{clean(event?.date) || "No date"}</span>
+                          <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace", fontSize: "0.68rem", fontWeight: 800 }}>{clean(event?.date) || "No date"}</span>
                           <span style={{ fontSize: "0.79rem", fontWeight: 750, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{eventTitle(event)}</span>
                         </span>
-                        <span style={{ color: "rgba(255,255,255,0.42)", display: "block", fontSize: "0.61rem", fontWeight: 800, letterSpacing: "0.045em", marginTop: "0.22rem" }}>{eventRuleSummary(event)}</span>
+                        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", display: "block", fontSize: "0.61rem", fontWeight: 800, letterSpacing: "0.045em", marginTop: "0.22rem" }}>{eventRuleSummary(event)}</span>
                       </span>
-                      <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.66rem", fontWeight: 700 }}>{expanded ? "Collapse" : "Edit"}</span>
+                      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.66rem", fontWeight: 700 }}>{expanded ? "Collapse" : "Edit"}</span>
                     </button>
                     {expanded && renderEventEditor(event, index)}
                   </article>
@@ -653,16 +654,16 @@ const ScriptedEventsEditor = ({
 
   return (
     <div data-no-translate style={{ minWidth: 0 }}>
-      <div style={{ alignItems: "center", background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", display: "flex", flexWrap: "wrap", gap: "0.7rem", justifyContent: "space-between", padding: "0.72rem 0.75rem" }}>
+      <div style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "12px", display: "flex", flexWrap: "wrap", gap: "0.7rem", justifyContent: "space-between", padding: "0.72rem 0.75rem" }}>
         <div style={{ minWidth: 0 }}>
-          <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.82rem", fontWeight: 800 }}>{events.length} scripted event{events.length === 1 ? "" : "s"}</div>
-          <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.68rem", marginTop: "0.18rem" }}>{rangeText}</div>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.82rem", fontWeight: 800 }}>{events.length} scripted event{events.length === 1 ? "" : "s"}</div>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.68rem", marginTop: "0.18rem" }}>{rangeText}</div>
         </div>
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem" }}>
           {isGame && overridden && (
             <button type="button" className="oh-tap-row" style={buttonStyle(styles)} onClick={onUseScenarioDefault}>Use scenario default</button>
           )}
-          <button type="button" className="oh-tap-row" style={buttonStyle(styles, { background: "rgba(255,255,255,0.09)" })} onClick={() => setManagerOpen(true)}>Manage scripted events</button>
+          <button type="button" className="oh-tap-row" style={buttonStyle(styles, { background: "color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)" })} onClick={() => setManagerOpen(true)}>Manage scripted events</button>
         </div>
       </div>
       {manager}

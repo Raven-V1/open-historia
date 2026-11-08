@@ -84,7 +84,7 @@ const UnitPopup = ({ unit, x, y, isNew, polities = [], onChange, onDelete, onClo
             <option key={type} value={type}>{TYPE_LABELS[type] || type}</option>
           ))}
         </select>
-        <label style={{ display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap", color: "rgba(255,255,255,0.7)" }}>
+        <label style={{ display: "flex", alignItems: "center", gap: 5, whiteSpace: "nowrap", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
           <span style={{ fontSize: 10.5, fontWeight: 700 }}>Strength</span>
           <input
             type="number"
@@ -104,7 +104,7 @@ const UnitPopup = ({ unit, x, y, isNew, polities = [], onChange, onDelete, onClo
         </label>
       </div>
 
-      <label style={{ display: "grid", gap: 4, color: "rgba(255,255,255,0.7)" }}>
+      <label style={{ display: "grid", gap: 4, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         <span style={{ fontSize: 10.5, fontWeight: 700 }}>Owner</span>
         <select value={ownerKnown ? unit.ownerCode : ""} onChange={(e) => onChange({ ownerCode: e.target.value })} style={{ ...inputStyle, padding: "5px 6px" }} aria-label="Unit owner">
           {!ownerKnown && <option value="">{unit.ownerCode ? `${unit.ownerCode} (not on this map)` : "Choose a country…"}</option>}
@@ -114,7 +114,7 @@ const UnitPopup = ({ unit, x, y, isNew, polities = [], onChange, onDelete, onClo
         </select>
       </label>
 
-      <label style={{ display: "grid", gap: 4, color: "rgba(255,255,255,0.7)" }}>
+      <label style={{ display: "grid", gap: 4, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         <span style={{ fontSize: 10.5, fontWeight: 700 }}>Composition</span>
         <input
           value={unit.composition || ""}
@@ -124,7 +124,7 @@ const UnitPopup = ({ unit, x, y, isNew, polities = [], onChange, onDelete, onClo
         />
       </label>
 
-      <label style={{ display: "grid", gap: 4, color: "rgba(255,255,255,0.7)" }}>
+      <label style={{ display: "grid", gap: 4, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         <span style={{ fontSize: 10.5, fontWeight: 700 }}>What it is doing</span>
         <input
           value={unit.note || ""}

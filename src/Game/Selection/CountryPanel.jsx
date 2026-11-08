@@ -1,5 +1,6 @@
 /*! Open Historia — country info panel © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "../GameUI/carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP } from "../../runtime/mobileUi.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -58,12 +59,12 @@ const FILTER_MODES = [
 ];
 
 const surface = {
-    backgroundColor: "rgba(24, 24, 27, 0.97)",
+    backgroundColor: "color-mix(in srgb, var(--oh-paper, rgb(24,24,27)) 97%, transparent)",
     backdropFilter: "blur(8px)",
-    border: "1px solid rgba(255,255,255,0.1)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
     borderRadius: "16px",
     boxShadow: "-4px 0 24px rgba(0,0,0,0.45)",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     fontFamily: "sans-serif",
 };
 
@@ -85,9 +86,9 @@ const PHONE_PLACEMENT = {
 };
 
 const pillStyle = {
-    border: "1px solid rgba(255,255,255,0.35)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)",
     borderRadius: "999px",
-    color: "rgba(255,255,255,0.92)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)",
     display: "inline-block",
     fontSize: "0.74rem",
     fontWeight: 600,
@@ -96,10 +97,10 @@ const pillStyle = {
 
 const footerButtonStyle = {
     alignItems: "center",
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.16)",
+    background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
     borderRadius: "999px",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     cursor: "pointer",
     display: "flex",
     flex: 1,
@@ -452,23 +453,23 @@ const CountryInfoPanel = () => {
         <div style={{ alignItems: "center", display: "flex", gap: "0.6rem", padding: "1rem 1.1rem 0.8rem" }}>
         {currentFlag.imageUrl && !flagFailed ? (
             <button type="button" onClick={() => setFlagPickerOpen(true)} title="Change flag" style={{ background: "none", border: "none", padding: 0, cursor: "pointer", display: "flex" }}>
-                <img src={bundledFlagUrl(currentFlag.imageUrl)} alt="" onError={() => setFlagFailed(true)} style={{ borderRadius: 4, height: "1.35rem", width: "2.1rem", objectFit: "contain", boxShadow: "0 0 0 1px rgba(255,255,255,0.15)" }} />
+                <img src={bundledFlagUrl(currentFlag.imageUrl)} alt="" onError={() => setFlagFailed(true)} style={{ borderRadius: 4, height: "1.35rem", width: "2.1rem", objectFit: "contain", boxShadow: "0 0 0 1px color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)" }} />
             </button>
         ) : (
-            <button type="button" onClick={() => setFlagPickerOpen(true)} title="Set flag" style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: 4, height: "1.35rem", width: "2.1rem", cursor: "pointer" }} />
+            <button type="button" onClick={() => setFlagPickerOpen(true)} title="Set flag" style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: 4, height: "1.35rem", width: "2.1rem", cursor: "pointer" }} />
         )}
         <span style={{ flex: 1, fontSize: "1.15rem", fontWeight: 800, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
         {displayName || country.name}
         </span>
-        <button type="button" className="oh-tap" onClick={() => setFlagPickerOpen(true)} title="Change flag" style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.12)", borderRadius: 7, color: "rgba(255,255,255,0.72)", cursor: "pointer", fontSize: "0.68rem", fontWeight: 700, padding: "0.3rem 0.45rem" }}>Flag</button>
+        <button type="button" className="oh-tap" onClick={() => setFlagPickerOpen(true)} title="Change flag" style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: 7, color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", cursor: "pointer", fontSize: "0.68rem", fontWeight: 700, padding: "0.3rem 0.45rem" }}>Flag</button>
         <button
         type="button"
         className="oh-tap"
         aria-label="Close country panel"
         onClick={() => setCountry(null)}
-        style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: "1.15rem", lineHeight: 1, padding: "0.2rem" }}
+        style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", fontSize: "1.15rem", lineHeight: 1, padding: "0.2rem" }}
         >
-        {"✕"}
+        <UiIcon name="close" size={16} />
         </button>
         </div>
 
@@ -476,7 +477,7 @@ const CountryInfoPanel = () => {
         <div style={{ display: "flex", flex: 1, flexDirection: "column", gap: "0.4rem", minHeight: 0, overflowY: "auto", padding: "0 1.1rem 1rem", scrollbarWidth: "thin" }}>
         <div style={{ alignItems: "baseline", display: "flex", justifyContent: "space-between" }}>
         <div style={{ fontSize: "1rem", fontWeight: 800 }}>Related Events</div>
-        <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.75rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.75rem" }}>
         {filteredEvents.length > eventLimit ? `${eventLimit} of ${filteredEvents.length} shown` : `${filteredEvents.length} shown`}
         </div>
         </div>
@@ -485,7 +486,7 @@ const CountryInfoPanel = () => {
         value={search}
         onChange={(event) => setSearch(event.target.value)}
         placeholder="Search events..."
-        style={{ background: "rgba(0,0,0,0.28)", border: "1px solid rgba(255,255,255,0.14)", borderRadius: 8, color: "white", flex: 1, fontSize: "0.82rem", outline: "none", padding: "0.55rem 0.7rem" }}
+        style={{ background: "rgba(0,0,0,0.28)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)", borderRadius: 8, color: "var(--oh-ink, #fff)", flex: 1, fontSize: "0.82rem", outline: "none", padding: "0.55rem 0.7rem" }}
         />
         <button
         type="button"
@@ -499,23 +500,23 @@ const CountryInfoPanel = () => {
         </div>
 
         {!ready ? (
-            <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem", padding: "0.3rem 0 0.4rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.8rem", padding: "0.3rem 0 0.4rem" }}>
             Loading...
             </div>
         ) : filteredEvents.length === 0 ? (
-            <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.8rem", padding: "0.3rem 0 0.4rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.8rem", padding: "0.3rem 0 0.4rem" }}>
             No events found for this country.
             </div>
         ) : (
             <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem", padding: "0.2rem 0 0.4rem" }}>
             {filteredEvents.slice(0, eventLimit).map((event) => (
-                <div key={event.id} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, padding: "0.55rem 0.7rem" }}>
+                <div key={event.id} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 10, padding: "0.55rem 0.7rem" }}>
                 <div style={{ alignItems: "baseline", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
                 <span style={{ fontSize: "0.82rem", fontWeight: 700 }}>{event.title}</span>
-                <span style={{ color: "rgba(255,255,255,0.4)", flexShrink: 0, fontSize: "0.68rem" }}>{(formatGameDateReadable(event.date) || event.date)}</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", flexShrink: 0, fontSize: "0.68rem" }}>{(formatGameDateReadable(event.date) || event.date)}</span>
                 </div>
                 {event.description && (
-                    <div style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.74rem", lineHeight: 1.5, marginTop: "0.2rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.74rem", lineHeight: 1.5, marginTop: "0.2rem" }}>
                     {String(event.description).length > 220 ? `${String(event.description).slice(0, 220)}…` : event.description}
                     </div>
                 )}
@@ -537,9 +538,9 @@ const CountryInfoPanel = () => {
         {subordination && (
             <div
                 style={{
-                    background: "rgba(255,255,255,0.05)",
-                    border: "1px solid rgba(255,255,255,0.13)",
-                    borderLeft: "2px solid rgba(255,255,255,0.3)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)",
+                    borderLeft: "2px solid color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)",
                     borderRadius: 12,
                     display: "flex",
                     flexDirection: "column",
@@ -549,7 +550,7 @@ const CountryInfoPanel = () => {
                 }}
             >
                 <span style={{ fontSize: "0.9rem", fontWeight: 800, letterSpacing: "0.01em" }}>{subordination.headline}</span>
-                <div style={{ color: "rgba(255,255,255,0.86)", fontSize: "0.78rem", lineHeight: 1.45 }}>{subordination.meaning}</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", fontSize: "0.78rem", lineHeight: 1.45 }}>{subordination.meaning}</div>
                 {subordination.facts.length > 0 && (
                     <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
                         {subordination.facts.map((fact) => (
@@ -557,9 +558,9 @@ const CountryInfoPanel = () => {
                                 key={fact}
                                 style={{
                                     background: "rgba(0,0,0,0.22)",
-                                    border: "1px solid rgba(255,255,255,0.1)",
+                                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
                                     borderRadius: 999,
-                                    color: "rgba(255,255,255,0.7)",
+                                    color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)",
                                     fontSize: "0.68rem",
                                     padding: "0.12rem 0.45rem",
                                     whiteSpace: "nowrap",
@@ -569,7 +570,7 @@ const CountryInfoPanel = () => {
                     </div>
                 )}
                 {subordination.provenance && (
-                    <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.7rem", fontStyle: "italic" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.7rem", fontStyle: "italic" }}>
                         {subordination.provenance}
                     </div>
                 )}
@@ -581,7 +582,7 @@ const CountryInfoPanel = () => {
             {tags.map((tag) => (
                 <span
                     key={tag}
-                    style={{ ...pillStyle, background: "rgba(255,255,255,0.11)", borderColor: "rgba(255,255,255,0.25)" }}
+                    style={{ ...pillStyle, background: "color-mix(in srgb, var(--oh-ink, #fff) 11%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" }}
                     title="What this country is — the map-maker set this, and the AI reads it as context"
                 >
                     {tag}
@@ -597,7 +598,7 @@ const CountryInfoPanel = () => {
         <div>
         <div style={{ fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.35rem" }}>Alternative Names</div>
         {aliases.length === 0 ? (
-            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.78rem" }}>None</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.78rem" }}>None</div>
         ) : (
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
             {aliases.map((alias) => (
@@ -609,7 +610,7 @@ const CountryInfoPanel = () => {
         <div>
         <div style={{ fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.35rem" }}>Sovereign Regions ({regions.length})</div>
         {regions.length === 0 ? (
-            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.78rem" }}>None</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.78rem" }}>None</div>
         ) : (
             <RegionPills
             names={regions}
@@ -626,7 +627,7 @@ const CountryInfoPanel = () => {
             <div>
             <div style={{ fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.35rem" }}>Controlled, Not Sovereign ({controlledForeignRegions.length})</div>
             {controlledForeignRegions.length === 0 ? (
-                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.76rem" }}>None</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.76rem" }}>None</div>
             ) : (
                 <RegionPills
                 names={controlledForeignRegions}
@@ -639,7 +640,7 @@ const CountryInfoPanel = () => {
             <div>
             <div style={{ fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.35rem" }}>Under Foreign Control ({occupiedSovereignRegions.length})</div>
             {occupiedSovereignRegions.length === 0 ? (
-                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.76rem" }}>None</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.76rem" }}>None</div>
             ) : (
                 <RegionPills
                 names={occupiedSovereignRegions}
@@ -653,10 +654,10 @@ const CountryInfoPanel = () => {
         )}
 
         {report !== null && (
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 10, marginTop: "0.6rem", padding: "0.7rem 0.8rem" }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 10, marginTop: "0.6rem", padding: "0.7rem 0.8rem" }}>
             <div style={{ fontSize: "0.85rem", fontWeight: 700, marginBottom: "0.3rem" }}>Advisor Report</div>
             {report === "loading" ? (
-                <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.78rem" }}>Preparing the report…</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.78rem" }}>Preparing the report…</div>
             ) : report?.error ? (
                 <div style={{ color: "#f87171", fontSize: "0.78rem" }}>{report.error}</div>
             ) : (
@@ -664,7 +665,7 @@ const CountryInfoPanel = () => {
                 // model's report reads as one, not as pipes and a literal tag.
                 <>
                 <MarkdownStyleInjector />
-                <Markdown bare className="timeline-markdown" style={{ color: "rgba(255,255,255,0.85)", fontSize: "0.79rem", lineHeight: 1.55 }}>
+                <Markdown bare className="timeline-markdown" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)", fontSize: "0.79rem", lineHeight: 1.55 }}>
                 {String(report)}
                 </Markdown>
                 </>
@@ -675,14 +676,14 @@ const CountryInfoPanel = () => {
 
         {/* Footer */}
         {/* The buttons wrap onto two lines on a narrow phone rather than squeezing their words. */}
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", display: "flex", flexWrap: "wrap", gap: "0.6rem", padding: "0.8rem 1.1rem" }}>
+        <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", display: "flex", flexWrap: "wrap", gap: "0.6rem", padding: "0.8rem 1.1rem" }}>
         <button type="button" className="oh-tap-row" onClick={runAdvisorReport} style={{ ...footerButtonStyle, flex: "1 1 auto", whiteSpace: "nowrap" }}>
         {hasReport ? "Regenerate Report" : "Advisor Report"}
         </button>
         <button type="button" className="oh-tap-row" onClick={openStats} style={{ ...footerButtonStyle, flex: "1 1 auto", whiteSpace: "nowrap" }}>
         Stats
         </button>
-        <button type="button" className="oh-tap-row" onClick={openDiplomacy} style={{ ...footerButtonStyle, background: "rgba(255,255,255,0.15)", border: "1px solid rgba(255,255,255,0.28)", flex: "1 1 auto", whiteSpace: "nowrap" }}>
+        <button type="button" className="oh-tap-row" onClick={openDiplomacy} style={{ ...footerButtonStyle, background: "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", flex: "1 1 auto", whiteSpace: "nowrap" }}>
         Open Diplomacy
         </button>
         </div>

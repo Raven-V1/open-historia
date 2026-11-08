@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "../Game/GameUI/carbonIcons.jsx";
 import { panelSurface, inputStyle } from "./editorStyles.js";
 import { flagImageUrlFromGid } from "../runtime/countryFlags.js";
 import { saveBlobToDisk } from "../runtime/saveFile.js";
@@ -19,7 +20,7 @@ const buttonStyle = (active = false) => ({
   cursor: "pointer",
   fontSize: 12,
   fontWeight: 700,
-  background: active ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.06)",
+  background: active ? "rgba(0,0,0,0.5)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
 });
 
 // runtime/saveFile.js: a download in a browser, Downloads/Open Historia in the app.
@@ -1088,10 +1089,10 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
         padding: 0,
       }}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "11px 13px", borderBottom: "1px solid rgba(255,255,255,0.1)" }}>
-        <div style={{ fontWeight: 800, fontSize: 14 }}>🗺 Province Map Importer</div>
+      <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "11px 13px", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }}>
+        <div style={{ fontWeight: 800, fontSize: 14 }}><UiIcon name="map" size={14} /> Province Map Importer</div>
         <div style={{ flex: 1 }} />
-        <button onClick={onClose} style={{ ...buttonStyle(false), padding: "3px 8px" }}>✕</button>
+        <button onClick={onClose} style={{ ...buttonStyle(false), padding: "3px 8px" }}><UiIcon name="close" size={14} /></button>
       </div>
 
       <div style={{ padding: 13, display: "grid", gap: 12 }}>
@@ -1111,7 +1112,7 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
                 onChange={(e) => chooseRaster(e.target.files?.[0] || null)}
                 style={{ ...inputStyle, padding: 7 }}
               />
-              <span style={{ color: "rgba(255,255,255,0.5)" }}>24/32-bit BMP is decoded directly. PNG/JPEG/WebP use the browser image decoder.</span>
+              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>24/32-bit BMP is decoded directly. PNG/JPEG/WebP use the browser image decoder.</span>
             </label>
 
             <label style={{ display: "grid", gap: 5, fontSize: 11.5 }}>
@@ -1122,7 +1123,7 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
                 onChange={(e) => { setDefinitionFile(e.target.files?.[0] || null); setResult(null); }}
                 style={{ ...inputStyle, padding: 7 }}
               />
-              <span style={{ color: "rgba(255,255,255,0.5)" }}>When supplied, province IDs/type/terrain metadata are preserved and “land only” can exclude sea/lake provinces.</span>
+              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>When supplied, province IDs/type/terrain metadata are preserved and “land only” can exclude sea/lake provinces.</span>
             </label>
 
             <div style={{ display: "grid", gap: 6 }}>
@@ -1134,7 +1135,7 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
                   ["north", "North latitude"],
                   ["south", "South latitude"],
                 ].map(([key, label]) => (
-                  <label key={key} style={{ fontSize: 10.5, color: "rgba(255,255,255,0.58)" }}>
+                  <label key={key} style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)" }}>
                     {label}
                     <input
                       type="number"
@@ -1148,7 +1149,7 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
               </div>
               <div style={{ display: "flex", gap: 7, alignItems: "center", flexWrap: "wrap" }}>
                 <button onClick={() => { setBounds(WORLD); setResult(null); }} style={buttonStyle(false)}>Reset whole-world fit</button>
-                <label style={{ fontSize: 10.5, color: "rgba(255,255,255,0.58)" }}>
+                <label style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)" }}>
                   overlay opacity&nbsp;
                   <input type="range" min="0.1" max="0.9" step="0.05" value={opacity} onChange={(e) => setOpacity(Number(e.target.value))} />
                 </label>
@@ -1205,10 +1206,10 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
             </label>
 
             {metadataFile && (
-              <div style={{ display: "grid", gap: 7, padding: "9px 10px", borderRadius: 9, background: "rgba(255,255,255,0.1)", border: "1px solid rgba(255,255,255,0.1)" }}>
+              <div style={{ display: "grid", gap: 7, padding: "9px 10px", borderRadius: 9, background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }}>
                 <div style={{ fontSize: 11.5, fontWeight: 800 }}>Metadata join</div>
 
-                <label style={{ fontSize: 10.7, color: "rgba(255,255,255,0.65)" }}>
+                <label style={{ fontSize: 10.7, color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)" }}>
                   Geometry key
                   <select value={geoJoinKey} onChange={(e) => { setGeoJoinKey(e.target.value); setResult(null); }} style={{ ...inputStyle, marginTop: 3 }}>
                     <option value="auto">Auto-detect</option>
@@ -1216,7 +1217,7 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
                   </select>
                 </label>
 
-                <label style={{ fontSize: 10.7, color: "rgba(255,255,255,0.65)" }}>
+                <label style={{ fontSize: 10.7, color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)" }}>
                   Metadata key
                   <select value={metadataJoinKey} onChange={(e) => { setMetadataJoinKey(e.target.value); setResult(null); }} style={{ ...inputStyle, marginTop: 3 }}>
                     <option value="auto">Auto-detect</option>
@@ -1228,7 +1229,7 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
                   </select>
                 </label>
 
-                <label style={{ fontSize: 10.7, color: "rgba(255,255,255,0.65)" }}>
+                <label style={{ fontSize: 10.7, color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)" }}>
                   Region name field
                   <select value={metadataNameField} onChange={(e) => { setMetadataNameField(e.target.value); setResult(null); }} style={{ ...inputStyle, marginTop: 3 }}>
                     <option value="auto">Auto-detect name / region_name / NAME…</option>
@@ -1260,7 +1261,7 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
             </div>
 
             {stats?.cityMarkers > 0 && (
-              <div style={{ display: "grid", gap: 6, padding: "9px 10px", borderRadius: 9, background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.1)" }}>
+              <div style={{ display: "grid", gap: 6, padding: "9px 10px", borderRadius: 9, background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }}>
                 <div style={{ fontSize: 11.5, fontWeight: 800 }}>City markers detected: {Number(stats.cityMarkers).toLocaleString()}</div>
                 <label style={{ fontSize: 11 }}>
                   <input type="checkbox" checked={importCities} onChange={(e) => setImportCities(e.target.checked)} />{" "}
@@ -1292,10 +1293,10 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
 
         {(busy || progress.message) && (
           <div style={{ display: "grid", gap: 5 }}>
-            <div style={{ height: 7, borderRadius: 999, background: "rgba(255,255,255,0.08)", overflow: "hidden" }}>
-              <div style={{ width: `${Math.max(0, Math.min(100, (progress.fraction || 0) * 100))}%`, height: "100%", background: "rgba(255,255,255,0.14)" }} />
+            <div style={{ height: 7, borderRadius: 999, background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", overflow: "hidden" }}>
+              <div style={{ width: `${Math.max(0, Math.min(100, (progress.fraction || 0) * 100))}%`, height: "100%", background: "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)" }} />
             </div>
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.62)" }}>{progress.message}</div>
+            <div style={{ fontSize: 11, color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)" }}>{progress.message}</div>
           </div>
         )}
 
@@ -1345,12 +1346,12 @@ const ProvinceImportPanel = ({ api, polities = {}, flags = {}, importPolityRoste
         ) : null}
 
         {status && (
-          <div style={{ padding: "8px 9px", borderRadius: 8, background: status.includes("imported") ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)", border: "1px solid rgba(255,255,255,0.12)", fontSize: 11.5, lineHeight: 1.45 }}>
+          <div style={{ padding: "8px 9px", borderRadius: 8, background: status.includes("imported") ? "rgba(34,197,94,0.08)" : "rgba(239,68,68,0.08)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", fontSize: 11.5, lineHeight: 1.45 }}>
             {status}
           </div>
         )}
 
-        <div style={{ paddingTop: 8, borderTop: "1px solid rgba(255,255,255,0.1)", fontSize: 10.8, lineHeight: 1.45, color: "rgba(255,255,255,0.5)" }}>
+        <div style={{ paddingTop: 8, borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", fontSize: 10.8, lineHeight: 1.45, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>
           <b>Safety:</b> Apply automatically downloads the current regions plus authored city markers as one mixed GeoJSON backup before replacement, and that backup can be re-imported from the GeoJSON tab. Whole-map import deliberately clears the in-memory region Undo stack instead of keeping two enormous worlds resident at once.
         </div>
       </div>

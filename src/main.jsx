@@ -21,6 +21,8 @@ import "./runtime/settingsLog.js";
 import App from "./App.jsx";
 import "maplibre-gl/dist/maplibre-gl.css";
 import "./styles.css";
+import "./assets/fonts/fonts-ibm-plex.css";
+import "./carbon/carbon.scss";
 
 // The website and the local server (a normal browser tab that can be installed
 // as an app) register public/sw.js. The Android app does not: mobile/scripts/

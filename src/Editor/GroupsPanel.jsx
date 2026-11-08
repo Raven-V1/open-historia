@@ -138,7 +138,7 @@ const GroupsPanel = ({ api, groups = {}, setGroups, selection = [], regionEpoch 
         <>
           <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {names.length === 0 && (
-              <div style={{ fontSize: 12, color: "rgba(255,255,255,0.5)" }}>No groups yet.</div>
+              <div style={{ fontSize: 12, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>No groups yet.</div>
             )}
             {names.map((name) => (
               <button
@@ -149,7 +149,7 @@ const GroupsPanel = ({ api, groups = {}, setGroups, selection = [], regionEpoch 
               >
                 <Swatch color={recordOf(name).color} />
                 <span style={{ flex: 1, minWidth: 0, overflowWrap: "anywhere" }}>{name}</span>
-                <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 500 }}>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: 11, fontWeight: 500 }}>
                   {(usage[name] ?? 0) === 1 ? "1 region" : `${usage[name] ?? 0} regions`}
                 </span>
               </button>
@@ -170,7 +170,7 @@ const GroupsPanel = ({ api, groups = {}, setGroups, selection = [], regionEpoch 
             </button>
           </div>
           {selection.length > 0 && (
-            <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>
+            <div style={{ fontSize: 11, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>
               A new group takes the {selection.length === 1 ? "selected region" : `${selection.length} selected regions`}.
             </div>
           )}
@@ -260,7 +260,7 @@ const GroupsPanel = ({ api, groups = {}, setGroups, selection = [], regionEpoch 
           </div>
 
           <div style={labelDim}>Area</div>
-          <div style={{ fontSize: 12, color: "rgba(255,255,255,0.75)" }}>
+          <div style={{ fontSize: 12, color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)" }}>
             {(usage[current] ?? 0) === 1 ? "1 region" : `${usage[current] ?? 0} regions`}
             {selection.length > 0 && ` · ${selection.length} selected`}
           </div>

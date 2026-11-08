@@ -59,7 +59,7 @@ test("Events and Timeline use themeable translucent surfaces without changing sk
 
 test("Tools / Cheats chrome consumes theme tokens without changing administrative operations", () => {
   assert.match(settings, /const QuickAction = [\s\S]*?neutral: \{ background: "var\(--oh-ui-overlay-card,/);
-  assert.match(settings, /const QuickMenuTabButton = [\s\S]*?background: selected \? "var\(--oh-ui-active,/);
+  assert.match(settings, /const QuickMenuTabs = [\s\S]*?<CarbonTabList aria-label="Game menu"/);
   assert.match(settings, /className=\{\x60oh-menu-card/);
   assert.match(settings, /background: "var\(--oh-ui-overlay, rgba\(32,32,35,0\.63\)\)"/);
   assert.match(cheats, /const inputStyle = \{[\s\S]*?background: "var\(--oh-ui-overlay-strong,/);

@@ -1,5 +1,7 @@
 /*! Open Historia — portions (reasoning toggle + small-screen menu) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { lazy, Suspense, useEffect, useId, useLayoutEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import UiIcon from "./carbonIcons.jsx";
+import { CarbonCheckbox, CarbonComboBox, CarbonSelect, CarbonSlider, CarbonTab, CarbonTabList, CarbonTabs, CarbonTextInput, SwitchControl } from "./carbonControls.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
 import { createPortal } from "react-dom";
@@ -132,7 +134,7 @@ const baseStyle = {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     fontFamily: "sans-serif",
     borderRadius: "14px",
     border: "1px solid var(--oh-hud-border)",
@@ -144,7 +146,7 @@ const labelStyle = {
     fontSize: "0.78rem",
     fontWeight: 650,
     marginBottom: "0.4rem",
-    color: "rgba(255,255,255,0.88)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)",
     cursor: "text",
 };
 
@@ -152,9 +154,9 @@ const inputStyle = {
     width: "100%",
     padding: "0.55rem 0.75rem",
     borderRadius: "8px",
-    border: "1px solid rgba(255,255,255,0.1)",
-    backgroundColor: "rgba(255,255,255,0.04)",
-    color: "#f8fafc",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+    backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+    color: "var(--oh-ink, #fff)",
     fontSize: "0.82rem",
     outline: "none",
     boxSizing: "border-box",
@@ -165,7 +167,7 @@ const inputStyle = {
 const helperStyle = {
     marginTop: "0.35rem",
     fontSize: "0.72rem",
-    color: "rgba(255,255,255,0.48)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)",
     lineHeight: 1.45,
 };
 
@@ -176,9 +178,9 @@ const fieldGroupStyle = {
 const smallButtonStyle = {
     padding: "0.45rem 0.75rem",
     borderRadius: "8px",
-    border: "1px solid rgba(255,255,255,0.1)",
-    backgroundColor: "rgba(255,255,255,0.06)",
-    color: "#f8fafc",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+    backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+    color: "var(--oh-ink, #fff)",
     fontSize: "0.78rem",
     fontWeight: 600,
     cursor: "pointer",
@@ -199,8 +201,8 @@ const listCardStyle = {
     gap: "0.5rem",
     padding: "0.6rem 0.75rem",
     borderRadius: "8px",
-    border: "1px solid rgba(255,255,255,0.08)",
-    backgroundColor: "rgba(255,255,255,0.025)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+    backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)",
     marginBottom: "0.45rem",
 };
 
@@ -242,54 +244,21 @@ function groupProviders(options) {
 }
 
 const LanguagePicker = ({ label, current, onSelect, saving = false, helperText, options = getLanguageOptions() }) => {
-    const [query, setQuery] = useState("");
-    const normalizedQuery = query.trim().toLowerCase();
-    const filtered = normalizedQuery
-        ? options.filter((option) =>
-            `${option.name} ${option.native} ${option.code}`.toLowerCase().includes(normalizedQuery))
-        : options;
-    const listed = filtered.some((option) => option.code === current);
-
+    const languageText = (option) => (option ? `${option.name}${option.native && option.native !== option.name ? ` — ${option.native}` : ""}` : "");
     return (
         <div style={fieldGroupStyle}>
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: "0.4rem" }}>
-            <label style={{ ...labelStyle, marginBottom: 0 }}>{label}</label>
-            {query && (
-                <button
-                type="button"
-                onClick={() => setQuery("")}
-                style={{ background: "none", border: "none", color: "#60a5fa", fontSize: "0.7rem", cursor: "pointer", padding: 0 }}
-                >
-                Clear
-                </button>
-            )}
-        </div>
-        <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
-            <select
-            data-no-translate
-            value={listed ? current : ""}
-            onChange={(event) => onSelect(event.target.value)}
-            style={{ ...inputStyle, flex: "1 1 200px", cursor: "pointer", opacity: saving ? 0.6 : 1, borderColor: "rgba(96,165,250,0.3)" }}
-            >
-            {!listed && (
-                <option value="" disabled>
-                {filtered.length ? `${filtered.length} matches — pick one` : "No matching language"}
-                </option>
-            )}
-            {filtered.map((option) => (
-                <option key={option.code} value={option.code} style={{ color: "black" }}>
-                {option.name}{option.native && option.native !== option.name ? ` — ${option.native}` : ""}
-                </option>
-            ))}
-            </select>
-            <input
-            style={{ ...inputStyle, flex: "0 1 180px", minWidth: "130px" }}
-            type="text"
-            value={query}
-            placeholder="Search languages..."
-            onChange={(event) => setQuery(event.target.value)}
-            />
-        </div>
+        <CarbonComboBox
+        id={`oh-language-${label.replace(/\s+/g, "-").toLowerCase()}`}
+        titleText={label}
+        placeholder="Search languages..."
+        items={options}
+        selectedItem={options.find((option) => option.code === current) || null}
+        itemToString={languageText}
+        shouldFilterItem={({ item, inputValue }) => !inputValue || inputValue === languageText(options.find((option) => option.code === current)) || `${item.name} ${item.native} ${item.code}`.toLowerCase().includes(inputValue.trim().toLowerCase())}
+        onChange={({ selectedItem }) => { if (selectedItem) onSelect(selectedItem.code); }}
+        disabled={saving}
+        size="md"
+        />
         {helperText && (
             <div style={helperStyle}>
             {helperText}
@@ -462,14 +431,7 @@ const GameBasemapField = () => {
     return (
         <div style={fieldGroupStyle}>
             <label style={labelStyle} htmlFor="game-basemap-style">Basemap</label>
-            <select
-                id="game-basemap-style"
-                data-no-translate
-                value={shown.pick}
-                disabled={only}
-                onChange={(event) => setGamePick(event.target.value)}
-                style={{ ...inputStyle, cursor: only ? "not-allowed" : "pointer", opacity: only ? 0.6 : 1 }}
-            >
+            <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="game-basemap-style" data-no-translate value={shown.pick} disabled={only} onChange={(event) => setGamePick(event.target.value)} >
                 {option(maps[0])}
                 {grouped ? (
                     <>
@@ -477,7 +439,7 @@ const GameBasemapField = () => {
                         <optgroup label={uiString(BASEMAP_GROUP_LABELS.builtin)}>{builtin.map(option)}</optgroup>
                     </>
                 ) : [...scenarioOwn, ...builtin].map(option)}
-            </select>
+            </CarbonSelect>
             <div style={helperStyle}>
                 {only
                     ? "This scenario has one map."
@@ -532,16 +494,9 @@ const DefaultBasemapField = () => {
             />
             <div style={fieldGroupStyle}>
                 <label style={labelStyle} htmlFor="default-basemap">Default basemap</label>
-                <select
-                    id="default-basemap"
-                    data-no-translate
-                    value={value}
-                    disabled={!useDefault}
-                    onChange={(event) => setMapSettingValue(DEFAULT_BASEMAP_KEY, event.target.value)}
-                    style={{ ...inputStyle, cursor: useDefault ? "pointer" : "not-allowed", opacity: useDefault ? 1 : 0.6 }}
-                >
+                <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="default-basemap" data-no-translate value={value} disabled={!useDefault} onChange={(event) => setMapSettingValue(DEFAULT_BASEMAP_KEY, event.target.value)} >
                     {ESRI_BASEMAPS.map((basemap) => <option key={basemap.id} value={basemap.id} style={{ color: "black" }}>{basemap.label}</option>)}
-                </select>
+                </CarbonSelect>
                 <div style={helperStyle}>
                     {useDefault
                         ? "Games start on this map wherever their scenario offers it, and on the scenario's starting map elsewhere. Each game's own settings can still pick another."
@@ -592,46 +547,12 @@ const Toggle = ({ label, enabled, onToggle, disabled = false, inactive = "" }) =
     {inactive
         ? (
             <span style={{ minWidth: 0, paddingRight: "0.5rem" }}>
-            <span style={{ display: "block", fontSize: "0.86rem", fontWeight: 550, color: "rgba(255,255,255,0.9)" }}>{label}</span>
-            <span style={{ color: "rgba(255,255,255,0.45)", display: "block", fontSize: "0.7rem", marginTop: "0.15rem" }}>{inactive}</span>
+            <span style={{ display: "block", fontSize: "0.86rem", fontWeight: 550, color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)" }}>{label}</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", display: "block", fontSize: "0.7rem", marginTop: "0.15rem" }}>{inactive}</span>
             </span>
         )
-        : <span style={{ fontSize: "0.86rem", fontWeight: 550, color: "rgba(255,255,255,0.9)", paddingRight: "0.5rem" }}>{label}</span>}
-    <button
-    type="button"
-    onClick={touch || disabled ? undefined : onToggle}
-    disabled={disabled}
-    aria-label={label}
-    style={{
-        width: "2.75rem",
-        height: "1.5rem",
-        borderRadius: "9999px",
-        border: "none",
-        cursor: disabled ? "default" : "pointer",
-        opacity: disabled ? 0.45 : 1,
-        position: "relative",
-        padding: "2px",
-        boxSizing: "border-box",
-        transition: "background-color 150ms ease, box-shadow 150ms ease",
-        backgroundColor: enabled ? (inactive ? "var(--oh-ui-hover, rgba(59,130,246,0.35))" : "var(--oh-ui-active, #3b82f6)") : "rgba(255,255,255,0.14)",
-        boxShadow: enabled && !inactive ? "0 0 10px var(--oh-ui-line, rgba(59,130,246,0.35))" : "none",
-        flexShrink: 0,
-        outline: "none",
-    }}
-    >
-    <div
-    style={{
-        width: "1.25rem",
-        height: "1.25rem",
-        backgroundColor: "#ffffff",
-        borderRadius: "50%",
-        transform: enabled ? "translateX(1.25rem)" : "translateX(0px)",
-        transition: "transform 150ms cubic-bezier(0.2, 0, 0, 1)",
-        boxShadow: "0 1px 3px rgba(0,0,0,0.35)",
-        pointerEvents: "none",
-    }}
-    />
-    </button>
+        : <span style={{ fontSize: "0.86rem", fontWeight: 550, color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", paddingRight: "0.5rem" }}>{label}</span>}
+    <SwitchControl label={label} checked={enabled} disabled={disabled} onChange={() => onToggle()} />
     </div>
     );
 };
@@ -659,7 +580,7 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
 
     return (
         <div style={{ marginBottom: "1rem" }}>
-        <label style={{ display: "block", fontSize: "0.9rem", marginBottom: "0.6rem", color: "white" }}>
+        <label style={{ display: "block", fontSize: "0.9rem", marginBottom: "0.6rem", color: "var(--oh-ink, #fff)" }}>
         AI Provider
         </label>
 
@@ -669,9 +590,9 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
             width: "100%",
             padding: "0.8rem 0.9rem",
             borderRadius: "10px",
-            border: "1px solid rgba(255,255,255,0.12)",
+            border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
             backgroundColor: "rgba(0,0,0,0.18)",
-            color: "white",
+            color: "var(--oh-ink, #fff)",
             cursor: "pointer",
             textAlign: "left",
         }}
@@ -681,11 +602,11 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
         <div style={{ fontSize: "0.9rem", fontWeight: 700 }}>
         {selectedProvider.label}
         </div>
-        <div style={{ marginTop: "0.2rem", fontSize: "0.72rem", color: "rgba(255,255,255,0.6)", lineHeight: 1.45 }}>
+        <div style={{ marginTop: "0.2rem", fontSize: "0.72rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", lineHeight: 1.45 }}>
         {selectedProvider.group} · {selectedProvider.description}
         </div>
         </div>
-        <div style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.7)" }}>
+        <div style={{ fontSize: "0.85rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         {isCatalogOpen ? "Hide" : "Change"}
         </div>
         </div>
@@ -701,8 +622,8 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
                 marginTop: "0.7rem",
                 padding: "0.75rem",
                 borderRadius: "10px",
-                border: "1px solid rgba(255,255,255,0.1)",
-                backgroundColor: "rgba(255,255,255,0.04)",
+                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+                backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
             }}
             >
             <input
@@ -721,7 +642,7 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
             <div style={{ maxHeight: "12rem", overflowY: "auto", scrollbarWidth: "none", display: "flex", flexDirection: "column", gap: "0.7rem" }}>
             {groupedProviders.length > 0 ? groupedProviders.map((group) => (
                 <div key={group.name}>
-                <div style={{ marginBottom: "0.35rem", fontSize: "0.68rem", fontWeight: 700, color: "rgba(255,255,255,0.45)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
+                <div style={{ marginBottom: "0.35rem", fontSize: "0.68rem", fontWeight: 700, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", textTransform: "uppercase", letterSpacing: "0.04em" }}>
                 {group.name}
                 </div>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem" }}>
@@ -737,9 +658,9 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
                             padding: "0.7rem 0.75rem",
                             borderRadius: "8px",
                             border: "1px solid",
-                            borderColor: selected ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.08)",
+                            borderColor: selected ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
                             backgroundColor: selected ? "rgba(0,0,0,0.42)" : "rgba(0,0,0,0.16)",
-                            color: "white",
+                            color: "var(--oh-ink, #fff)",
                             cursor: "pointer",
                             textAlign: "left",
                         }}
@@ -749,12 +670,12 @@ const ApiProviderSelector = ({ provider, onProviderChange }) => {
                         {option.label}
                         </span>
                         {selected && (
-                            <span style={{ fontSize: "0.68rem", color: "#93c5fd", fontWeight: 700 }}>
+                            <span style={{ fontSize: "0.68rem", color: "var(--oh-link, #93c5fd)", fontWeight: 700 }}>
                             Active
                             </span>
                         )}
                         </div>
-                        <div style={{ marginTop: "0.18rem", fontSize: "0.72rem", lineHeight: 1.4, color: "rgba(255,255,255,0.6)" }}>
+                        <div style={{ marginTop: "0.18rem", fontSize: "0.72rem", lineHeight: 1.4, color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)" }}>
                         {option.description}
                         </div>
                         </button>
@@ -788,17 +709,13 @@ const StructuredModeSelect = ({ onChange, value }) => {
     return (
         <div style={fieldGroupStyle}>
         <label style={labelStyle}>How the AI answers</label>
-        <select
-        value={mode}
-        onChange={(event) => onChange(event.target.value)}
-        style={{ ...inputStyle, cursor: "pointer" }}
-        >
+        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-4" value={mode} onChange={(event) => onChange(event.target.value)} >
         {["auto", ...STRUCTURED_MODES].map((option) => (
             <option key={option} value={option} style={{ color: "black" }}>
             {STRUCTURED_MODE_LABELS[option]}
             </option>
         ))}
-        </select>
+        </CarbonSelect>
         <div style={helperStyle}>
         {/* The general point first, so it reads the same whatever is selected,
             then what THIS choice means. */}
@@ -821,6 +738,9 @@ const EyeOffIcon = ({ size = 18 }) => (
     <line x1="1" y1="1" x2="23" y2="23" />
   </svg>
 );
+
+// Where this build's source is published (the AGPL requires it to be offered).
+const SOURCE_CODE_URL = "https://github.com/Raven-V1/open-historia";
 
 const SettingsInput = ({
     label,
@@ -857,7 +777,11 @@ const SettingsInput = ({
             />
         ) : isPassword ? (
             <div style={{ alignItems: "center", display: "flex", position: "relative" }}>
-                <input
+                <CarbonTextInput
+                id={`${listId}-field`}
+                hideLabel
+                labelText={label || placeholder || "API key"}
+                className="oh-carbon-password"
                 type={effectiveType}
                 value={value}
                 onChange={(event) => onChange(event.target.value)}
@@ -865,7 +789,6 @@ const SettingsInput = ({
                 autoComplete="off"
                 spellCheck={false}
                 list={list ? listId : undefined}
-                style={{ ...inputStyle, paddingRight: "2.5rem" }}
                 />
                 <button
                   type="button"
@@ -906,7 +829,10 @@ const SettingsInput = ({
                 </button>
             </div>
         ) : (
-            <input
+            <CarbonTextInput
+            id={`${listId}-field`}
+            hideLabel
+            labelText={label || placeholder || "Value"}
             type={type}
             value={value}
             onChange={(event) => onChange(event.target.value)}
@@ -914,7 +840,6 @@ const SettingsInput = ({
             autoComplete="off"
             spellCheck={false}
             list={list ? listId : undefined}
-            style={inputStyle}
             />
         )}
         {list && (
@@ -986,7 +911,7 @@ const STATUS_COLORS = {
     ready: { color: "#86efac", border: "rgba(134,239,172,0.28)", background: "rgba(34,197,94,0.1)" },
     spent: { color: "#fbbf24", border: "rgba(245,158,11,0.32)", background: "rgba(245,158,11,0.1)" },
     unusable: { color: "#fca5a5", border: "rgba(248,113,113,0.34)", background: "rgba(239,68,68,0.1)" },
-    busy: { color: "#93c5fd", border: "rgba(96,165,250,0.3)", background: "rgba(59,130,246,0.1)" },
+    busy: { color: "var(--oh-link, #93c5fd)", border: "rgba(96,165,250,0.3)", background: "rgba(59,130,246,0.1)" },
 };
 
 const describeRowStatus = (status, at) => {
@@ -1171,13 +1096,13 @@ const EntryEditor = ({ entry, connections, entries }) => {
         {connections.length > 1 && (
             <div style={fieldGroupStyle}>
             <label style={labelStyle}>Connection</label>
-            <select data-no-translate value={entry.connectionId} onChange={(event) => set("connectionId")(event.target.value)} style={{ ...inputStyle, cursor: "pointer" }}>
+            <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-5" data-no-translate value={entry.connectionId} onChange={(event) => set("connectionId")(event.target.value)} >
             {connections.map((candidate) => (
                 <option key={candidate.id} value={candidate.id} style={{ color: "black" }}>
                 {connectionDisplayName(candidate)} — {getProviderMeta(candidate.provider).label}
                 </option>
             ))}
-            </select>
+            </CarbonSelect>
             </div>
         )}
         {connection && <ConnectionFields connection={connection} sharedBy={sharedBy} />}
@@ -1194,7 +1119,7 @@ const EntryEditor = ({ entry, connections, entries }) => {
             : "Leave blank to use the built-in default."}
         />
         <details style={{ marginBottom: "0.4rem" }}>
-        <summary style={{ cursor: "pointer", fontSize: "0.74rem", color: "rgba(255,255,255,0.62)", marginBottom: "0.6rem", ...(touch ? TOUCH_SUMMARY : null) }}>This model only</summary>
+        <summary style={{ cursor: "pointer", fontSize: "0.74rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", marginBottom: "0.6rem", ...(touch ? TOUCH_SUMMARY : null) }}>This model only</summary>
         <SettingsInput
         label="Custom parameters for this model (JSON)"
         multiline
@@ -1224,7 +1149,7 @@ const FillPanel = ({ connections, onDone }) => {
         setAdded(fillFallbackList(order, models.split(/[\n,]/)));
     };
     return (
-        <div style={{ marginTop: "0.7rem", padding: "0.75rem", borderRadius: "10px", border: "1px solid rgba(255,255,255,0.1)", backgroundColor: "rgba(255,255,255,0.03)" }}>
+        <div style={{ marginTop: "0.7rem", padding: "0.75rem", borderRadius: "10px", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", backgroundColor: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)" }}>
         <div style={{ fontSize: "0.8rem", fontWeight: 700, marginBottom: "0.4rem" }}>Fill the list</div>
         <div style={{ ...helperStyle, marginTop: 0, marginBottom: "0.6rem" }}>
         Every model on every ticked connection, strongest model first across all of
@@ -1233,8 +1158,8 @@ const FillPanel = ({ connections, onDone }) => {
         </div>
         {connections.map((connection) => (
             <label key={connection.id} className="oh-tap-row" style={{ alignItems: "center", display: "flex", gap: "0.5rem", fontSize: "0.8rem", marginBottom: "0.35rem", cursor: "pointer" }}>
-            <input type="checkbox" checked={ticked.includes(connection.id)} onChange={() => toggle(connection.id)} />
-            {connectionDisplayName(connection)} <span style={{ color: "rgba(255,255,255,0.45)" }}>({getProviderMeta(connection.provider).label})</span>
+            <CarbonCheckbox id={`oh-fill-${connection.id}`} labelText="" hideLabel checked={ticked.includes(connection.id)} onChange={() => toggle(connection.id)} />
+            {connectionDisplayName(connection)} <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>({getProviderMeta(connection.provider).label})</span>
             </label>
         ))}
         <SettingsInput label="Models, strongest first (one per line)" multiline value={models} onChange={setModels} placeholder={GEMINI_DEFAULT_CHAIN.join("\n")} />
@@ -1298,7 +1223,7 @@ const FallbackListSection = () => {
             <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between", flexWrap: "wrap" }}>
             <div style={{ minWidth: 0, flex: 1 }}>
             <div data-no-translate style={{ fontSize: "0.82rem", fontWeight: 650, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-            <span style={{ color: "rgba(255,255,255,0.4)", marginRight: "0.4rem" }}>{index + 1}</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", marginRight: "0.4rem" }}>{index + 1}</span>
             {entry.resolved?.label ?? "(connection removed)"}
             </div>
             <div style={{ ...helperStyle, marginTop: "0.15rem" }}>
@@ -1313,7 +1238,7 @@ const FallbackListSection = () => {
             <button type="button" className="oh-tap" onClick={() => moveEntry(entry.id, index + 1)} disabled={index === entries.length - 1} aria-label="Move down" title="Move down" style={{ ...rowButtonStyle, opacity: index === entries.length - 1 ? 0.4 : 1 }}>↓</button>
             <button type="button" className="oh-tap-row" onClick={() => setEditingId(editingId === entry.id ? null : entry.id)} style={rowButtonStyle}>{editingId === entry.id ? "Done" : "Edit"}</button>
             {entry.status.status !== "ready" && <button type="button" className="oh-tap-row" onClick={() => resetEntryState(entry.id)} title="Clear this status. Every call tries this model again either way." style={rowButtonStyle}>Reset</button>}
-            <button type="button" className="oh-tap" onClick={() => remove(entry)} aria-label="Remove" title="Remove from the list" style={rowButtonStyle}>✕</button>
+            <button type="button" className="oh-tap" onClick={() => remove(entry)} aria-label="Remove" title="Remove from the list" style={rowButtonStyle}><UiIcon name="close" size={14} /></button>
             </div>
             {editingId === entry.id && (
                 <div style={{ marginTop: "0.75rem" }}>
@@ -1330,10 +1255,10 @@ const FallbackListSection = () => {
         {filling && <FillPanel connections={connections} onDone={() => setFilling(false)} />}
         <div style={{ ...fieldGroupStyle, marginTop: "0.9rem" }}>
         <label style={labelStyle}>When a model is rate limited</label>
-        <select value={view.rateLimitPolicy} onChange={(event) => setRateLimitPolicy(event.target.value)} style={{ ...inputStyle, cursor: "pointer" }}>
+        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-6" value={view.rateLimitPolicy} onChange={(event) => setRateLimitPolicy(event.target.value)} >
         <option value="next" style={{ color: "black" }}>Use the next one straight away (default)</option>
         <option value="wait" style={{ color: "black" }}>Wait, then try it again</option>
-        </select>
+        </CarbonSelect>
         <div style={helperStyle}>
         A rate limit is a short pause, not a used-up allowance, and it is usually
         over by the next call — which starts at the top of the list again. Waiting
@@ -1387,7 +1312,7 @@ const ConnectionsSection = () => {
                 </div>
                 <div style={{ display: "flex", gap: "0.3rem", flexShrink: 0 }}>
                 <button type="button" className="oh-tap-row" onClick={() => setEditingId(editingId === connection.id ? null : connection.id)} style={rowButtonStyle}>{editingId === connection.id ? "Done" : "Edit"}</button>
-                <button type="button" className="oh-tap" onClick={() => remove(connection)} aria-label="Remove" title="Remove connection" style={rowButtonStyle}>✕</button>
+                <button type="button" className="oh-tap" onClick={() => remove(connection)} aria-label="Remove" title="Remove connection" style={rowButtonStyle}><UiIcon name="close" size={14} /></button>
                 </div>
                 </div>
                 {editingId === connection.id && (
@@ -1438,12 +1363,12 @@ const TaskPicks = () => {
                 {AI_TASK_ROUTING.filter((entry) => entry.group === group).map(({ key, label, hint }) => (
                     <div key={key} style={fieldGroupStyle}>
                     <label style={labelStyle}>{label}</label>
-                    <select value={withConnection.some((entry) => entry.id === picks[key]) ? picks[key] : ""} onChange={(event) => update(key, event.target.value)} style={{ ...inputStyle, cursor: "pointer" }}>
+                    <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-7" value={withConnection.some((entry) => entry.id === picks[key]) ? picks[key] : ""} onChange={(event) => update(key, event.target.value)} >
                     <option value="" style={{ color: "black" }}>Start at the top of the list</option>
                     {withConnection.map((entry, index) => (
                         <option key={entry.id} value={entry.id} style={{ color: "black" }}>{index + 1}. {entry.resolved.label}</option>
                     ))}
-                    </select>
+                    </CarbonSelect>
                     <div style={helperStyle}>{hint}</div>
                     </div>
                 ))}
@@ -1562,14 +1487,14 @@ const RequestBudgetSection = () => {
         >
             <div style={{ marginBottom: "0.95rem" }}>
                 <div style={{ alignItems: "baseline", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
-                    <div style={{ color: "rgba(255,255,255,0.92)", fontSize: "0.82rem", fontWeight: 800 }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)", fontSize: "0.82rem", fontWeight: 800 }}>
                         <span data-no-translate>{day.used}</span> of <span data-no-translate>{day.limit}</span> used today
                     </div>
-                    <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.64rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.64rem" }}>
                         resets at <span data-no-translate>{formatResetTime(day.resetAt)}</span>
                     </div>
                 </div>
-                <div style={{ background: "rgba(255,255,255,0.07)", borderRadius: "999px", height: "6px", marginTop: "0.4rem", overflow: "hidden" }}>
+                <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "999px", height: "6px", marginTop: "0.4rem", overflow: "hidden" }}>
                     <div style={{ background: barColor, height: "100%", width: `${Math.round(share * 100)}%` }} />
                 </div>
                 <div style={{ ...helperStyle, marginTop: "0.4rem" }}>
@@ -1581,10 +1506,10 @@ const RequestBudgetSection = () => {
                 </div>
                 {tasks.length > 0 && (
                     <details style={{ marginTop: "0.4rem" }}>
-                        <summary style={{ cursor: "pointer", fontSize: "0.74rem", color: "rgba(255,255,255,0.62)", ...(touch ? TOUCH_SUMMARY : null) }}>Used today, by task</summary>
+                        <summary style={{ cursor: "pointer", fontSize: "0.74rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", ...(touch ? TOUCH_SUMMARY : null) }}>Used today, by task</summary>
                         <div style={{ display: "grid", gap: "0.15rem", marginTop: "0.3rem" }}>
                             {tasks.map((row) => (
-                                <div key={row.label} style={{ color: "rgba(255,255,255,0.72)", display: "flex", fontSize: "0.72rem", gap: "0.5rem", justifyContent: "space-between" }}>
+                                <div key={row.label} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", display: "flex", fontSize: "0.72rem", gap: "0.5rem", justifyContent: "space-between" }}>
                                     {/* A task this table does not name is shown as it was counted. */}
                                     <span data-no-translate={row.named ? undefined : true} style={{ minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.label}</span>
                                     <span data-no-translate>{row.count}</span>
@@ -1598,7 +1523,7 @@ const RequestBudgetSection = () => {
             <div style={{ border: "1px solid rgba(248,113,113,0.18)", borderRadius: "10px", background: "rgba(239,68,68,0.055)", marginBottom: "0.95rem", padding: "0.7rem 0.75rem" }}>
                 <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.6rem", justifyContent: "space-between" }}>
                     <div style={{ minWidth: 0 }}>
-                        <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.76rem", fontWeight: 800 }}>Emergency AI stop</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.76rem", fontWeight: 800 }}>Emergency AI stop</div>
                         <div style={{ ...helperStyle, marginTop: "0.2rem" }}>
                             Cancels all live AI generation requests the client can abort, including retries and fallback attempts. It does not undo finished work; an already-submitted provider batch job, or an Android native-LAN request already inside the native HTTP plugin, cannot be recalled.
                         </div>
@@ -1608,9 +1533,9 @@ const RequestBudgetSection = () => {
                     onClick={cancelActiveRequests}
                     style={{
                         ...smallButtonStyle,
-                        backgroundColor: activeAiRequests ? "rgba(239,68,68,0.18)" : "rgba(255,255,255,0.06)",
-                        borderColor: activeAiRequests ? "rgba(248,113,113,0.4)" : "rgba(255,255,255,0.13)",
-                        color: activeAiRequests ? "#fecaca" : "rgba(255,255,255,0.72)",
+                        backgroundColor: activeAiRequests ? "rgba(239,68,68,0.18)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                        borderColor: activeAiRequests ? "rgba(248,113,113,0.4)" : "color-mix(in srgb, var(--oh-ink, #fff) 13%, transparent)",
+                        color: activeAiRequests ? "#fecaca" : "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
                         flexShrink: 0,
                         fontWeight: 800,
                     }}
@@ -1618,7 +1543,7 @@ const RequestBudgetSection = () => {
                         Cancel all AI requests{activeAiRequests ? ` (${activeAiRequests})` : ""}
                     </button>
                 </div>
-                {cancelNotice && <div role="status" style={{ ...helperStyle, color: "rgba(255,255,255,0.68)", marginTop: "0.45rem" }}>{cancelNotice}</div>}
+                {cancelNotice && <div role="status" style={{ ...helperStyle, color: "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)", marginTop: "0.45rem" }}>{cancelNotice}</div>}
             </div>
 
             <Toggle
@@ -1714,10 +1639,10 @@ const SocialLinks = ({ discordUrl, redditUrl, githubUrl }) => {
                 rel="noopener noreferrer"
                 className="oh-tap-row"
                 style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.08)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
                     borderRadius: "7px",
-                    color: "rgba(255,255,255,0.58)",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)",
                     fontSize: "0.68rem",
                     fontWeight: 700,
                     padding: "0.38rem 0.55rem",
@@ -1762,7 +1687,7 @@ const SettingsButton = ({ onToggle, topOffset = "0.5rem", hidden = false }) => {
             transition: "opacity 180ms ease 40ms",
         }}
         >
-        ☰
+        <UiIcon name="menu" size={20} />
         </button>
     );
 };
@@ -2055,28 +1980,28 @@ const DiagnosticsLogViewer = () => {
             The desktop app&apos;s own entries could not be read just now.
             </div>
         )}
-        <div style={{ maxHeight: "18rem", overflowY: "auto", border: "1px solid rgba(255,255,255,0.1)", borderRadius: "6px" }}>
+        <div style={{ maxHeight: "18rem", overflowY: "auto", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "6px" }}>
         {shown === null && <div style={viewerNoteStyle}>Reading the log…</div>}
         {shown !== null && entries.length === 0 && (
             <div style={viewerNoteStyle}>{onlyProblems ? "No problems logged." : "Nothing logged yet."}</div>
         )}
         {entries.map((entry, index) => (
-            <div key={`${entry.at}-${index}`} style={{ borderBottom: "1px solid rgba(255,255,255,0.06)", padding: "0.3rem 0.45rem" }}>
+            <div key={`${entry.at}-${index}`} style={{ borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", padding: "0.3rem 0.45rem" }}>
             <div
             className="oh-tap-row"
             onClick={() => entry.detail && setExpanded(expanded === index ? null : index)}
             style={{ cursor: entry.detail ? "pointer" : "default", display: "flex", gap: "0.45rem", fontSize: "0.72rem", alignItems: touch ? "center" : "baseline" }}
             >
-            <span style={{ color: "rgba(255,255,255,0.4)", whiteSpace: "nowrap" }}>{String(entry.at || "").slice(11, 19)}</span>
-            <span style={{ color: entry.problem ? "#ffb35c" : "rgba(255,255,255,0.55)", fontWeight: 700, whiteSpace: "nowrap" }}>{entry.category}</span>
-            <span style={{ color: "#fff", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", whiteSpace: "nowrap" }}>{String(entry.at || "").slice(11, 19)}</span>
+            <span style={{ color: entry.problem ? "#ffb35c" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontWeight: 700, whiteSpace: "nowrap" }}>{entry.category}</span>
+            <span style={{ color: "var(--oh-ink, #fff)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", flex: 1 }}>
             {entry.message}{entry.repeat > 1 ? ` (×${entry.repeat})` : ""}
             </span>
-            {entry.detail && <span style={{ color: "rgba(255,255,255,0.35)" }}>{expanded === index ? "▾" : "▸"}</span>}
+            {entry.detail && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)" }}>{expanded === index ? "▾" : "▸"}</span>}
             </div>
             {expanded === index && (
                 <pre style={{
-                    background: "rgba(0,0,0,0.35)", borderRadius: 6, color: "rgba(255,255,255,0.8)",
+                    background: "rgba(0,0,0,0.35)", borderRadius: 6, color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)",
                     fontSize: "0.68rem", margin: "0.3rem 0 0", maxHeight: "12rem", overflow: "auto", padding: "0.45rem",
                     whiteSpace: "pre-wrap", wordBreak: "break-word",
                 }}>{entry.detail}</pre>
@@ -2088,7 +2013,7 @@ const DiagnosticsLogViewer = () => {
     );
 };
 
-const viewerNoteStyle = { padding: "0.6rem", fontSize: "0.72rem", color: "rgba(255,255,255,0.45)" };
+const viewerNoteStyle = { padding: "0.6rem", fontSize: "0.72rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" };
 
 // The button picks its own game — whichever is being played — so both the tooltip
 // and the result name it. A campaign name can be long; the button is one line.
@@ -2223,7 +2148,7 @@ const DiagnosticsPanel = () => {
 
     return (
         <div>
-        <div style={{ marginBottom: "0.55rem", fontSize: "0.72rem", color: "rgba(255,255,255,0.45)", lineHeight: 1.35 }}>
+        <div style={{ marginBottom: "0.55rem", fontSize: "0.72rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", lineHeight: 1.35 }}>
         The game keeps a running log of what you did — saves opened, orders queued, turns taken, and anything that went wrong. Send it with a bug report and it says what happened, in order. Saving it with the game attaches the campaign it happened in, which is what lets a fix be tested against it.
         </div>
 
@@ -2235,10 +2160,10 @@ const DiagnosticsPanel = () => {
         disabled={copyState === "copying"}
         style={{ ...diagnosticsButton, flex: 1 }}
         >
-        {copyState === "copied" ? "✓ Copied!" : copyState === "failed" ? "Couldn't copy" : copyState === "copying" ? "Copying…" : "📋 Copy log"}
+        {copyState === "copied" ? <><UiIcon name="check" size={14} /> Copied!</> : copyState === "failed" ? "Couldn't copy" : copyState === "copying" ? "Copying…" : <><UiIcon name="copy" size={14} /> Copy log</>}
         </button>
         <button type="button" className="oh-tap-row" onClick={handleDownload} style={{ ...diagnosticsButton, flex: 1 }}>
-        💾 Save log file
+        <UiIcon name="save" size={14} /> Save log file
         </button>
         </div>
 
@@ -2262,8 +2187,8 @@ const DiagnosticsPanel = () => {
             : attachState.kind === "failed"
             ? "Couldn't save the game"
             : attachState.kind === "saved"
-            ? `✓ Saved ${enabled ? "log + " : ""}“${shortGameName(attachState.name)}” (${attachState.size})`
-            : enabled ? "💾 Save log file + game" : "💾 Save game"}
+            ? <><UiIcon name="check" size={14} /> {`Saved ${enabled ? "log + " : ""}“${shortGameName(attachState.name)}” (${attachState.size})`}</>
+            : enabled ? <><UiIcon name="save" size={14} /> Save log file + game</> : <><UiIcon name="save" size={14} /> Save game</>}
         </button>
         )}
 
@@ -2273,12 +2198,12 @@ const DiagnosticsPanel = () => {
         onClick={() => setViewing((value) => !value)}
         style={{ ...diagnosticsButton, width: "100%", marginBottom: "0.5rem" }}
         >
-        {viewing ? "Hide log" : "🔎 View log"}
+        {viewing ? "Hide log" : <><UiIcon name="search" size={14} /> View log</>}
         </button>
         {viewing && <DiagnosticsLogViewer />}
 
         <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
-        <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>
+        <span style={{ fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>
         {/* The size, not just the count, because the cap is otherwise invisible:
             a player watching the count sit still cannot tell a quiet game from a
             log that is silently rolling its oldest entries off the front. */}
@@ -2304,7 +2229,7 @@ const DiagnosticsPanel = () => {
         </button>
         </div>
 
-        <div style={{ margin: "0.5rem 0 1rem", fontSize: "0.68rem", color: "rgba(255,255,255,0.38)", lineHeight: 1.4 }}>
+        <div style={{ margin: "0.5rem 0 1rem", fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", lineHeight: 1.4 }}>
         {/* The warning tracks the switch below rather than stating the worst
             case always: a player reading "your conversations are included" on a
             log that does not contain them learns to disbelieve this line, which
@@ -2347,16 +2272,16 @@ const helperTextStyle = {
     marginTop: "-0.7rem",
     marginBottom: "0.7rem",
     fontSize: "0.72rem",
-    color: "rgba(255,255,255,0.45)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)",
     lineHeight: 1.35,
 };
 
 const diagnosticsButton = {
     alignItems: "center",
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.18)",
+    background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)",
     borderRadius: "8px",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     cursor: "pointer",
     display: "flex",
     fontFamily: "sans-serif",
@@ -2385,8 +2310,8 @@ const PRIVACY_HREF = import.meta.env.VITE_OH_NATIVE ? "https://openhistoria.com/
 
 const QuickAction = ({ title, description, symbol, tone = "neutral", onClick, href, compact = false }) => {
     const tones = {
-        neutral: { background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.04))", border: "var(--oh-ui-line, rgba(255,255,255,0.08))", icon: "var(--oh-ui-overlay-card, rgba(255,255,255,0.08))", color: "#f8fafc" },
-        slate: { background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.05))", border: "var(--oh-ui-line, rgba(255,255,255,0.12))", icon: "var(--oh-ui-overlay-card, rgba(255,255,255,0.08))", color: "#e4e4e7" },
+        neutral: { background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.04))", border: "var(--oh-ui-line, rgba(255,255,255,0.08))", icon: "var(--oh-ui-overlay-card, rgba(255,255,255,0.08))", color: "var(--oh-ink, #fff)" },
+        slate: { background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.05))", border: "var(--oh-ui-line, rgba(255,255,255,0.12))", icon: "var(--oh-ui-overlay-card, rgba(255,255,255,0.08))", color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" },
         blue: { background: "var(--oh-ui-active, rgba(59,130,246,0.08))", border: "var(--oh-ui-line, rgba(96,165,250,0.18))", icon: "var(--oh-ui-active, rgba(59,130,246,0.16))", color: "var(--oh-ui-text, #dbeafe)" },
         amber: { background: "rgba(245,158,11,0.07)", border: "rgba(251,191,36,0.17)", icon: "rgba(245,158,11,0.14)", color: "#fde68a" },
     };
@@ -2412,7 +2337,7 @@ const QuickAction = ({ title, description, symbol, tone = "neutral", onClick, hr
             <span aria-hidden="true" style={{ alignItems: "center", background: palette.icon, border: `1px solid ${palette.border}`, borderRadius: "8px", display: "inline-flex", flexShrink: 0, fontSize: compact ? "0.85rem" : "1rem", fontWeight: 900, height: compact ? "1.9rem" : "2.35rem", justifyContent: "center", width: compact ? "1.9rem" : "2.35rem" }}>{symbol}</span>
             <span style={{ minWidth: 0 }}>
                 <span style={{ display: "block", fontSize: compact ? "0.78rem" : "0.84rem", fontWeight: 850 }}>{title}</span>
-                {description && <span style={{ color: "rgba(255,255,255,0.38)", display: "block", fontSize: compact ? "0.61rem" : "0.64rem", lineHeight: 1.35, marginTop: "0.16rem" }}>{description}</span>}
+                {description && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", display: "block", fontSize: compact ? "0.61rem" : "0.64rem", lineHeight: 1.35, marginTop: "0.16rem" }}>{description}</span>}
             </span>
         </>
     );
@@ -2446,9 +2371,9 @@ const PerformanceModeSetting = () => {
     return (
         <div style={fieldGroupStyle}>
         <label style={labelStyle} htmlFor="game-performance-mode">Performance mode</label>
-        <select id="game-performance-mode" value={mode} onChange={(event) => choose(event.target.value)} style={{ ...inputStyle, cursor: "pointer" }}>
+        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="game-performance-mode" value={mode} onChange={(event) => choose(event.target.value)} >
         {PERFORMANCE_MODES.map((entry) => <option key={entry.key || "auto"} value={entry.key} style={{ color: "black" }}>{entry.label}</option>)}
-        </select>
+        </CarbonSelect>
         <div style={helperStyle}>
         Auto picks Low memory in the Android app, on a touch screen with no mouse, and on a device with 4 GB of memory or less: the map loads in smaller steps with fewer workers. Full is faster on a strong tablet, and Low memory can steady a weak computer. A change applies after the game is reloaded.
         </div>
@@ -2519,16 +2444,11 @@ const DisplayModeSelector = ({ isFullscreenEnabled, onToggleFullscreen }) => {
     return (
         <div style={fieldGroupStyle}>
             <label style={labelStyle} htmlFor="game-display-mode">Display mode</label>
-            <select
-                id="game-display-mode"
-                style={inputStyle}
-                value={activeMode}
-                onChange={(event) => selectMode(event.target.value)}
-            >
+            <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="game-display-mode" value={activeMode} onChange={(event) => selectMode(event.target.value)} >
                 <option value="windowed">Windowed</option>
                 {isDesktop && <option value="maximized">Maximized</option>}
                 <option value="fullscreen">Fullscreen</option>
-            </select>
+            </CarbonSelect>
             <div style={helperStyle}>
                 {activeMode === "maximized"
                     ? "The game's window fills your screen, with its title bar."
@@ -2577,19 +2497,14 @@ const PlayerFocusSetting = () => {
     return (
         <div style={fieldGroupStyle}>
         <label style={{ ...labelStyle, fontWeight: 700 }}>Player focus — for this game</label>
-        <select
-        disabled={saving || !gameId}
-        value={following ? "" : focus}
-        onChange={(event) => choose(event.target.value || null)}
-        style={{ ...inputStyle, cursor: "pointer" }}
-        >
+        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="oh-settings-select-10" disabled={saving || !gameId} value={following ? "" : focus} onChange={(event) => choose(event.target.value || null)} >
         <option value="" style={{ color: "black" }}>{`Scenario default (${scenarioLabel})`}</option>
         {PLAYER_FOCUS_LEVELS.map((level) => (
             <option key={level.key} value={level.key} style={{ color: "black" }}>
             {level.label}
             </option>
         ))}
-        </select>
+        </CarbonSelect>
         <div style={helperStyle}>
         {/* Every level, not only the one selected: the choice is between four
             feels, and a player cannot compare them one at a time. */}
@@ -2612,10 +2527,10 @@ const SettingsSection = ({ title, description, right, children }) => (
         <div style={{ alignItems: "flex-start", display: "flex", gap: "0.75rem", justifyContent: "space-between", marginBottom: "0.85rem" }}>
             <div style={{ minWidth: 0 }}>
                 <div style={{ alignItems: "center", display: "flex", gap: "0.5rem" }}>
-                    <span style={{ backgroundColor: "#3b82f6", borderRadius: "2px", display: "inline-block", height: "0.85rem", width: "3px" }} />
-                    <span style={{ color: "#f8fafc", fontSize: "0.92rem", fontWeight: 750, letterSpacing: "-0.01em" }}>{title}</span>
+                    <span data-oh-section-bar style={{ backgroundColor: "#3b82f6", borderRadius: "2px", display: "inline-block", height: "0.85rem", width: "3px" }} />
+                    <span style={{ color: "var(--oh-ink, #fff)", fontSize: "0.92rem", fontWeight: 750, letterSpacing: "-0.01em" }}>{title}</span>
                 </div>
-                {description && <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.22rem", paddingLeft: "0.7rem" }}>{description}</div>}
+                {description && <div data-oh-section-desc style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.22rem", paddingLeft: "0.7rem" }}>{description}</div>}
             </div>
             {right}
         </div>
@@ -2708,18 +2623,19 @@ const SoundSection = ({ musicOn, onToggleMusic, effectsOn, onToggleEffects }) =>
             <label style={{ alignItems: "center", display: "flex", gap: "0.75rem", justifyContent: "space-between", marginBottom: "0.85rem", opacity: musicOn ? 1 : 0.5 }}>
                 <span style={{ fontSize: "0.9rem" }}>{"Music volume"}</span>
                 <span style={{ alignItems: "center", display: "flex", gap: "0.6rem" }}>
-                    <input
-                    type="range"
-                    min="0"
-                    max="100"
-                    step="1"
+                    <CarbonSlider
+                    id="oh-settings-music-volume"
+                    min={0}
+                    max={100}
+                    step={1}
                     value={volume}
                     disabled={!musicOn}
-                    onChange={(event) => setMapSettingValue(MAP_SETTING_KEYS.musicVolume, String(musicVolumeOf(event.target.value)))}
-                    aria-label="Music volume"
-                    style={{ accentColor: "#3b82f6", width: "9rem" }}
+                    hideTextInput
+                    onChange={({ value }) => setMapSettingValue(MAP_SETTING_KEYS.musicVolume, String(musicVolumeOf(value)))}
+                    ariaLabelInput="Music volume"
+                    labelText=""
                     />
-                    <span data-no-translate style={{ color: "#93c5fd", fontSize: "0.78rem", minWidth: "2.6rem", textAlign: "right", fontWeight: 650 }}>{`${volume}%`}</span>
+                    <span data-no-translate style={{ color: "var(--oh-link, #93c5fd)", fontSize: "0.78rem", minWidth: "2.6rem", textAlign: "right", fontWeight: 650 }}>{`${volume}%`}</span>
                 </span>
             </label>
             <Toggle label="Sound effects" enabled={effectsOn} onToggle={onToggleEffects} />
@@ -2808,11 +2724,11 @@ const PrivacySection = ({ discordPresenceOn, onToggleDiscordPresence }) => {
 };
 
 const SETTINGS_SECTIONS = [
-    { key: "general", label: "General", icon: "◫", description: "Language, display, accessibility, sound and privacy" },
-    { key: "sound", label: "Sound", icon: "♫", description: "The game's music and sound effects." },
-    { key: "map", label: "Map", icon: "◇", description: "Basemap, labels, globe and camera" },
-    { key: "ai", label: "AI", icon: "✦", description: "Models, backups, keys and reasoning" },
-    { key: "advanced", label: "Advanced", icon: "⌘", description: "Per-task models and expert controls" },
+    { key: "general", label: "General", icon: <UiIcon name="columns" size={16} />, description: "Language, display, accessibility, sound and privacy" },
+    { key: "sound", label: "Sound", icon: <UiIcon name="music" size={16} />, description: "The game's music and sound effects." },
+    { key: "map", label: "Map", icon: <UiIcon name="map" size={16} />, description: "Basemap, labels, globe and camera" },
+    { key: "ai", label: "AI", icon: <UiIcon name="ai" size={16} />, description: "Models, backups, keys and reasoning" },
+    { key: "advanced", label: "Advanced", icon: <UiIcon name="adjust" size={16} />, description: "Per-task models and expert controls" },
 ];
 
 // The small menu becoming the workspace. `fromRect` is the small menu's card
@@ -2930,7 +2846,7 @@ const SettingsWorkspace = ({
                         background: selected ? "var(--oh-ui-active, rgba(59,130,246,0.12))" : "transparent",
                         border: `1px solid ${selected ? "rgba(96,165,250,0.3)" : "transparent"}`,
                         borderRadius: "10px",
-                        color: selected ? "var(--oh-ui-text, #ffffff)" : "rgba(255,255,255,0.6)",
+                        color: selected ? "var(--oh-ui-text, #ffffff)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)",
                         cursor: "pointer",
                         display: "flex",
                         flex: isMobile ? "1 1 0" : "none",
@@ -2944,10 +2860,10 @@ const SettingsWorkspace = ({
                         ...(isMobile ? { flexDirection: "column", gap: "0.25rem", justifyContent: "center", padding: "0.45rem 0.2rem", textAlign: "center" } : null),
                     }}
                     >
-                        <span aria-hidden="true" style={{ alignItems: "center", background: selected ? "var(--oh-ui-active, rgba(59,130,246,0.24))" : "rgba(255,255,255,0.04)", border: `1px solid ${selected ? "rgba(96,165,250,0.4)" : "transparent"}`, borderRadius: "8px", color: selected ? "var(--oh-ui-accent, #60a5fa)" : "rgba(255,255,255,0.7)", display: "inline-flex", flexShrink: 0, fontSize: "0.85rem", fontWeight: 700, height: "1.9rem", justifyContent: "center", width: "1.9rem", transition: "all 140ms ease" }}>{section.icon}</span>
+                        <span aria-hidden="true" style={{ alignItems: "center", background: selected ? "var(--oh-ui-active, rgba(59,130,246,0.24))" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: `1px solid ${selected ? "rgba(96,165,250,0.4)" : "transparent"}`, borderRadius: "8px", color: selected ? "var(--oh-ui-accent, #60a5fa)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", display: "inline-flex", flexShrink: 0, fontSize: "0.85rem", fontWeight: 700, height: "1.9rem", justifyContent: "center", width: "1.9rem", transition: "all 140ms ease" }}>{section.icon}</span>
                         <span>
                             <span style={{ display: "block", fontSize: "0.8rem", fontWeight: selected ? 750 : 600, color: selected ? "var(--oh-ui-accent, #bfdbfe)" : "inherit" }}>{section.label}</span>
-                            {!isMobile && <span style={{ color: selected ? "rgba(191,219,254,0.65)" : "rgba(255,255,255,0.32)", display: "block", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.12rem" }}>{section.description}</span>}
+                            {!isMobile && <span style={{ color: selected ? "rgba(191,219,254,0.65)" : "color-mix(in srgb, var(--oh-ink, #fff) 32%, transparent)", display: "block", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.12rem" }}>{section.description}</span>}
                         </span>
                     </button>
                 );
@@ -2964,9 +2880,9 @@ const SettingsWorkspace = ({
             <div style={{ marginBottom: "0.2rem" }}>
                 <div style={{ alignItems: "center", display: "flex", gap: "0.5rem" }}>
                     <span style={{ color: "var(--oh-ui-accent, #60a5fa)", fontSize: "0.95rem" }}>{page?.icon}</span>
-                    <span style={{ color: "#f8fafc", fontSize: "1.1rem", fontWeight: 800, letterSpacing: "-0.01em" }}>{pageTitle}</span>
+                    <span style={{ color: "var(--oh-ink, #fff)", fontSize: "1.1rem", fontWeight: 800, letterSpacing: "-0.01em" }}>{pageTitle}</span>
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.72rem", marginTop: "0.2rem" }}>{pageDescription}</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.72rem", marginTop: "0.2rem" }}>{pageDescription}</div>
             </div>
 
             {activeSection === "general" && (
@@ -3026,15 +2942,10 @@ const SettingsWorkspace = ({
                 <SettingsSection title="Map presentation" description="Choose the map mode and visual presentation options.">
                     <div style={fieldGroupStyle}>
                         <label style={labelStyle} htmlFor="game-map-mode">Map mode</label>
-                        <select
-                            id="game-map-mode"
-                            style={inputStyle}
-                            value={mapMode || "political"}
-                            onChange={(event) => updateMapMode(event.target.value)}
-                        >
+                        <CarbonSelect hideLabel size="sm" labelText="Choose an option" id="game-map-mode" value={mapMode || "political"} onChange={(event) => updateMapMode(event.target.value)} >
                             <option value="political">Political (Countries and borders)</option>
                             <option value="diplomatic">Diplomatic (Allies, enemies, trade partners)</option>
-                        </select>
+                        </CarbonSelect>
                         <div style={helperStyle}>Diplomatic mode colours each country by where it stands with you: your puppets, allies, friends, hostile countries and enemies at war.</div>
                     </div>
                 </SettingsSection>
@@ -3126,7 +3037,7 @@ const SettingsWorkspace = ({
                 <SettingsSection title="Generation behavior" description="Bound model waiting behavior without changing the deterministic fallback path.">
                     {forGame ? <PlayerFocusSetting /> : (
                         <div style={{ ...helperStyle, marginBottom: "0.8rem" }}>
-                            Player focus is set for each game on its own: open the game, then ☰ → Settings → AI.
+                            Player focus is set for each game on its own: open the game, then Menu → Settings → AI.
                         </div>
                     )}
                     <Toggle label="Limit AI generation" enabled={mapSettings.limitAiGeneration} onToggle={() => updateMapSetting("limitAiGeneration", MAP_SETTING_KEYS.limitAiGeneration, !mapSettings.limitAiGeneration)} />
@@ -3220,26 +3131,26 @@ const SettingsWorkspace = ({
     // is widened by the notch and the home indicator so neither covers the ←, the
     // ✕ or the bottom of the page.
     return createPortal(
-        <div role="dialog" aria-modal="true" aria-label="Game settings" className={leaving ? "oh-fade-out" : closing ? "oh-fade-out-slow" : fromRect ? undefined : "oh-fade-in"} style={{ alignItems: "center", background: "rgba(8,9,11,0.75)", display: "flex", inset: 0, justifyContent: "center", padding: isMobile ? `calc(0.45rem + ${SAFE_TOP}) calc(0.45rem + ${SAFE_RIGHT}) calc(0.45rem + ${SAFE_BOTTOM}) calc(0.45rem + ${SAFE_LEFT})` : "clamp(0.8rem, 2vw, 1.6rem)", position: "fixed", zIndex: 2147483000, contain: "strict" }}>
-            <div ref={cardRef} className="oh-ws-card" style={{ background: "var(--oh-ui-bg, rgba(20,21,24,0.97))", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.08))", borderRadius: isMobile ? "12px" : "18px", boxShadow: "0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04)", color: "white", display: "flex", flexDirection: "column", fontFamily: "sans-serif", height: isMobile ? `calc(${APP_HEIGHT} - 0.9rem - ${SAFE_TOP} - ${SAFE_BOTTOM})` : `min(800px, calc(${APP_HEIGHT} - 2.4rem))`, maxWidth: "1120px", overflow: "hidden", width: isMobile ? `calc(100vw - 0.9rem - ${SAFE_LEFT} - ${SAFE_RIGHT})` : "min(94vw, 1120px)" }}>
-                <div style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.07)", display: "flex", gap: "0.75rem", padding: "0.85rem 1.1rem" }}>
-                    <button type="button" className="oh-tap" onClick={onBack} aria-label="Back to game menu" title="Back to game menu" style={{ alignItems: "center", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "rgba(255,255,255,0.7)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>←</button>
+        <div role="dialog" aria-modal="true" aria-label="Game settings" className={leaving ? "oh-fade-out" : closing ? "oh-fade-out-slow" : fromRect ? undefined : "oh-fade-in"} style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-paper, rgb(8,9,11)) 75%, transparent)", display: "flex", inset: 0, justifyContent: "center", padding: isMobile ? `calc(0.45rem + ${SAFE_TOP}) calc(0.45rem + ${SAFE_RIGHT}) calc(0.45rem + ${SAFE_BOTTOM}) calc(0.45rem + ${SAFE_LEFT})` : "clamp(0.8rem, 2vw, 1.6rem)", position: "fixed", zIndex: 2147483000, contain: "strict" }}>
+            <div ref={cardRef} className="oh-ws-card" style={{ background: "var(--oh-ui-bg, rgba(20,21,24,0.97))", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.08))", borderRadius: isMobile ? "12px" : "18px", boxShadow: "0 24px 60px rgba(0,0,0,0.55), 0 0 0 1px color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", color: "var(--oh-ink, #fff)", display: "flex", flexDirection: "column", fontFamily: "sans-serif", height: isMobile ? `calc(${APP_HEIGHT} - 0.9rem - ${SAFE_TOP} - ${SAFE_BOTTOM})` : `min(800px, calc(${APP_HEIGHT} - 2.4rem))`, maxWidth: "1120px", overflow: "hidden", width: isMobile ? `calc(100vw - 0.9rem - ${SAFE_LEFT} - ${SAFE_RIGHT})` : "min(94vw, 1120px)" }}>
+                <div style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "flex", gap: "0.75rem", padding: "0.85rem 1.1rem" }}>
+                    <button type="button" className="oh-tap" onClick={onBack} aria-label="Back to game menu" title="Back to game menu" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>←</button>
                     <div style={{ flex: 1, minWidth: 0 }}>
                         <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.45rem 0.65rem" }}>
-                            <span style={{ backgroundColor: "var(--oh-ui-accent, #3b82f6)", borderRadius: "3px", display: "inline-block", height: "1.05rem", width: "4px" }} />
-                            <span style={{ color: "#f8fafc", fontSize: "1.04rem", fontWeight: 800 }}>Settings</span>
+                            <span data-oh-section-bar style={{ backgroundColor: "var(--oh-ui-accent, #3b82f6)", borderRadius: "3px", display: "inline-block", height: "1.05rem", width: "4px" }} />
+                            <span style={{ color: "var(--oh-ink, #fff)", fontSize: "1.04rem", fontWeight: 800 }}>Settings</span>
                             {forGame && context?.scenarioName && <span style={{ backgroundColor: "rgba(59,130,246,0.15)", border: "1px solid rgba(96,165,250,0.3)", borderRadius: "6px", color: "#93c5fd", fontSize: "0.7rem", fontWeight: 700, padding: "0.15rem 0.45rem" }}>{context.scenarioName}</span>}
                         </div>
-                        <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.66rem", marginTop: "0.12rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.66rem", marginTop: "0.12rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                             {forGame
                                 ? [context?.countryName ? `Playing as ${context.countryName}` : "", context?.date || ""].filter(Boolean).join(" · ") || "Game preferences"
-                                : "For every game. A game's own settings are in its ☰ menu."}
+                                : "For every game. A game's own settings are in its menu."}
                         </div>
                     </div>
-                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Close settings" style={{ alignItems: "center", background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "rgba(255,255,255,0.7)", cursor: "pointer", display: "flex", fontSize: "1.1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>×</button>
+                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Close settings" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer", display: "flex", fontSize: "1.1rem", height: "2.1rem", justifyContent: "center", width: "2.1rem", transition: "background-color 140ms ease, color 140ms ease" }}>×</button>
                 </div>
                 <div style={{ display: "grid", flex: 1, gridTemplateColumns: isMobile ? "minmax(0, 1fr)" : "235px minmax(0, 1fr)", gridTemplateRows: isMobile ? "auto minmax(0, 1fr)" : "minmax(0, 1fr)", minHeight: 0 }}>
-                    <aside style={{ backgroundColor: "rgba(0,0,0,0.18)", borderBottom: isMobile ? "1px solid rgba(255,255,255,0.06)" : "none", borderRight: isMobile ? "none" : "1px solid rgba(255,255,255,0.06)", minHeight: 0, overflowY: isMobile ? "visible" : "auto" }}>{nav}</aside>
+                    <aside style={{ backgroundColor: "rgba(0,0,0,0.18)", borderBottom: isMobile ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)" : "none", borderRight: isMobile ? "none" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", minHeight: 0, overflowY: isMobile ? "visible" : "auto" }}>{nav}</aside>
                     <main style={{ minHeight: 0, overflowY: "auto", padding: isMobile ? "0.8rem" : "1.1rem 1.25rem 1.4rem", contain: "paint" }}>{content}</main>
                 </div>
             </div>
@@ -3255,37 +3166,27 @@ const QUICK_MENU_TABS = [
     { key: "help", label: "Help" },
 ];
 
-// `fill` (a phone): the four tabs share the strip evenly, with room for all
-// four down to a 320 px screen.
-const QuickMenuTabButton = ({ label, selected, onClick, fill = false }) => (
-    <button
-    type="button"
-    className="oh-tap-row"
-    onClick={onClick}
-    style={{
-        background: selected ? "var(--oh-ui-active, rgba(0,0,0,0.42))" : "transparent",
-        border: `1px solid ${selected ? "var(--oh-ui-accent, rgba(255,255,255,0.28))" : "transparent"}`,
-        borderRadius: "8px",
-        color: selected ? "#f4f4f5" : "rgba(255,255,255,0.56)",
-        cursor: "pointer",
-        fontFamily: "inherit",
-        fontSize: "0.72rem",
-        fontWeight: 850,
-        padding: "0.5rem 0.8rem",
-        textTransform: "uppercase",
-        letterSpacing: "0.04em",
-        ...(fill ? { flex: "1 1 auto", padding: "0.5rem 0.45rem" } : null),
-    }}
+// The four tabs are Carbon's Tabs (the panels under them are drawn by the menu
+// itself, so only the strip is used). `fill` (a phone): the tabs share the
+// strip evenly, with room for all four down to a 320 px screen.
+const QuickMenuTabs = ({ active, onChange, fill = false }) => (
+    <CarbonTabs
+    selectedIndex={Math.max(0, QUICK_MENU_TABS.findIndex((tab) => tab.key === active))}
+    onChange={({ selectedIndex }) => onChange(QUICK_MENU_TABS[selectedIndex].key)}
     >
-    {label}
-    </button>
+    <CarbonTabList aria-label="Game menu" contained={fill} fullWidth={fill}>
+    {QUICK_MENU_TABS.map((tab) => (
+        <CarbonTab key={tab.key}>{tab.label}</CarbonTab>
+    ))}
+    </CarbonTabList>
+    </CarbonTabs>
 );
 
 const QuickMenuPanel = ({ title, description, children }) => (
     <div style={{ display: "flex", flexDirection: "column", gap: "0.75rem" }}>
         <div>
-            <div style={{ color: "#f8fafc", fontSize: "0.82rem", fontWeight: 850 }}>{title}</div>
-            {description && <div style={{ color: "rgba(255,255,255,0.36)", fontSize: "0.64rem", lineHeight: 1.45, marginTop: "0.18rem" }}>{description}</div>}
+            <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.82rem", fontWeight: 850 }}>{title}</div>
+            {description && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 36%, transparent)", fontSize: "0.64rem", lineHeight: 1.45, marginTop: "0.18rem" }}>{description}</div>}
         </div>
         {children}
     </div>
@@ -3300,12 +3201,12 @@ const ContextSummaryCard = ({ context }) => {
 
     return (
         <div style={{ background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.03))", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.07))", borderRadius: "11px", padding: "0.8rem 0.85rem" }}>
-            <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.74rem", fontWeight: 800, marginBottom: "0.6rem" }}>Current session</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: "0.74rem", fontWeight: 800, marginBottom: "0.6rem" }}>Current session</div>
             <div style={{ display: "grid", gap: "0.45rem" }}>
                 {rows.map((row) => (
                     <div key={row.label} style={{ alignItems: "baseline", display: "grid", gap: "0.4rem", gridTemplateColumns: "5.2rem minmax(0, 1fr)" }}>
-                        <span style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.63rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>{row.label}</span>
-                        <span data-no-translate={row.label !== "Scenario" ? true : undefined} style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.72rem", fontWeight: 650, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.value}</span>
+                        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.63rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.04em" }}>{row.label}</span>
+                        <span data-no-translate={row.label !== "Scenario" ? true : undefined} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.72rem", fontWeight: 650, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{row.value}</span>
                     </div>
                 ))}
             </div>
@@ -3505,7 +3406,7 @@ const SettingsMenu = ({
             <QuickMenuPanel title="Game" description="Campaign identity and management actions.">
                 <ContextSummaryCard context={context} />
                 {typeof onOpenGameManagement === "function" && (
-                    <QuickAction title="Game Management" description="Switch, duplicate, import or manage campaigns" symbol="▦" onClick={() => runAndClose(onOpenGameManagement)} />
+                    <QuickAction title="Game Management" description="Switch, duplicate, import or manage campaigns" symbol={<UiIcon name="grid" size={18} />} onClick={() => runAndClose(onOpenGameManagement)} />
                 )}
             </QuickMenuPanel>
         );
@@ -3513,11 +3414,11 @@ const SettingsMenu = ({
         panelContent = (
             <QuickMenuPanel title="Settings" description="Jump straight into the options category you want.">
                 <div style={grid}>
-                    <QuickAction title="General" description="Language, display, accessibility, sound and privacy" symbol="◫" onClick={() => openSettingsSection("general")} />
-                    <QuickAction title="Sound" description="The game's music and sound effects." symbol="♫" onClick={() => openSettingsSection("sound")} />
-                    <QuickAction title="Map" description="Basemap, labels, globe and camera" symbol="◇" onClick={() => openSettingsSection("map")} />
-                    <QuickAction title="AI" description="Models, backups, keys and reasoning" symbol="✦" onClick={() => openSettingsSection("ai")} />
-                    <QuickAction title="Advanced" description="Per-task models and expert controls" symbol="⌘" onClick={() => openSettingsSection("advanced")} />
+                    <QuickAction title="General" description="Language, display, accessibility, sound and privacy" symbol={<UiIcon name="columns" size={18} />} onClick={() => openSettingsSection("general")} />
+                    <QuickAction title="Sound" description="The game's music and sound effects." symbol={<UiIcon name="music" size={16} />} onClick={() => openSettingsSection("sound")} />
+                    <QuickAction title="Map" description="Basemap, labels, globe and camera" symbol={<UiIcon name="map" size={18} />} onClick={() => openSettingsSection("map")} />
+                    <QuickAction title="AI" description="Models, backups, keys and reasoning" symbol={<UiIcon name="ai" size={16} />} onClick={() => openSettingsSection("ai")} />
+                    <QuickAction title="Advanced" description="Per-task models and expert controls" symbol={<UiIcon name="adjust" size={18} />} onClick={() => openSettingsSection("advanced")} />
                 </div>
             </QuickMenuPanel>
         );
@@ -3525,19 +3426,20 @@ const SettingsMenu = ({
         panelContent = (
             <QuickMenuPanel title="Help" description="Guides, bug reporting and community links.">
                 <div style={grid}>
-                    <QuickAction title="Wiki" description="How-to pages and setup help" symbol="?" href="/wiki/" />
+                    <QuickAction title="Wiki" description="How-to pages and setup help" symbol={<UiIcon name="help" size={18} />} href="/wiki/" />
                     <QuickAction
                         title={updateCheckResult.status === "checking" ? "Checking for updates…" : "Check for updates"}
                         description={appUpdateCheckDescription(updateCheckResult)}
-                        symbol="↻"
+                        symbol={<UiIcon name="renew" size={18} />}
                         tone="blue"
                         onClick={checkForUpdatesNow}
                     />
-                    {reportBugUrl && <QuickAction title="Report a Bug" description="Open the issue/report page" symbol="!" tone="amber" href={reportBugUrl} />}
-                    <QuickAction title="Privacy" description="What the game keeps and sends" symbol="§" href={PRIVACY_HREF} />
+                    {reportBugUrl && <QuickAction title="Report a Bug" description="Open the issue/report page" symbol={<UiIcon name="alert" size={18} />} tone="amber" href={reportBugUrl} />}
+                    <QuickAction title="Source code" description="The AGPL source of this build, for anyone to read" symbol={<UiIcon name="code" size={18} />} href={SOURCE_CODE_URL} />
+                    <QuickAction title="Privacy" description="What the game keeps and sends" symbol={<UiIcon name="policy" size={18} />} href={PRIVACY_HREF} />
                 </div>
                 <div style={{ alignItems: isMobile ? "stretch" : "center", display: "flex", flexDirection: isMobile ? "column" : "row", gap: "0.55rem", justifyContent: "space-between" }}>
-                    <span style={{ color: "rgba(255,255,255,0.24)", fontSize: "0.6rem" }}>Community</span>
+                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 24%, transparent)", fontSize: "0.6rem" }}>Community</span>
                     <SocialLinks discordUrl={discordUrl} redditUrl={redditUrl} githubUrl={githubUrl} />
                 </div>
             </QuickMenuPanel>
@@ -3547,15 +3449,15 @@ const SettingsMenu = ({
             <QuickMenuPanel title="Tools" description="High-frequency in-game tools should stay one click away.">
                 <div style={grid}>
                     {typeof onOpenCheats === "function" && (
-                        <QuickAction title="Cheats" description="Game master tools and world editing" symbol="⌁" tone="slate" onClick={() => runAndClose(onOpenCheats)} />
+                        <QuickAction title="Cheats" description="Game master tools and world editing" symbol={<UiIcon name="terminal" size={18} />} tone="slate" onClick={() => runAndClose(onOpenCheats)} />
                     )}
                     {typeof onOpenEvents === "function" && (
-                        <QuickAction title="Events / Timeline" description="Review the current turn and world history" symbol="◷" tone="blue" onClick={() => runAndClose(onOpenEvents)} />
+                        <QuickAction title="Events / Timeline" description="Review the current turn and world history" symbol={<UiIcon name="time" size={18} />} tone="blue" onClick={() => runAndClose(onOpenEvents)} />
                     )}
                     {/* This branch's own tool, in the same row: every AI call with its prompt,
                         answer and cost. Continuum has no counterpart. */}
                     {typeof onOpenDebugConsole === "function" && (
-                        <QuickAction title="AI debug console" description="Every AI call, its prompt, answer and cost" symbol="◈" onClick={() => runAndClose(onOpenDebugConsole)} />
+                        <QuickAction title="AI debug console" description="Every AI call, its prompt, answer and cost" symbol={<UiIcon name="debug" size={18} />} onClick={() => runAndClose(onOpenDebugConsole)} />
                     )}
                     {/* The last slot of the row is the community's: two half-width
                         tiles, each nothing but the brand's own mark on the brand's own
@@ -3595,23 +3497,21 @@ const SettingsMenu = ({
             boxShadow: "var(--oh-hud-shadow)",
         }}
         >
-            <div style={{ alignItems: "center", borderBottom: "1px solid rgba(255,255,255,0.07)", display: "flex", gap: "0.75rem", margin: "-0.1rem -0.1rem 0.75rem", padding: "0 0.1rem 0.7rem" }}>
+            <div style={{ alignItems: "center", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "flex", gap: "0.75rem", margin: "-0.1rem -0.1rem 0.75rem", padding: "0 0.1rem 0.7rem" }}>
                 <img alt="Open Historia" src="/logo.png" style={{ borderRadius: "8px", flexShrink: 0, height: "2.25rem", width: "2.25rem" }} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ alignItems: "baseline", display: "flex", flexWrap: "wrap", gap: "0.35rem 0.55rem" }}>
-                        <span style={{ color: "#f8fafc", fontSize: "0.92rem", fontWeight: 900 }}>{context?.scenarioName || context?.gameName || "Open Historia"}</span>
+                        <span style={{ color: "var(--oh-ink, #fff)", fontSize: "0.92rem", fontWeight: 900 }}>{context?.scenarioName || context?.gameName || "Open Historia"}</span>
                     </div>
-                    <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.61rem", marginTop: "0.15rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.61rem", marginTop: "0.15rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                         {[context?.countryName ? `Playing as ${context.countryName}` : "", context?.date || ""].filter(Boolean).join(" · ") || "Game menu"}
                     </div>
                 </div>
-                <button type="button" className="oh-tap" onClick={() => onClose?.()} aria-label="Close game menu" style={{ alignItems: "center", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "rgba(255,255,255,0.58)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2rem", justifyContent: "center", width: "2rem" }}>×</button>
+                <button type="button" className="oh-tap" onClick={() => onClose?.()} aria-label="Close game menu" style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", cursor: "pointer", display: "flex", fontSize: "1rem", height: "2rem", justifyContent: "center", width: "2rem" }}>×</button>
             </div>
 
-            <div style={{ background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.03))", border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.07))", borderRadius: "10px", display: "flex", gap: "0.2rem", padding: "0.2rem", marginBottom: "0.8rem", overflowX: "auto", scrollbarWidth: "none" }}>
-                {QUICK_MENU_TABS.map((tab) => (
-                    <QuickMenuTabButton key={tab.key} label={tab.label} selected={activeQuickTab === tab.key} onClick={() => setActiveQuickTab(tab.key)} fill={isMobile} />
-                ))}
+            <div style={{ marginBottom: "0.75rem" }}>
+                <QuickMenuTabs active={activeQuickTab} onChange={setActiveQuickTab} fill={isMobile} />
             </div>
 
             <div key={activeQuickTab} className="oh-surface-in" style={{ flex: 1, minHeight: 0 }}>

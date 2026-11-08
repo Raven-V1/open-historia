@@ -51,9 +51,9 @@ import { RefreshButton, RefreshIcon } from "./rostraRefresh.jsx";
 const feedRequests = createReportRequests();
 
 const INK = "#f4f4f5";
-const INK_SOFT = "rgba(244,244,245,0.56)";
-const INK_FAINT = "rgba(244,244,245,0.34)";
-const LINE = "rgba(255,255,255,0.08)";
+const INK_SOFT = "color-mix(in srgb, var(--oh-ink, #fff) 56%, transparent)";
+const INK_FAINT = "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)";
+const LINE = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)";
 const LIKED = "#f43f5e";
 
 const iconProps = { width: 17, height: 17, viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: 1.7, strokeLinecap: "round", strokeLinejoin: "round", "aria-hidden": true };
@@ -73,7 +73,7 @@ const ensureStyles = () => {
   style.textContent = `
   @keyframes rostraShimmer { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
   .rostra-search-input::placeholder { color: ${INK_FAINT}; }
-  .rostra-search-hit:hover { background: rgba(255,255,255,0.05); }
+  .rostra-search-hit:hover { background: color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent); }
   @media (prefers-reduced-motion: reduce) { .rostra-shimmer { animation: none !important; } }
   `;
   document.head.appendChild(style);
@@ -109,7 +109,7 @@ const actionStyle = {
 const PersonAvatar = ({ author }) => {
   const { initials, colour } = placeFeedAvatar(author);
   return (
-    <span aria-hidden="true" style={{ alignItems: "center", background: colour, borderRadius: "50%", color: "#fff", display: "flex", flex: "0 0 auto", fontSize: "0.8rem", fontWeight: 700, height: "2.4rem", justifyContent: "center", letterSpacing: "0.02em", width: "2.4rem" }}>
+    <span aria-hidden="true" style={{ alignItems: "center", background: colour, borderRadius: "50%", color: "var(--oh-ink, #fff)", display: "flex", flex: "0 0 auto", fontSize: "0.8rem", fontWeight: 700, height: "2.4rem", justifyContent: "center", letterSpacing: "0.02em", width: "2.4rem" }}>
       {initials}
     </span>
   );
@@ -149,7 +149,7 @@ const PersonPost = ({ post, language, liked, onLike }) => (
 
 // What stands in for the posts while the request is out.
 const SkeletonPost = ({ width }) => {
-  const bar = (w, h = "0.65rem") => ({ animation: "rostraShimmer 1.4s cubic-bezier(0.45, 0, 0.55, 1) infinite", background: "rgba(255,255,255,0.1)", borderRadius: "999px", height: h, width: w });
+  const bar = (w, h = "0.65rem") => ({ animation: "rostraShimmer 1.4s cubic-bezier(0.45, 0, 0.55, 1) infinite", background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "999px", height: h, width: w });
   return (
     <div aria-hidden="true" style={{ borderBottom: `1px solid ${LINE}`, display: "flex", gap: "0.65rem", padding: "0.8rem 1rem" }}>
       <span className="rostra-shimmer" style={{ ...bar("2.4rem", "2.4rem"), borderRadius: "50%", flex: "0 0 auto" }} />
@@ -397,7 +397,7 @@ const RostraSearch = ({ shown, opened = null, country, feed, renderPost }) => {
     <div style={{ display: "flex", flexDirection: "column", minHeight: "100%" }}>
       {/* The search box: a country or a region. */}
       <div style={{ borderBottom: `1px solid ${LINE}`, padding: "0.65rem 0.85rem" }}>
-        <label style={{ alignItems: "center", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "999px", color: INK_SOFT, display: "flex", gap: "0.45rem", padding: "0.38rem 0.75rem" }}>
+        <label style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "999px", color: INK_SOFT, display: "flex", gap: "0.45rem", padding: "0.38rem 0.75rem" }}>
           <SearchGlyph />
           <input
             ref={inputRef}
@@ -458,7 +458,7 @@ const RostraSearch = ({ shown, opened = null, country, feed, renderPost }) => {
               <div style={{ color: INK_SOFT, fontSize: "0.68rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{dateLong}</div>
             </div>
             {picked && (
-              <button type="button" className="oh-tap-row" onClick={() => { setPicked(null); setNationwide(false); }} style={{ background: "rgba(255,255,255,0.06)", border: "none", borderRadius: "999px", color: INK_SOFT, cursor: "pointer", fontFamily: "inherit", fontSize: "0.68rem", fontWeight: 700, padding: "0.32rem 0.7rem" }}>
+              <button type="button" className="oh-tap-row" onClick={() => { setPicked(null); setNationwide(false); }} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "none", borderRadius: "999px", color: INK_SOFT, cursor: "pointer", fontFamily: "inherit", fontSize: "0.68rem", fontWeight: 700, padding: "0.32rem 0.7rem" }}>
                 Your country
               </button>
             )}
@@ -469,7 +469,7 @@ const RostraSearch = ({ shown, opened = null, country, feed, renderPost }) => {
               title="Load new posts (one AI request)"
               disabled={!canAsk}
               onClick={ask}
-              style={{ alignItems: "center", background: "rgba(255,255,255,0.06)", border: "none", borderRadius: "999px", color: INK, cursor: canAsk ? "pointer" : "default", display: "inline-flex", flex: "0 0 auto", height: "2rem", justifyContent: "center", opacity: canAsk ? 1 : 0.45, padding: 0, width: "2rem" }}
+              style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "none", borderRadius: "999px", color: INK, cursor: canAsk ? "pointer" : "default", display: "inline-flex", flex: "0 0 auto", height: "2rem", justifyContent: "center", opacity: canAsk ? 1 : 0.45, padding: 0, width: "2rem" }}
             >
               <RefreshIcon />
             </button>
@@ -488,7 +488,7 @@ const RostraSearch = ({ shown, opened = null, country, feed, renderPost }) => {
               <div style={{ ...sectionLabel, padding: "0 0 0.4rem" }}>Trending</div>
               <div data-no-translate style={{ display: "flex", flexWrap: "wrap", gap: "0.35rem" }}>
                 {trends.map((trend) => (
-                  <span key={trend} style={{ background: "rgba(255,255,255,0.07)", borderRadius: "999px", color: INK, fontSize: "0.74rem", fontWeight: 650, padding: "0.22rem 0.6rem" }}>{trend}</span>
+                  <span key={trend} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "999px", color: INK, fontSize: "0.74rem", fontWeight: 650, padding: "0.22rem 0.6rem" }}>{trend}</span>
                 ))}
               </div>
             </div>
@@ -535,7 +535,7 @@ const RostraSearch = ({ shown, opened = null, country, feed, renderPost }) => {
               return (
                 <div key={batch.id}>
                   {line && (
-                    <div style={{ background: "rgba(255,255,255,0.03)", borderBottom: `1px solid ${LINE}`, color: INK_SOFT, fontSize: "0.68rem", fontWeight: 700, padding: "0.38rem 1rem", textAlign: "center" }}>
+                    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", borderBottom: `1px solid ${LINE}`, color: INK_SOFT, fontSize: "0.68rem", fontWeight: 700, padding: "0.38rem 1rem", textAlign: "center" }}>
                       {line.kind === "date" ? formatGameDateReadable(line.gameDate) || line.gameDate : "Earlier"}
                     </div>
                   )}

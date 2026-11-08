@@ -19,7 +19,7 @@ import { GREETINGS } from "../../runtime/greetings.js";
 import { DEFAULT_LANGUAGE, getStoredLanguage, getUiLanguageOptions, isRtlLanguage } from "../../runtime/i18n.js";
 import { reduceMotionEnabled } from "../../runtime/mapSettings.js";
 import { switchLanguage } from "../../runtime/translator.js";
-import { DEFAULT_UI_THEME, UI_THEME_PRESETS, selectUiTheme, useUiTheme } from "../../runtime/uiTheme.js";
+import { CARBON_THEMES, DEFAULT_UI_THEME, UI_THEME_PRESETS, selectUiTheme, useUiTheme } from "../../runtime/uiTheme.js";
 import "./firstSetup.css";
 
 const GREETING_MS = 4400;
@@ -121,6 +121,7 @@ const ThemePage = ({ onBack, onDone }) => {
   const theme = useUiTheme();
   const choices = [
     { id: DEFAULT_UI_THEME, name: "Default (Original)", colors: ORIGINAL_COLORS },
+    ...CARBON_THEMES.map((carbon) => ({ id: carbon.id, name: carbon.name, colors: carbon.colors })),
     ...UI_THEME_PRESETS.map((preset) => ({ id: preset.id, name: preset.name, colors: preset.colors })),
   ];
   return (

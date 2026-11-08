@@ -22,9 +22,9 @@
 
 // The outlines' greys: a card's ground and edge, and the shapes on it (a line
 // of text, a button, a picture). Flat, like every surface of the menu.
-const GROUND = "rgba(255,255,255,0.03)";
-const EDGE = "1px solid rgba(255,255,255,0.08)";
-const INK = "rgba(255,255,255,0.07)";
+const GROUND = "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)";
+const EDGE = "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)";
+const INK = "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)";
 
 // One shape: a line of text (`radius` "6px"), a pill (the default), a field,
 // a picture.

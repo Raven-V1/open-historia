@@ -11,6 +11,7 @@
 // it controls, not land it owns (runtime/groups.js).
 
 import { lazy, Suspense, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { createPortal } from "react-dom";
 import { isTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -22,12 +23,12 @@ import { bundledFlagUrl } from "../../runtime/countryFlags.js";
 const CountryPickerMap = lazy(() => import("./CountryPickerMap.jsx"));
 const FlagPicker = lazy(() => import("../../Editor/FlagPicker.jsx"));
 
-const label = { color: "rgba(255,255,255,0.7)", fontSize: "0.78rem", fontWeight: 700, margin: "0.1rem 0 0.3rem" };
+const label = { color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: "0.78rem", fontWeight: 700, margin: "0.1rem 0 0.3rem" };
 const field = {
   background: "rgba(0,0,0,0.28)",
-  border: "1px solid rgba(255,255,255,0.16)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
   borderRadius: 8,
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "sans-serif",
   fontSize: "0.85rem",
   outline: "none",
@@ -36,10 +37,10 @@ const field = {
   boxSizing: "border-box",
 };
 const pill = (active) => ({
-  background: active ? "rgba(0,0,0,0.39)" : "rgba(255,255,255,0.06)",
-  border: `1px solid ${active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.1)"}`,
+  background: active ? "rgba(0,0,0,0.39)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: `1px solid ${active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)"}`,
   borderRadius: 999,
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: "0.8rem",
   fontWeight: 700,
@@ -116,7 +117,7 @@ const FactionCreator = ({ regionsGeojson, ownerOverrides = null, customBackgroun
             className="oh-tap"
             value={color}
             onChange={(e) => setColor(e.target.value)}
-            style={{ width: 48, height: 34, background: "none", border: "1px solid rgba(255,255,255,0.16)", borderRadius: 8, cursor: "pointer" }}
+            style={{ width: 48, height: 34, background: "none", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)", borderRadius: 8, cursor: "pointer" }}
           />
         </div>
         <div style={{ flex: 1 }}>
@@ -124,9 +125,9 @@ const FactionCreator = ({ regionsGeojson, ownerOverrides = null, customBackgroun
           {/* Wraps on a narrow phone rather than pushing Remove off the card. */}
           <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: "0.5rem" }}>
             {flag ? (
-              <img src={bundledFlagUrl(flag)} alt="" style={{ width: 34, height: 22, objectFit: "contain", borderRadius: 3, border: "1px solid rgba(255,255,255,0.25)" }} />
+              <img src={bundledFlagUrl(flag)} alt="" style={{ width: 34, height: 22, objectFit: "contain", borderRadius: 3, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" }} />
             ) : (
-              <span aria-hidden="true" style={{ fontSize: "1.4rem" }}>🏳️</span>
+              <span aria-hidden="true" style={{ fontSize: "1.4rem" }}><UiIcon name="flag" size={22} /></span>
             )}
             <button type="button" className="oh-tap-row" onClick={() => setFlagOpen(true)} style={pill(false)}>
               {flag ? "Change flag" : "Choose flag"}
@@ -156,17 +157,17 @@ const FactionCreator = ({ regionsGeojson, ownerOverrides = null, customBackgroun
           <button type="button" className="oh-tap-row" onClick={() => setLandless(false)} style={pill(!landless)}>{group ? GROUP_CREATOR_TEXTS.someArea : "Claim regions"}</button>
         </div>
         {landless ? (
-          <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.76rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.76rem" }}>
             {group ? GROUP_CREATOR_TEXTS.noAreaText : "You begin with no territory — a stateless power. Your campaign is to gain or retake land."}
           </div>
         ) : (
           <>
-            <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.76rem", marginBottom: "0.3rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.76rem", marginBottom: "0.3rem" }}>
               {group
                 ? (regionIds.size === 1 ? "1 region controlled" : `${regionIds.size} regions controlled`)
                 : (regionIds.size === 1 ? "1 region claimed" : `${regionIds.size} regions claimed`)}
             </div>
-            <Suspense fallback={<div style={{ color: "rgba(255,255,255,0.5)", padding: "2rem 0", textAlign: "center" }}>Loading map…</div>}>
+            <Suspense fallback={<div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", padding: "2rem 0", textAlign: "center" }}>Loading map…</div>}>
               <CountryPickerMap
                 countryOptions={[]}
                 onPickCountry={() => {}}

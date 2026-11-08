@@ -10,6 +10,7 @@
 // Community tab.
 
 import { useEffect, useRef, useState } from "react";
+import UiIcon from "../Game/GameUI/carbonIcons.jsx";
 import { createPortal } from "react-dom";
 import { EDITOR_BASEMAPS, esriPreviewUrl } from "./basemaps.js";
 import { BACKGROUND_ACCEPT, loadBackgroundFile, vectorLayerToGeoJSON } from "./customBackground.js";
@@ -34,7 +35,7 @@ const overlay = {
   position: "fixed",
   inset: 0,
   zIndex: 2147483100,
-  background: "rgba(8,8,9,0.82)",
+  background: "color-mix(in srgb, var(--oh-paper, rgb(8,8,9)) 82%, transparent)",
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
@@ -46,10 +47,10 @@ const panel = {
   maxHeight: "88vh",
   display: "flex",
   flexDirection: "column",
-  background: "rgba(21,21,24,0.98)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-paper, rgb(21,21,24)) 98%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "18px",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   boxShadow: "0 24px 80px rgba(0,0,0,0.55)",
   overflow: "hidden",
 };
@@ -59,14 +60,14 @@ const headerBar = {
   alignItems: "center",
   gap: "0.6rem",
   padding: "0.85rem 1.1rem",
-  borderBottom: "1px solid rgba(255,255,255,0.08)",
+  borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
 };
 
 const bodyBox = { padding: "1.1rem", overflowY: "auto" };
 
 const cardSurface = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.09)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)",
   borderRadius: "14px",
   overflow: "hidden",
   display: "flex",
@@ -75,15 +76,15 @@ const cardSurface = {
   cursor: "pointer",
 };
 
-const rowTitle = { color: "rgba(255,255,255,0.9)", fontSize: "0.95rem", fontWeight: 800, margin: "0 0 0.6rem" };
+const rowTitle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.95rem", fontWeight: 800, margin: "0 0 0.6rem" };
 const rowScroll = { display: "flex", gap: "0.8rem", overflowX: "auto", paddingBottom: "0.4rem", scrollbarWidth: "thin" };
-const dim = { color: "rgba(255,255,255,0.4)", fontSize: "0.82rem", padding: "0.3rem 0 0.7rem" };
+const dim = { color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.82rem", padding: "0.3rem 0 0.7rem" };
 
 const tabBtn = (active) => ({
-  background: active ? "rgba(0,0,0,0.49)" : "rgba(255,255,255,0.06)",
-  border: active ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.1)",
+  background: active ? "rgba(0,0,0,0.49)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: active ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "999px",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: "0.8rem",
   fontWeight: 700,
@@ -92,10 +93,10 @@ const tabBtn = (active) => ({
 
 const uploadBtn = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.14)",
-  border: "1px solid rgba(255,255,255,0.23)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)",
   borderRadius: "999px",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.8rem",
@@ -105,10 +106,10 @@ const uploadBtn = {
 };
 
 const closeBtn = {
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "999px",
-  color: "#fff",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: "0.85rem",
   fontWeight: 700,
@@ -119,7 +120,7 @@ const closeBtn = {
 // A little pill on a card saying it came from the community, linking to its
 // post when the record kept one. Shared with FlagPicker's cards.
 export const CommunitySourceBadge = ({ url }) => {
-  const style = { position: "absolute", left: 6, bottom: 6, background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "999px", color: "#fff", fontSize: "0.6rem", fontWeight: 700, padding: "0.12rem 0.45rem", textDecoration: "none" };
+  const style = { position: "absolute", left: 6, bottom: 6, background: "rgba(0,0,0,0.6)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", borderRadius: "999px", color: "var(--oh-ink, #fff)", fontSize: "0.6rem", fontWeight: 700, padding: "0.12rem 0.45rem", textDecoration: "none" };
   return url ? (
     <a href={url} target="_blank" rel="noopener noreferrer" title="Installed from the community hub. Open its post" onClick={(e) => e.stopPropagation()} style={style}>
       Community ↗
@@ -130,13 +131,13 @@ export const CommunitySourceBadge = ({ url }) => {
 };
 
 // `activeLabel`: what the mark on an active card says.
-const BasemapCard = ({ title, imageUrl, imageFilter, active, activeLabel = "✓ In use", badge, onClick, onDelete, onPublish, communityUrl = null, fromCommunity = false }) => (
+const BasemapCard = ({ title, imageUrl, imageFilter, active, activeLabel = <><UiIcon name="check" size={14} /> In use</>, badge, onClick, onDelete, onPublish, communityUrl = null, fromCommunity = false }) => (
   <div
-    style={{ ...cardSurface, outline: active ? "2px solid rgba(255,255,255,0.22)" : "none", outlineOffset: "-2px" }}
+    style={{ ...cardSurface, outline: active ? "2px solid color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)" : "none", outlineOffset: "-2px" }}
     onClick={onClick}
     title={title}
   >
-    <div style={{ position: "relative", aspectRatio: "3 / 2", background: "#111113" }}>
+    <div style={{ position: "relative", aspectRatio: "3 / 2", background: "var(--oh-paper, #111113)" }}>
       {imageUrl ? (
         <img
           src={imageUrl}
@@ -147,7 +148,7 @@ const BasemapCard = ({ title, imageUrl, imageFilter, active, activeLabel = "✓ 
         />
       ) : (
         <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", opacity: 0.5 }}>
-          🗺️
+          <UiIcon name="map" size={24} />
         </div>
       )}
       {badge && (
@@ -156,7 +157,7 @@ const BasemapCard = ({ title, imageUrl, imageFilter, active, activeLabel = "✓ 
         </span>
       )}
       {active && (
-        <span style={{ position: "absolute", right: 6, top: 6, background: "rgba(255,255,255,0.28)", borderRadius: "999px", fontSize: "0.62rem", fontWeight: 700, padding: "0.1rem 0.4rem" }}>
+        <span style={{ position: "absolute", right: 6, top: 6, background: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", borderRadius: "999px", fontSize: "0.62rem", fontWeight: 700, padding: "0.1rem 0.4rem" }}>
           {activeLabel}
         </span>
       )}
@@ -166,7 +167,7 @@ const BasemapCard = ({ title, imageUrl, imageFilter, active, activeLabel = "✓ 
           type="button"
           title="Share this basemap to the community"
           onClick={(e) => { e.stopPropagation(); onPublish(); }}
-          style={{ position: "absolute", left: 6, bottom: 6, background: "rgba(255,255,255,0.28)", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "999px", color: "#fff", cursor: "pointer", fontSize: "0.7rem", height: "1.5rem", width: "1.5rem", lineHeight: 1 }}
+          style={{ position: "absolute", left: 6, bottom: 6, background: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", borderRadius: "999px", color: "var(--oh-ink, #fff)", cursor: "pointer", fontSize: "0.7rem", height: "1.5rem", width: "1.5rem", lineHeight: 1 }}
         >
           ⤴
         </button>
@@ -176,9 +177,9 @@ const BasemapCard = ({ title, imageUrl, imageFilter, active, activeLabel = "✓ 
           type="button"
           title="Remove from your basemaps"
           onClick={(e) => { e.stopPropagation(); onDelete(); }}
-          style={{ position: "absolute", right: 6, bottom: 6, background: "rgba(0,0,0,0.6)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "999px", color: "#fff", cursor: "pointer", fontSize: "0.7rem", height: "1.5rem", width: "1.5rem", lineHeight: 1 }}
+          style={{ position: "absolute", right: 6, bottom: 6, background: "rgba(0,0,0,0.6)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", borderRadius: "999px", color: "var(--oh-ink, #fff)", cursor: "pointer", fontSize: "0.7rem", height: "1.5rem", width: "1.5rem", lineHeight: 1 }}
         >
-          ✕
+          <UiIcon name="close" size={14} />
         </button>
       )}
     </div>
@@ -214,11 +215,11 @@ const DetailedMaps = ({ list, loading, download, onDownload, onCancel }) => {
             const busy = download?.id === entry.id;
             const label = busy
               ? `Downloading…${download.percent !== null ? ` ${download.percent}%` : ""}`
-              : upToDate ? `✓ Downloaded (v${have})`
-                : have ? `⬆ Update to v${latest.version} (${size})` : `⬇ Download (${size})`;
+              : upToDate ? <><UiIcon name="check" size={14} /> {`Downloaded (v${have})`}</>
+                : have ? <><UiIcon name="download" size={14} /> {`Update to v${latest.version} (${size})`}</> : <><UiIcon name="download" size={14} /> {`Download (${size})`}</>;
             return (
               <div key={entry.id} style={{ ...cardSurface, flex: "unset", cursor: "default" }}>
-                <div style={{ position: "relative", aspectRatio: "3 / 2", background: "#111113" }}>
+                <div style={{ position: "relative", aspectRatio: "3 / 2", background: "var(--oh-paper, #111113)" }}>
                   {latest.preview ? (
                     <img
                       src={latest.preview}
@@ -228,7 +229,7 @@ const DetailedMaps = ({ list, loading, download, onDownload, onCancel }) => {
                       style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                     />
                   ) : (
-                    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", opacity: 0.5 }}>🗺️</div>
+                    <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", opacity: 0.5 }}><UiIcon name="map" size={26} /></div>
                   )}
                   <span style={{ position: "absolute", left: 6, top: 6, background: "rgba(0,0,0,0.55)", borderRadius: "6px", fontSize: "0.6rem", fontWeight: 700, padding: "0.1rem 0.35rem", textTransform: "uppercase" }}>
                     detailed · v{latest.version} · {size}
@@ -236,10 +237,10 @@ const DetailedMaps = ({ list, loading, download, onDownload, onCancel }) => {
                 </div>
                 <div style={{ padding: "0.5rem 0.6rem", display: "flex", flexDirection: "column", gap: "0.35rem" }}>
                   <div style={{ fontSize: "0.8rem", fontWeight: 700 }}>{entry.name}</div>
-                  {entry.author && <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.5)" }}>by {entry.author}</div>}
-                  {entry.license && <div style={{ fontSize: "0.66rem", color: "rgba(255,255,255,0.45)" }}>{entry.license}</div>}
+                  {entry.author && <div style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>by {entry.author}</div>}
+                  {entry.license && <div style={{ fontSize: "0.66rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>{entry.license}</div>}
                   {have > 0 && !upToDate && latest.notes && (
-                    <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.65)" }}>New in v{latest.version}: {latest.notes}</div>
+                    <div style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)" }}>New in v{latest.version}: {latest.notes}</div>
                   )}
                   <button
                     type="button"
@@ -265,19 +266,19 @@ const DetailedMaps = ({ list, loading, download, onDownload, onCancel }) => {
 // one; here a map is made the starting one, taken out (✕), or, a detailed map,
 // shown over another of the scenario's drawn maps.
 const MAP_KIND_LABELS = { builtinLabel: "built-in", vectorLabel: "drawn map", imageLabel: "picture", plainLabel: "plain sea", detailedLabel: "detailed map" };
-const mapRow = { display: "flex", alignItems: "center", flexWrap: "wrap", gap: "0.5rem", padding: "0.35rem 0.5rem", borderRadius: "10px", background: "rgba(255,255,255,0.04)" };
+const mapRow = { display: "flex", alignItems: "center", flexWrap: "wrap", gap: "0.5rem", padding: "0.35rem 0.5rem", borderRadius: "10px", background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)" };
 const smallBtn = { ...tabBtn(false), fontSize: "0.72rem", padding: "0.2rem 0.6rem" };
 const ScenarioMapsList = ({ maps, onMakeStarting, onRemove, onShownOver, onSaveToLibrary, inLibrary }) => {
   const drawn = maps.filter((map) => map.kind === "vector");
   const nameOf = (key) => maps.find((map) => map.key === key)?.name || "";
-  const box = { marginBottom: "1.3rem", padding: "0.7rem 0.8rem", border: "1px solid rgba(255,255,255,0.09)", borderRadius: "12px", background: "rgba(255,255,255,0.03)" };
+  const box = { marginBottom: "1.3rem", padding: "0.7rem 0.8rem", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)", borderRadius: "12px", background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)" };
   return (
     <div style={box}>
       <div style={{ ...rowTitle, marginBottom: "0.3rem" }}>This scenario&apos;s maps</div>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
         {maps.map((map) => (
           <div key={map.key} style={mapRow}>
-            <span style={{ width: "1rem", textAlign: "center" }} title={map.starting ? "The starting map" : undefined}>{map.starting ? "★" : ""}</span>
+            <span style={{ width: "1rem", textAlign: "center" }} title={map.starting ? "The starting map" : undefined}>{map.starting ? <UiIcon name="star" size={14} /> : ""}</span>
             <span data-no-translate style={{ fontSize: "0.82rem", fontWeight: 700 }}>{map.name}</span>
             <span style={{ fontSize: "0.7rem", opacity: 0.55, fontWeight: 600 }}>{MAP_KIND_LABELS[`${map.kind}Label`]}</span>
             {map.kind === "detailed" && (
@@ -288,7 +289,7 @@ const ScenarioMapsList = ({ maps, onMakeStarting, onRemove, onShownOver, onSaveT
                     data-no-translate
                     value={map.over}
                     onChange={(e) => onShownOver(map.key, e.target.value)}
-                    style={{ background: "rgba(0,0,0,0.4)", color: "#fff", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "6px", fontSize: "0.72rem" }}
+                    style={{ background: "rgba(0,0,0,0.4)", color: "var(--oh-ink, #fff)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", borderRadius: "6px", fontSize: "0.72rem" }}
                   >
                     {drawn.map((option) => <option key={option.key} value={option.key} style={{ color: "black" }}>{option.name}</option>)}
                   </select>
@@ -305,7 +306,7 @@ const ScenarioMapsList = ({ maps, onMakeStarting, onRemove, onShownOver, onSaveT
             )}
             {!map.starting && (
               <button type="button" style={smallBtn} title="Players start on this map" onClick={() => onMakeStarting(map)}>
-                ★ Make starting map
+                <UiIcon name="star" size={14} /> Make starting map
               </button>
             )}
             {!map.starting && (
@@ -313,9 +314,9 @@ const ScenarioMapsList = ({ maps, onMakeStarting, onRemove, onShownOver, onSaveT
                 type="button"
                 title="Take this map out of the scenario's maps"
                 onClick={() => onRemove(map.key)}
-                style={{ background: "none", border: "none", color: "#fff", cursor: "pointer", fontSize: "0.8rem", padding: "0 0.2rem" }}
+                style={{ background: "none", border: "none", color: "var(--oh-ink, #fff)", cursor: "pointer", fontSize: "0.8rem", padding: "0 0.2rem" }}
               >
-                ✕
+                <UiIcon name="close" size={14} />
               </button>
             )}
           </div>
@@ -496,7 +497,7 @@ const BasemapPicker = ({
       } else if (result?.libraryError) {
         setNotice({ tone: "error", text: "The basemap is in this scenario's maps, but it could not be saved to Your basemaps, so it will not be here to reuse." });
       } else if (result?.added) {
-        setNotice({ tone: "warn", text: "Added to this scenario's maps. To draw on it, make it the starting map (★)." });
+        setNotice({ tone: "warn", text: "Added to this scenario's maps. To draw on it, make it the starting map." });
       }
     } catch (e) {
       window.alert(`Could not add that map: ${e?.message || e}`);
@@ -620,7 +621,7 @@ const BasemapPicker = ({
             aria-label={isMobile ? "Add basemap or detailed map" : undefined}
             title="A basemap: a picture (.png, .jpg) or a painted map (.geojson, .kml, .zip…). Or a detailed map: a .pmtiles file of picture tiles, up to 500 MB. GeoTIFF files and .pmtiles of vector tiles are shown for the current session only."
           >
-            {busy ? (isMobile ? "…" : "Adding…") : isMobile ? "⬆" : "⬆ Add basemap or detailed map"}
+            {busy ? (isMobile ? "…" : "Adding…") : isMobile ? <UiIcon name="upload" size={14} /> : <><UiIcon name="upload" size={14} /> Add basemap or detailed map</>}
             <input
               type="file"
               accept={acceptFor(BACKGROUND_ACCEPT)}
@@ -632,7 +633,7 @@ const BasemapPicker = ({
               }}
             />
           </label>
-          <button type="button" className="oh-tap" aria-label="Close basemap picker" style={{ ...closeBtn, marginLeft: isMobile ? "auto" : undefined }} onClick={onClose} title="Close">✕</button>
+          <button type="button" className="oh-tap" aria-label="Close basemap picker" style={{ ...closeBtn, marginLeft: isMobile ? "auto" : undefined }} onClick={onClose} title="Close"><UiIcon name="close" size={16} /></button>
         </div>
 
         <div style={bodyBox}>
@@ -662,7 +663,7 @@ const BasemapPicker = ({
                       imageUrl={esriPreviewUrl(b.service)}
                       imageFilter={b.previewFilter}
                       active={builtinInScenario(b.id)}
-                      activeLabel={startingBuiltin(b.id) ? "★ Starting map" : "✓ In this scenario"}
+                      activeLabel={startingBuiltin(b.id) ? <><UiIcon name="star" size={14} /> Starting map</> : <><UiIcon name="check" size={14} /> In this scenario</>}
                       onClick={() => onAddBuiltin?.(b.id)}
                     />
                   ))}
@@ -674,7 +675,7 @@ const BasemapPicker = ({
                 {loading ? (
                   <div style={dim}>Loading…</div>
                 ) : !painted.length ? (
-                  <div style={dim}>No basemaps of your own yet. Use “⬆ Add basemap or detailed map” to add a picture or a painted map (.png, .jpg, .geojson…); it stays here so you can reuse it on any scenario.</div>
+                  <div style={dim}>No basemaps of your own yet. Use “Add basemap or detailed map” to add a picture or a painted map (.png, .jpg, .geojson…); it stays here so you can reuse it on any scenario.</div>
                 ) : (
                   <div style={rowScroll}>
                     {painted.map((bm) => (
@@ -683,7 +684,7 @@ const BasemapPicker = ({
                         title={bm.name}
                         imageUrl={bm.thumbnail}
                         active={!browse && libraryInScenario(bm)}
-                        activeLabel="✓ In this scenario"
+                        activeLabel={<><UiIcon name="check" size={14} /> In this scenario</>}
                         badge={bm.kind === "vector" ? "drawn map" : "picture"}
                         onClick={browse ? undefined : () => onAddLibrary?.(bm)}
                         onDelete={() => handleDelete(bm)}
@@ -702,7 +703,7 @@ const BasemapPicker = ({
                 {loading ? (
                   <div style={dim}>Loading…</div>
                 ) : !mine.some((bm) => bm.kind === "tiled") ? (
-                  <div style={dim}>No detailed maps yet. Download one from the Community tab, or add your own .pmtiles file with “⬆ Add basemap or detailed map”. A detailed map is drawn on top of a scenario&apos;s basemap.</div>
+                  <div style={dim}>No detailed maps yet. Download one from the Community tab, or add your own .pmtiles file with “Add basemap or detailed map”. A detailed map is drawn on top of a scenario&apos;s basemap.</div>
                 ) : (
                   <div style={rowScroll}>
                     {mine.filter((bm) => bm.kind === "tiled").map((bm) => (
@@ -711,7 +712,7 @@ const BasemapPicker = ({
                         title={bm.name}
                         imageUrl={bm.thumbnail}
                         active={!browse && detailedInScenario(bm)}
-                        activeLabel={startingDetailed(bm) ? "★ Starting map" : "✓ In this scenario"}
+                        activeLabel={startingDetailed(bm) ? <><UiIcon name="star" size={14} /> Starting map</> : <><UiIcon name="check" size={14} /> In this scenario</>}
                         badge={`detailed${bm.official ? ` v${bm.official.version}` : ""} · ${formatBytes(bm.bytes)}`}
                         onClick={browse ? undefined : () => onAddLibrary?.(bm)}
                         onDelete={() => handleDelete(bm)}
@@ -770,7 +771,7 @@ const BasemapPicker = ({
                     const canInstall = basemapPostInstallable(post) && !installed;
                     return (
                     <div key={post.id} style={{ ...cardSurface, flex: "unset", cursor: "default" }}>
-                      <div style={{ position: "relative", aspectRatio: "3 / 2", background: "#111113" }}>
+                      <div style={{ position: "relative", aspectRatio: "3 / 2", background: "var(--oh-paper, #111113)" }}>
                         {/* The image's checked copy in the hub's releases, never
                             the post's own attachment (communityBasemaps.js). */}
                         {post.pictureUrl ? (
@@ -782,7 +783,7 @@ const BasemapPicker = ({
                             style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
                           />
                         ) : (
-                          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", opacity: 0.5 }}>🗺️</div>
+                          <div style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", fontSize: "1.6rem", opacity: 0.5 }}><UiIcon name="map" size={26} /></div>
                         )}
                         {post.kind === "vector" && (
                           <span style={{ position: "absolute", left: 6, top: 6, background: "rgba(0,0,0,0.55)", borderRadius: "6px", fontSize: "0.6rem", fontWeight: 700, padding: "0.1rem 0.35rem", textTransform: "uppercase" }}>vector</span>
@@ -793,7 +794,7 @@ const BasemapPicker = ({
                       </div>
                       <div style={{ padding: "0.5rem 0.6rem", display: "flex", flexDirection: "column", gap: "0.4rem" }}>
                         <div style={{ fontSize: "0.8rem", fontWeight: 700, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{post.title}</div>
-                        <div style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.5)" }}>by {post.author}</div>
+                        <div style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>by {post.author}</div>
                         <button
                           type="button"
                           disabled={!canInstall || busyId === post.id}
@@ -801,12 +802,12 @@ const BasemapPicker = ({
                           title={installed ? "Already in Your basemaps" : canInstall ? "Install into Your basemaps" : "This post has no basemap file attached"}
                           style={{
                             ...tabBtn(false),
-                            background: canInstall ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.04)",
+                            background: canInstall ? "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
                             cursor: canInstall && busyId !== post.id ? "pointer" : "default",
                             opacity: canInstall || installed ? 1 : 0.5,
                           }}
                         >
-                          {busyId === post.id ? "Installing…" : installed ? "✓ Installed" : "⬇ Install"}
+                          {busyId === post.id ? "Installing…" : installed ? <><UiIcon name="check" size={14} /> Installed</> : <><UiIcon name="download" size={14} /> Install</>}
                         </button>
                       </div>
                     </div>

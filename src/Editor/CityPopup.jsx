@@ -11,6 +11,7 @@
 // population until the user explicitly chooses a size.
 
 import { useEffect, useRef, useState } from "react";
+import UiIcon from "../Game/GameUI/carbonIcons.jsx";
 import { panelSurface, inputStyle, pillButton } from "./editorStyles.js";
 
 const SIZES = [
@@ -128,11 +129,11 @@ const CityPopup = ({ feature, x, y, isNew, onChange, onDelete, onClose }) => {
               })
             }
           />
-          ★ Capital
+          <UiIcon name="star" size={14} /> Capital
         </label>
       </div>
 
-      <label style={{ display: "grid", gap: 4, color: "rgba(255,255,255,0.7)" }}>
+      <label style={{ display: "grid", gap: 4, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         <span style={{ fontSize: 10.5, fontWeight: 700 }}>Population</span>
         <input
           type="number"
@@ -152,7 +153,7 @@ const CityPopup = ({ feature, x, y, isNew, onChange, onDelete, onClose }) => {
         />
       </label>
 
-      <label style={{ display: "grid", gap: 4, color: "rgba(255,255,255,0.7)" }}>
+      <label style={{ display: "grid", gap: 4, color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>
         <span style={{ fontSize: 10.5, fontWeight: 700 }}>Population by year</span>
         <textarea
           value={seriesDraft ?? seriesToText(feature.populationByYear)}

@@ -181,7 +181,7 @@ const markupStyle = (feature) => {
       image: new CircleStyle({
         radius: focused ? 9 : 7,
         fill: new Fill({ color: state === "rejected" ? "rgba(148,163,184,0.35)" : `${color}55` }),
-        stroke: new Stroke({ color: focused ? "#ffffff" : color, width: focused ? 3 : 2 }),
+        stroke: new Stroke({ color: focused ? "var(--oh-ink, #fff)" : color, width: focused ? 3 : 2 }),
       }),
       zIndex: focused ? 20 : 10,
     });
@@ -191,7 +191,7 @@ const markupStyle = (feature) => {
       stroke: new Stroke({
         // Focused, a region's outline turns white; a proposed shape keeps its
         // blue, so the old border and the new one stay told apart.
-        color: focused && kind !== "shape" ? "#ffffff" : color,
+        color: focused && kind !== "shape" ? "var(--oh-ink, #fff)" : color,
         width: focused ? 3.5 : kind === "shape" ? 2.5 : 2,
         lineDash: dashed ? (kind === "shape" ? [8, 5] : state === "rejected" ? [2, 5] : [6, 4]) : undefined,
       }),
@@ -407,7 +407,7 @@ const StatusNote = ({ status }) => {
     return <span title="You changed this after you posted the scenario. Accepting replaces your version." style={{ color: "#fb923c", fontSize: 10.5, fontWeight: 700 }}>You changed this too</span>;
   }
   if (status === "applied") return <span style={{ color: "#86efac", fontSize: 10.5, fontWeight: 700 }}>Already on your map</span>;
-  if (status === "missing") return <span style={{ color: "#cbd5e1", fontSize: 10.5, fontWeight: 700 }}>Not on your map</span>;
+  if (status === "missing") return <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: 10.5, fontWeight: 700 }}>Not on your map</span>;
   return null;
 };
 
@@ -417,12 +417,12 @@ const Decision = ({ change, review }) => {
   if (decided) {
     return (
       <span style={{ alignItems: "center", display: "inline-flex", gap: 6 }}>
-        <span style={{ color: decided === "accepted" ? "#86efac" : "rgba(255,255,255,0.5)", fontSize: 11, fontWeight: 700 }}>
+        <span style={{ color: decided === "accepted" ? "#86efac" : "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: 11, fontWeight: 700 }}>
           {decided === "accepted" ? "Accepted" : "Rejected"}
         </span>
         {review.canUndo(change.id)
           ? <button type="button" onClick={(event) => { event.stopPropagation(); review.undo(change); }} style={{ ...pillButton(false), padding: "3px 7px", fontSize: 11 }}>Undo</button>
-          : <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 10.5 }}>To undo it, change it back by hand.</span>}
+          : <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: 10.5 }}>To undo it, change it back by hand.</span>}
       </span>
     );
   }
@@ -444,8 +444,8 @@ const ChangeRow = ({ change, review, doc, onFocus, indent = false }) => {
       onClick={() => onFocus(change)}
       onKeyDown={(event) => { if (event.key === "Enter") onFocus(change); }}
       style={{
-        background: focused ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.03)",
-        border: `1px solid ${focused ? "rgba(255,255,255,0.3)" : "rgba(255,255,255,0.07)"}`,
+        background: focused ? "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+        border: `1px solid ${focused ? "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"}`,
         borderRadius: 8,
         cursor: "pointer",
         display: "grid",
@@ -461,12 +461,12 @@ const ChangeRow = ({ change, review, doc, onFocus, indent = false }) => {
       {change.kind === "polity-change" && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: 4 }}>
           {Object.keys(change.fields ?? {}).map((field) => (
-            <span key={field} style={{ background: "rgba(255,255,255,0.07)", borderRadius: 5, fontSize: 10.5, padding: "1px 6px" }}>{FIELD_CHIP_LABELS[field] || field}</span>
+            <span key={field} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: 5, fontSize: 10.5, padding: "1px 6px" }}>{FIELD_CHIP_LABELS[field] || field}</span>
           ))}
         </div>
       )}
       {change.kind === "borders" && (
-        <div style={{ color: "rgba(255,255,255,0.62)", display: "grid", fontSize: 11, gap: 2 }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", display: "grid", fontSize: 11, gap: 2 }}>
           {(change.regions ?? []).slice(0, 8).map((region) => (
             <span key={region.id}>
               {region.op === "add" ? `New region: ${region.name}` : region.op === "remove" ? `Region removed: ${region.name}` : `Region redrawn: ${region.name}`}
@@ -503,10 +503,10 @@ const OwnershipGroups = ({ changes, review, doc, onFocus }) => {
           <button
             type="button"
             onClick={() => setOpen((current) => ({ ...current, [group.key]: !current[group.key] }))}
-            style={{ background: "transparent", border: "none", color: "white", cursor: "pointer", flex: 1, fontSize: 12, fontWeight: 700, padding: 0, textAlign: "left" }}
+            style={{ background: "transparent", border: "none", color: "var(--oh-ink, #fff)", cursor: "pointer", flex: 1, fontSize: 12, fontWeight: 700, padding: 0, textAlign: "left" }}
           >
             {`${open[group.key] ? "▾" : "▸"} ${fromLabel} → ${toLabel}`}
-            <span style={{ color: "rgba(255,255,255,0.55)", fontWeight: 400, marginLeft: 6 }}>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontWeight: 400, marginLeft: 6 }}>
               {group.items.length === 1 ? "1 region" : `${group.items.length} regions`}
             </span>
           </button>
@@ -516,7 +516,7 @@ const OwnershipGroups = ({ changes, review, doc, onFocus }) => {
               <button type="button" onClick={() => review.reject(pending)} style={{ ...pillButton(false), padding: "3px 8px", fontSize: 11 }}>Reject</button>
             </>
           )}
-          {!pending.length && <span style={{ color: "rgba(255,255,255,0.5)", fontSize: 11 }}>Decided</span>}
+          {!pending.length && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: 11 }}>Decided</span>}
         </div>
         {open[group.key] && group.items.map((change) => <ChangeRow key={change.id} change={change} review={review} doc={doc} onFocus={onFocus} indent />)}
       </div>
@@ -556,7 +556,7 @@ const SuggestionReviewPanel = ({ review, doc, api, suggestion, onClose }) => {
       width={400}
       onClose={onClose}
       footer={(
-        <div style={{ color: "rgba(255,255,255,0.62)", fontSize: 11.5, lineHeight: 1.45 }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: 11.5, lineHeight: 1.45 }}>
           Accepted changes are on the map now. Save the map to keep them in the scenario.
         </div>
       )}
@@ -564,7 +564,7 @@ const SuggestionReviewPanel = ({ review, doc, api, suggestion, onClose }) => {
       {(suggestion?.by || suggestion?.note) && (
         <div style={{ display: "grid", gap: 4 }}>
           {suggestion.by ? <span style={{ fontSize: 12, fontWeight: 700 }} data-no-translate>{suggestion.by}</span> : null}
-          {suggestion.note ? <span data-no-translate style={{ color: "rgba(255,255,255,0.72)", fontSize: 11.5, lineHeight: 1.45, whiteSpace: "pre-wrap" }}>{suggestion.note}</span> : null}
+          {suggestion.note ? <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: 11.5, lineHeight: 1.45, whiteSpace: "pre-wrap" }}>{suggestion.note}</span> : null}
         </div>
       )}
       <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: 6 }}>
@@ -580,7 +580,7 @@ const SuggestionReviewPanel = ({ review, doc, api, suggestion, onClose }) => {
         <input type="checkbox" checked={hideDecided} onChange={(event) => setHideDecided(event.target.checked)} />
         Hide the changes already decided
       </label>
-      {!visible.length && <div style={{ color: "rgba(255,255,255,0.6)", fontSize: 12 }}>Nothing left to decide.</div>}
+      {!visible.length && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: 12 }}>Nothing left to decide.</div>}
       {REVIEW_SECTIONS.map((section) => {
         const items = visible.filter((change) => sectionOfChange(change) === section.id);
         if (!items.length) return null;

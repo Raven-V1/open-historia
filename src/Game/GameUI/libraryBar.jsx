@@ -1,8 +1,13 @@
 /*! Open Historia — portions (map-editor embed, apply-to-scenario, country picker) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
+import { CarbonModal } from "./carbonControls.jsx";
+import UiIcon, { DifficultyIcon } from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, SCREEN_HEIGHT, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
 import { Presence } from "./presence.jsx";
+import Asleep from "@carbon/icons-react/es/Asleep.js";
+import Light from "@carbon/icons-react/es/Light.js";
+import { toggleCarbonScheme, useUiTheme } from "../../runtime/uiTheme.js";
 import {
   PROMPT_EDITOR_SECTIONS,
   PROMPT_GUIDANCE_DEFAULTS,
@@ -214,17 +219,17 @@ const surfaceStyle = {
 
 const actionButtonStyle = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.08)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
   borderRadius: "999px",
-  color: "rgba(246,246,248,0.92)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.82rem",
   fontWeight: 600,
   gap: "0.4rem",
   justifyContent: "center",
-  boxShadow: "inset 0 1px 0 rgba(255,255,255,0.045), 0 6px 18px rgba(0,0,0,0.12)",
+  boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 4.5%, transparent), 0 6px 18px rgba(0,0,0,0.12)",
   minHeight: "2.2rem",
   padding: "0 1rem",
   transition: "background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease",
@@ -250,6 +255,15 @@ const APP_SHELL_MAX_WIDTH = "3000px";
 // min track keeps cards readable from ordinary laptops through ultrawide.
 const LIBRARY_GRID_TEMPLATE = "repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr))";
 const CARD_TEXT_SHADOW = "0 1px 2px rgba(0,0,0,0.9), 0 5px 16px rgba(0,0,0,0.72), 0 14px 30px rgba(0,0,0,0.55)";
+// Text on a card's accent colour: dark on a light accent, white on a dark one,
+// so the badge and the button read in either theme.
+const inkOnAccent = (hex) => {
+  const m = /^#?([0-9a-f]{2})([0-9a-f]{2})([0-9a-f]{2})/i.exec(String(hex || ""));
+  if (!m) return "#ffffff";
+  const [r, g, b] = [m[1], m[2], m[3]].map((part) => parseInt(part, 16));
+  return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? "#0b0f14" : "#ffffff";
+};
+
 const SCENARIO_CARD_TEXT_SHADOW = "0 1px 2px rgba(0,0,0,0.96), 0 6px 18px rgba(0,0,0,0.82), 0 16px 34px rgba(0,0,0,0.64)";
 
 const ButtonIcon = ({ kind, size = 15, strokeWidth = 1.9 }) => {
@@ -388,11 +402,11 @@ const MENU_RAIL_ICON = 22;
 // A page's button on the rail: a rounded square, its icon over its name.
 const railButtonStyle = (active) => ({
   alignItems: "center",
-  background: active ? "var(--oh-ui-active, rgba(255,255,255,0.11))" : "rgba(255,255,255,0.035)",
-  border: `1px solid ${active ? "var(--oh-ui-accent, rgba(255,255,255,0.24))" : "rgba(255,255,255,0.07)"}`,
+  background: active ? "var(--oh-ui-active, rgba(255,255,255,0.11))" : "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)",
+  border: `1px solid ${active ? "var(--oh-ui-accent, rgba(255,255,255,0.24))" : "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"}`,
   borderRadius: "16px",
-  boxShadow: active ? "inset 0 1px 0 rgba(255,255,255,0.06), 0 8px 20px rgba(0,0,0,0.28)" : "none",
-  color: active ? "#ffffff" : "rgba(236,236,240,0.7)",
+  boxShadow: active ? "inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent), 0 8px 20px rgba(0,0,0,0.28)" : "none",
+  color: active ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)",
   cursor: "pointer",
   display: "flex",
   flexDirection: "column",
@@ -411,7 +425,10 @@ const railButtonStyle = (active) => ({
 // The rail down the left of the main menu, on a screen wide enough for it: the
 // mark and the name, a rounded square for each page, and Settings at its
 // foot. A phone keeps the pages as a row across the top.
-const MenuRail = ({ activeTab, onTab, onOpenSettings, onOpenHistory }) => (
+const MenuRail = ({ activeTab, onTab, onOpenSettings, onOpenHistory }) => {
+  const uiTheme = useUiTheme();
+  const carbonLight = uiTheme.preset === "carbon-light";
+  return (
   <nav
     style={{
       alignItems: "center",
@@ -436,10 +453,10 @@ const MenuRail = ({ activeTab, onTab, onOpenSettings, onOpenHistory }) => (
       title="Update history: every update to Open Historia"
       type="button"
     >
-      <div style={{ alignItems: "center", background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "999px", display: "flex", height: "3.15rem", justifyContent: "center", overflow: "hidden", width: "3.15rem" }}>
+      <div style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "999px", display: "flex", height: "3.15rem", justifyContent: "center", overflow: "hidden", width: "3.15rem" }}>
         <img alt="" src="/logo.png" style={{ height: "2.05rem", width: "2.05rem" }} />
       </div>
-      <div style={{ color: "#fff", fontSize: "0.8rem", fontWeight: 800, letterSpacing: "-0.01em", lineHeight: 1.15, textAlign: "center" }}>
+      <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.8rem", fontWeight: 800, letterSpacing: "-0.01em", lineHeight: 1.15, textAlign: "center" }}>
         Open Historia
       </div>
     </button>
@@ -459,6 +476,18 @@ const MenuRail = ({ activeTab, onTab, onOpenSettings, onOpenHistory }) => (
       </button>
     ))}
     <div style={{ flex: 1, minHeight: "0.6rem" }} />
+    <button
+      aria-label={carbonLight ? "Switch to dark theme" : "Switch to light theme"}
+      className="oh-tap-row"
+      data-oh-theme-nav=""
+      onClick={toggleCarbonScheme}
+      style={railButtonStyle(false)}
+      title={carbonLight ? "Switch to dark theme" : "Switch to light theme"}
+      type="button"
+    >
+      {carbonLight ? <Asleep size={MENU_RAIL_ICON} /> : <Light size={MENU_RAIL_ICON} />}
+      <span>{carbonLight ? "Dark" : "Light"}</span>
+    </button>
     {typeof onOpenSettings === "function" && (
       <button className="oh-tap-row" data-oh-theme-nav="" onClick={onOpenSettings} style={railButtonStyle(false)} type="button">
         <ButtonIcon kind="settings" size={MENU_RAIL_ICON} />
@@ -466,7 +495,8 @@ const MenuRail = ({ activeTab, onTab, onOpenSettings, onOpenHistory }) => (
       </button>
     )}
   </nav>
-);
+  );
+};
 
 // On a touch screen .oh-tap / .oh-tap-row (styles.css) make a control a
 // finger's 44 px, but a min-height written inline beats a class, and every pill
@@ -483,7 +513,7 @@ const touchFit = (style, touch, { icon = false } = {}) => {
 const SHELF_CARD_WIDTH = "min(21rem, calc(100vw - 2.4rem))";
 
 const fieldLabelStyle = {
-  color: "rgba(255,255,255,0.72)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
   display: "block",
   fontSize: "0.75rem",
   fontWeight: 600,
@@ -493,10 +523,10 @@ const fieldLabelStyle = {
 };
 
 const inputStyle = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "12px",
-  color: "#f8fafc",
+  color: "var(--oh-ink, #fff)",
   fontSize: "0.9rem",
   outline: "none",
   padding: "0.8rem 0.9rem",
@@ -727,8 +757,8 @@ const PromptSectionEditor = ({
   return (
     <div
       style={{
-        background: "rgba(255,255,255,0.03)",
-        border: "1px solid rgba(255,255,255,0.08)",
+        background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+        border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
         borderRadius: "18px",
         padding: "0.9rem",
       }}
@@ -745,10 +775,10 @@ const PromptSectionEditor = ({
           }}
         >
           <div style={{ flex: "1 1 15rem" }}>
-            <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.82rem", fontWeight: 700 }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.82rem", fontWeight: 700 }}>
               Prompt pack
             </div>
-            <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.72rem", lineHeight: 1.4, marginTop: "0.15rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.72rem", lineHeight: 1.4, marginTop: "0.15rem" }}>
               Move every scenario-authored prompt passage at once. Tooling and output contracts stay with the app.
             </div>
           </div>
@@ -805,10 +835,10 @@ const PromptSectionEditor = ({
 
       {(onExportPromptPack || onImportPromptPack) ? (
         <div style={{ margin: "0.1rem 0 0.75rem" }}>
-          <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", marginBottom: "0.6rem" }} />
+          <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", marginBottom: "0.6rem" }} />
           <div
             style={{
-              color: "rgba(255,255,255,0.42)",
+              color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)",
               fontSize: "0.68rem",
               fontWeight: 700,
               letterSpacing: "0.06em",
@@ -829,9 +859,9 @@ const PromptSectionEditor = ({
             style={touchFit({
               ...themeButtonStyle,
               background:
-                section.key === currentSection.key ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.05)",
+                section.key === currentSection.key ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
               borderColor:
-                section.key === currentSection.key ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.08)",
+                section.key === currentSection.key ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
               minHeight: "2rem",
               padding: "0 0.8rem",
             }, touch)}
@@ -842,15 +872,15 @@ const PromptSectionEditor = ({
         ))}
       </div>
 
-      <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.82rem", marginBottom: "0.5rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.82rem", marginBottom: "0.5rem" }}>
         {currentSection.description}
       </div>
       <div
         style={{
-          background: "rgba(255,255,255,0.03)",
-          border: "1px solid rgba(255,255,255,0.11)",
+          background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+          border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 11%, transparent)",
           borderRadius: "12px",
-          color: "rgba(255,255,255,0.62)",
+          color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)",
           fontSize: "0.76rem",
           lineHeight: 1.45,
           marginBottom: "0.9rem",
@@ -872,7 +902,7 @@ const PromptSectionEditor = ({
               <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
                 <label style={{ ...fieldLabelStyle, marginBottom: 0 }}>
                   {segment.label}
-                  {edited ? <span style={{ color: "#e4e4e7", marginLeft: "0.4rem" }}>· edited</span> : null}
+                  {edited ? <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", marginLeft: "0.4rem" }}>· edited</span> : null}
                 </label>
                 {edited ? (
                   <button
@@ -886,7 +916,7 @@ const PromptSectionEditor = ({
                 ) : null}
               </div>
               {segment.hint ? (
-                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.76rem", margin: "0.25rem 0 0.35rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.76rem", margin: "0.25rem 0 0.35rem" }}>
                   {segment.hint}
                 </div>
               ) : null}
@@ -1005,6 +1035,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 border: "1px solid rgba(255,255,255,0.18)",
                 borderRadius: "999px",
                 color: "rgba(248,248,250,0.96)",
+                ...(selected ? { color: inkOnAccent(scenario.accentColor), textShadow: "none" } : null),
                 display: "inline-flex",
                 fontSize: "0.68rem",
                 fontWeight: 700,
@@ -1071,7 +1102,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
         <div>
           <div
             style={{
-              color: "#fff",
+              color: "var(--oh-ink, #fff)",
               fontSize: "1.32rem",
               fontWeight: 800,
               letterSpacing: "-0.025em",
@@ -1083,7 +1114,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
           </div>
           <div
             style={{
-              color: "rgba(228,228,235,0.78)",
+              color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)",
               display: "-webkit-box",
               fontSize: "0.82rem",
               lineHeight: 1.45,
@@ -1101,7 +1132,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
           {scenario.subtitle && scenario.subtitle !== (scenario.heroSubtitle || scenario.description) && (
             <div
               style={{
-                color: "rgba(255,255,255,0.5)",
+                color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)",
                 display: "-webkit-box",
                 fontSize: "0.75rem",
                 marginBottom: "0.45rem",
@@ -1128,7 +1159,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 borderColor: updating || updateIsPrimary ? "#27a663dd" : `${scenario.accentColor}`,
                 borderRadius: "11px",
                 boxShadow: `0 3px 12px ${scenario.accentColor}33`,
-                color: "#fff",
+                color: updating || updateIsPrimary ? "#ffffff" : inkOnAccent(scenario.accentColor),
                 cursor: updating ? "progress" : "pointer",
                 fontSize: "0.88rem",
                 fontWeight: 700,
@@ -1150,8 +1181,8 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 onClick={() => onEdit(scenario.id)}
                 style={touchFit({
                   ...themeButtonStyle,
-                  background: "rgba(255,255,255,0.06)",
-                  borderColor: "rgba(255,255,255,0.12)",
+                  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                  borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
                   borderRadius: "9px",
                   flex: 1,
                   fontSize: "0.78rem",
@@ -1167,8 +1198,8 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 onClick={() => onClone(scenario)}
                 style={touchFit({
                   ...themeButtonStyle,
-                  background: "rgba(255,255,255,0.06)",
-                  borderColor: "rgba(255,255,255,0.12)",
+                  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                  borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
                   borderRadius: "9px",
                   flex: 1.3,
                   fontSize: "0.78rem",
@@ -1205,7 +1236,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
                 <button
                   className="oh-tap-row"
                   onClick={() => onUpdate(scenario)}
-                  style={touchFit({ ...themeButtonStyle, background: "#1d7f4ccc", borderColor: "#27a663dd", color: "#fff", minHeight: "2rem", padding: "0 0.8rem" }, touch)}
+                  style={touchFit({ ...themeButtonStyle, background: "#1d7f4ccc", borderColor: "#27a663dd", color: "var(--oh-ink, #fff)", minHeight: "2rem", padding: "0 0.8rem" }, touch)}
                   type="button"
                 >
                   <ButtonIcon kind="update" /> Update
@@ -1360,6 +1391,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
                 border: "1px solid rgba(255,255,255,0.18)",
                 borderRadius: "999px",
                 color: "rgba(248,248,250,0.96)",
+                ...(active ? { color: inkOnAccent(game.accentColor), textShadow: "none" } : null),
                 display: "inline-flex",
                 flex: "0 0 auto",
                 fontSize: "0.68rem",
@@ -1492,28 +1524,28 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
         }}
       >
         <div>
-          <div style={{ color: "#fff", fontSize: isMobile ? "0.98rem" : "1.08rem", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.25, marginBottom: "0.45rem", overflowWrap: "break-word" }}>
+          <div style={{ color: "var(--oh-ink, #fff)", fontSize: isMobile ? "0.98rem" : "1.08rem", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.25, marginBottom: "0.45rem", overflowWrap: "break-word" }}>
             {game.name}
           </div>
           <div style={{ display: "grid", gap: "0.35rem", gridTemplateColumns: "1fr 1fr", marginBottom: "0.55rem" }}>
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", gridColumn: "1 / -1", minWidth: 0, padding: "0.35rem 0.55rem" }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Country"}</div>
-              <div style={{ color: "#fff", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={game.country || undefined}>{game.country || "No player country"}</div>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "10px", gridColumn: "1 / -1", minWidth: 0, padding: "0.35rem 0.55rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Country"}</div>
+              <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={game.country || undefined}>{game.country || "No player country"}</div>
             </div>
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", minWidth: 0, padding: "0.35rem 0.55rem" }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Date"}</div>
-              <div style={{ color: "#fff", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "10px", minWidth: 0, padding: "0.35rem 0.55rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Date"}</div>
+              <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
                 {formatGameDateShort(game.currentDate, getStoredLanguage()) || game.currentDate || "No date"}
               </div>
             </div>
-            <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", minWidth: 0, padding: "0.35rem 0.55rem" }}>
-              <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Round"}</div>
-              <div style={{ color: "#fff", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{game.round || 1}</div>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "10px", minWidth: 0, padding: "0.35rem 0.55rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.58rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>{"Round"}</div>
+              <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.8rem", fontWeight: 600, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{game.round || 1}</div>
             </div>
           </div>
           <div
             style={{
-              color: "rgba(228,228,235,0.78)",
+              color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)",
               display: "-webkit-box",
               fontSize: "0.8rem",
               lineHeight: 1.4,
@@ -1530,9 +1562,9 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
         <div>
           <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.4rem", marginBottom: "0.6rem" }}>
             {[["Actions", game.pendingActions], ["Events", game.eventCount]].map(([label, count]) => (
-              <span key={label} style={{ alignItems: "center", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "8px", color: "rgba(255,255,255,0.6)", display: "inline-flex", fontSize: "0.72rem", gap: "0.35rem", padding: "0.2rem 0.5rem" }}>
+              <span key={label} style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "8px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", display: "inline-flex", fontSize: "0.72rem", gap: "0.35rem", padding: "0.2rem 0.5rem" }}>
                 {label}
-                <span style={{ color: "#fff", fontWeight: 700 }}>{count ?? 0}</span>
+                <span style={{ color: "var(--oh-ink, #fff)", fontWeight: 700 }}>{count ?? 0}</span>
               </span>
             ))}
           </div>
@@ -1542,11 +1574,11 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
               onClick={() => onActivate(game.id)}
               style={touchFit({
                 ...themeButtonStyle,
-                background: active ? "rgba(255,255,255,0.06)" : (game.accentColor || DEFAULT_ACCENT_COLOR),
-                borderColor: active ? "rgba(255,255,255,0.22)" : (game.accentColor || DEFAULT_ACCENT_COLOR),
+                background: active ? "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)" : (game.accentColor || DEFAULT_ACCENT_COLOR),
+                borderColor: active ? "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)" : (game.accentColor || DEFAULT_ACCENT_COLOR),
                 borderRadius: "11px",
                 boxShadow: active ? "none" : `0 3px 12px ${(game.accentColor || DEFAULT_ACCENT_COLOR)}33`,
-                color: "#fff",
+                color: "var(--oh-ink, #fff)",
                 fontSize: "0.88rem",
                 fontWeight: 700,
                 minHeight: "2.35rem",
@@ -1563,7 +1595,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
                   onClick={() => onArchive(game)}
                   style={touchFit({
                     ...themeButtonStyle,
-                    background: "rgba(255,255,255,0.06)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
                     flex: 1,
                     fontSize: "0.78rem",
                     minHeight: "2rem",
@@ -1616,15 +1648,15 @@ const MenuRow = ({ action, children, description, emptyText, icon, title }) => {
         <div style={{ alignItems: "center", display: "flex", gap: "0.85rem" }}>
           <div style={{ alignItems: "center", display: "flex", flexShrink: 0, gap: "0.55rem" }}>
             {icon && <span aria-hidden="true" style={{ fontSize: "1rem", lineHeight: 1 }}>{icon}</span>}
-            <div style={{ color: "rgba(255,255,255,0.94)", fontSize: isMobile ? "1rem" : "1.12rem", fontWeight: 800, letterSpacing: "-0.02em" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", fontSize: isMobile ? "1rem" : "1.12rem", fontWeight: 800, letterSpacing: "-0.02em" }}>
               {title}
             </div>
           </div>
-          <div style={{ background: "rgba(255,255,255,0.08)", flex: 1, height: 1 }} />
+          <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", flex: 1, height: 1 }} />
           {action}
         </div>
         {description && (
-          <div style={{ color: "rgba(255,255,255,0.64)", fontSize: "0.88rem", marginLeft: icon ? "1.55rem" : 0, marginTop: "0.32rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 64%, transparent)", fontSize: "0.88rem", marginLeft: icon ? "1.55rem" : 0, marginTop: "0.32rem" }}>
             {description}
           </div>
         )}
@@ -1636,7 +1668,7 @@ const MenuRow = ({ action, children, description, emptyText, icon, title }) => {
           {children}
         </div>
       ) : (
-        <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.85rem", padding: "0.4rem 0 0.6rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.85rem", padding: "0.4rem 0 0.6rem" }}>
           {emptyText || "Nothing here yet."}
         </div>
       )}
@@ -1670,7 +1702,7 @@ const DeletedCard = ({ busy, entry, onRestore, touch }) => (
       <div data-no-translate style={{ fontSize: "1.02rem", fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={entry.name}>
         {entry.name}
       </div>
-      <div style={{ color: "rgba(255,255,255,0.64)", display: "flex", flexWrap: "wrap", fontSize: "0.82rem", gap: "0.6rem", marginTop: "0.3rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 64%, transparent)", display: "flex", flexWrap: "wrap", fontSize: "0.82rem", gap: "0.6rem", marginTop: "0.3rem" }}>
         <span>{deletedWhen(entry.deletedAt)}</span>
         {Number.isFinite(entry.bytes) && entry.bytes > 0 && <span data-no-translate>{formatZipSize(entry.bytes)}</span>}
       </div>
@@ -1743,7 +1775,7 @@ const RecentlyDeletedRow = ({ kind, onChanged, trash }) => {
             <button className="oh-tap-row" disabled={busy} onClick={() => setConfirmEmpty(false)} style={touchFit({ ...themeButtonStyle }, touch)} type="button">
               Cancel
             </button>
-            <button className="oh-tap-row" disabled={busy} onClick={handleEmpty} style={touchFit({ ...themeButtonStyle, background: "rgba(185,28,28,0.72)", borderColor: "rgba(248,113,113,0.4)", color: "#fff" }, touch)} type="button">
+            <button className="oh-tap-row" disabled={busy} onClick={handleEmpty} style={touchFit({ ...themeButtonStyle, background: "rgba(185,28,28,0.72)", borderColor: "rgba(248,113,113,0.4)", color: "var(--oh-ink, #fff)" }, touch)} type="button">
               Empty
             </button>
           </div>
@@ -1753,7 +1785,7 @@ const RecentlyDeletedRow = ({ kind, onChanged, trash }) => {
           </button>
         )}
         description={confirmEmpty ? question : description}
-        icon="🗑️"
+        icon={<UiIcon name="trash" size={16} />}
         title="Recently deleted"
       >
         {entries.map((entry) => (
@@ -1776,9 +1808,9 @@ const BrowsePill = ({ active, children, onClick, style }) => (
     onClick={onClick}
     style={{
       ...browseControlStyle,
-      background: active ? "var(--oh-grey-selected)" : "rgba(255,255,255,0.05)",
-      borderColor: active ? "var(--oh-grey-border-strong)" : "rgba(255,255,255,0.08)",
-      color: active ? "var(--oh-grey-text)" : "rgba(246,246,248,0.78)",
+      background: active ? "var(--oh-grey-selected)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+      borderColor: active ? "var(--oh-grey-border-strong)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+      color: active ? "var(--oh-grey-text)" : "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)",
       ...style,
     }}
     type="button"
@@ -1794,8 +1826,8 @@ const LibraryCollection = ({ children, controls, description, emptyText, title }
     <section style={{ marginBottom: isMobile ? "1.75rem" : "2.3rem", width: "100%" }}>
       <div style={{ alignItems: isMobile ? "stretch" : "flex-end", display: "flex", flexDirection: isMobile ? "column" : "row", flexWrap: isMobile ? undefined : "wrap", gap: "0.8rem", justifyContent: "space-between", marginBottom: "0.9rem" }}>
         <div>
-          <div style={{ color: "rgba(255,255,255,0.96)", fontSize: isMobile ? "1.08rem" : "1.22rem", fontWeight: 800, letterSpacing: "-0.025em" }}>{title}</div>
-          {description ? <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.86rem", marginTop: "0.28rem" }}>{description}</div> : null}
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: isMobile ? "1.08rem" : "1.22rem", fontWeight: 800, letterSpacing: "-0.025em" }}>{title}</div>
+          {description ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.86rem", marginTop: "0.28rem" }}>{description}</div> : null}
         </div>
         {controls}
       </div>
@@ -1806,7 +1838,7 @@ const LibraryCollection = ({ children, controls, description, emptyText, title }
           {children}
         </div>
       ) : (
-        <div style={{ border: "1px dashed rgba(255,255,255,0.12)", borderRadius: "16px", color: "rgba(255,255,255,0.48)", fontSize: "0.86rem", padding: "1rem" }}>{emptyText || "Nothing here yet."}</div>
+        <div style={{ border: "1px dashed color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderRadius: "16px", color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.86rem", padding: "1rem" }}>{emptyText || "Nothing here yet."}</div>
       )}
     </section>
   );
@@ -1823,7 +1855,7 @@ const CreateScenarioTile = ({ busy, onCreate }) => (
       background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.03))",
       border: "2px dashed var(--oh-ui-line, rgba(255,255,255,0.24))",
       borderRadius: "24px",
-      color: "rgba(255,255,255,0.78)",
+      color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)",
       cursor: busy ? "wait" : "pointer",
       display: "flex",
       flex: `0 0 ${SHELF_CARD_WIDTH}`,
@@ -1864,12 +1896,12 @@ const EDITOR_PANEL = "var(--oh-ui-surface, #12141a)";
 const EDITOR_NAV = "var(--oh-ui-header, #0d0f14)";
 const editorCardStyle = {
   background: "var(--oh-ui-raised, #171a22)",
-  border: "1px solid rgba(255,255,255,0.08)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
   borderRadius: "16px",
   marginBottom: "0.95rem",
   padding: "1rem 1.05rem",
 };
-const editorCardTitleStyle = { color: "#fff", fontSize: "0.92rem", fontWeight: 800, letterSpacing: "-0.01em", marginBottom: "0.75rem" };
+const editorCardTitleStyle = { color: "var(--oh-ink, #fff)", fontSize: "0.92rem", fontWeight: 800, letterSpacing: "-0.01em", marginBottom: "0.75rem" };
 
 const EditorSectionIcon = ({ kind, size = 17 }) => {
   const common = { fill: "none", height: size, stroke: "currentColor", strokeLinecap: "round", strokeLinejoin: "round", strokeWidth: 1.8, viewBox: "0 0 24 24", width: size };
@@ -1893,7 +1925,7 @@ const editorNavButtonStyle = (active) => ({
   ...themeButtonStyle,
   background: active ? "var(--oh-ui-active, rgba(255,255,255,0.1))" : "transparent",
   border: `1px solid ${active ? "var(--oh-ui-accent, rgba(255,255,255,0.18))" : "transparent"}`,
-  color: active ? "#fff" : "rgba(236,236,240,0.72)",
+  color: active ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
   fontWeight: active ? 700 : 600,
   gap: "0.6rem",
   justifyContent: "flex-start",
@@ -1974,7 +2006,7 @@ const EditorDrawer = ({
       <button
         className="oh-tap-row"
         onClick={onSave}
-        style={touchFit({ ...themeButtonStyle, background: accent, borderColor: accent, borderRadius: "11px", boxShadow: `0 3px 12px ${accent}33`, color: "#fff", flex: isMobile ? "1 1 7rem" : undefined, fontWeight: 700, minHeight: "2.4rem", width: isMobile ? undefined : "100%" }, touch)}
+        style={touchFit({ ...themeButtonStyle, background: accent, borderColor: accent, borderRadius: "11px", boxShadow: `0 3px 12px ${accent}33`, color: "var(--oh-ink, #fff)", flex: isMobile ? "1 1 7rem" : undefined, fontWeight: 700, minHeight: "2.4rem", width: isMobile ? undefined : "100%" }, touch)}
         type="button"
       >
         {isBusy ? "Saving..." : "Save"}
@@ -1983,10 +2015,10 @@ const EditorDrawer = ({
         <button
           className="oh-tap-row"
           onClick={onOpenMapEditor}
-          style={touchFit({ ...themeButtonStyle, background: "rgba(255,255,255,0.08)", flex: isMobile ? "1 1 9rem" : undefined, width: isMobile ? undefined : "100%" }, touch)}
+          style={touchFit({ ...themeButtonStyle, background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", flex: isMobile ? "1 1 9rem" : undefined, width: isMobile ? undefined : "100%" }, touch)}
           type="button"
         >
-          🗺️ Open Map Editor
+          <UiIcon name="map" size={14} /> Open Map Editor
         </button>
       )}
       {kind === "scenario" && onSuggestChanges && record.hubOrigin && (
@@ -1994,7 +2026,7 @@ const EditorDrawer = ({
           className="oh-tap-row"
           onClick={onSuggestChanges}
           title="Send your changes to this community scenario's author, who can accept or reject each one."
-          style={touchFit({ ...themeButtonStyle, background: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 18%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 45%, transparent)", color: "#fff", flex: isMobile ? "1 1 9rem" : undefined, width: isMobile ? undefined : "100%" }, touch)}
+          style={touchFit({ ...themeButtonStyle, background: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 18%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ui-accent, #2bc1f3) 45%, transparent)", color: "var(--oh-ink, #fff)", flex: isMobile ? "1 1 9rem" : undefined, width: isMobile ? undefined : "100%" }, touch)}
           type="button"
         >
           Suggest changes
@@ -2031,10 +2063,10 @@ const EditorDrawer = ({
         aria-label={`${kind === "scenario" ? "Scenario" : "Game"} Editor`}
         style={{
           background: EDITOR_PANEL,
-          border: isMobile ? "none" : "1px solid rgba(255,255,255,0.09)",
+          border: isMobile ? "none" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)",
           borderRadius: isMobile ? 0 : "22px",
           boxShadow: "0 24px 70px rgba(0,0,0,0.55)",
-          color: "#fff",
+          color: "var(--oh-ink, #fff)",
           display: "flex",
           flexDirection: isMobile ? "column" : "row",
           height: isMobile ? APP_HEIGHT : `min(56rem, calc(${APP_HEIGHT} - 2.5rem - ${SAFE_TOP} - ${SAFE_BOTTOM}))`,
@@ -2046,8 +2078,8 @@ const EditorDrawer = ({
         <nav
           style={{
             background: EDITOR_NAV,
-            borderBottom: isMobile ? "1px solid rgba(255,255,255,0.08)" : "none",
-            borderRight: isMobile ? "none" : "1px solid rgba(255,255,255,0.08)",
+            borderBottom: isMobile ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" : "none",
+            borderRight: isMobile ? "none" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
             display: "flex",
             flexDirection: "column",
             flexShrink: 0,
@@ -2070,7 +2102,7 @@ const EditorDrawer = ({
               }}
             />
             <div style={{ flex: 1, minWidth: 0 }}>
-              <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.66rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.66rem", fontWeight: 700, letterSpacing: "0.08em", textTransform: "uppercase" }}>
                 {kind === "scenario" ? "Scenario" : "Game"} Editor
               </div>
               <div style={{ fontSize: "0.98rem", fontWeight: 800, letterSpacing: "-0.02em", lineHeight: 1.2, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={record.name}>
@@ -2098,7 +2130,7 @@ const EditorDrawer = ({
                   aria-current={editorSection === sectionKey ? "page" : undefined}
                   className="oh-tap-row"
                   onClick={() => setEditorSection(sectionKey)}
-                  style={touchFit({ ...editorNavButtonStyle(editorSection === sectionKey), border: `1px solid ${editorSection === sectionKey ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.08)"}`, flexShrink: 0, width: "auto" }, touch)}
+                  style={touchFit({ ...editorNavButtonStyle(editorSection === sectionKey), border: `1px solid ${editorSection === sectionKey ? "color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"}`, flexShrink: 0, width: "auto" }, touch)}
                   type="button"
                 >
                   <EditorSectionIcon kind={sectionKey} size={15} />
@@ -2111,7 +2143,7 @@ const EditorDrawer = ({
             <div style={{ display: "flex", flex: 1, flexDirection: "column", gap: "0.9rem", minHeight: 0, overflowY: "auto", scrollbarWidth: "thin" }}>
               {groups.map((group) => (
                 <div key={group.label}>
-                  <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.64rem", fontWeight: 700, letterSpacing: "0.09em", marginBottom: "0.35rem", padding: "0 0.7rem", textTransform: "uppercase" }}>
+                  <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.64rem", fontWeight: 700, letterSpacing: "0.09em", marginBottom: "0.35rem", padding: "0 0.7rem", textTransform: "uppercase" }}>
                     {group.label}
                   </div>
                   <div style={{ display: "flex", flexDirection: "column", gap: "0.15rem" }}>
@@ -2140,13 +2172,13 @@ const EditorDrawer = ({
 
         <div style={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0, minWidth: 0 }}>
           {!isMobile && (
-            <div style={{ alignItems: "flex-start", borderBottom: "1px solid rgba(255,255,255,0.07)", display: "flex", flexShrink: 0, gap: "1rem", justifyContent: "space-between", padding: "1.15rem 1.4rem 1rem" }}>
+            <div style={{ alignItems: "flex-start", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "flex", flexShrink: 0, gap: "1rem", justifyContent: "space-between", padding: "1.15rem 1.4rem 1rem" }}>
               <div style={{ minWidth: 0 }}>
-                <h2 style={{ color: "#fff", fontSize: "1.35rem", fontWeight: 800, letterSpacing: "-0.03em", margin: 0 }}>
+                <h2 style={{ color: "var(--oh-ink, #fff)", fontSize: "1.35rem", fontWeight: 800, letterSpacing: "-0.03em", margin: 0 }}>
                   {editorSectionLabels[editorSection] || editorSection}
                 </h2>
                 {EDITOR_SECTION_BLURBS[editorSection] && (
-                  <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.8rem", lineHeight: 1.45, marginTop: "0.25rem" }}>
+                  <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.8rem", lineHeight: 1.45, marginTop: "0.25rem" }}>
                     {EDITOR_SECTION_BLURBS[editorSection]}
                   </div>
                 )}
@@ -2262,19 +2294,19 @@ const EditorDrawer = ({
                       }}
                       style={touchFit({
                         ...themeButtonStyle,
-                        background: checked ? "rgba(255,255,255,0.12)" : "rgba(255,255,255,0.04)",
-                        borderColor: checked ? "rgba(255,255,255,0.25)" : "rgba(255,255,255,0.1)",
+                        background: checked ? "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                        borderColor: checked ? "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
                         minHeight: "2rem",
                         padding: "0 0.7rem",
                       }, touch)}
                     >
-                      {checked ? "✓ " : ""}
+                      {checked ? <UiIcon name="check" size={14} /> : null}
                       {UNIT_TYPE_LABELS[unitType] ?? unitType}
                     </button>
                   );
                 })}
               </div>
-              <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", marginTop: "0.5rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.72rem", marginTop: "0.5rem" }}>
                 Uncheck types that don't fit the era — e.g. no Air Force in 1200. Players can only deploy the checked types.
               </div>
             </div>
@@ -2344,7 +2376,7 @@ const EditorDrawer = ({
         <>
           <Suspense
             fallback={
-              <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem", color: "rgba(255,255,255,0.6)", fontSize: "0.8rem" }}>
+              <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.8rem" }}>
                 Loading Political World tools...
               </div>
             }
@@ -2357,7 +2389,7 @@ const EditorDrawer = ({
           </Suspense>
           <Suspense
             fallback={
-              <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem", color: "rgba(255,255,255,0.6)", fontSize: "0.8rem" }}>
+              <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.8rem" }}>
                 Loading manual Political World editor...
               </div>
             }
@@ -2375,9 +2407,9 @@ const EditorDrawer = ({
       )}
 
       {editorSection === "stats" && kind === "scenario" && (
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
-          <div style={{ color: "rgba(255,255,255,0.92)", fontSize: "0.92rem", fontWeight: 800, marginBottom: "0.2rem" }}>National Stats</div>
-          <div style={{ color: "rgba(255,255,255,0.46)", fontSize: "0.7rem", lineHeight: 1.45, marginBottom: "0.8rem" }}>
+        <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)", fontSize: "0.92rem", fontWeight: 800, marginBottom: "0.2rem" }}>National Stats</div>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", fontSize: "0.7rem", lineHeight: 1.45, marginBottom: "0.8rem" }}>
             Define the entire National Stats sheet for this scenario. Sections, values, units, order, icons, colours and AI guidance are scenario data and travel with exports.
           </div>
           <StatsSheetEditor value={statsValue} onChange={onStatsChange} />
@@ -2434,7 +2466,7 @@ const EditorDrawer = ({
       )}
 
       {editorSection === "assets" && (
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
+        <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
           <div style={{ display: "grid", gap: "0.7rem" }}>
             {Object.entries(kind === "scenario" ? scenarioAssetLabels : gameAssetLabels).map(([assetKey, label]) => {
               const isCoverAsset = assetKey === "cover";
@@ -2456,10 +2488,10 @@ const EditorDrawer = ({
               return (
                 // On a phone the Upload and Reset buttons drop below the text
                 // rather than squeezing it to a word per line.
-                <div key={assetKey} style={{ alignItems: "center", background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "14px", display: "flex", flexWrap: isMobile ? "wrap" : undefined, gap: "0.75rem", justifyContent: "space-between", padding: "0.72rem 0.78rem" }}>
+                <div key={assetKey} style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "14px", display: "flex", flexWrap: isMobile ? "wrap" : undefined, gap: "0.75rem", justifyContent: "space-between", padding: "0.72rem 0.78rem" }}>
                   <div style={{ minWidth: 0 }}>
                     <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>{label}</div>
-                    <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.78rem", marginTop: "0.15rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.78rem", marginTop: "0.15rem" }}>
                       {hasOwnAsset
                         ? isCoverAsset
                           ? kind === "scenario"
@@ -2473,7 +2505,7 @@ const EditorDrawer = ({
                         alt={`${record.name} cover`}
                         src={previewUrl}
                         style={{
-                          border: "1px solid rgba(255,255,255,0.08)",
+                          border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
                           borderRadius: "12px",
                           display: "block",
                           height: "4.8rem",
@@ -2493,8 +2525,8 @@ const EditorDrawer = ({
                       onClick={() => onClearAsset(assetKey)}
                       style={touchFit({
                         ...themeButtonStyle,
-                        background: "rgba(255,255,255,0.03)",
-                        color: hasOwnAsset ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.35)",
+                        background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+                        color: hasOwnAsset ? "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)",
                       }, touch)}
                       disabled={!hasOwnAsset}
                       type="button"
@@ -2538,14 +2570,14 @@ const EditorDrawer = ({
       )}
 
       {editorSection === "bundles" && kind === "scenario" && (
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
-          <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.82rem", lineHeight: 1.5, marginBottom: "0.85rem" }}>
+        <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.82rem", lineHeight: 1.5, marginBottom: "0.85rem" }}>
             Download the scenario as one self-contained file — custom map geometry, cities and basemap all travel with it, ready to share or re-import. The <strong>.zip</strong> carries a custom basemap as a real image file (smaller, and the form the community hub expects); the <strong>JSON</strong> packs everything into one text file.
           </div>
-          <div style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.16)", borderRadius: "10px", color: "rgba(255,255,255,0.88)", fontSize: "0.8rem", lineHeight: 1.5, marginBottom: "0.85rem", padding: "0.55rem 0.7rem" }}>
+          <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)", borderRadius: "10px", color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", fontSize: "0.8rem", lineHeight: 1.5, marginBottom: "0.85rem", padding: "0.55rem 0.7rem" }}>
             <div style={{ fontWeight: 700 }}>A scenario you post or share in any way is released under CC BY 4.0.</div>
             <div>The file says so.</div>
-            <a href={SCENARIO_LICENSE_URL} target="_blank" rel="noopener noreferrer" style={{ color: "rgba(255,255,255,0.88)" }}>About CC BY 4.0 ↗</a>
+            <a href={SCENARIO_LICENSE_URL} target="_blank" rel="noopener noreferrer" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>About CC BY 4.0 ↗</a>
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: "0.55rem" }}>
             <button className="oh-tap-row" onClick={() => onExportBundle("zip")} style={touchFit(themeButtonStyle, touch)} type="button">
@@ -2566,7 +2598,7 @@ const EditorDrawer = ({
           </div>
 
           {isMobile && (
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", flexShrink: 0, padding: `0.7rem calc(0.9rem + ${SAFE_RIGHT}) calc(0.7rem + ${SAFE_BOTTOM}) calc(0.9rem + ${SAFE_LEFT})` }}>
+            <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", flexShrink: 0, padding: `0.7rem calc(0.9rem + ${SAFE_RIGHT}) calc(0.7rem + ${SAFE_BOTTOM}) calc(0.9rem + ${SAFE_LEFT})` }}>
               {actions}
             </div>
           )}
@@ -4621,7 +4653,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
               alignItems: "center",
               borderRadius: "12px",
               boxSizing: "border-box",
-              color: "rgba(255,255,255,0.72)",
+              color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
               display: "flex",
               gap: "0.55rem",
               height: "2.85rem",
@@ -4634,8 +4666,8 @@ const LibraryTopBar = ({ onOpenSettings }) => {
           >
             <img alt="Open Historia" src="/logo.png" style={{ borderRadius: "7px", flexShrink: 0, height: "1.85rem", width: "1.85rem" }} />
             <div style={{ minWidth: 0, lineHeight: 1.15 }}>
-              <div style={{ color: "rgba(255,255,255,0.94)", fontSize: "0.72rem", fontWeight: 850 }}>Open Historia</div>
-              <div style={{ color: "rgba(226,226,229,0.42)", fontSize: "0.6rem", marginTop: "0.12rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{summaryText}</div>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", fontSize: "0.72rem", fontWeight: 850 }}>Open Historia</div>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.6rem", marginTop: "0.12rem", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{summaryText}</div>
             </div>
           </div>
           <button
@@ -4691,7 +4723,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         <div style={{ position: "fixed", inset: 0, zIndex: 10050 }}>
           <Suspense
             fallback={
-              <div style={{ position: "fixed", inset: 0, background: "var(--oh-ui-bg, #111113)", color: "white", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "sans-serif" }}>
+              <div style={{ position: "fixed", inset: 0, background: "var(--oh-ui-bg, #111113)", color: "var(--oh-ink, #fff)", display: "flex", alignItems: "center", justifyContent: "center", fontFamily: "sans-serif" }}>
                 Loading map editor…
               </div>
             }
@@ -4747,7 +4779,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         {(countryPicker) => (
         <div
           onClick={closeCountryPicker}
-          style={{ position: "fixed", inset: 0, zIndex: 10060, background: "rgba(0,0,0,0.7)", backdropFilter: "blur(6px)", display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "center", padding: `${SAFE_TOP} ${SAFE_RIGHT} ${SAFE_BOTTOM} ${SAFE_LEFT}` }}
+          style={{ visibility: difficultyPick ? "hidden" : "visible", position: "fixed", inset: 0, zIndex: 10060, background: "rgba(0,0,0,0.7)", backdropFilter: "blur(6px)", display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "center", padding: `${SAFE_TOP} ${SAFE_RIGHT} ${SAFE_BOTTOM} ${SAFE_LEFT}` }}
         >
           {/* On a phone the card takes the whole screen height rather than 80%
               of it: the search, the map, the list and the buttons need every
@@ -4761,8 +4793,8 @@ const LibraryTopBar = ({ onOpenSettings }) => {
             style={{
               ...themeSurfaceStyle,
               background: "var(--oh-ui-surface, #11141a)",
-              border: "1px solid rgba(255,255,255,0.14)",
-              boxShadow: "0 24px 64px rgba(0,0,0,0.85), 0 0 0 1px rgba(255,255,255,0.06)",
+              border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
+              boxShadow: "0 24px 64px rgba(0,0,0,0.85), 0 0 0 1px color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
               borderRadius: 18,
               width: difficultyPick ? "min(460px, 92vw)" : isMobile ? "min(640px, 94vw)" : "min(1120px, 95vw)",
               maxHeight: isMobile ? `calc(${SCREEN_HEIGHT} - 1.5rem - ${SAFE_TOP} - ${SAFE_BOTTOM})` : "88vh",
@@ -4771,85 +4803,20 @@ const LibraryTopBar = ({ onOpenSettings }) => {
               display: "flex",
               flexDirection: "column",
               padding: isMobile ? "1rem" : "1.25rem 1.5rem",
-              color: "#fff",
+              color: "var(--oh-ink, #fff)",
               fontFamily: "sans-serif",
               overflow: difficultyPick ? "visible" : isMobile ? "auto" : "hidden",
             }}
           >
-            {difficultyPick ? (
-              <>
-                <div style={{ fontWeight: 800, fontSize: "1.2rem", letterSpacing: "-0.01em" }}>Choose your difficulty</div>
-                <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.8rem", margin: "0.2rem 0 0.85rem" }}>
-                  How hard should the world fight back?
-                </div>
-                {selectedCountryOption && (() => {
-                  const flagUrl = flagImageUrlFromGid(selectedCountryOption.code) || flagImageUrlFromGid(selectedCountryOption.name)
-                    || (gidToAlpha2(selectedCountryOption.code) ? bundledFlagUrl(`https://flagcdn.com/${gidToAlpha2(selectedCountryOption.code)}.svg`) : null);
-                  return (
-                    <div style={{ alignItems: "center", display: "flex", fontSize: "0.95rem", fontWeight: 700, gap: "0.6rem", marginBottom: "0.85rem", padding: "0.6rem 0.85rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10 }}>
-                      {flagUrl ? (
-                        <img
-                          src={bundledFlagUrl(flagUrl)}
-                          alt=""
-                          style={{ borderRadius: 3, boxShadow: "0 1px 3px rgba(0,0,0,0.5)", border: "1px solid rgba(255,255,255,0.2)", display: "block", flexShrink: 0, height: "1.2rem", objectFit: "cover", width: "1.75rem" }}
-                        />
-                      ) : (
-                        <span aria-hidden="true" style={{ background: "rgba(255,255,255,0.15)", borderRadius: 3, display: "inline-block", flexShrink: 0, height: "1.2rem", width: "1.75rem" }} />
-                      )}
-                      <div style={{ display: "flex", flexDirection: "column" }}>
-                        <span>{selectedCountryOption.name}</span>
-                        <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.45)", fontWeight: 400 }}>Selected Nation</span>
-                      </div>
-                    </div>
-                  );
-                })()}
-                {difficultyPick?.group && (
-                  <div style={{ alignItems: "center", display: "flex", fontSize: "0.95rem", fontWeight: 700, gap: "0.6rem", marginBottom: "0.85rem", padding: "0.6rem 0.85rem", background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10 }}>
-                    <span aria-hidden="true" style={{ background: difficultyPick.group.color || "#a1a1aa", borderRadius: 4, display: "inline-block", height: 20, width: 20 }} />
-                    <div style={{ display: "flex", flexDirection: "column" }}>
-                      <span data-no-translate>{difficultyPick.group.name}</span>
-                      <span style={{ fontSize: "0.68rem", color: "rgba(255,255,255,0.45)", fontWeight: 400 }}>Selected Group</span>
-                    </div>
-                  </div>
-                )}
-                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", overflowY: "auto" }}>
-                  {DIFFICULTY_LEVELS.map((level) => (
-                    <button
-                      key={level.id}
-                      type="button"
-                      onClick={() => pickDifficulty(level.id)}
-                      style={{
-                        ...themeButtonStyle,
-                        alignItems: "center",
-                        background: "rgba(255,255,255,0.05)",
-                        border: "1px solid rgba(255,255,255,0.1)",
-                        borderRadius: 10,
-                        display: "flex",
-                        flexDirection: "column",
-                        gap: "0.3rem",
-                        padding: "0.9rem 0.6rem",
-                        transition: "background 0.15s ease, border-color 0.15s ease",
-                      }}
-                    >
-                      <span style={{ fontSize: "1.75rem", lineHeight: 1 }}>{level.emoji}</span>
-                      <span style={{ fontWeight: 700, fontSize: "0.92rem" }}>{level.label}</span>
-                      <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.7rem", textAlign: "center", lineHeight: 1.3 }}>{level.blurb}</span>
-                    </button>
-                  ))}
-                </div>
-                <button type="button" className="oh-tap-row" onClick={() => setDifficultyPick(null)} style={touchFit({ ...themeButtonStyle, marginTop: "0.85rem", borderRadius: 8, padding: "0.6rem" }, touch)}>
-                  Back
-                </button>
-              </>
-            ) : (
+            {difficultyPick ? null : (
               <>
                 <div style={{ display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "space-between", flexWrap: "wrap", gap: "0.6rem", marginBottom: "0.75rem", flexShrink: 0 }}>
                   <div>
                     <div style={{ display: "flex", alignItems: "center", gap: "0.45rem" }}>
-                      <span style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "rgba(255,255,255,0.55)", background: "rgba(255,255,255,0.08)", padding: "0.15rem 0.45rem", borderRadius: 4 }}>
+                      <span style={{ fontSize: "0.65rem", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", padding: "0.15rem 0.45rem", borderRadius: 4 }}>
                         Scenario
                       </span>
-                      <span style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.82rem", fontWeight: 600 }}>
+                      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", fontSize: "0.82rem", fontWeight: 600 }}>
                         {countryPicker.name}
                       </span>
                     </div>
@@ -4866,7 +4833,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                         background: "rgba(0,0,0,0.35)",
                         padding: 3,
                         borderRadius: 10,
-                        border: "1px solid rgba(255,255,255,0.1)",
+                        border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
                         gap: 2,
                       }}
                     >
@@ -4880,8 +4847,8 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                           borderRadius: 7,
                           fontSize: "0.8rem",
                           fontWeight: 700,
-                          background: pickerTab === "country" ? "rgba(255,255,255,0.14)" : "transparent",
-                          color: pickerTab === "country" ? "#fff" : "rgba(255,255,255,0.6)",
+                          background: pickerTab === "country" ? "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)" : "transparent",
+                          color: pickerTab === "country" ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)",
                           padding: "0.4rem 0.85rem",
                         }, touch)}
                       >
@@ -4897,8 +4864,8 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                           borderRadius: 7,
                           fontSize: "0.8rem",
                           fontWeight: 700,
-                          background: pickerTab === "group" ? "rgba(255,255,255,0.14)" : "transparent",
-                          color: pickerTab === "group" ? "#fff" : "rgba(255,255,255,0.6)",
+                          background: pickerTab === "group" ? "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)" : "transparent",
+                          color: pickerTab === "group" ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)",
                           padding: "0.4rem 0.85rem",
                         }, touch)}
                       >
@@ -4915,12 +4882,12 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                   <div style={{ display: "flex", flexDirection: "column", flex: 1, minHeight: 0, overflowY: "auto" }}>
                     {/* A group controls an area without owning it (runtime/groups.js):
                         lead one of the scenario's, or make one. */}
-                    <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.76rem", lineHeight: 1.45, marginBottom: "0.6rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.76rem", lineHeight: 1.45, marginBottom: "0.6rem" }}>
                       Lead a group instead of a country: a cartel, a militia, a movement, an outbreak. It owns no land; it controls an area, and the world deals with it as what it is.
                     </div>
                     {pickerGroups.length > 0 && (
                       <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem", marginBottom: "0.8rem" }}>
-                        <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.78rem", fontWeight: 700 }}>This scenario's groups</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: "0.78rem", fontWeight: 700 }}>This scenario's groups</div>
                         {pickerGroups.map((entry) => (
                           <button
                             key={entry.name}
@@ -4932,7 +4899,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                             <span aria-hidden="true" style={{ background: entry.color, borderRadius: 4, flex: "0 0 auto", height: 16, width: 16 }} />
                             <span style={{ display: "flex", flexDirection: "column", gap: "0.1rem", minWidth: 0 }}>
                               <span data-no-translate style={{ fontWeight: 700 }}>{entry.name}</span>
-                              <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.7rem" }}>
+                              <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem" }}>
                                 {entry.regionCount === 1 ? "Controls 1 region" : entry.regionCount ? `Controls ${entry.regionCount} regions` : "Controls no area yet"}
                               </span>
                             </span>
@@ -4940,7 +4907,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                         ))}
                       </div>
                     )}
-                    <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.78rem", fontWeight: 700, marginBottom: "0.3rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: "0.78rem", fontWeight: 700, marginBottom: "0.3rem" }}>
                       {pickerGroups.length ? "Or make a new group" : "Make a group"}
                     </div>
                     <FactionCreator
@@ -4972,7 +4939,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                     <div style={{ display: "flex", flex: 1, minHeight: 0, width: "100%" }}>
                       <Suspense
                         fallback={
-                          <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.85rem", padding: "4rem 0", textAlign: "center", width: "100%" }}>
+                          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.85rem", padding: "4rem 0", textAlign: "center", width: "100%" }}>
                             Loading map…
                           </div>
                         }
@@ -4989,14 +4956,14 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                         />
                       </Suspense>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: isMobile ? "0.6rem" : "0.75rem", borderTop: "1px solid rgba(255,255,255,0.08)", paddingTop: "0.6rem", flexShrink: 0 }}>
+                    <div style={{ display: "flex", justifyContent: "flex-end", marginTop: isMobile ? "0.6rem" : "0.75rem", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", paddingTop: "0.6rem", flexShrink: 0 }}>
                       <button
                         type="button"
                         className="oh-tap-row"
                         onClick={closeCountryPicker}
                         style={touchFit({
                           ...themeButtonStyle,
-                          background: "rgba(255,255,255,0.06)",
+                          background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
                           borderRadius: 8,
                           padding: "0.45rem 1.25rem",
                           fontSize: "0.85rem",
@@ -5014,6 +4981,74 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         </div>
         )}
       </Presence>
+      <CarbonModal
+        open={Boolean(difficultyPick)}
+        passiveModal
+        size="sm"
+        className="oh-difficulty-modal"
+        modalHeading="Choose your difficulty"
+        modalLabel="How hard should the world fight back?"
+        onRequestClose={() => setDifficultyPick(null)}
+      >
+          {selectedCountryOption && (() => {
+            const flagUrl = flagImageUrlFromGid(selectedCountryOption.code) || flagImageUrlFromGid(selectedCountryOption.name)
+              || (gidToAlpha2(selectedCountryOption.code) ? bundledFlagUrl(`https://flagcdn.com/${gidToAlpha2(selectedCountryOption.code)}.svg`) : null);
+            return (
+              <div style={{ alignItems: "center", display: "flex", fontSize: "0.95rem", fontWeight: 700, gap: "0.6rem", marginBottom: "0.85rem", padding: "0.6rem 0.85rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10 }}>
+                {flagUrl ? (
+                  <img
+                    src={bundledFlagUrl(flagUrl)}
+                    alt=""
+                    style={{ borderRadius: 3, boxShadow: "0 1px 3px rgba(0,0,0,0.5)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", display: "block", flexShrink: 0, height: "1.2rem", objectFit: "cover", width: "1.75rem" }}
+                  />
+                ) : (
+                  <span aria-hidden="true" style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: 3, display: "inline-block", flexShrink: 0, height: "1.2rem", width: "1.75rem" }} />
+                )}
+                <div style={{ display: "flex", flexDirection: "column" }}>
+                  <span>{selectedCountryOption.name}</span>
+                  <span style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontWeight: 400 }}>Selected Nation</span>
+                </div>
+              </div>
+            );
+          })()}
+          {difficultyPick?.group && (
+            <div style={{ alignItems: "center", display: "flex", fontSize: "0.95rem", fontWeight: 700, gap: "0.6rem", marginBottom: "0.85rem", padding: "0.6rem 0.85rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10 }}>
+              <span aria-hidden="true" style={{ background: difficultyPick.group.color || "#a1a1aa", borderRadius: 4, display: "inline-block", height: 20, width: 20 }} />
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span data-no-translate>{difficultyPick.group.name}</span>
+                <span style={{ fontSize: "0.68rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontWeight: 400 }}>Selected Group</span>
+              </div>
+            </div>
+          )}
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "0.6rem", overflowY: "auto" }}>
+            {DIFFICULTY_LEVELS.map((level) => (
+              <button
+                key={level.id}
+                type="button"
+                onClick={() => pickDifficulty(level.id)}
+                style={{
+                  ...themeButtonStyle,
+                  alignItems: "center",
+                  background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+                  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+                  borderRadius: 10,
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.3rem",
+                  padding: "0.9rem 0.6rem",
+                  transition: "background 0.15s ease, border-color 0.15s ease",
+                }}
+              >
+                <span style={{ lineHeight: 1 }}><DifficultyIcon id={level.id} size={28} /></span>
+                <span style={{ fontWeight: 700, fontSize: "0.92rem" }}>{level.label}</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", textAlign: "center", lineHeight: 1.3 }}>{level.blurb}</span>
+              </button>
+            ))}
+          </div>
+          <button type="button" className="oh-tap-row" onClick={() => setDifficultyPick(null)} style={touchFit({ ...themeButtonStyle, marginTop: "0.85rem", borderRadius: 8, padding: "0.6rem" }, touch)}>
+            Back
+          </button>
+      </CarbonModal>
 
       {/* Pressing Play on a game whose scenario this library does not hold. The
           third button appears only when the sender recorded somewhere to fetch
@@ -5026,12 +5061,12 @@ const LibraryTopBar = ({ onOpenSettings }) => {
           >
             <div
               onClick={(event) => event.stopPropagation()}
-              style={{ ...themeSurfaceStyle, borderRadius: 16, color: "#fff", fontFamily: "sans-serif", padding: "1.1rem", width: "min(430px, 92vw)" }}
+              style={{ ...themeSurfaceStyle, borderRadius: 16, color: "var(--oh-ink, #fff)", fontFamily: "sans-serif", padding: "1.1rem", width: "min(430px, 92vw)" }}
             >
               <div style={{ fontSize: "1rem", fontWeight: 800 }}>This game's scenario isn't here</div>
-              <div style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.82rem", lineHeight: 1.5, margin: "0.5rem 0 1rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.82rem", lineHeight: 1.5, margin: "0.5rem 0 1rem" }}>
                 “{pending.name}” was played on{" "}
-                <strong style={{ color: "rgba(255,255,255,0.86)" }}>
+                <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)" }}>
                   {pending.importedScenarioName || pending.scenarioName}
                 </strong>
                 , which isn't in your library — so there is no map to open it on.
@@ -5054,7 +5089,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                     className="oh-tap-row"
                     disabled={isBusy}
                     onClick={() => handleMissingScenarioImport(pending)}
-                    style={touchFit({ ...themeButtonStyle, background: "rgba(255,255,255,0.15)", borderColor: "rgba(255,255,255,0.28)", minHeight: "2.6rem" }, touch)}
+                    style={touchFit({ ...themeButtonStyle, background: "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", minHeight: "2.6rem" }, touch)}
                     type="button"
                   >
                     {isBusy ? "Getting the scenario…" : "Import & play"}
@@ -5102,13 +5137,13 @@ const LibraryTopBar = ({ onOpenSettings }) => {
               aria-modal="true"
               onClick={(event) => event.stopPropagation()}
               role="dialog"
-              style={{ ...themeSurfaceStyle, borderRadius: 16, color: "#fff", fontFamily: "sans-serif", padding: "1.1rem", width: "min(430px, 92vw)" }}
+              style={{ ...themeSurfaceStyle, borderRadius: 16, color: "var(--oh-ink, #fff)", fontFamily: "sans-serif", padding: "1.1rem", width: "min(430px, 92vw)" }}
             >
               <div style={{ fontSize: "1rem", fontWeight: 800 }}>Replace your changes?</div>
-              <div data-no-translate style={{ color: "rgba(255,255,255,0.86)", fontSize: "0.86rem", fontWeight: 700, marginTop: "0.35rem", overflowWrap: "anywhere" }}>
+              <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", fontSize: "0.86rem", fontWeight: 700, marginTop: "0.35rem", overflowWrap: "anywhere" }}>
                 {pending.scenario.name}
               </div>
-              <div style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.82rem", lineHeight: 1.5, margin: "0.5rem 0 1rem" }}>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.82rem", lineHeight: 1.5, margin: "0.5rem 0 1rem" }}>
                 You have changed this scenario since you downloaded it. Updating replaces it with the community hub's checked file, so your changes to it will be lost. To keep them, clone the scenario first. Games already started on it keep working.
               </div>
               <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem" }}>
@@ -5166,7 +5201,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
           style={{
             background:
               "var(--oh-ui-bg, #0f0f11)",
-            color: "#fff",
+            color: "var(--oh-ink, #fff)",
             display: "flex",
             flexDirection: isMobile ? "column" : "row",
             fontFamily: "sans-serif",
@@ -5176,7 +5211,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
           }}
         >
           {isMobile ? (
-            <div style={{ background: "var(--oh-ui-overlay-strong, rgba(15,15,17,0.92))", backdropFilter: "blur(14px)", borderBottom: "1px solid rgba(255,255,255,0.08)", flexShrink: 0 }}>
+            <div style={{ background: "var(--oh-ui-overlay-strong, rgba(15,15,17,0.92))", backdropFilter: "blur(14px)", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", flexShrink: 0 }}>
               <div
                 style={{
                   alignItems: "center",
@@ -5201,8 +5236,8 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                     onClick={() => setActiveTab(tab.id)}
                     style={touchFit({
                       ...themeButtonStyle,
-                      background: activeTab === tab.id ? "var(--oh-grey-selected)" : "rgba(255,255,255,0.04)",
-                      borderColor: activeTab === tab.id ? "var(--oh-grey-border-strong)" : "rgba(255,255,255,0.08)",
+                      background: activeTab === tab.id ? "var(--oh-grey-selected)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                      borderColor: activeTab === tab.id ? "var(--oh-grey-border-strong)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
                       borderRadius: "10px",
                       fontSize: "0.86rem",
                       fontWeight: activeTab === tab.id ? 700 : 500,
@@ -5224,7 +5259,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
 
           <div style={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0, minWidth: 0 }}>
           {!isMobile && (
-            <div style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", flexShrink: 0 }}>
+            <div style={{ borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", flexShrink: 0 }}>
               <div
                 style={{
                   alignItems: "center",
@@ -5238,7 +5273,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                   width: "100%",
                 }}
               >
-                <h1 style={{ color: "#fff", fontSize: "1.42rem", fontWeight: 800, letterSpacing: "-0.03em", margin: 0, minWidth: 0 }}>
+                <h1 style={{ color: "var(--oh-ink, #fff)", fontSize: "1.42rem", fontWeight: 800, letterSpacing: "-0.03em", margin: 0, minWidth: 0 }}>
                   {MENU_TABS.find((tab) => tab.id === activeTab)?.label ?? ""}
                 </h1>
                 <div style={{ alignItems: "center", display: "flex", flexShrink: 0, gap: "0.55rem", justifyContent: "flex-end" }}>
@@ -5290,11 +5325,11 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                 <div style={{ alignItems: "center", display: "flex", flexDirection: "column", justifyContent: "center", minHeight: "60vh", textAlign: "center" }}>
                   <img alt="" src="/logo.png" style={{ height: "5rem", marginBottom: "1.2rem", opacity: 0.9, width: "5rem" }} />
                   <div style={{ fontSize: "1.5rem", fontWeight: 800, letterSpacing: "-0.02em" }}>No games yet</div>
-                  <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.95rem", lineHeight: 1.6, margin: "0.6rem 0 1.6rem", maxWidth: "26rem" }}>
+                  <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.95rem", lineHeight: 1.6, margin: "0.6rem 0 1.6rem", maxWidth: "26rem" }}>
                     Start a new game from one of your scenarios, or grab new scenarios from the community first.
                   </div>
                   <div style={{ display: "flex", flexWrap: "wrap", gap: "0.7rem", justifyContent: "center" }}>
-                    <button type="button" style={{ ...themeButtonStyle, background: "rgba(255,255,255,0.15)", borderColor: "rgba(255,255,255,0.28)", minHeight: "2.8rem", padding: "0 1.4rem" }} onClick={() => setActiveTab("scenarios")}>
+                    <button type="button" style={{ ...themeButtonStyle, background: "color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", minHeight: "2.8rem", padding: "0 1.4rem" }} onClick={() => setActiveTab("scenarios")}>
                       Start from a scenario
                     </button>
                     <button type="button" style={{ ...themeButtonStyle, minHeight: "2.8rem", padding: "0 1.4rem" }} onClick={() => setActiveTab("community")}>
@@ -5349,7 +5384,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
             ) : (
               <>
                 {recentScenarios.length > 0 && (
-                  <MenuRow description="The scenarios behind your latest games and edits." icon="🕐" title="Recently Used">
+                  <MenuRow description="The scenarios behind your latest games and edits." icon={<UiIcon name="time" size={16} />} title="Recently Used">
                     {recentScenarios.map((scenario) => (
                       <ScenarioCard
                         key={scenario.id}

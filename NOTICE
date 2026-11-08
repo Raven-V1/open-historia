@@ -1,0 +1,26 @@
+Open Historia (modified version, Raven-V1 fork)
+================================================
+
+This is a modified version of Open Historia
+(https://github.com/Open-Historia/open-historia), licensed AGPL-3.0-or-later
+(see LICENSE). The source of this fork is at
+https://github.com/Raven-V1/open-historia.
+
+Third-party components added by this fork
+-----------------------------------------
+
+Carbon Design System (@carbon/react, @carbon/styles, @carbon/icons-react)
+  Copyright IBM Corp.
+  Licensed under the Apache License, Version 2.0.
+  https://github.com/carbon-design-system/carbon
+  License text: public/licenses/Carbon-Apache-2.0.txt (served at /licenses/)
+
+IBM Plex Sans and IBM Plex Mono (@ibm/plex-sans, @ibm/plex-mono)
+  Copyright 2017 IBM Corp. with Reserved Font Name "Plex".
+  Licensed under the SIL Open Font License, Version 1.1.
+  https://github.com/IBM/plex
+  License text: public/licenses/IBM-Plex-OFL-1.1.txt (served at /licenses/)
+  The font files are in src/assets/fonts/ibm-plex/.
+
+Carbon and Plex are used unmodified. The earlier notices of this project
+(music, scenarios, fonts) are in README.md and beside the files they cover.

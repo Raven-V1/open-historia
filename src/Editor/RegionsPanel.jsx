@@ -35,7 +35,7 @@ const RegionsPanel = ({ api, polities, selection, setSelection, onClose }) => {
           autoFocus
         />
       </div>
-      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>
+      <div style={{ fontSize: 11, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>
         {results.length}{results.length >= 300 ? "+" : ""} shown
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
@@ -55,9 +55,9 @@ const RegionsPanel = ({ api, polities, selection, setSelection, onClose }) => {
                 textAlign: "left",
                 padding: "6px 8px",
                 borderRadius: 8,
-                border: active ? "1px solid rgba(255,255,255,0.28)" : "1px solid transparent",
-                background: active ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.03)",
-                color: "white",
+                border: active ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid transparent",
+                background: active ? "rgba(0,0,0,0.25)" : "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+                color: "var(--oh-ink, #fff)",
                 cursor: "pointer",
               }}
             >
@@ -65,7 +65,7 @@ const RegionsPanel = ({ api, polities, selection, setSelection, onClose }) => {
                 <div style={{ fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", textOverflow: "ellipsis", overflow: "hidden" }}>
                   {r.name || r.id}
                 </div>
-                <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.5)" }}>
+                <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>
                   {r.id} · {polityDisplayName(polities, r.owner) || "unowned"}
                 </div>
               </span>

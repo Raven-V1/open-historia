@@ -19,7 +19,7 @@ const menuItem = {
   padding: "7px 10px",
   background: "transparent",
   border: "none",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   cursor: "pointer",
   fontSize: 12.5,
   textAlign: "left",
@@ -81,7 +81,7 @@ const DocumentsMenu = ({ currentId, author, onAuthorChange, onNew, onSave, onExp
       {open && (
         <div style={{ ...panelSurface, position: "absolute", top: "calc(100% + 6px)", left: 0, zIndex: 60, width: 244, boxSizing: "border-box", padding: 6, display: "flex", flexDirection: "column", gap: 2 }}>
           <div style={{ padding: "4px 8px 6px" }}>
-            <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.45)", textTransform: "uppercase", letterSpacing: "0.03em", marginBottom: 4 }}>
+            <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", textTransform: "uppercase", letterSpacing: "0.03em", marginBottom: 4 }}>
               Made by
             </div>
             <input
@@ -91,7 +91,7 @@ const DocumentsMenu = ({ currentId, author, onAuthorChange, onNew, onSave, onExp
               style={{ ...inputStyle, padding: "6px 8px", fontSize: 12.5 }}
             />
           </div>
-          <div style={{ height: 1, background: "rgba(255,255,255,0.1)", margin: "2px 0 4px" }} />
+          <div style={{ height: 1, background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", margin: "2px 0 4px" }} />
           <button style={menuItem} onClick={() => { onNew("fault-lines"); close(); }}>
             <Icon name="layers" size={15} /> New — world map
           </button>
@@ -101,7 +101,7 @@ const DocumentsMenu = ({ currentId, author, onAuthorChange, onNew, onSave, onExp
           <button style={menuItem} onClick={() => { onNew("blank"); close(); }}>
             <Icon name="draw" size={15} /> New — blank map
           </button>
-          <div style={{ height: 1, background: "rgba(255,255,255,0.1)", margin: "4px 0" }} />
+          <div style={{ height: 1, background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", margin: "4px 0" }} />
           <button style={menuItem} onClick={() => { onSave(); close(); }}>
             <Icon name="save" size={15} /> Save now
           </button>
@@ -111,8 +111,8 @@ const DocumentsMenu = ({ currentId, author, onAuthorChange, onNew, onSave, onExp
           <button style={menuItem} onClick={() => { onExportGame(); close(); }}>
             <Icon name="feature" size={15} /> Export for game
           </button>
-          <div style={{ height: 1, background: "rgba(255,255,255,0.1)", margin: "4px 0" }} />
-          <div style={{ padding: "2px 10px", fontSize: 10.5, color: "rgba(255,255,255,0.45)", textTransform: "uppercase", letterSpacing: "0.03em" }}>
+          <div style={{ height: 1, background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", margin: "4px 0" }} />
+          <div style={{ padding: "2px 10px", fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", textTransform: "uppercase", letterSpacing: "0.03em" }}>
             Saved maps
           </div>
           {removeError && (
@@ -122,17 +122,17 @@ const DocumentsMenu = ({ currentId, author, onAuthorChange, onNew, onSave, onExp
           )}
           <div style={{ maxHeight: 240, overflowY: "auto" }}>
             {docs.length === 0 && (
-              <div style={{ padding: "6px 10px", fontSize: 12, color: "rgba(255,255,255,0.4)" }}>No saved maps yet</div>
+              <div style={{ padding: "6px 10px", fontSize: 12, color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>No saved maps yet</div>
             )}
             {docs.map((doc) => (
               <div key={doc.id} style={{ display: "flex", alignItems: "center", gap: 6, padding: "2px 4px" }}>
                 <button
-                  style={{ ...menuItem, padding: "6px 8px", flex: 1, background: doc.id === currentId ? "rgba(255,255,255,0.08)" : "transparent" }}
+                  style={{ ...menuItem, padding: "6px 8px", flex: 1, background: doc.id === currentId ? "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" : "transparent" }}
                   onClick={() => { onOpen(doc.id); close(); }}
                 >
                   <span style={{ flex: 1 }}>
                     <div style={{ fontWeight: 600 }}>{doc.name}</div>
-                    <div style={{ fontSize: 10, color: "rgba(255,255,255,0.45)" }}>{doc.regionCount} regions · {doc.featureCount} features</div>
+                    <div style={{ fontSize: 10, color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" }}>{doc.regionCount} regions · {doc.featureCount} features</div>
                   </span>
                 </button>
                 <button
@@ -145,7 +145,7 @@ const DocumentsMenu = ({ currentId, author, onAuthorChange, onNew, onSave, onExp
                     background: armed === doc.id ? "rgba(185,28,28,0.72)" : "transparent",
                     border: armed === doc.id ? "1px solid rgba(248,113,113,0.4)" : "1px solid transparent",
                     borderRadius: 8,
-                    color: armed === doc.id ? "#fff" : "#f87171",
+                    color: armed === doc.id ? "var(--oh-ink, #fff)" : "#f87171",
                     cursor: doc.id === currentId ? "default" : "pointer",
                     display: "flex",
                     flexShrink: 0,

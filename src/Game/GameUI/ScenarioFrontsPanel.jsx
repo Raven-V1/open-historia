@@ -10,6 +10,7 @@
 // (PrehistoryPanel.jsx), with its own Save.
 
 import React, { useEffect, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 
 import { saveScenario } from "../../runtime/library.js";
 import { useTouchPrimary } from "../../runtime/mobileUi.js";
@@ -19,10 +20,10 @@ import { MAX_SCENARIO_FRONTS, blankScenarioFront, normalizeScenarioFronts } from
 
 const buttonStyle = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "999px",
-  color: "rgba(246,246,248,0.92)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.76rem",
@@ -34,11 +35,11 @@ const buttonStyle = {
 };
 const primaryButtonStyle = { ...buttonStyle, background: "rgba(43,193,243,0.16)", borderColor: "rgba(43,193,243,0.4)", color: "#e0f6fe" };
 const inputStyle = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "10px",
   boxSizing: "border-box",
-  color: "#f8fafc",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "inherit",
   fontSize: "0.78rem",
   outline: "none",
@@ -46,7 +47,7 @@ const inputStyle = {
   width: "100%",
 };
 const labelStyle = {
-  color: "rgba(255,255,255,0.58)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)",
   display: "block",
   fontSize: "0.63rem",
   fontWeight: 700,
@@ -54,13 +55,13 @@ const labelStyle = {
   marginBottom: "0.3rem",
   textTransform: "uppercase",
 };
-const hintStyle = { color: "rgba(255,255,255,0.5)", fontSize: "0.7rem", lineHeight: 1.5 };
-const sectionStyle = { background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, marginTop: "0.8rem", padding: "0.75rem" };
+const hintStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", lineHeight: 1.5 };
+const sectionStyle = { background: "color-mix(in srgb, var(--oh-ink, #fff) 2%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: 14, marginTop: "0.8rem", padding: "0.75rem" };
 const choiceStyle = (active) => ({
   ...buttonStyle,
-  background: active ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.04)",
-  borderColor: active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.08)",
-  color: active ? "#f4f4f5" : "rgba(255,255,255,0.7)",
+  background: active ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  borderColor: active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+  color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)",
   fontSize: "0.7rem",
   minHeight: "1.8rem",
   padding: "0 0.6rem",
@@ -97,15 +98,15 @@ const SideEditor = ({ front, side, countries, onChange, touch }) => {
       <label style={labelStyle}>{side === 0 ? <>One side</> : <>The other side</>}</label>
       <div data-no-translate style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem", marginBottom: members.length ? "0.4rem" : 0 }}>
         {members.map((name) => (
-          <span key={name} style={{ alignItems: "center", background: "rgba(255,255,255,0.08)", borderRadius: "999px", display: "inline-flex", fontSize: "0.74rem", fontWeight: 700, gap: "0.3rem", padding: "0.2rem 0.3rem 0.2rem 0.65rem" }}>
+          <span key={name} style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "999px", display: "inline-flex", fontSize: "0.74rem", fontWeight: 700, gap: "0.3rem", padding: "0.2rem 0.3rem 0.2rem 0.65rem" }}>
             {countries.find((country) => fold(country.key) === fold(name))?.label ?? name}
             <button
               aria-label="Remove"
               className="oh-tap"
               onClick={() => setMembers(members.filter((other) => other !== name))}
-              style={{ background: "none", border: "none", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: "0.85rem", lineHeight: 1, padding: "0 0.25rem" }}
+              style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", fontSize: "0.85rem", lineHeight: 1, padding: "0 0.25rem" }}
               type="button"
-            >✕</button>
+            ><UiIcon name="close" size={14} /></button>
           </span>
         ))}
       </div>
@@ -224,13 +225,13 @@ const ScenarioFrontsPanel = ({ details, onDetailsChange }) => {
   };
 
   return (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
-      <div style={{ color: "rgba(255,255,255,0.94)", fontSize: "0.95rem", fontWeight: 800 }}>Fronts</div>
+    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", fontSize: "0.95rem", fontWeight: 800 }}>Fronts</div>
       <div style={{ ...hintStyle, marginTop: "0.2rem" }}>The fronts this scenario begins with. A new game opens with their troops already standing along the line, and its war room ready, without asking your AI for anything.</div>
       <div style={{ ...hintStyle, marginTop: "0.2rem" }}>You do not draw the line: it runs where the two sides’ land meets on your map. Paint the land each side holds in the map editor, then name the sides here.</div>
 
       <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between", marginTop: "0.8rem" }}>
-        <div style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.66rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.66rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>
           {draft.length === 1 ? "1 front" : `${draft.length} fronts`}
         </div>
         <button className="oh-tap" disabled={draft.length >= MAX_SCENARIO_FRONTS} onClick={() => setDraft([...draft, blankScenarioFront()])} style={touchFit({ ...buttonStyle, opacity: draft.length >= MAX_SCENARIO_FRONTS ? 0.5 : 1 }, touch)} type="button">+ Add a front</button>

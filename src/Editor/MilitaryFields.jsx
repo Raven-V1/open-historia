@@ -27,8 +27,8 @@ import { DEFAULT_MUSTER } from "../runtime/mustering.js";
 import { formatPopulationFigure } from "../runtime/populationFigure.js";
 
 const fieldStyle = { ...inputStyle, flex: "0 0 64px", padding: "4px 6px", textAlign: "right", width: 64 };
-const hintStyle = { color: "rgba(255,255,255,0.45)", fontSize: 10.5, lineHeight: 1.45 };
-const groupLabelStyle = { color: "rgba(255,255,255,0.48)", fontSize: 10.5, marginTop: 2 };
+const hintStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: 10.5, lineHeight: 1.45 };
+const groupLabelStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: 10.5, marginTop: 2 };
 const percent = (share) => String(Math.round(Number(share) * 1000) / 10);
 
 // One figure: its name, and a field that keeps what is typed in it. The stored
@@ -40,7 +40,7 @@ const FigureField = ({ label, title, text, placeholder, onText }) => {
   }, [text]);
   return (
     <label title={title} style={{ alignItems: "center", display: "flex", gap: 6, minWidth: 0 }}>
-      <span style={{ color: "rgba(255,255,255,0.72)", flex: 1, fontSize: 11.5, minWidth: 0 }}>{label}</span>
+      <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", flex: 1, fontSize: 11.5, minWidth: 0 }}>{label}</span>
       <input
         ref={ref}
         defaultValue={text}
@@ -103,10 +103,10 @@ const MilitaryFields = ({ recordKey = "", value, defaults = null, onChange, onRa
   );
 
   return (
-    <details style={{ border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, padding: "6px 9px" }}>
+    <details style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 8, padding: "6px 9px" }}>
       <summary style={{ cursor: "pointer", fontSize: 11.5, fontWeight: 700 }}>
         <span>Military</span>
-        {kept && <span style={{ color: "rgba(255,255,255,0.5)", fontWeight: 500 }}> · its own figures</span>}
+        {kept && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontWeight: 500 }}> · its own figures</span>}
       </summary>
       <div key={recordKey} style={{ display: "flex", flexDirection: "column", gap: 7, marginTop: 7 }}>
 

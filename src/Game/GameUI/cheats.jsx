@@ -1,5 +1,6 @@
 /*! Open Historia — cheats panel © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon, { DifficultyIcon } from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -146,10 +147,10 @@ const transferWholeCountry = async (source, owner, game) => {
 };
 
 const TOOLS = [
-    { id: "master-ai", title: "GM Console", subtitle: "Master AI · AI-assisted world intervention and canonical changes", icon: "✦", badge: "AI" },
-    { id: "reminders", title: "Simulation Reminders", subtitle: "Standing facts every AI in the game is told until you withdraw them — and what the next skip will hear", icon: "❖" },
+    { id: "master-ai", title: "GM Console", subtitle: "Master AI · AI-assisted world intervention and canonical changes", icon: <UiIcon name="ai" size={16} />, badge: "AI" },
+    { id: "reminders", title: "Simulation Reminders", subtitle: "Standing facts every AI in the game is told until you withdraw them — and what the next skip will hear", icon: <UiIcon name="catalog" size={16} /> },
     { id: "roll-back-turn", title: "Roll Back Turn", subtitle: "Restore the game to the start of an earlier turn", icon: "↶" },
-    { id: "your-country", title: "Play As Country", subtitle: "Change which country you're currently controlling", icon: "♛" },
+    { id: "your-country", title: "Play As Country", subtitle: "Change which country you're currently controlling", icon: <UiIcon name="user" size={16} /> },
     { id: "difficulty", title: "Difficulty", subtitle: "Decide how things tend to go for you", icon: "◈" },
     { id: "annex-country", title: "Annex Country", subtitle: "Transfer an entire country's mapped territory", icon: "⇢" },
     { id: "annex-regions", title: "Annex Regions", subtitle: "Transfer individual map regions to another country", icon: "⌖" },
@@ -157,12 +158,12 @@ const TOOLS = [
     { id: "add-country", title: "Add Country", subtitle: "Create a new polity for custom or fantasy campaigns", icon: "+", badge: "Advanced" },
     { id: "regions", title: "Region Inspector", subtitle: "Inspect control, sovereignty, claims, and region identity", icon: "▦" },
     { id: "groups", title: "Groups", subtitle: "Cartels, militias, outbreaks: groups that control an area without owning it, and what each is", icon: "⬡" },
-    { id: "puppets", title: "Puppet States", subtitle: "Protectorates, puppet states and client states: who answers to whom, how loyally, and ending it", icon: "⛓" },
+    { id: "puppets", title: "Puppet States", subtitle: "Protectorates, puppet states and client states: who answers to whom, how loyally, and ending it", icon: <UiIcon name="link" size={16} /> },
     { id: "edit-feature", title: "Map Feature Editor", subtitle: "Inspect and edit runtime features and scenario cities", icon: "◉" },
     { id: "add-feature", title: "Add Map Feature", subtitle: "Place cities, HQs, landmarks, ports, and other world features", icon: "+" },
     { id: "clear-features", title: "Clear Map Features", subtitle: "Remove custom features or restore standard cities", icon: "⌫", badge: "Advanced" },
     { id: "events", title: "Event Editor", subtitle: "Search, create, and repair canonical timeline events", icon: "≡" },
-    { id: "interactive-event", title: "Interactive Event", subtitle: "Play any event on the record out as a scene, the way a time skip offers one now and then", icon: "⚡" },
+    { id: "interactive-event", title: "Interactive Event", subtitle: "Play any event on the record out as a scene, the way a time skip offers one now and then", icon: <UiIcon name="flash" size={16} /> },
     { id: "history-document", title: "History Document", subtitle: "Read and edit the living history the AI is given in place of older events; the timeline keeps every event", icon: "≣" },
 ];
 
@@ -171,7 +172,7 @@ const TOOL_GROUPS = [
         id: "gm-history",
         title: "GM & History",
         subtitle: "Intervene in the world, repair canon, or restore an earlier state.",
-        icon: "✦",
+        icon: <UiIcon name="ai" size={16} />,
         tools: ["master-ai", "reminders", "events", "interactive-event", "history-document", "roll-back-turn"],
     },
     {
@@ -185,7 +186,7 @@ const TOOL_GROUPS = [
         id: "military",
         title: "Military",
         subtitle: "Inspect and manually manipulate forces on the map.",
-        icon: "⚔",
+        icon: <UiIcon name="military" size={16} />,
         tools: ["forces"],
     },
     {
@@ -209,7 +210,7 @@ const inputStyle = {
     border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.16))",
     borderRadius: 8,
     boxSizing: "border-box",
-    color: "#fff",
+    color: "var(--oh-ink, #fff)",
     fontSize: "0.83rem",
     outline: "none",
     padding: "0.5rem 0.6rem",
@@ -221,7 +222,7 @@ const buttonStyle = {
     background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.06))",
     border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.12))",
     borderRadius: 8,
-    color: "#fff",
+    color: "var(--oh-ink, #fff)",
     cursor: "pointer",
     display: "flex",
     fontSize: "0.82rem",
@@ -255,7 +256,7 @@ const iconTileStyle = {
     background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.06))",
     border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.1))",
     borderRadius: 8,
-    color: "#f4f4f5",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)",
     display: "flex",
     flex: "0 0 2rem",
     fontSize: "0.9rem",
@@ -269,7 +270,7 @@ const badgeStyle = {
     background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.06))",
     border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.1))",
     borderRadius: 999,
-    color: "rgba(255,255,255,0.52)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 52%, transparent)",
     flexShrink: 0,
     fontSize: "0.58rem",
     fontWeight: 800,
@@ -279,7 +280,7 @@ const badgeStyle = {
 };
 
 const labelStyle = {
-    color: "rgba(255,255,255,0.75)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)",
     display: "block",
     fontSize: "0.72rem",
     fontWeight: 700,
@@ -353,7 +354,7 @@ const PolitySelect = ({ polities, value, onChange, placeholder = "Pick a country
     <select value={value} onChange={(event) => onChange(event.target.value)} style={{ ...inputStyle, colorScheme: "dark", cursor: "pointer" }}>
     <option value="">{placeholder}</option>
     {polities.map((polity) => (
-        <option key={polity.code} value={polity.code} style={{ background: "#18181b", color: "#fff" }}>
+        <option key={polity.code} value={polity.code} style={{ background: "var(--oh-paper, #18181b)", color: "var(--oh-ink, #fff)" }}>
         {polity.name}
         </option>
     ))}
@@ -446,7 +447,7 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
     if (!open) return null;
 
     const header = (title, subtitle) => (
-        <div style={{ borderBottom: "1px solid rgba(255,255,255,0.08)", marginBottom: "0.7rem", paddingBottom: "0.6rem" }}>
+        <div style={{ borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", marginBottom: "0.7rem", paddingBottom: "0.6rem" }}>
         <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between" }}>
         <div style={{ alignItems: "center", display: "flex", gap: "0.45rem", minWidth: 0 }}>
         {tool && (
@@ -456,9 +457,9 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
         )}
         <div style={{ fontSize: "1rem", fontWeight: 800 }}>{title}</div>
         </div>
-        <button type="button" className="oh-tap" aria-label="Close cheats" onClick={onClose} style={{ ...buttonStyle, padding: "0.25rem 0.55rem" }}>✕</button>
+        <button type="button" className="oh-tap" aria-label="Close cheats" onClick={onClose} style={{ ...buttonStyle, padding: "0.25rem 0.55rem" }}><UiIcon name="close" size={16} /></button>
         </div>
-        {subtitle && <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.74rem", marginTop: "0.2rem" }}>{subtitle}</div>}
+        {subtitle && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.74rem", marginTop: "0.2rem" }}>{subtitle}</div>}
         </div>
     );
 
@@ -468,7 +469,7 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
             screen's: centred from 50%, it could only use half the screen and
             broke a one-line instruction over four. */}
         {clickMode && (
-            <div className="oh-hud-popover" style={{ alignItems: "center", display: "flex", gap: "0.6rem", background: "rgba(24, 24, 27, 0.96)", border: "1px solid rgba(0,0,0,0.19)", borderRadius: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.35)", color: "#fff", fontFamily: "sans-serif", fontSize: "0.85rem", left: "50%", padding: "0.6rem 0.9rem", position: "fixed", top: PANEL_TOP, transform: "translateX(-50%)", zIndex: 10070, ...(isMobile ? { boxSizing: "border-box", maxWidth: "calc(100vw - 1rem)", width: "max-content" } : null) }}>
+            <div className="oh-hud-popover" style={{ alignItems: "center", display: "flex", gap: "0.6rem", background: "color-mix(in srgb, var(--oh-paper, rgb(24,24,27)) 96%, transparent)", border: "1px solid rgba(0,0,0,0.19)", borderRadius: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.35)", color: "var(--oh-ink, #fff)", fontFamily: "sans-serif", fontSize: "0.85rem", left: "50%", padding: "0.6rem 0.9rem", position: "fixed", top: PANEL_TOP, transform: "translateX(-50%)", zIndex: 10070, ...(isMobile ? { boxSizing: "border-box", maxWidth: "calc(100vw - 1rem)", width: "max-content" } : null) }}>
             <span>{clickMode.label}</span>
             <button type="button" className="oh-tap-row" onClick={endClickMode} style={{ ...primaryButtonStyle, padding: "0.3rem 0.6rem" }}>Done</button>
             </div>
@@ -482,7 +483,7 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
             border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.1))",
             borderRadius: 18,
             boxShadow: "-4px 0 24px rgba(0,0,0,0.4)",
-            color: "white",
+            color: "var(--oh-ink, #fff)",
             display: clickMode ? "none" : "flex",
             flexDirection: "column",
             fontFamily: "sans-serif",
@@ -513,7 +514,7 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
                 <div style={{ ...iconTileStyle, flexBasis: "2.15rem", height: "2.15rem", width: "2.15rem" }}>⌘</div>
                 <div style={{ minWidth: 0 }}>
                     <div style={{ fontSize: "0.78rem", fontWeight: 800 }}>Canonical world tools</div>
-                    <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.66rem", lineHeight: 1.35, marginTop: "0.08rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.66rem", lineHeight: 1.35, marginTop: "0.08rem" }}>
                         Edits become the current canonical state, not permanent locks. Normal simulation remains free to evolve them afterward.
                     </div>
                 </div>
@@ -523,10 +524,10 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
             {TOOL_GROUPS.map((group) => (
                 <section key={group.id}>
                     <div style={{ alignItems: "flex-start", display: "flex", gap: "0.45rem", marginBottom: "0.36rem", padding: "0 0.1rem" }}>
-                        <span style={{ color: "#e4e4e7", fontSize: "0.75rem", lineHeight: "1rem" }}>{group.icon}</span>
+                        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", fontSize: "0.75rem", lineHeight: "1rem" }}>{group.icon}</span>
                         <div style={{ minWidth: 0 }}>
                             <div style={{ fontSize: "0.69rem", fontWeight: 850, letterSpacing: "0.055em", textTransform: "uppercase" }}>{group.title}</div>
-                            <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.61rem", lineHeight: 1.35, marginTop: "0.04rem" }}>{group.subtitle}</div>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.61rem", lineHeight: 1.35, marginTop: "0.04rem" }}>{group.subtitle}</div>
                         </div>
                     </div>
                     <div style={{ display: "flex", flexDirection: "column", gap: "0.34rem" }}>
@@ -535,10 +536,10 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
                             if (typeof onOpenForces !== "function") return null;
                             return (
                                 <button key="forces" type="button" onClick={onOpenForces} style={homeToolButtonStyle}>
-                                    <span style={iconTileStyle}>⚔</span>
+                                    <span style={iconTileStyle}><UiIcon name="military" size={16} /></span>
                                     <span style={{ flex: 1, minWidth: 0 }}>
                                         <span style={{ display: "block", fontSize: "0.78rem", fontWeight: 760 }}>Force Manager</span>
-                                        <span style={{ color: "rgba(255,255,255,0.45)", display: "block", fontSize: "0.65rem", fontWeight: 500, lineHeight: 1.35, marginTop: "0.08rem" }}>Deploy, inspect, edit, and repair forces on the map</span>
+                                        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", display: "block", fontSize: "0.65rem", fontWeight: 500, lineHeight: 1.35, marginTop: "0.08rem" }}>Deploy, inspect, edit, and repair forces on the map</span>
                                     </span>
                                     <span style={badgeStyle}>2.0</span>
                                 </button>
@@ -558,7 +559,7 @@ const CheatsPanel = ({ open, onClose, onOpenForces }) => {
                                 <span style={iconTileStyle}>{entry.icon || "•"}</span>
                                 <span style={{ flex: 1, minWidth: 0 }}>
                                     <span style={{ display: "block", fontSize: "0.78rem", fontWeight: 760 }}>{entry.title}</span>
-                                    <span style={{ color: "rgba(255,255,255,0.45)", display: "block", fontSize: "0.65rem", fontWeight: 500, lineHeight: 1.35, marginTop: "0.08rem" }}>{entry.subtitle}</span>
+                                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", display: "block", fontSize: "0.65rem", fontWeight: 500, lineHeight: 1.35, marginTop: "0.08rem" }}>{entry.subtitle}</span>
                                 </span>
                                 {entry.badge && <span style={badgeStyle}>{entry.badge}</span>}
                             </button>
@@ -604,11 +605,11 @@ const cleanEditorNumber = (value) => {
 };
 
 const MAP_FEATURE_STATUS_META = {
-    planned: { label: "Planned", color: "#e4e4e7" },
+    planned: { label: "Planned", color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" },
     under_construction: { label: "Under construction", color: "#fcd34d" },
     active: { label: "Active", color: "#86efac" },
     damaged: { label: "Damaged", color: "#fca5a5" },
-    inactive: { label: "Inactive", color: "#d1d1d5" },
+    inactive: { label: "Inactive", color: "var(--oh-ink, #d1d1d5)" },
     abandoned: { label: "Abandoned", color: "#fdba74" },
     destroyed: { label: "Destroyed", color: "#f87171" },
 };
@@ -631,13 +632,13 @@ const notifyCitiesUpdated = () => {
 
 const editorFieldStyle = {
     background: "rgba(0,0,0,0.22)",
-    border: "1px solid rgba(255,255,255,0.11)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 11%, transparent)",
     borderRadius: 9,
     padding: "0.55rem",
 };
 
 const editorSectionLabelStyle = {
-    color: "rgba(255,255,255,0.48)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)",
     fontSize: "0.63rem",
     fontWeight: 850,
     letterSpacing: "0.07em",
@@ -647,9 +648,9 @@ const editorSectionLabelStyle = {
 
 const debugPreStyle = {
     background: "rgba(0,0,0,0.3)",
-    border: "1px solid rgba(255,255,255,0.1)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
     borderRadius: 8,
-    color: "rgba(255,255,255,0.72)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
     fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace",
     fontSize: "0.61rem",
     lineHeight: 1.42,
@@ -1016,16 +1017,16 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
         {header(meta.title, "Identity, Political World, national baseline, and present-state administration")}
         <div style={{ overflowY: "auto", paddingRight: "0.12rem" }}>
             <div style={{
-                background: "rgba(255,255,255,0.05)",
-                border: "1px solid rgba(255,255,255,0.12)",
+                background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
                 borderRadius: 11,
                 marginBottom: "0.72rem",
                 padding: "0.62rem 0.7rem",
             }}>
-                <div style={{ color: "#f4f4f5", fontSize: "0.66rem", fontWeight: 900, letterSpacing: "0.065em", textTransform: "uppercase" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "0.66rem", fontWeight: 900, letterSpacing: "0.065em", textTransform: "uppercase" }}>
                     Canonical now · evolvable later
                 </div>
-                <div style={{ color: "rgba(255,255,255,0.52)", fontSize: "0.67rem", lineHeight: 1.4, marginTop: "0.16rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 52%, transparent)", fontSize: "0.67rem", lineHeight: 1.4, marginTop: "0.16rem" }}>
                     A manual edit sets the country's current baseline. Later wars, annexations, losses, growth, crises, and other world events remain free to change it.
                 </div>
             </div>
@@ -1074,7 +1075,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                 {target ? "Pick another country on map →" : "Pick a country on map →"}
             </button>
 
-            <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.66rem", lineHeight: 1.4, marginTop: "0.35rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.66rem", lineHeight: 1.4, marginTop: "0.35rem" }}>
                 Click any owned region. The editor resolves the region's current live owner, not the map's historical provenance.
             </div>
 
@@ -1095,7 +1096,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
             </details>
 
             {loading && (
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.75rem", marginTop: "0.75rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.75rem", marginTop: "0.75rem" }}>
                     Loading canonical country state…
                 </div>
             )}
@@ -1104,7 +1105,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                 <>
                     <div style={{ ...editorFieldStyle, marginTop: "0.75rem" }}>
                         <div style={editorSectionLabelStyle}>Identity</div>
-                        <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.61rem", marginBottom: "0.4rem" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.61rem", marginBottom: "0.4rem" }}>
                             Stable key: <code>{target}</code>
                         </div>
                         <label style={{ ...labelStyle, marginTop: 0 }}>Display name</label>
@@ -1124,7 +1125,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                             <input
                                 type="color"
                                 className="oh-tap"
-                                value={hexToRgb(form.color) ? (String(form.color).startsWith("#") ? form.color : `#${form.color}`) : "rgba(255,255,255,0.22)"}
+                                value={hexToRgb(form.color) ? (String(form.color).startsWith("#") ? form.color : `#${form.color}`) : "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)"}
                                 onChange={(event) => change("color", event.target.value)}
                                 style={{ background: "none", border: "none", cursor: "pointer", height: "2.2rem", padding: 0, width: "2.8rem" }}
                             />
@@ -1135,7 +1136,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                         <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", gap: "0.5rem" }}>
                             <div>
                                 <div style={editorSectionLabelStyle}>Political World</div>
-                                <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.62rem", lineHeight: 1.4 }}>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.62rem", lineHeight: 1.4 }}>
                                     Canonical political truth used by the Advisor, diplomacy, institutions and simulation. This is not a Stats-side copy.
                                 </div>
                             </div>
@@ -1197,7 +1198,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
 
                         <details open style={{ marginTop: "0.7rem" }}>
                             <summary style={{ cursor: "pointer", fontSize: "0.72rem", fontWeight: 850 }}>Strategic outlook · goals, fears, ambitions, pressure</summary>
-                            <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.61rem", lineHeight: 1.4, marginTop: "0.35rem" }}>One item per line. These are canonical causal inputs, not flavor text.</div>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.61rem", lineHeight: 1.4, marginTop: "0.35rem" }}>One item per line. These are canonical causal inputs, not flavor text.</div>
                             {politicsTextarea("Goals", "goalsText", "One goal per line")}
                             {politicsTextarea("Fears", "fearsText", "One fear per line")}
                             {politicsTextarea("Ambitions", "ambitionsText", "One ambition per line")}
@@ -1206,8 +1207,8 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
 
                         <details open style={{ marginTop: "0.7rem" }}>
                             <summary style={{ cursor: "pointer", fontSize: "0.72rem", fontWeight: 850 }}>Parties / political entities ({politicsForm.parties?.length || 0})</summary>
-                            <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.61rem", lineHeight: 1.4, marginTop: "0.35rem" }}>Party roles update the government's actual party IDs. Support (%) and legislature seats are separate measures; blank seats mean unknown, while 0 means no seats.</div>
-                            <div role={composition.error ? "alert" : "status"} style={{ color: composition.error ? "#fca5a5" : "rgba(255,255,255,0.55)", fontSize: "0.64rem", lineHeight: 1.45, marginTop: "0.38rem" }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.61rem", lineHeight: 1.4, marginTop: "0.35rem" }}>Party roles update the government's actual party IDs. Support (%) and legislature seats are separate measures; blank seats mean unknown, while 0 means no seats.</div>
+                            <div role={composition.error ? "alert" : "status"} style={{ color: composition.error ? "#fca5a5" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.64rem", lineHeight: 1.45, marginTop: "0.38rem" }}>
                                 {composition.error || (
                                     <>
                                         {composition.totalSeats === null
@@ -1222,7 +1223,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                             </div>
                             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.55rem" }}>
                                 {(politicsForm.parties || []).map((party, index) => (
-                                    <details key={party._editorKey || party.id || index} style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9, padding: "0.5rem" }}>
+                                    <details key={party._editorKey || party.id || index} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 9, padding: "0.5rem" }}>
                                         <summary style={{ cursor: "pointer", fontSize: "0.7rem", fontWeight: 800 }}>
                                             {party.name || `Political entity ${index + 1}`}{party.ruling ? " · Government" : party.coalition ? " · Coalition" : ""}
                                         </summary>
@@ -1267,7 +1268,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                             <summary style={{ cursor: "pointer", fontSize: "0.72rem", fontWeight: 850 }}>Power blocs / non-party actors ({politicsForm.powerBlocs?.length || 0})</summary>
                             <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem", marginTop: "0.55rem" }}>
                                 {(politicsForm.powerBlocs || []).map((bloc, index) => (
-                                    <details key={bloc.id || index} style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9, padding: "0.5rem" }}>
+                                    <details key={bloc.id || index} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 9, padding: "0.5rem" }}>
                                         <summary style={{ cursor: "pointer", fontSize: "0.7rem", fontWeight: 800 }}>{bloc.name || `Power bloc ${index + 1}`}</summary>
                                         <div style={{ display: "grid", gap: "0.44rem", gridTemplateColumns: "1fr 1fr", marginTop: "0.55rem" }}>
                                             {[["Name", "name"], ["Short name", "shortName"], ["Kind", "kind"], ["Status", "status"], ["Leader", "leader"], ["Ideology", "ideology"], ["Influence label", "influenceLabel"]].map(([label, key]) => (
@@ -1287,7 +1288,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
 
                         <details open style={{ marginTop: "0.75rem" }} data-political-trait-catalog="true">
                             <summary style={{ cursor: "pointer", fontSize: "0.72rem", fontWeight: 850 }}>Political traits · full supported catalog ({POLITICAL_TRAIT_REGISTRY.length})</summary>
-                            <div style={{ color: "rgba(255,255,255,0.46)", fontSize: "0.62rem", lineHeight: 1.45, marginTop: "0.35rem" }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", fontSize: "0.62rem", lineHeight: 1.45, marginTop: "0.35rem" }}>
                                 Every supported Political World trait is listed here. Blank means <strong>not specified</strong>, not 0. Values run from 0 to 100 and shape how this government behaves.
                             </div>
                             <div style={{ display: "grid", gap: "0.5rem", gridTemplateColumns: "repeat(auto-fit, minmax(190px, 1fr))", marginTop: "0.6rem" }}>
@@ -1295,10 +1296,10 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                                     const rawValue = politicsForm.traitValues?.[trait.key] ?? "";
                                     const isSet = rawValue !== "" && rawValue !== null && rawValue !== undefined;
                                     return (
-                                        <div key={trait.key} style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9, padding: "0.52rem" }}>
+                                        <div key={trait.key} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 9, padding: "0.52rem" }}>
                                             <div style={{ alignItems: "center", display: "flex", gap: "0.4rem", justifyContent: "space-between" }}>
                                                 <label style={{ ...labelStyle, margin: 0 }}>{trait.label}</label>
-                                                <span style={{ color: isSet ? "#86efac" : "rgba(255,255,255,0.35)", fontSize: "0.56rem", fontWeight: 800, textTransform: "uppercase" }}>{isSet ? "set" : "unset"}</span>
+                                                <span style={{ color: isSet ? "#86efac" : "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.56rem", fontWeight: 800, textTransform: "uppercase" }}>{isSet ? "set" : "unset"}</span>
                                             </div>
                                             <input
                                                 type="number"
@@ -1310,7 +1311,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                                                 value={rawValue}
                                                 onChange={(event) => changeTrait(trait.key, event.target.value)}
                                             />
-                                            <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.57rem", lineHeight: 1.35, marginTop: "0.32rem" }}>{trait.description}</div>
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.57rem", lineHeight: 1.35, marginTop: "0.32rem" }}>{trait.description}</div>
                                             <code style={{ color: "var(--oh-grey-muted)", display: "block", fontSize: "0.55rem", marginTop: "0.3rem" }}>{trait.key}</code>
                                         </div>
                                     );
@@ -1320,7 +1321,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
 
                         <details style={{ marginTop: "0.75rem" }} data-political-structured-json="true">
                             <summary style={{ cursor: "pointer", fontSize: "0.72rem", fontWeight: 850 }}>Advanced structured traits & perceptions</summary>
-                            <div style={{ color: "rgba(255,255,255,0.44)", fontSize: "0.61rem", lineHeight: 1.45, marginTop: "0.35rem" }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 44%, transparent)", fontSize: "0.61rem", lineHeight: 1.45, marginTop: "0.35rem" }}>
                                 Raw JSON remains available for power users and legacy extension traits. Registered canonical trait keys stay synchronized with the controls above whenever this JSON is valid.
                             </div>
                             <label style={labelStyle}>Traits JSON</label>
@@ -1343,7 +1344,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
 
                         <details style={{ marginTop: "0.75rem" }} data-political-debug="true">
                             <summary style={{ cursor: "pointer", fontSize: "0.72rem", fontWeight: 850 }}>Political Debug · prove what the simulator sees</summary>
-                            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.61rem", lineHeight: 1.45, marginTop: "0.35rem" }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.61rem", lineHeight: 1.45, marginTop: "0.35rem" }}>
                                 Read-only canonical and derived state. This includes values the editor cannot directly modify, plus the complete supported trait catalog with unset dimensions preserved.
                             </div>
                             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.42rem", marginTop: "0.55rem" }}>
@@ -1364,9 +1365,9 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                                 <div style={editorSectionLabelStyle}>All supported traits · current canonical values</div>
                                 <div style={{ display: "grid", gap: "0.3rem", gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))", marginTop: "0.4rem" }}>
                                     {(politicsDebug?.traitCatalog?.traits || POLITICAL_TRAIT_REGISTRY.map((trait) => ({ ...trait, value: null, status: "unset" }))).map((trait) => (
-                                        <div key={trait.key} style={{ alignItems: "center", background: "rgba(255,255,255,0.025)", borderRadius: 7, display: "flex", fontSize: "0.62rem", justifyContent: "space-between", padding: "0.35rem 0.45rem" }}>
+                                        <div key={trait.key} style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", borderRadius: 7, display: "flex", fontSize: "0.62rem", justifyContent: "space-between", padding: "0.35rem 0.45rem" }}>
                                             <span>{trait.label}</span>
-                                            <code style={{ color: trait.value == null ? "rgba(255,255,255,0.34)" : "var(--oh-grey-text)" }}>{trait.value == null ? "unset" : trait.value}</code>
+                                            <code style={{ color: trait.value == null ? "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" : "var(--oh-grey-text)" }}>{trait.value == null ? "unset" : trait.value}</code>
                                         </div>
                                     ))}
                                 </div>
@@ -1384,7 +1385,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                                 readOnly
                                 rows={18}
                                 spellCheck={false}
-                                style={{ ...inputStyle, color: "rgba(255,255,255,0.72)", fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace", fontSize: "0.62rem", lineHeight: 1.4, resize: "vertical" }}
+                                style={{ ...inputStyle, color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontFamily: "ui-monospace, SFMono-Regular, Menlo, Consolas, monospace", fontSize: "0.62rem", lineHeight: 1.4, resize: "vertical" }}
                                 value={decisionContextText || ""}
                             />
                         </details>
@@ -1408,7 +1409,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                             <div style={{ ...editorFieldStyle, marginTop: "0.65rem" }}>
                                 <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", marginBottom: "0.45rem" }}>
                                     <div style={editorSectionLabelStyle}>National baseline</div>
-                                    <span style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.6rem" }}>
+                                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.6rem" }}>
                                         {baseline.componentCount} territorial component{baseline.componentCount === 1 ? "" : "s"}
                                     </span>
                                 </div>
@@ -1417,7 +1418,7 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                                     {pairedField("GDP (€ billions) · whole polity", "gdpB", { type: "number", min: "0.001", step: "0.1" })}
                                     <div style={{ minWidth: 0 }}>
                                         <label style={{ ...labelStyle, marginTop: 0 }}>GDP / capita · derived</label>
-                                        <div style={{ ...inputStyle, color: "rgba(255,255,255,0.62)", cursor: "default" }}>{perCapitaText}</div>
+                                        <div style={{ ...inputStyle, color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", cursor: "default" }}>{perCapitaText}</div>
                                     </div>
                                     {pairedField("GDP growth (%)", "gdpGrowth", { type: "number", step: "0.1" })}
                                 </div>
@@ -1504,9 +1505,9 @@ const CountryEditorView = ({ meta, header, busy, status, polities, refresh, runB
                                 }}>
                                     <div style={{ background: "#22c55e", width: `${Math.max(0, Math.min(100, Number(form.agriculture) || 0))}%` }} />
                                     <div style={{ background: "#3b82f6", width: `${Math.max(0, Math.min(100, Number(form.industry) || 0))}%` }} />
-                                    <div style={{ background: "rgba(255,255,255,0.07)", width: `${Math.max(0, Math.min(100, Number(form.services) || 0))}%` }} />
+                                    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", width: `${Math.max(0, Math.min(100, Number(form.services) || 0))}%` }} />
                                 </div>
-                                <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.61rem", lineHeight: 1.4, marginTop: "0.45rem" }}>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.61rem", lineHeight: 1.4, marginTop: "0.45rem" }}>
                                     Always totals 100%. Moving one sector keeps that value and redistributes the remainder across the other two in proportion to their current shares.
                                 </div>
                             </details>
@@ -1597,8 +1598,8 @@ const sortEventsChronologically = (events) => events
     })
     .map(({ event }) => event);
 
-const eventBadgeStyle = (tone = "rgba(255,255,255,0.55)") => ({
-    background: "rgba(255,255,255,0.05)",
+const eventBadgeStyle = (tone = "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)") => ({
+    background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
     border: `1px solid ${tone}`,
     borderRadius: 999,
     color: tone,
@@ -1613,9 +1614,9 @@ const eventBadgeStyle = (tone = "rgba(255,255,255,0.55)") => ({
 
 const eventFilterButtonStyle = (active) => ({
     ...buttonStyle,
-    background: active ? "rgba(0,0,0,0.39)" : "rgba(255,255,255,0.05)",
-    borderColor: active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.1)",
-    color: active ? "#f4f4f5" : "rgba(255,255,255,0.7)",
+    background: active ? "rgba(0,0,0,0.39)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+    borderColor: active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+    color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)",
     fontSize: "0.66rem",
     padding: "0.36rem 0.5rem",
 });
@@ -1681,8 +1682,8 @@ const RemindersView = ({ meta, header, busy, status, game, runBusy }) => {
         return "Reminder withdrawn. The next time skip is told it no longer holds.";
     });
 
-    const cardStyle = { background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "0.5rem 0.6rem" };
-    const noteStyle = { color: "rgba(255,255,255,0.48)", fontSize: "0.68rem", lineHeight: 1.45 };
+    const cardStyle = { background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 8, padding: "0.5rem 0.6rem" };
+    const noteStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.68rem", lineHeight: 1.45 };
     const statusLine = status && (
         <div style={{ color: status.startsWith("Failed") ? "#fca5a5" : "rgba(191,219,254,0.9)", fontSize: "0.72rem", marginTop: "0.55rem" }}>
             {status}
@@ -1737,7 +1738,7 @@ const RemindersView = ({ meta, header, busy, status, game, runBusy }) => {
                                 <>
                                 <div style={{ fontSize: "0.76rem", lineHeight: 1.45, whiteSpace: "pre-wrap" }}>{entry.text}</div>
                                 <div style={{ alignItems: "center", display: "flex", gap: "0.35rem", justifyContent: "space-between", marginTop: "0.35rem" }}>
-                                    <span style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.62rem" }}>
+                                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.62rem" }}>
                                         {entry.date ? `since ${readable(entry.date)}` : ""}{entry.round ? ` · round ${entry.round}` : ""}
                                     </span>
                                     <span style={{ display: "flex", gap: "0.3rem" }}>
@@ -1763,7 +1764,7 @@ const RemindersView = ({ meta, header, busy, status, game, runBusy }) => {
                         <div style={{ display: "flex", flexDirection: "column", gap: "0.3rem" }}>
                             {pending.map((entry) => (
                                 <div key={entry.id} style={{ ...cardStyle, fontSize: "0.7rem", lineHeight: 1.4 }}>
-                                    <span style={{ color: "#e4e4e7", fontSize: "0.6rem", fontWeight: 750, marginRight: "0.4rem", textTransform: "uppercase" }}>{gmChangeKindLabel(entry.kind)}</span>
+                                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", fontSize: "0.6rem", fontWeight: 750, marginRight: "0.4rem", textTransform: "uppercase" }}>{gmChangeKindLabel(entry.kind)}</span>
                                     {entry.summary}
                                 </div>
                             ))}
@@ -1829,7 +1830,7 @@ const InteractiveEventView = ({ meta, header, busy, status, game, runBusy, close
         return "The offer is gone. Nothing else changed.";
     });
 
-    const noteStyle = { color: "rgba(255,255,255,0.48)", fontSize: "0.68rem", lineHeight: 1.45 };
+    const noteStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.68rem", lineHeight: 1.45 };
     const warnStyle = { background: "rgba(250,204,21,0.08)", border: "1px solid rgba(250,204,21,0.32)", borderRadius: 8, color: "#fde68a", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.5rem 0.6rem" };
     const statusLine = status && (
         <div style={{ color: status.startsWith("Failed") ? "#fca5a5" : "rgba(191,219,254,0.9)", fontSize: "0.72rem", marginTop: "0.55rem" }}>
@@ -1879,11 +1880,11 @@ const InteractiveEventView = ({ meta, header, busy, status, game, runBusy, close
                     const revealing = unseen.has(id);
                     const wouldBeOffered = isOfferableEvent(event);
                     return (
-                        <div key={id || `${event.title}-${event.date}`} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "0.5rem 0.6rem" }}>
+                        <div key={id || `${event.title}-${event.date}`} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 8, padding: "0.5rem 0.6rem" }}>
                             <div data-no-translate style={{ fontSize: "0.76rem", fontWeight: 700, lineHeight: 1.35 }}>{cleanEventText(event.title) || "Untitled event"}</div>
                             <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.3rem", marginTop: "0.25rem" }}>
                                 {isGameDate(event.date) && <span data-no-translate style={{ ...noteStyle, fontSize: "0.64rem" }}>{formatGameDateReadable(event.date)}</span>}
-                                <span style={eventBadgeStyle(wouldBeOffered ? "rgba(134,239,172,0.5)" : "rgba(255,255,255,0.28)")}>
+                                <span style={eventBadgeStyle(wouldBeOffered ? "rgba(134,239,172,0.5)" : "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)")}>
                                     {wouldBeOffered ? "a skip could offer this" : "a skip never would"}
                                 </span>
                             </div>
@@ -2197,7 +2198,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
     const renderQuoteEditor = (form, setForm) => (
         <details style={{ ...editorFieldStyle, marginTop: "0.5rem", padding: "0.45rem 0.55rem" }}>
             <summary style={{ cursor: "pointer", fontSize: "0.68rem", fontWeight: 750, ...(touch ? TOUCH_SUMMARY : null) }}>Optional quotation</summary>
-            <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.6rem", lineHeight: 1.4, marginTop: "0.45rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.6rem", lineHeight: 1.4, marginTop: "0.45rem" }}>
                 Quotes are occasional presentation metadata, not a mechanical impact. Leave blank for ordinary events.
             </div>
             <label style={{ display: "block", marginTop: "0.5rem" }}>
@@ -2227,9 +2228,9 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
     // thumb-sized one here.
     const choiceButton = (active) => ({
         ...buttonStyle,
-        background: active ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.05)",
-        borderColor: active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.1)",
-        color: active ? "#f4f4f5" : "rgba(255,255,255,0.7)",
+        background: active ? "rgba(0,0,0,0.45)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+        borderColor: active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+        color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)",
         fontSize: "0.64rem",
         minHeight: touch ? "2.75rem" : "2rem",
         padding: "0.34rem 0.48rem",
@@ -2300,10 +2301,10 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                     style={{ marginTop: "0.12rem" }}
                 />
                 <span>
-                    <span style={{ color: form.allowNpcReactions ? "#a7f3d0" : "rgba(255,255,255,0.82)", display: "block", fontSize: "0.7rem", fontWeight: 800 }}>
+                    <span style={{ color: form.allowNpcReactions ? "#a7f3d0" : "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", display: "block", fontSize: "0.7rem", fontWeight: 800 }}>
                         Allow NPC diplomatic reactions
                     </span>
-                    <span style={{ color: "rgba(255,255,255,0.42)", display: "block", fontSize: "0.6rem", lineHeight: 1.4, marginTop: "0.14rem" }}>
+                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", display: "block", fontSize: "0.6rem", lineHeight: 1.4, marginTop: "0.14rem" }}>
                         After a 12-second undo window, the AI may send one natural diplomatic follow-up — or none. Minor friendly reactions such as congratulations, condolences, curiosity, or simple goodwill are allowed; enabling this never guarantees a message.
                     </span>
                 </span>
@@ -2322,7 +2323,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
         {header(meta.title, meta.subtitle)}
         <div style={{ display: "flex", flex: 1, flexDirection: "column", minHeight: 0, overflowY: "auto", paddingRight: "0.12rem" }}>
             <div style={{
-                background: "rgba(255,255,255,0.045)",
+                background: "color-mix(in srgb, var(--oh-ink, #fff) 4.5%, transparent)",
                 border: "1px solid rgba(96,165,250,0.2)",
                 borderRadius: 10,
                 color: "rgba(219,234,254,0.78)",
@@ -2330,7 +2331,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                 lineHeight: 1.4,
                 padding: "0.55rem 0.65rem",
             }}>
-                <strong style={{ color: "#dbeafe" }}>Canonical history editor.</strong> Text, optional quotations, and metadata edits immediately change the persistent timeline. Already-applied state effects are deliberately not replayed, reverted, or reinterpreted here.
+                <strong style={{ color: "var(--oh-link, #dbeafe)" }}>Canonical history editor.</strong> Text, optional quotations, and metadata edits immediately change the persistent timeline. Already-applied state effects are deliberately not replayed, reverted, or reinterpreted here.
             </div>
 
             <div style={{ display: "grid", gap: "0.4rem", gridTemplateColumns: isMobile ? "repeat(2, minmax(0, 1fr))" : "repeat(4, minmax(0, 1fr))", marginTop: "0.55rem" }}>
@@ -2341,7 +2342,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                     ["Manual", counts.manual],
                 ].map(([label, value]) => (
                     <div key={label} style={{ ...editorFieldStyle, minWidth: 0, padding: "0.45rem 0.5rem" }}>
-                        <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.52rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>{label}</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.52rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>{label}</div>
                         <div style={{ fontSize: "0.9rem", fontWeight: 850, marginTop: "0.1rem" }}>{value}</div>
                     </div>
                 ))}
@@ -2352,9 +2353,9 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
             </button>
 
             {creating && (
-                <div style={{ ...editorFieldStyle, borderColor: "rgba(255,255,255,0.23)", marginTop: "0.55rem" }}>
-                    <div style={{ color: "#f4f4f5", fontSize: "0.7rem", fontWeight: 850, letterSpacing: "0.04em", textTransform: "uppercase" }}>New canonical event</div>
-                    <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.18rem" }}>
+                <div style={{ ...editorFieldStyle, borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)", marginTop: "0.55rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "0.7rem", fontWeight: 850, letterSpacing: "0.04em", textTransform: "uppercase" }}>New canonical event</div>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.62rem", lineHeight: 1.35, marginTop: "0.18rem" }}>
                         Inserts history directly and links it into the normal Events panel. Optional NPC reactions are evaluated separately only after the undo window.
                     </div>
                     <label style={{ display: "block", marginTop: "0.55rem" }}>
@@ -2448,14 +2449,14 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                 ].map(([value, label]) => (
                     <button key={value} type="button" className="oh-tap-row" onClick={() => { setFilter(value); setLimit(80); }} style={eventFilterButtonStyle(filter === value)}>{label}</button>
                 ))}
-                <span style={{ alignSelf: "center", color: "rgba(255,255,255,0.34)", fontSize: "0.62rem", marginLeft: "auto" }}>
+                <span style={{ alignSelf: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.62rem", marginLeft: "auto" }}>
                     {filtered.length} match{filtered.length === 1 ? "" : "es"}
                 </span>
             </div>
 
             <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginTop: "0.5rem" }}>
-                {events === null && <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.74rem", padding: "0.5rem" }}>Loading canonical timeline…</div>}
-                {events !== null && filtered.length === 0 && <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.74rem", padding: "0.5rem" }}>No matching events.</div>}
+                {events === null && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.74rem", padding: "0.5rem" }}>Loading canonical timeline…</div>}
+                {events !== null && filtered.length === 0 && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.74rem", padding: "0.5rem" }}>No matching events.</div>}
 
                 {filtered.slice(0, limit).map(({ event, sourceIndex, editorKey }) => {
                     const isEditing = editingKey === editorKey;
@@ -2477,10 +2478,10 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                     const failedReactionAttempts = Math.max(0, Math.trunc(Number(event?.npcReaction?.attempts) || 0));
                     const failedReactionError = cleanEventText(event?.npcReaction?.lastError);
                     return (
-                        <div key={editorKey} style={{ ...editorFieldStyle, borderColor: isEditing ? "rgba(255,255,255,0.23)" : "rgba(255,255,255,0.1)", padding: "0.55rem 0.6rem" }}>
+                        <div key={editorKey} style={{ ...editorFieldStyle, borderColor: isEditing ? "color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", padding: "0.55rem 0.6rem" }}>
                             <div style={{ alignItems: "flex-start", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
                                 <div style={{ minWidth: 0 }}>
-                                    <div data-no-translate style={{ color: "rgba(255,255,255,0.46)", fontSize: "0.62rem", fontWeight: 700 }}>{event.date || "Undated"}</div>
+                                    <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", fontSize: "0.62rem", fontWeight: 700 }}>{event.date || "Undated"}</div>
                                     <div style={{ fontSize: "0.78rem", fontWeight: 780, lineHeight: 1.28, marginTop: "0.08rem" }}>{event.title || "(untitled)"}</div>
                                 </div>
                                 <div style={{ display: "flex", flexShrink: 0, gap: "0.3rem" }}>
@@ -2507,7 +2508,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                                                     : "Event removed from canonical history. Existing world state was left untouched.";
                                             });
                                         }}
-                                    >🗑</button>
+                                    ><UiIcon name="trash" size={14} /></button>
                                 </div>
                             </div>
 
@@ -2524,7 +2525,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                             </div>
 
                             {!isEditing && event.description && (
-                                <div style={{ color: "rgba(255,255,255,0.49)", fontSize: "0.66rem", lineHeight: 1.4, marginTop: "0.38rem" }}>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 49%, transparent)", fontSize: "0.66rem", lineHeight: 1.4, marginTop: "0.38rem" }}>
                                     {event.description.length > 260 ? `${event.description.slice(0, 257)}…` : event.description}
                                 </div>
                             )}
@@ -2595,7 +2596,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                                 </div>
                             )}
                             {!pendingReaction && !isEditing && reactionResult === "silent" && (
-                                <div style={{ background: "rgba(148,163,184,0.055)", border: "1px solid rgba(148,163,184,0.16)", borderRadius: 8, color: "rgba(212,212,216,0.72)", fontSize: "0.61rem", lineHeight: 1.35, marginTop: "0.45rem", padding: "0.4rem 0.48rem" }}>
+                                <div style={{ background: "rgba(148,163,184,0.055)", border: "1px solid rgba(148,163,184,0.16)", borderRadius: 8, color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: "0.61rem", lineHeight: 1.35, marginTop: "0.45rem", padding: "0.4rem 0.48rem" }}>
                                     NPC reaction check complete. No chat message sent.
                                 </div>
                             )}
@@ -2606,11 +2607,11 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                             )}
                             {!isEditing && event?.quote?.text && (
                                 <div style={{ borderLeft: "2px solid rgba(148,163,184,0.38)", marginTop: "0.45rem", padding: "0.08rem 0 0.08rem 0.58rem" }}>
-                                    <div style={{ color: "rgba(247,247,249,0.78)", fontSize: "0.65rem", fontStyle: "italic", lineHeight: 1.45 }}>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.65rem", fontStyle: "italic", lineHeight: 1.45 }}>
                                         “{event.quote.text}”
                                     </div>
                                     {(event.quote.speaker || event.quote.role) && (
-                                        <div style={{ color: "rgba(206,206,210,0.46)", fontSize: "0.58rem", marginTop: "0.2rem" }}>
+                                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)", fontSize: "0.58rem", marginTop: "0.2rem" }}>
                                             — {event.quote.speaker || "Unknown speaker"}{event.quote.role ? `, ${event.quote.role}` : ""}
                                         </div>
                                     )}
@@ -2618,7 +2619,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                             )}
 
                             {isEditing && (
-                                <div style={{ borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: "0.55rem", paddingTop: "0.5rem" }}>
+                                <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", marginTop: "0.55rem", paddingTop: "0.5rem" }}>
                                     <label>
                                         <span style={labelStyle}>Date</span>
                                         <input type="date" style={{ ...inputStyle, colorScheme: "dark" }} value={editForm.date ?? ""} onChange={(e) => setEditForm({ ...editForm, date: e.target.value })} />
@@ -2644,7 +2645,7 @@ const EventEditorView = ({ meta, header, busy, status, game, runBusy }) => {
                                             <strong>Structured state already applied:</strong> {impact.text}. Saving this editor changes the canonical event record only; those effects are preserved exactly as they are.
                                         </div>
                                     )}
-                                    <div style={{ color: "rgba(255,255,255,0.28)", fontSize: "0.56rem", marginTop: "0.45rem", overflowWrap: "anywhere" }}>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", fontSize: "0.56rem", marginTop: "0.45rem", overflowWrap: "anywhere" }}>
                                         ID {event.id} · source {source}
                                     </div>
                                     <div style={{ display: "flex", gap: "0.45rem", marginTop: "0.55rem" }}>
@@ -2886,7 +2887,7 @@ const GroupsView = ({ meta, header, busy, status, game, runBusy, beginClickMode,
         <>
         {header(meta.title, meta.subtitle)}
         <div style={{ overflowY: "auto", paddingRight: "0.08rem" }}>
-            <div style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.17)", borderRadius: 10, color: "#e4e4e7", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 17%, transparent)", borderRadius: 10, color: "var(--oh-ink, #e4e4e7)", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
                 A group controls an area without owning it: the regions stay their countries', and the map outlines and tints the group's area in its colour. The description is what the AI is told the group is; the AI can found, change, move and erase groups too.
             </div>
 
@@ -2894,9 +2895,9 @@ const GroupsView = ({ meta, header, busy, status, game, runBusy, beginClickMode,
                 <>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.32rem", marginTop: "0.55rem" }}>
                     {world === null ? (
-                        <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.7rem" }}>Loading…</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.7rem" }}>Loading…</div>
                     ) : names.length === 0 ? (
-                        <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.7rem" }}>No groups yet.</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.7rem" }}>No groups yet.</div>
                     ) : names.map((name) => (
                         <button
                             key={name}
@@ -2907,7 +2908,7 @@ const GroupsView = ({ meta, header, busy, status, game, runBusy, beginClickMode,
                         >
                             {swatch(groups[name].color)}
                             <span style={{ flex: 1, fontWeight: 750, minWidth: 0, overflowWrap: "anywhere" }}>{name}</span>
-                            <span style={{ color: "rgba(255,255,255,0.45)", flexShrink: 0, fontSize: "0.66rem" }}>
+                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", flexShrink: 0, fontSize: "0.66rem" }}>
                                 {(areas[name] ?? []).length === 1 ? "1 region" : `${(areas[name] ?? []).length} regions`}
                             </span>
                         </button>
@@ -2965,7 +2966,7 @@ const GroupsView = ({ meta, header, busy, status, game, runBusy, beginClickMode,
                 {selected && current && (
                     <div style={{ ...editorFieldStyle, marginTop: "0.55rem" }}>
                         <div style={editorSectionLabelStyle}>Area</div>
-                        <div style={{ color: currentArea.length ? "#f4f4f5" : "rgba(255,255,255,0.45)", fontSize: "0.72rem", lineHeight: 1.45, overflowWrap: "anywhere" }}>
+                        <div style={{ color: currentArea.length ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, overflowWrap: "anywhere" }}>
                             {currentArea.length
                                 ? `${currentArea.length === 1 ? "1 region" : `${currentArea.length} regions`}: ${currentArea.slice(0, 24).map((id) => regionNames.get(id) || id).join(", ")}${currentArea.length > 24 ? ` and ${currentArea.length - 24} more` : ""}`
                                 : "It controls no area yet."}
@@ -3128,7 +3129,7 @@ const PuppetStatesView = ({ meta, header, busy, status, game, polities, runBusy,
             style={{ ...buttonStyle, alignItems: "flex-start", display: "flex", flexDirection: "column", gap: "0.15rem", justifyContent: "flex-start", textAlign: "left", width: "100%" }}
         >
             <span style={{ fontWeight: 750, overflowWrap: "anywhere" }}>{row.overlord} → {row.puppet}</span>
-            <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.66rem", fontWeight: 500 }}>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.66rem", fontWeight: 500 }}>
                 {`${kindName(row.kind)} · ${row.secrecy === "covert" ? "Covert" : "Openly known"} · Loyalty ${loyaltyNumber(row.loyalty)}`}
             </span>
         </button>
@@ -3138,7 +3139,7 @@ const PuppetStatesView = ({ meta, header, busy, status, game, polities, runBusy,
         <>
         {header(meta.title, meta.subtitle)}
         <div style={{ overflowY: "auto", paddingRight: "0.08rem" }}>
-            <div style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.17)", borderRadius: 10, color: "#e4e4e7", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 17%, transparent)", borderRadius: 10, color: "var(--oh-ink, #e4e4e7)", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
                 A puppet stays a separate country with its own land; its overlord directs it. The rules are the ledger's: one overlord each, no puppet holds puppets of its own, and a secret once public stays public. The next time skip is told of each change.
             </div>
 
@@ -3146,9 +3147,9 @@ const PuppetStatesView = ({ meta, header, busy, status, game, polities, runBusy,
                 <>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.32rem", marginTop: "0.55rem" }}>
                     {world === null ? (
-                        <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.7rem" }}>Loading…</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.7rem" }}>Loading…</div>
                     ) : rows.live.length === 0 ? (
-                        <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.7rem" }}>No country is anyone's puppet now.</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.7rem" }}>No country is anyone's puppet now.</div>
                     ) : rows.live.map(rowButton)}
                 </div>
                 <button type="button" className="oh-tap-row" disabled={busy || world === null} onClick={startNew} style={{ ...primaryButtonStyle, marginTop: "0.55rem", width: "100%" }}>
@@ -3156,10 +3157,10 @@ const PuppetStatesView = ({ meta, header, busy, status, game, polities, runBusy,
                 </button>
                 {rows.ended.length > 0 && (
                     <details style={{ marginTop: "0.55rem" }}>
-                        <summary style={{ color: "rgba(255,255,255,0.55)", cursor: "pointer", fontSize: "0.7rem" }}>{`Ended arrangements (${rows.ended.length})`}</summary>
+                        <summary style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", fontSize: "0.7rem" }}>{`Ended arrangements (${rows.ended.length})`}</summary>
                         <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem", marginTop: "0.4rem" }}>
                             {rows.ended.map((row, index) => (
-                                <div key={`${keyOf(row)}-${index}`} style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.68rem", overflowWrap: "anywhere" }}>
+                                <div key={`${keyOf(row)}-${index}`} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.68rem", overflowWrap: "anywhere" }}>
                                     {`${row.overlord} → ${row.puppet} · ${capitalize(row.status)}${row.endedDate ? ` · ${(formatGameDateReadable(row.endedDate) || row.endedDate)}` : ""}`}
                                 </div>
                             ))}
@@ -3186,13 +3187,13 @@ const PuppetStatesView = ({ meta, header, busy, status, game, polities, runBusy,
                     )}
                     <label style={labelStyle}>Kind</label>
                     <select value={form.kind} onChange={(event) => setForm({ ...form, kind: event.target.value })} style={{ ...inputStyle, colorScheme: "dark", cursor: "pointer" }}>
-                        {PUPPET_KIND_OPTIONS.map((option) => <option key={option.id} value={option.id} style={{ background: "#18181b", color: "#fff" }}>{option.label}</option>)}
+                        {PUPPET_KIND_OPTIONS.map((option) => <option key={option.id} value={option.id} style={{ background: "var(--oh-paper, #18181b)", color: "var(--oh-ink, #fff)" }}>{option.label}</option>)}
                     </select>
                     {editing === "" && (
                         <>
                         <label style={labelStyle}>Known</label>
                         <select value={form.secrecy} onChange={(event) => setForm({ ...form, secrecy: event.target.value })} style={{ ...inputStyle, colorScheme: "dark", cursor: "pointer" }}>
-                            {PUPPET_SECRECY_OPTIONS.map((option) => <option key={option.id} value={option.id} style={{ background: "#18181b", color: "#fff" }}>{option.label}</option>)}
+                            {PUPPET_SECRECY_OPTIONS.map((option) => <option key={option.id} value={option.id} style={{ background: "var(--oh-paper, #18181b)", color: "var(--oh-ink, #fff)" }}>{option.label}</option>)}
                         </select>
                         </>
                     )}
@@ -3207,7 +3208,7 @@ const PuppetStatesView = ({ meta, header, busy, status, game, polities, runBusy,
                         </div>
                     )}
                     {current?.secrecy === "covert" && (
-                        <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.68rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.68rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
                             Covert: only the two of them know, until someone's spies find out.
                         </div>
                     )}
@@ -3420,7 +3421,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
         return (
             <>
             {header(meta.title, meta.subtitle)}
-            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.72rem", lineHeight: 1.45 }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.72rem", lineHeight: 1.45 }}>
                 Groups are switched off for this game. Turn them back on in the scenario or game editor (Features) to edit them here.
             </div>
             </>
@@ -3559,10 +3560,10 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
         };
         const eventRef = (entry) => `event ${entry._eventIndex}`;
         const exactRowStyle = {
-            background: "rgba(255,255,255,0.03)",
-            border: "1px solid rgba(255,255,255,0.07)",
+            background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
             borderRadius: 7,
-            color: "rgba(255,255,255,0.66)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 66%, transparent)",
             fontSize: "0.65rem",
             lineHeight: 1.38,
             marginTop: "0.24rem",
@@ -3571,10 +3572,10 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
         };
         const subsectionTitle = (title, count, note = "") => (
             <div style={{ alignItems: "baseline", display: "flex", gap: "0.35rem", justifyContent: "space-between", marginTop: "0.48rem" }}>
-                <div style={{ color: "rgba(255,255,255,0.76)", fontSize: "0.67rem", fontWeight: 750, letterSpacing: "0.02em" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 76%, transparent)", fontSize: "0.67rem", fontWeight: 750, letterSpacing: "0.02em" }}>
                     {title} <span style={{ color: "rgba(147,197,253,0.72)", fontWeight: 600 }}>({count})</span>
                 </div>
-                {note ? <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.58rem", textAlign: "right" }}>{note}</div> : null}
+                {note ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.58rem", textAlign: "right" }}>{note}</div> : null}
             </div>
         );
 
@@ -3631,10 +3632,10 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             <span
                 key={label}
                 style={{
-                    background: value ? "rgba(59,130,246,0.13)" : "rgba(255,255,255,0.04)",
-                    border: `1px solid ${value ? "rgba(96,165,250,0.28)" : "rgba(255,255,255,0.08)"}`,
+                    background: value ? "rgba(59,130,246,0.13)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                    border: `1px solid ${value ? "rgba(96,165,250,0.28)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"}`,
                     borderRadius: 999,
-                    color: value ? "rgba(219,234,254,0.95)" : "rgba(255,255,255,0.42)",
+                    color: value ? "rgba(219,234,254,0.95)" : "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)",
                     fontSize: "0.66rem",
                     padding: "0.18rem 0.42rem",
                 }}
@@ -3657,7 +3658,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                     marginBottom: "0.7rem",
                     padding: "0.55rem 0.65rem",
                 }}>
-                    <strong style={{ color: "#bfdbfe" }}>Preview → Apply.</strong> Generate a transaction, inspect every canonical operation, then apply that exact preview. Apply performs no second AI call, revalidates the live world immediately before writing, and never advances the date or round.
+                    <strong style={{ color: "var(--oh-link, #bfdbfe)" }}>Preview → Apply.</strong> Generate a transaction, inspect every canonical operation, then apply that exact preview. Apply performs no second AI call, revalidates the live world immediately before writing, and never advances the date or round.
                 </div>
 
                 <label style={labelStyle}>Mode</label>
@@ -3675,8 +3676,8 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 style={{
                                     ...buttonStyle,
                                     alignItems: "flex-start",
-                                    background: active ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.04)",
-                                    borderColor: active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.1)",
+                                    background: active ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                                    borderColor: active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
                                     flexDirection: "column",
                                     gap: "0.18rem",
                                     justifyContent: "flex-start",
@@ -3685,8 +3686,8 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     textAlign: "left",
                                 }}
                             >
-                                <span style={{ color: active ? "#f4f4f5" : "rgba(255,255,255,0.8)", fontSize: "0.74rem" }}>{option.title}</span>
-                                <span style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.63rem", fontWeight: 400, lineHeight: 1.3 }}>{option.description}</span>
+                                <span style={{ color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", fontSize: "0.74rem" }}>{option.title}</span>
+                                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.63rem", fontWeight: 400, lineHeight: 1.3 }}>{option.description}</span>
                             </button>
                         );
                     })}
@@ -3723,22 +3724,22 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                 >
                     {busy ? "Planning canonical transaction…" : gmPreview ? "Generate New Preview" : "Generate Preview"}
                 </button>
-                <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.69rem", lineHeight: 1.4, marginTop: "0.45rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.69rem", lineHeight: 1.4, marginTop: "0.45rem" }}>
                     AI interpretation is constrained by the live native GM schema. Wars, relations, agreements and subordinations are structured objects now — no encoded string mini-language and no turn simulation path.
                 </div>
 
                 {gmPreview && (
                     <div style={{
                         background: "rgba(0,0,0,0.18)",
-                        border: "1px solid rgba(255,255,255,0.11)",
+                        border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 11%, transparent)",
                         borderRadius: 10,
                         marginTop: "0.8rem",
                         padding: "0.7rem",
                     }}>
                         <div style={{ alignItems: "center", display: "flex", gap: "0.45rem", justifyContent: "space-between" }}>
                             <div>
-                                <div style={{ color: gmApplied ? "#86efac" : "#93c5fd", fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.08em" }}>{gmApplied ? "APPLIED · CANON UPDATED" : "PREVIEW ONLY · NOTHING CHANGED"}</div>
-                                <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.62rem", marginTop: "0.16rem" }}>
+                                <div style={{ color: gmApplied ? "#86efac" : "var(--oh-link, #93c5fd)", fontSize: "0.65rem", fontWeight: 800, letterSpacing: "0.08em" }}>{gmApplied ? "APPLIED · CANON UPDATED" : "PREVIEW ONLY · NOTHING CHANGED"}</div>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.62rem", marginTop: "0.16rem" }}>
                                     {gmPreview.date || "Current date"} · {gmPreview.mode} · source {gmPreview?.generation?.source || "unknown"}
                                 </div>
                             </div>
@@ -3748,7 +3749,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                         </div>
 
                         {/* The model's words, already in the player's language: not the interface's to translate. */}
-                        <div data-no-translate={gmPreview.summary ? "" : undefined} style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.75rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
+                        <div data-no-translate={gmPreview.summary ? "" : undefined} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: "0.75rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
                             {gmPreview.summary || "No summary returned."}
                         </div>
 
@@ -3765,13 +3766,13 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                         {gmEditOpen ? "Cancel Edit" : "Edit Preview"}
                                     </button>
                                     {gmPreview.revisionCount > 0 && (
-                                        <span style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.64rem" }}>
+                                        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.64rem" }}>
                                             {`Revision ${gmPreview.revisionCount}`}
                                         </span>
                                     )}
                                 </div>
                                 {gmEditOpen && (
-                                    <div style={{ background: "rgba(255,255,255,0.035)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, marginTop: "0.5rem", padding: "0.55rem" }}>
+                                    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 8, marginTop: "0.5rem", padding: "0.55rem" }}>
                                         <label style={labelStyle} htmlFor="gm-preview-revision">What should change?</label>
                                         <textarea
                                             id="gm-preview-revision"
@@ -3782,7 +3783,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                             rows={3}
                                             style={{ ...inputStyle, marginTop: "0.35rem", resize: "vertical" }}
                                         />
-                                        <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.63rem", lineHeight: 1.35, marginTop: "0.35rem" }}>
+                                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.63rem", lineHeight: 1.35, marginTop: "0.35rem" }}>
                                             Unmentioned operations stay in the preview. Nothing is applied until you approve the full revised transaction.
                                         </div>
                                         <button
@@ -3808,10 +3809,10 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                         )}
 
                         {gmNotes.length > 0 && (
-                            <div style={{ border: "1px solid rgba(255,255,255,0.14)", borderRadius: 8, marginTop: "0.55rem", padding: "0.45rem 0.55rem" }}>
-                                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase" }}>Left out of this preview</div>
+                            <div style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)", borderRadius: 8, marginTop: "0.55rem", padding: "0.45rem 0.55rem" }}>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.08em", textTransform: "uppercase" }}>Left out of this preview</div>
                                 {gmNotes.map((text) => (
-                                    <div key={text} style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.7rem", lineHeight: 1.4, marginTop: "0.25rem" }}>{text}</div>
+                                    <div key={text} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.7rem", lineHeight: 1.4, marginTop: "0.25rem" }}>{text}</div>
                                 ))}
                             </div>
                         )}
@@ -3842,7 +3843,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 <div style={{ ...labelStyle, marginBottom: "0.3rem", marginTop: 0 }}>Authored events</div>
                                 <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
                                     {events.map((event, index) => (
-                                        <div key={event.id || `${event.date}-${index}`} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "0.5rem 0.55rem" }}>
+                                        <div key={event.id || `${event.date}-${index}`} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 8, padding: "0.5rem 0.55rem" }}>
                                             <div style={{ color: "rgba(147,197,253,0.82)", fontSize: "0.61rem" }}>EVENT {index} · {event.date || "undated"}</div>
                                             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.25rem", marginTop: "0.28rem" }}>
                                                 {[
@@ -3853,19 +3854,19 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                                     ...(event.warId ? [`WAR · ${event.warId}`] : []),
                                                 ].map((badge) => (
                                                     <span key={badge} style={{
-                                                        background: "rgba(255,255,255,0.05)",
-                                                        border: "1px solid rgba(255,255,255,0.09)",
+                                                        background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+                                                        border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)",
                                                         borderRadius: 999,
-                                                        color: "rgba(255,255,255,0.5)",
+                                                        color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)",
                                                         fontSize: "0.56rem",
                                                         padding: "0.14rem 0.34rem",
                                                     }}>{badge}</span>
                                                 ))}
                                             </div>
-                                            <div data-no-translate style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.74rem", fontWeight: 650, marginTop: "0.22rem" }}>{event.title}</div>
-                                            <div data-no-translate style={{ color: "rgba(255,255,255,0.54)", fontSize: "0.68rem", lineHeight: 1.35, marginTop: "0.2rem" }}>{event.description}</div>
+                                            <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.74rem", fontWeight: 650, marginTop: "0.22rem" }}>{event.title}</div>
+                                            <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 54%, transparent)", fontSize: "0.68rem", lineHeight: 1.35, marginTop: "0.2rem" }}>{event.description}</div>
                                             {Array.isArray(event.combatants) && event.combatants.length > 0 ? (
-                                                <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.61rem", marginTop: "0.24rem" }}>Combatants: {event.combatants.join(" · ")}</div>
+                                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.61rem", marginTop: "0.24rem" }}>Combatants: {event.combatants.join(" · ")}</div>
                                             ) : null}
                                         </div>
                                     ))}
@@ -3875,7 +3876,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
 
                         <div style={{ marginTop: "0.72rem" }}>
                             <div style={{ ...labelStyle, marginBottom: "0.15rem", marginTop: 0 }}>Exact canonical changes</div>
-                            <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.62rem", lineHeight: 1.35 }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.62rem", lineHeight: 1.35 }}>
                                 These are the individual operations the Apply step would execute. Authored prose above is not a substitute for these state changes.
                             </div>
 
@@ -3888,10 +3889,10 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                         </div>
                                     ) : visibleOperationRows("territory-sovereignty", transferOps).map((entry, index) => (
                                         <div key={`transfer-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>{entry.regionName || entry.regionId || "Unknown region"}</strong>
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{entry.regionName || entry.regionId || "Unknown region"}</strong>
                                             {` · ${entry.fromCode || "unclaimed"} → ${entry.toCode || "unclaimed"}${entry.wholeCountry ? " · whole country" : ""}`}
-                                            <span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>
-                                            {entry.note ? <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.14rem" }}>{entry.note}</div> : null}
+                                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>
+                                            {entry.note ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.14rem" }}>{entry.note}</div> : null}
                                         </div>
                                     ))}
                                     {operationExpander("territory-sovereignty", transferOps.length)}
@@ -3907,9 +3908,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                         if (entry.op === "clear_contest") detail = `CLEAR CONTEST · controller ${entry.fromCode || "unknown"}${entry.clearAll ? " · all claimants" : ` · claimant ${entry.claimantCode || "unknown"}`}`;
                                         return (
                                             <div key={`control-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}>
-                                                <strong style={{ color: "rgba(255,255,255,0.88)" }}>{region}</strong> · {detail}
-                                                <span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>
-                                                {entry.note ? <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.14rem" }}>{entry.note}</div> : null}
+                                                <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{region}</strong> · {detail}
+                                                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>
+                                                {entry.note ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.14rem" }}>{entry.note}</div> : null}
                                             </div>
                                         );
                                     })}
@@ -3920,10 +3921,10 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                         <div style={exactRowStyle}>NONE</div>
                                     ) : visibleOperationRows("territory-claims", claimOps).map((entry, index) => (
                                         <div key={`claim-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>{entry.regionName || entry.regionId || "Unknown region"}</strong>
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{entry.regionName || entry.regionId || "Unknown region"}</strong>
                                             {` · ${entry.drop ? "CLAIM WITHDRAWN" : "CLAIMED"} by ${entry.claimantCode || "unknown"}`}
-                                            <span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>
-                                            {entry.note ? <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.14rem" }}>{entry.note}</div> : null}
+                                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>
+                                            {entry.note ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.14rem" }}>{entry.note}</div> : null}
                                         </div>
                                     ))}
                                     {operationExpander("territory-claims", claimOps.length)}
@@ -3942,16 +3943,16 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                         ));
                                         return (
                                             <div key={`polity-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}>
-                                                <strong style={{ color: "rgba(255,255,255,0.88)" }}>
+                                                <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>
                                                     {String(entry.operation || "update").toUpperCase()} · {stableIdentity}{hasDistinctDisplayName ? ` → ${displayName}` : ""}
                                                 </strong>
-                                                <span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>
+                                                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>
                                                 {hasDistinctDisplayName ? (
                                                     <div style={{ color: "rgba(147,197,253,0.62)", marginTop: "0.14rem" }}>
                                                         Stable identity: {stableIdentity} · current/display name: {displayName}
                                                     </div>
                                                 ) : null}
-                                                {Object.keys(details).length > 0 ? <div style={{ color: "rgba(255,255,255,0.44)", marginTop: "0.14rem" }}>{compactJson(details)}</div> : null}
+                                                {Object.keys(details).length > 0 ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 44%, transparent)", marginTop: "0.14rem" }}>{compactJson(details)}</div> : null}
                                             </div>
                                         );
                                     })}
@@ -3966,11 +3967,11 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                         try { args = JSON.parse(entry.argsJson); } catch { /* keep raw text */ }
                                         return (
                                             <div key={`politics-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}>
-                                                <strong style={{ color: "rgba(255,255,255,0.88)" }}>
+                                                <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>
                                                     {String(entry.op || "update").toUpperCase()} · {entry.polityKey || entry.polity || entry.country || "Unknown polity"}
                                                 </strong>
-                                                <span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>
-                                                <div style={{ color: "rgba(255,255,255,0.5)", marginTop: "0.14rem" }}>
+                                                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>
+                                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", marginTop: "0.14rem" }}>
                                                     {compactJson(args)}
                                                 </div>
                                             </div>
@@ -3984,9 +3985,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     {subsectionTitle("Authoritative Stats baselines", statPatches.length)}
                                     {statPatches.map((entry, index) => (
                                         <div key={`stat-${entry.country}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>{entry.country}</strong> · {compactJson(entry.patch)}
-                                            {Array.isArray(entry.eventIndexes) && entry.eventIndexes.length > 0 ? <span style={{ color: "rgba(255,255,255,0.34)" }}> · events {entry.eventIndexes.join(", ")}</span> : null}
-                                            {entry.reason ? <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.14rem" }}>{entry.reason}</div> : null}
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{entry.country}</strong> · {compactJson(entry.patch)}
+                                            {Array.isArray(entry.eventIndexes) && entry.eventIndexes.length > 0 ? <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · events {entry.eventIndexes.join(", ")}</span> : null}
+                                            {entry.reason ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.14rem" }}>{entry.reason}</div> : null}
                                         </div>
                                     ))}
                                 </div>
@@ -4002,7 +4003,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                         if (entry.op === "attack") detail = `ATTACK · ${entry.unitId || "unknown unit"} → ${entry.targetUnitId || "unknown target"}`;
                                         if (entry.op === "strength") detail = `STRENGTH · ${entry.unitId || "unknown unit"} → ${entry.strength ?? "?"}`;
                                         if (entry.op === "remove") detail = `REMOVE · ${entry.unitId || "unknown unit"}`;
-                                        return <div key={`unit-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}><strong style={{ color: "rgba(255,255,255,0.88)" }}>{detail}</strong><span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>{entry.note ? <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.14rem" }}>{entry.note}</div> : null}</div>;
+                                        return <div key={`unit-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}><strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{detail}</strong><span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>{entry.note ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.14rem" }}>{entry.note}</div> : null}</div>;
                                     })}
                                 </div>
                             )}
@@ -4028,7 +4029,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                             if (changes.length) detail += ` · ${changes.join(" · ")}`;
                                         }
                                         if (entry.op === "rename") detail += ` → ${entry.newName || "unnamed"}`;
-                                        return <div key={`marker-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}><strong style={{ color: "rgba(255,255,255,0.88)" }}>{detail}</strong><span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>{patch.note || entry.marker?.note ? <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.14rem" }}>{patch.note || entry.marker?.note}</div> : null}</div>;
+                                        return <div key={`marker-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}><strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{detail}</strong><span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>{patch.note || entry.marker?.note ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.14rem" }}>{patch.note || entry.marker?.note}</div> : null}</div>;
                                     })}
                                 </div>
                             )}
@@ -4040,13 +4041,13 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                         const regions = Array.isArray(entry.regionIds) ? entry.regionIds : [];
                                         return (
                                             <div key={`group-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}>
-                                                <strong style={{ color: "rgba(255,255,255,0.88)" }}>
+                                                <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>
                                                     {String(entry.op || "update").toUpperCase()} · {entry.name || "Unnamed group"}{entry.newName ? ` → ${entry.newName}` : ""}
                                                 </strong>
-                                                <span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>
+                                                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>
                                                 {regions.length > 0 ? <div style={{ marginTop: "0.12rem" }}>{`Regions: ${regions.join(", ")}`}</div> : null}
-                                                {entry.description ? <div style={{ color: "rgba(255,255,255,0.44)", marginTop: "0.12rem" }}>{entry.description}</div> : null}
-                                                {entry.note ? <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.14rem" }}>{entry.note}</div> : null}
+                                                {entry.description ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 44%, transparent)", marginTop: "0.12rem" }}>{entry.description}</div> : null}
+                                                {entry.note ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.14rem" }}>{entry.note}</div> : null}
                                             </div>
                                         );
                                     })}
@@ -4058,16 +4059,16 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     {subsectionTitle("Institutions", institutionOps.length, "world.institutions")}
                                     {institutionOps.map((entry, index) => (
                                         <div key={`institution-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>
                                                 {String(entry.op || "update").toUpperCase()} · {entry.name || entry.institutionId || "Unknown institution"}
                                             </strong>
-                                            <span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>
+                                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>
                                             <div style={{ marginTop: "0.12rem" }}>
                                                 {entry.targetPolity
                                                     ? `Actor: ${entry.actorPolity || "—"} · Target: ${entry.targetPolity}`
                                                     : `Actor: ${entry.actorPolity || "—"}`}
                                             </div>
-                                            {entry.reason || entry.terms ? <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.14rem" }}>{entry.reason || entry.terms}</div> : null}
+                                            {entry.reason || entry.terms ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.14rem" }}>{entry.reason || entry.terms}</div> : null}
                                         </div>
                                     ))}
                                 </div>
@@ -4078,9 +4079,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     {subsectionTitle("Other operations", ops.length, field)}
                                     {ops.map((entry, index) => (
                                         <div key={`other-${field}-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>{String(entry.op || entry.operation || "operation").toUpperCase()}</strong>
-                                            <span style={{ color: "rgba(255,255,255,0.34)" }}> · {eventRef(entry)}</span>
-                                            <div style={{ color: "rgba(255,255,255,0.5)", marginTop: "0.14rem" }}>
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{String(entry.op || entry.operation || "operation").toUpperCase()}</strong>
+                                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}> · {eventRef(entry)}</span>
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", marginTop: "0.14rem" }}>
                                                 {compactJson(Object.fromEntries(Object.entries(entry).filter(([key]) => !key.startsWith("_"))))}
                                             </div>
                                         </div>
@@ -4093,18 +4094,18 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     {subsectionTitle("Persistent storylines", storylineUpdates.length, "world.storylines")}
                                     {storylineUpdates.map((entry, index) => (
                                         <div key={`storyline-${entry.id}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>
                                                 {String(entry.status || "active").toUpperCase()} · {entry.id || "unnamed-storyline"}
                                             </strong>
-                                            <span style={{ color: "rgba(255,255,255,0.46)" }}>
+                                            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 46%, transparent)" }}>
                                                 {` · pressure ${Number.isFinite(Number(entry.pressure)) ? Number(entry.pressure) : "—"} · momentum ${Number.isFinite(Number(entry.momentum)) ? Number(entry.momentum) : "—"}`}
                                             </span>
-                                            {entry.title ? <div style={{ marginTop: "0.12rem", color: "rgba(255,255,255,0.68)" }}>{entry.title}</div> : null}
-                                            <div style={{ color: "rgba(255,255,255,0.38)", marginTop: "0.1rem" }}>
+                                            {entry.title ? <div style={{ marginTop: "0.12rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)" }}>{entry.title}</div> : null}
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", marginTop: "0.1rem" }}>
                                                 Participants: {entry.participants?.join(", ") || "—"} · Events: {entry.eventIndexes?.join(", ") || "—"}
                                                 {entry.startedDate ? ` · Started: ${entry.startedDate}` : ""}
                                             </div>
-                                            {entry.state ? <div style={{ color: "rgba(255,255,255,0.48)", marginTop: "0.12rem", lineHeight: 1.35 }}>{entry.state}</div> : null}
+                                            {entry.state ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", marginTop: "0.12rem", lineHeight: 1.35 }}>{entry.state}</div> : null}
                                         </div>
                                     ))}
                                 </div>
@@ -4115,9 +4116,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     {subsectionTitle("Wars", warUpdates.length, "world.wars")}
                                     {warUpdates.map((entry, index) => (
                                         <div key={`war-${entry.id}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>{String(entry.op || "update").toUpperCase()} · {entry.id}</strong>
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{String(entry.op || "update").toUpperCase()} · {entry.id}</strong>
                                             <div style={{ marginTop: "0.12rem" }}>Actors: {entry.actors?.join(", ") || "—"}{entry.opponents?.length ? ` · Opponents: ${entry.opponents.join(", ")}` : ""}</div>
-                                            <div style={{ color: "rgba(255,255,255,0.36)", marginTop: "0.1rem" }}>Events: {entry.eventIndexes?.join(", ") || "—"}{entry.note ? ` · ${entry.note}` : ""}</div>
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 36%, transparent)", marginTop: "0.1rem" }}>Events: {entry.eventIndexes?.join(", ") || "—"}{entry.note ? ` · ${entry.note}` : ""}</div>
                                         </div>
                                     ))}
                                 </div>
@@ -4128,8 +4129,8 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     {subsectionTitle("Relations", relationUpdates.length, "world.relations")}
                                     {relationUpdates.map((entry, index) => (
                                         <div key={`relation-${entry.a}-${entry.b}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>{entry.a} ↔ {entry.b}</strong> · {entry.score} · {entry.status}
-                                            <div style={{ color: "rgba(255,255,255,0.38)", marginTop: "0.1rem" }}>Events: {entry.eventIndexes?.join(", ") || "—"}{entry.summary ? ` · ${entry.summary}` : ""}</div>
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{entry.a} ↔ {entry.b}</strong> · {entry.score} · {entry.status}
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", marginTop: "0.1rem" }}>Events: {entry.eventIndexes?.join(", ") || "—"}{entry.summary ? ` · ${entry.summary}` : ""}</div>
                                         </div>
                                     ))}
                                 </div>
@@ -4140,9 +4141,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     {subsectionTitle("Agreements", agreementUpdates.length, "world.agreements")}
                                     {agreementUpdates.map((entry, index) => (
                                         <div key={`agreement-${entry.id}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>{String(entry.op || "update").toUpperCase()} · {entry.id}</strong> · {entry.type}
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{String(entry.op || "update").toUpperCase()} · {entry.id}</strong> · {entry.type}
                                             <div style={{ marginTop: "0.12rem" }}>Parties: {entry.parties?.join(", ") || "—"}{entry.title ? ` · ${entry.title}` : ""}</div>
-                                            <div style={{ color: "rgba(255,255,255,0.38)", marginTop: "0.1rem" }}>Events: {entry.eventIndexes?.join(", ") || "—"}{entry.terms ? ` · ${entry.terms}` : ""}</div>
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", marginTop: "0.1rem" }}>Events: {entry.eventIndexes?.join(", ") || "—"}{entry.terms ? ` · ${entry.terms}` : ""}</div>
                                         </div>
                                     ))}
                                 </div>
@@ -4153,9 +4154,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     {subsectionTitle("Subordinations", puppetUpdates.length, "world.puppets")}
                                     {puppetUpdates.map((entry, index) => (
                                         <div key={`puppet-${entry.overlord}-${entry.puppet}-${entry.op}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>{String(entry.op || "update").toUpperCase()} · {entry.overlord || "Unknown overlord"} → {entry.puppet || "Unknown puppet"}</strong>
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>{String(entry.op || "update").toUpperCase()} · {entry.overlord || "Unknown overlord"} → {entry.puppet || "Unknown puppet"}</strong>
                                             <div style={{ marginTop: "0.12rem" }}>Kind: {entry.kind || "—"} · Secrecy: {entry.secrecy || "—"} · Loyalty: {Number.isFinite(Number(entry.loyalty)) ? Number(entry.loyalty) : "—"}</div>
-                                            <div style={{ color: "rgba(255,255,255,0.38)", marginTop: "0.1rem" }}>Events: {entry.eventIndexes?.join(", ") || "—"}{entry.note ? ` · ${entry.note}` : ""}</div>
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", marginTop: "0.1rem" }}>Events: {entry.eventIndexes?.join(", ") || "—"}{entry.note ? ` · ${entry.note}` : ""}</div>
                                         </div>
                                     ))}
                                 </div>
@@ -4166,17 +4167,17 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     {subsectionTitle("Diplomatic chats", eventChats.length + outreach.length)}
                                     {eventChats.map((entry, index) => (
                                         <div key={`event-chat-${entry._eventIndex}-${entry._opIndex}-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>EVENT CHAT · {entry.title || "Untitled"}</strong> · speaker {entry.speaker || "unknown"}
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>EVENT CHAT · {entry.title || "Untitled"}</strong> · speaker {entry.speaker || "unknown"}
                                             <div style={{ marginTop: "0.12rem" }}>Participants: {(entry.countries || []).map((country) => country?.name || country).filter(Boolean).join(", ") || "—"}</div>
-                                            <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.1rem" }}>{entry.openingMessage || ""}</div>
-                                            <div style={{ color: "rgba(255,255,255,0.3)", marginTop: "0.1rem" }}>{eventRef(entry)}</div>
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.1rem" }}>{entry.openingMessage || ""}</div>
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)", marginTop: "0.1rem" }}>{eventRef(entry)}</div>
                                         </div>
                                     ))}
                                     {outreach.map((entry, index) => (
                                         <div key={`outreach-${index}`} style={exactRowStyle}>
-                                            <strong style={{ color: "rgba(255,255,255,0.88)" }}>OUTREACH · {entry.title || "Untitled"}</strong> · speaker {entry.speaker || "unknown"}
+                                            <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>OUTREACH · {entry.title || "Untitled"}</strong> · speaker {entry.speaker || "unknown"}
                                             <div style={{ marginTop: "0.12rem" }}>Participants: {(entry.countries || []).map((country) => country?.name || country).filter(Boolean).join(", ") || "—"}</div>
-                                            <div style={{ color: "rgba(255,255,255,0.42)", marginTop: "0.1rem" }}>{entry.openingMessage || ""}</div>
+                                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", marginTop: "0.1rem" }}>{entry.openingMessage || ""}</div>
                                         </div>
                                     ))}
                                 </div>
@@ -4218,9 +4219,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 zIndex: 4,
                             }}
                         >
-                            {busy ? "Applying canonical transaction…" : gmApplied ? "Applied ✓" : "Apply Transaction"}
+                            {busy ? "Applying canonical transaction…" : gmApplied ? <>Applied <UiIcon name="check" size={14} /></> : "Apply Transaction"}
                         </button>
-                        <div style={{ color: gmApplied ? "rgba(134,239,172,0.72)" : "rgba(255,255,255,0.4)", fontSize: "0.64rem", lineHeight: 1.35, marginTop: "0.35rem", textAlign: "center" }}>
+                        <div style={{ color: gmApplied ? "rgba(134,239,172,0.72)" : "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.64rem", lineHeight: 1.35, marginTop: "0.35rem", textAlign: "center" }}>
                             {gmApplied
                                 ? `Applied as ${gmApplyResult.transactionId}. Date and round were not advanced.`
                                 : "Apply uses this exact preview, revalidates current canon, writes through native seams, and records a persistent GM audit entry."}
@@ -4283,14 +4284,14 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             {/* Scrolls on a phone: a sixteen-row document under the notes is
                 taller than a phone's panel, which cut off the Save buttons. */}
             <div style={{ display: "flex", flexDirection: "column", minHeight: 0, ...(isMobile || touch ? { overflowY: "auto" } : null) }}>
-            <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.76rem", marginBottom: "0.5rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.76rem", marginBottom: "0.5rem" }}>
             Every event stays in the timeline in full. When enough have piled up, a pass folds the older ones into this document — the first pass writes it, every later one rewrites it with the new period added and unimportant older material condensed to stay near {HISTORY_CONSOLIDATION.documentWordBudget} words — and the AI is shown the document in their place, plus the newest {HISTORY_CONSOLIDATION.retainEvents} events one by one.
             </div>
             {data === null && (
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.76rem" }}>Reading the campaign…</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.76rem" }}>Reading the campaign…</div>
             )}
             {data !== null && (
-                <div style={{ ...editorFieldStyle, color: "rgba(255,255,255,0.72)", fontSize: "0.74rem", lineHeight: 1.45, marginBottom: "0.5rem" }}>
+                <div style={{ ...editorFieldStyle, color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: "0.74rem", lineHeight: 1.45, marginBottom: "0.5rem" }}>
                 <div>{data.totalEvents} events in the timeline. {data.status.text}</div>
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "0.3rem", marginTop: "0.45rem" }}>
                 <button
@@ -4355,7 +4356,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             )}
             {passes.length > 0 && (
                 <details style={{ marginTop: "0.6rem" }}>
-                <summary style={{ cursor: "pointer", color: "rgba(255,255,255,0.6)", fontSize: "0.74rem", ...(touch ? TOUCH_SUMMARY : null) }}>{passes.length} pass{passes.length === 1 ? "" : "es"} so far — what each one folded</summary>
+                <summary style={{ cursor: "pointer", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.74rem", ...(touch ? TOUCH_SUMMARY : null) }}>{passes.length} pass{passes.length === 1 ? "" : "es"} so far — what each one folded</summary>
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.4rem", marginTop: "0.4rem", maxHeight: "18rem", overflowY: "auto" }}>
                 {passes.map((entry, index) => {
                     const summary = String(entry?.summary ?? "");
@@ -4368,9 +4369,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                         entry?.source === "fallback" ? "written without the AI" : "",
                     ].filter(Boolean).join(" · ");
                     return (
-                        <div key={`${entry?.throughEventId || "pass"}-${index}`} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "0.5rem 0.6rem" }}>
-                        <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.68rem", marginBottom: "0.3rem" }}>{metaLine}</div>
-                        <div style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.74rem", lineHeight: 1.45, maxHeight: "8rem", overflowY: "auto", whiteSpace: "pre-wrap" }}>{summary}</div>
+                        <div key={`${entry?.throughEventId || "pass"}-${index}`} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 8, padding: "0.5rem 0.6rem" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.68rem", marginBottom: "0.3rem" }}>{metaLine}</div>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.74rem", lineHeight: 1.45, maxHeight: "8rem", overflowY: "auto", whiteSpace: "pre-wrap" }}>{summary}</div>
                         </div>
                     );
                 })}
@@ -4389,14 +4390,14 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             <>
             {header(meta.title, meta.subtitle)}
             <div style={{ display: "flex", flexDirection: "column", minHeight: 0 }}>
-            <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.76rem", marginBottom: "0.5rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.76rem", marginBottom: "0.5rem" }}>
             Restore the game to how it was at the start of an earlier turn. This permanently discards every turn played after the one you pick.
             </div>
             {items === null && (
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.76rem" }}>Loading restore points…</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.76rem" }}>Loading restore points…</div>
             )}
             {items !== null && snapshots.length === 0 && (
-                <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.76rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.76rem" }}>
                 No restore points yet — one is captured automatically at the start of each turn. Play a turn, then come back.
                 </div>
             )}
@@ -4405,11 +4406,11 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                 const confirming = editingId === snap.id;
                 const dateLabel = snap.fromDate ? String(snap.fromDate) : "";
                 return (
-                    <div key={snap.id} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 8, padding: "0.5rem 0.6rem" }}>
+                    <div key={snap.id} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 8, padding: "0.5rem 0.6rem" }}>
                     <div style={{ alignItems: "center", display: "flex", gap: "0.4rem", justifyContent: "space-between" }}>
                     <div style={{ minWidth: 0 }}>
                     <div style={{ fontSize: "0.82rem", fontWeight: 700 }}>Round {snap.round}{dateLabel ? ` · ${dateLabel}` : ""}</div>
-                    <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.68rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.68rem" }}>
                     {index === 0 ? "undoes the most recent turn" : `undoes the last ${index + 1} turns`}
                     </div>
                     </div>
@@ -4466,7 +4467,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             <>
             {header(meta.title, meta.subtitle)}
             <div>
-            <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.78rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.78rem" }}>
             Currently playing: <strong>{nameOf(game?.country)}</strong>
             </div>
             <label style={labelStyle}>New country</label>
@@ -4507,16 +4508,16 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             {header(meta.title, meta.subtitle)}
             <div style={{ overflowY: "auto", paddingRight: "0.12rem" }}>
                 <div style={{
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(255,255,255,0.21)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 21%, transparent)",
                     borderRadius: 9,
-                    color: "rgba(255,255,255,0.72)",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
                     fontSize: "0.68rem",
                     lineHeight: 1.45,
                     marginBottom: "0.55rem",
                     padding: "0.58rem 0.68rem",
                 }}>
-                    <strong style={{ color: "#f4f4f5", display: "block", fontSize: "0.72rem", marginBottom: "0.12rem" }}>
+                    <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", display: "block", fontSize: "0.72rem", marginBottom: "0.12rem" }}>
                         HOW THINGS GO FOR YOU
                     </strong>
                     Difficulty decides how things tend to go for you. On the easy levels your orders usually succeed and luck breaks your way; on Medium the world is realistic; on the hard levels your orders fall short and luck breaks against you. At every level each outcome has a cause, and what you order is always attempted.
@@ -4537,13 +4538,13 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     const nextGame = await readGameData({ force: true });
                                     await writeGameData({ ...nextGame, difficulty: level.id });
                                     await refresh();
-                                    return `Difficulty set to ${level.label} ${level.emoji}. Future simulation and diplomatic bargaining use this rigor; GM/admin edits remain exact.`;
+                                    return `Difficulty set to ${level.label}. Future simulation and diplomatic bargaining use this rigor; GM/admin edits remain exact.`;
                                 })}
                                 style={{
                                     ...buttonStyle,
                                     alignItems: "flex-start",
-                                    background: active ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.05)",
-                                    border: active ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.10)",
+                                    background: active ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+                                    border: active ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
                                     flexDirection: "column",
                                     gap: "0.26rem",
                                     minHeight: "6.1rem",
@@ -4552,16 +4553,16 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 }}
                             >
                                 <div style={{ alignItems: "center", display: "flex", gap: "0.42rem", width: "100%" }}>
-                                    <span style={{ fontSize: "1.15rem", lineHeight: 1 }}>{level.emoji}</span>
+                                    <span style={{ lineHeight: 1 }}><DifficultyIcon id={level.id} size={20} /></span>
                                     <div style={{ minWidth: 0 }}>
                                         <div style={{ alignItems: "center", display: "flex", gap: "0.3rem" }}>
-                                            <strong style={{ color: "#fff", fontSize: "0.76rem" }}>{level.label}</strong>
+                                            <strong style={{ color: "var(--oh-ink, #fff)", fontSize: "0.76rem" }}>{level.label}</strong>
                                             {active && (
                                                 <span style={{
-                                                    background: "rgba(255,255,255,0.1)",
-                                                    border: "1px solid rgba(255,255,255,0.23)",
+                                                    background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+                                                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)",
                                                     borderRadius: 999,
-                                                    color: "#f4f4f5",
+                                                    color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)",
                                                     fontSize: "0.5rem",
                                                     fontWeight: 900,
                                                     letterSpacing: "0.04em",
@@ -4569,12 +4570,12 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                                 }}>ACTIVE</span>
                                             )}
                                         </div>
-                                        <div style={{ color: active ? "#e4e4e7" : "rgba(255,255,255,0.48)", fontSize: "0.58rem", marginTop: "0.06rem" }}>
+                                        <div style={{ color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.58rem", marginTop: "0.06rem" }}>
                                             {level.blurb}
                                         </div>
                                     </div>
                                 </div>
-                                <div style={{ color: "rgba(255,255,255,0.58)", fontSize: "0.59rem", lineHeight: 1.35 }}>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)", fontSize: "0.59rem", lineHeight: 1.35 }}>
                                     {level.description}
                                 </div>
                             </button>
@@ -4585,29 +4586,29 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                 <div style={{ ...editorFieldStyle, marginTop: "0.58rem" }}>
                     <div style={{ alignItems: "center", display: "flex", justifyContent: "space-between", gap: "0.5rem" }}>
                         <div>
-                            <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.56rem", fontWeight: 900, letterSpacing: "0.08em" }}>CURRENT BEHAVIOR</div>
-                            <div style={{ color: "#fff", fontSize: "0.82rem", fontWeight: 800, marginTop: "0.08rem" }}>
-                                {currentMeta.emoji} {currentMeta.label}
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.56rem", fontWeight: 900, letterSpacing: "0.08em" }}>CURRENT BEHAVIOR</div>
+                            <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.82rem", fontWeight: 800, marginTop: "0.08rem" }}>
+                                <DifficultyIcon id={currentMeta.id} size={16} /> {currentMeta.label}
                             </div>
                         </div>
-                        <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.58rem", textAlign: "right" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.58rem", textAlign: "right" }}>
                             Applies from the next AI decision
                         </div>
                     </div>
 
                     <div style={{ display: "grid", gap: "0.34rem", gridTemplateColumns: "1fr 1fr", marginTop: "0.5rem" }}>
                         {profileRows.map(([label, value]) => (
-                            <div key={label} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 7, padding: "0.38rem 0.45rem" }}>
-                                <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.51rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>{label}</div>
-                                <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.67rem", fontWeight: 700, marginTop: "0.08rem" }}>{value}</div>
+                            <div key={label} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: 7, padding: "0.38rem 0.45rem" }}>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.51rem", fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>{label}</div>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: "0.67rem", fontWeight: 700, marginTop: "0.08rem" }}>{value}</div>
                             </div>
                         ))}
                     </div>
 
                     <div style={{ display: "grid", gap: "0.22rem", marginTop: "0.48rem" }}>
                         {(currentMeta.effects ?? []).map((effect) => (
-                            <div key={effect} style={{ color: "rgba(255,255,255,0.56)", fontSize: "0.6rem", lineHeight: 1.38 }}>
-                                <span style={{ color: "#d4d4d8", marginRight: "0.28rem" }}>◆</span>{effect}
+                            <div key={effect} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 56%, transparent)", fontSize: "0.6rem", lineHeight: 1.38 }}>
+                                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", marginRight: "0.28rem" }}>◆</span>{effect}
                             </div>
                         ))}
                     </div>
@@ -4616,7 +4617,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                 <div style={{
                     border: "1px solid rgba(34,197,94,0.20)",
                     borderRadius: 8,
-                    color: "rgba(255,255,255,0.48)",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)",
                     fontSize: "0.58rem",
                     lineHeight: 1.42,
                     marginTop: "0.5rem",
@@ -4709,7 +4710,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             >
             Start clicking the map
             </button>
-            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", marginTop: "0.5rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", marginTop: "0.5rem" }}>
             The map repaints ownership within ~5 seconds of each change.
             </div>
             {statusLine}
@@ -4759,7 +4760,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             <input style={inputStyle} value={fields.name ?? ""} onChange={(event) => setFields({ ...fields, name: event.target.value })} placeholder="Atlantis" />
             <label style={labelStyle}>Color (hex)</label>
             <div style={{ alignItems: "center", display: "flex", gap: "0.45rem" }}>
-            <input style={{ ...inputStyle, width: "8rem" }} value={fields.color ?? ""} onChange={(event) => setFields({ ...fields, color: event.target.value })} placeholder="#a1a1aa" />
+            <input style={{ ...inputStyle, width: "8rem" }} value={fields.color ?? ""} onChange={(event) => setFields({ ...fields, color: event.target.value })} placeholder="color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)" />
             <input
             type="color"
             className="oh-tap"
@@ -4786,7 +4787,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
         const isContested = claimants.length > 0;
         const isOccupied = Boolean(controller && sovereign && controller !== sovereign);
         const stateLabel = !controller ? "Unclaimed" : isOccupied ? "Occupied" : isContested ? "Disputed" : "Held";
-        const stateTone = isOccupied ? "#fcd34d" : isContested ? "#e4e4e7" : controller ? "#86efac" : "rgba(255,255,255,0.55)";
+        const stateTone = isOccupied ? "#fcd34d" : isContested ? "#e4e4e7" : controller ? "#86efac" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)";
 
         const normalizeClaimants = (raw, currentOwner = "") => [...new Set(
             (Array.isArray(raw)
@@ -4915,9 +4916,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             return message;
         };
 
-        const infoRow = (label, value, tone = "rgba(255,255,255,0.86)") => (
+        const infoRow = (label, value, tone = "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)") => (
             <div style={{ display: "grid", gap: "0.45rem", gridTemplateColumns: "7.4rem minmax(0, 1fr)", alignItems: "start" }}>
-                <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.66rem", fontWeight: 750, textTransform: "uppercase" }}>{label}</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.66rem", fontWeight: 750, textTransform: "uppercase" }}>{label}</div>
                 <div style={{ color: tone, fontSize: "0.76rem", fontWeight: 650, minWidth: 0, overflowWrap: "anywhere" }}>{value || "—"}</div>
             </div>
         );
@@ -4926,8 +4927,8 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             <>
             {header(meta.title, meta.subtitle)}
             <div style={{ overflowY: "auto", paddingRight: "0.08rem" }}>
-                <div style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.17)", borderRadius: 10, color: "#e4e4e7", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
-                    <strong style={{ color: "#f4f4f5" }}>Canonical now · evolvable later.</strong> Region edits change the present territorial state only. Future wars, treaties and simulated events remain free to move it again.
+                <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 17%, transparent)", borderRadius: 10, color: "var(--oh-ink, #e4e4e7)", fontSize: "0.68rem", lineHeight: 1.45, padding: "0.55rem 0.65rem" }}>
+                    <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" }}>Canonical now · evolvable later.</strong> Region edits change the present territorial state only. Future wars, treaties and simulated events remain free to move it again.
                 </div>
 
                 <button
@@ -4954,25 +4955,25 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                     <div style={{ ...editorFieldStyle, marginTop: "0.55rem", padding: "0.58rem 0.65rem" }}>
                         <div style={{ alignItems: "flex-start", display: "flex", gap: "0.65rem", justifyContent: "space-between" }}>
                             <div style={{ minWidth: 0 }}>
-                                <div style={{ color: "#fff", fontSize: "0.92rem", fontWeight: 850, overflowWrap: "anywhere" }}>{fields.name || regionId}</div>
-                                <div style={{ color: "rgba(255,255,255,0.36)", fontSize: "0.61rem", marginTop: "0.12rem" }}>{regionId}</div>
+                                <div style={{ color: "var(--oh-ink, #fff)", fontSize: "0.92rem", fontWeight: 850, overflowWrap: "anywhere" }}>{fields.name || regionId}</div>
+                                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 36%, transparent)", fontSize: "0.61rem", marginTop: "0.12rem" }}>{regionId}</div>
                             </div>
                             <span style={{ background: `${stateTone}18`, border: `1px solid ${stateTone}55`, borderRadius: 999, color: stateTone, flexShrink: 0, fontSize: "0.6rem", fontWeight: 800, letterSpacing: "0.04em", padding: "0.22rem 0.5rem", textTransform: "uppercase" }}>
                                 {stateLabel}
                             </span>
                         </div>
-                        <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", display: "grid", gap: "0.38rem", marginTop: "0.52rem", paddingTop: "0.52rem" }}>
+                        <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "grid", gap: "0.38rem", marginTop: "0.52rem", paddingTop: "0.52rem" }}>
                             {infoRow("Base geography", nameOf(fields.baseOwner) || countryNameFromBaseCode(fields.baseGid0))}
-                            {fields.baseGid0 && infoRow("Base GID₀", fields.baseGid0, "rgba(255,255,255,0.58)")}
+                            {fields.baseGid0 && infoRow("Base GID₀", fields.baseGid0, "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)")}
                             {infoRow("Controller", nameOf(controller), isOccupied ? "#fcd34d" : "#d1fae5")}
-                            {infoRow("Sovereign", nameOf(sovereign), isOccupied ? "#fde68a" : "rgba(255,255,255,0.86)")}
-                            {infoRow("Claimants", claimants.length ? claimants.map(nameOf).join(", ") : "None", claimants.length ? "#f4f4f5" : "rgba(255,255,255,0.55)")}
+                            {infoRow("Sovereign", nameOf(sovereign), isOccupied ? "#fde68a" : "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)")}
+                            {infoRow("Claimants", claimants.length ? claimants.map(nameOf).join(", ") : "None", claimants.length ? "#f4f4f5" : "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)")}
                         </div>
                     </div>
 
                     <div style={{ ...editorFieldStyle, marginTop: "0.55rem" }}>
                         <div style={editorSectionLabelStyle}>De-facto control</div>
-                        <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.65rem", lineHeight: 1.4, marginBottom: "0.45rem" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.65rem", lineHeight: 1.4, marginBottom: "0.45rem" }}>
                             Changes who physically administers the region. This uses the same canonical control semantics as occupation/liberation: legal sovereignty stays put and displaced parties may remain claimants.
                         </div>
                         <PolitySelect polities={polities} value={fields.controllerTarget ?? controller} onChange={(value) => setFields({ ...fields, controllerTarget: value })} placeholder="Unclaimed / no controller" />
@@ -5029,7 +5030,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
 
                     <div style={{ ...editorFieldStyle, marginTop: "0.55rem" }}>
                         <div style={editorSectionLabelStyle}>Legal sovereignty</div>
-                        <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.65rem", lineHeight: 1.4, marginBottom: "0.45rem" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.65rem", lineHeight: 1.4, marginBottom: "0.45rem" }}>
                             Formal title only. A legal transfer also moves administration when the old sovereign still controls the ground; a genuine third-party occupier is preserved.
                         </div>
                         <PolitySelect polities={polities} value={fields.sovereignTarget ?? sovereign} onChange={(value) => setFields({ ...fields, sovereignTarget: value })} placeholder="Pick legal sovereign…" />
@@ -5055,14 +5056,14 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
 
                     <div style={{ ...editorFieldStyle, marginTop: "0.55rem" }}>
                         <div style={editorSectionLabelStyle}>Claims & disputed state</div>
-                        <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.65rem", lineHeight: 1.4, marginBottom: "0.45rem" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.65rem", lineHeight: 1.4, marginBottom: "0.45rem" }}>
                             A claim marks the region disputed — striped in the claimant's colour — without moving the border.
                         </div>
                         {claimants.length ? (
                             <div style={{ display: "flex", flexDirection: "column", gap: "0.32rem" }}>
                                 {claimants.map((claimant) => (
-                                    <div key={claimant} style={{ alignItems: "center", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, display: "flex", gap: "0.5rem", justifyContent: "space-between", padding: "0.38rem 0.5rem" }}>
-                                        <span style={{ color: "#f4f4f5", fontSize: "0.73rem", fontWeight: 700, minWidth: 0, overflowWrap: "anywhere" }}>{nameOf(claimant)}</span>
+                                    <div key={claimant} style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 8, display: "flex", gap: "0.5rem", justifyContent: "space-between", padding: "0.38rem 0.5rem" }}>
+                                        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "0.73rem", fontWeight: 700, minWidth: 0, overflowWrap: "anywhere" }}>{nameOf(claimant)}</span>
                                         <button
                                             type="button"
                                             className="oh-tap-row"
@@ -5084,7 +5085,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 ))}
                             </div>
                         ) : (
-                            <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.7rem" }}>No active claimants.</div>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.7rem" }}>No active claimants.</div>
                         )}
 
                         <div style={{ display: "flex", gap: "0.4rem", marginTop: "0.5rem" }}>
@@ -5133,14 +5134,14 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                     {groupsOn && (
                     <div style={{ ...editorFieldStyle, marginTop: "0.55rem" }}>
                         <div style={editorSectionLabelStyle}>Group control</div>
-                        <div style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.65rem", lineHeight: 1.4, marginBottom: "0.45rem" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.65rem", lineHeight: 1.4, marginBottom: "0.45rem" }}>
                             A group controls the region without owning it: the border stays where it is, and the group's area is outlined and tinted in its colour. Groups are made in the Groups tool.
                         </div>
                         {fields.group ? (
-                            <div style={{ alignItems: "center", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.1)", borderRadius: 8, display: "flex", gap: "0.5rem", justifyContent: "space-between", padding: "0.38rem 0.5rem" }}>
+                            <div style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 8, display: "flex", gap: "0.5rem", justifyContent: "space-between", padding: "0.38rem 0.5rem" }}>
                                 <span style={{ alignItems: "center", display: "flex", gap: "0.4rem", minWidth: 0 }}>
                                     <span aria-hidden="true" style={{ background: fields.groupRegistry?.[fields.group]?.color, borderRadius: 3, flexShrink: 0, height: "0.75rem", width: "0.75rem" }} />
-                                    <span style={{ color: "#f4f4f5", fontSize: "0.73rem", fontWeight: 700, overflowWrap: "anywhere" }}>{fields.group}</span>
+                                    <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "0.73rem", fontWeight: 700, overflowWrap: "anywhere" }}>{fields.group}</span>
                                 </span>
                                 <button
                                     type="button"
@@ -5155,7 +5156,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 </button>
                             </div>
                         ) : (
-                            <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.7rem" }}>No group controls this region.</div>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.7rem" }}>No group controls this region.</div>
                         )}
                         {Object.keys(fields.groupRegistry ?? {}).length > 0 && (
                             <div style={{ display: "flex", gap: "0.4rem", marginTop: "0.5rem" }}>
@@ -5195,7 +5196,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 disabled={!fields.canRename}
                                 onChange={(event) => setFields({ ...fields, name: event.target.value })}
                             />
-                            <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
+                            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.62rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
                                 {fields.canRename
                                     ? "This scenario has editable custom region geometry. Renaming preserves the stable region ID."
                                     : "Stock-map region names come from immutable map tiles, so this name is read-only here."}
@@ -5225,7 +5226,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     Save region name
                                 </button>
                             )}
-                            <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", color: "rgba(255,255,255,0.4)", fontSize: "0.62rem", lineHeight: 1.45, marginTop: "0.5rem", paddingTop: "0.45rem" }}>
+                            <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.62rem", lineHeight: 1.45, marginTop: "0.5rem", paddingTop: "0.45rem" }}>
                                 Region ID: <code>{regionId}</code><br />
                                 Base geography: {nameOf(fields.baseOwner) || countryNameFromBaseCode(fields.baseGid0) || "unknown"}
                                 {fields.baseGid0 ? <> · GID₀ <code>{fields.baseGid0}</code></> : null}
@@ -5236,7 +5237,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                 )}
 
                 {!regionId && (
-                    <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, marginTop: "0.55rem" }}>
                         Pick any map region to inspect who holds it, who claims it, and its geographic provenance.
                     </div>
                 )}
@@ -5259,9 +5260,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             || String(kind || "landmark").replace(/\b\w/g, (letter) => letter.toUpperCase());
         const choiceButton = (active) => ({
             ...buttonStyle,
-            background: active ? "rgba(0,0,0,0.48)" : "rgba(255,255,255,0.05)",
-            border: active ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.1)",
-            color: active ? "#f4f4f5" : "rgba(255,255,255,0.72)",
+            background: active ? "rgba(0,0,0,0.48)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+            border: active ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+            color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
             fontSize: "0.68rem",
             padding: "0.38rem 0.45rem",
         });
@@ -5377,16 +5378,16 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                 had no room left for the list at all. */}
             <div style={{ display: "flex", flexDirection: "column", minHeight: 0, overflow: "hidden", ...(isMobile || touch ? { overflow: "auto" } : null) }}>
                 <div style={{
-                    background: "rgba(255,255,255,0.04)",
-                    border: "1px solid rgba(255,255,255,0.1)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
                     borderRadius: 10,
-                    color: "rgba(255,255,255,0.55)",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)",
                     fontSize: "0.66rem",
                     lineHeight: 1.45,
                     marginBottom: "0.55rem",
                     padding: "0.55rem 0.62rem",
                 }}>
-                    <strong style={{ color: "#f4f4f5" }}>Two native layers, one editor.</strong> Runtime features live in the canonical world and coexist with cities. Scenario cities are the authored historical city set used when this scenario has custom cities enabled.
+                    <strong style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" }}>Two native layers, one editor.</strong> Runtime features live in the canonical world and coexist with cities. Scenario cities are the authored historical city set used when this scenario has custom cities enabled.
                 </div>
 
                 <button
@@ -5416,7 +5417,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.38rem", marginTop: "0.5rem", overflowY: isMobile || touch ? "visible" : "auto", paddingRight: "0.08rem" }}>
                 {activeTab === "runtime" && markerRows.length === 0 && (
-                    <div style={{ color: "rgba(255,255,255,0.44)", fontSize: "0.72rem", lineHeight: 1.45, padding: "0.55rem 0" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 44%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, padding: "0.55rem 0" }}>
                         No runtime world features match this view. Use + Add new map feature above to create HQs, ports, landmarks, temporary markers, and more without replacing the city layer.
                     </div>
                 )}
@@ -5425,17 +5426,17 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                     const key = `marker:${marker.id}`;
                     const isEditing = editingId === key;
                     return (
-                        <div key={key} style={{ background: "rgba(255,255,255,0.04)", border: isEditing ? "1px solid rgba(0,0,0,0.5)" : "1px solid rgba(255,255,255,0.09)", borderRadius: 10, padding: "0.55rem 0.62rem" }}>
+                        <div key={key} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: isEditing ? "1px solid rgba(0,0,0,0.5)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)", borderRadius: 10, padding: "0.55rem 0.62rem" }}>
                             <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
                                 <div style={{ minWidth: 0 }}>
                                     <div style={{ alignItems: "center", display: "flex", gap: "0.36rem", minWidth: 0 }}>
-                                        <span style={{ color: "#f4f4f5", fontSize: "0.8rem", fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{marker.name}</span>
-                                        <span style={{ ...badgeStyle, color: "#e4e4e7" }}>RUNTIME</span>
+                                        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "0.8rem", fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{marker.name}</span>
+                                        <span style={{ ...badgeStyle, color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>RUNTIME</span>
                                         <span style={{ ...badgeStyle, color: mapFeatureStatusMeta(marker.status).color }}>
                                             {mapFeatureStatusMeta(marker.status).label}
                                         </span>
                                     </div>
-                                    <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.63rem", marginTop: "0.1rem" }}>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.63rem", marginTop: "0.1rem" }}>
                                         {kindLabel(marker.kind)}{marker.ownerCode ? ` · ${nameOf(marker.ownerCode)}` : ""}
                                     </div>
                                 </div>
@@ -5489,7 +5490,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                             </div>
 
                             {isEditing && (
-                                <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: "0.5rem", paddingTop: "0.5rem" }}>
+                                <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", marginTop: "0.5rem", paddingTop: "0.5rem" }}>
                                     <label style={{ ...labelStyle, marginTop: 0 }}>Name</label>
                                     <input style={inputStyle} value={fields.name ?? ""} onChange={(event) => setFields({ ...fields, name: event.target.value })} />
 
@@ -5517,7 +5518,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                         style={{ ...inputStyle, colorScheme: "dark", cursor: "pointer" }}
                                     >
                                         {MARKER_STATUSES.map((markerStatus) => (
-                                            <option key={markerStatus} value={markerStatus} style={{ background: "#18181b", color: "#fff" }}>
+                                            <option key={markerStatus} value={markerStatus} style={{ background: "var(--oh-paper, #18181b)", color: "var(--oh-ink, #fff)" }}>
                                                 {mapFeatureStatusMeta(markerStatus).label}
                                             </option>
                                         ))}
@@ -5570,7 +5571,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     </div>
 
                                     <details style={{ marginTop: "0.45rem" }}>
-                                        <summary style={{ color: "rgba(255,255,255,0.48)", cursor: "pointer", fontSize: "0.64rem", ...(touch ? TOUCH_SUMMARY : null) }}>Manual coordinates · advanced</summary>
+                                        <summary style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", cursor: "pointer", fontSize: "0.64rem", ...(touch ? TOUCH_SUMMARY : null) }}>Manual coordinates · advanced</summary>
                                         <div style={{ display: "grid", gap: "0.38rem", gridTemplateColumns: "1fr 1fr", marginTop: "0.38rem" }}>
                                             <input style={inputStyle} value={fields.lng ?? ""} onChange={(event) => setFields({ ...fields, lng: event.target.value })} placeholder="Longitude" />
                                             <input style={inputStyle} value={fields.lat ?? ""} onChange={(event) => setFields({ ...fields, lat: event.target.value })} placeholder="Latitude" />
@@ -5589,7 +5590,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                 )}
 
                 {activeTab === "cities" && data.customCities && cityRows.length === 0 && (
-                    <div style={{ color: "rgba(255,255,255,0.44)", fontSize: "0.72rem", lineHeight: 1.45, padding: "0.55rem 0" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 44%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, padding: "0.55rem 0" }}>
                         No scenario cities match this view.
                     </div>
                 )}
@@ -5601,14 +5602,14 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                     const isEditing = editingId === key;
                     const tier = Math.max(1, Math.min(4, Number(props.tier) || (props.capital === "primary" || props.capital === true ? 4 : 2)));
                     return (
-                        <div key={key} style={{ background: "rgba(255,255,255,0.04)", border: isEditing ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.09)", borderRadius: 10, padding: "0.55rem 0.62rem" }}>
+                        <div key={key} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: isEditing ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)", borderRadius: 10, padding: "0.55rem 0.62rem" }}>
                             <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
                                 <div style={{ minWidth: 0 }}>
                                     <div style={{ alignItems: "center", display: "flex", gap: "0.36rem", minWidth: 0 }}>
-                                        <span style={{ color: "#fff", fontSize: "0.8rem", fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{props.city || props.name || `City ${index + 1}`}</span>
-                                        <span style={{ ...badgeStyle, color: "#bfdbfe" }}>CITY</span>
+                                        <span style={{ color: "var(--oh-ink, #fff)", fontSize: "0.8rem", fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{props.city || props.name || `City ${index + 1}`}</span>
+                                        <span style={{ ...badgeStyle, color: "var(--oh-link, #bfdbfe)" }}>CITY</span>
                                     </div>
-                                    <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.63rem", marginTop: "0.1rem" }}>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.63rem", marginTop: "0.1rem" }}>
                                         {CITY_PROMINENCE.find((entry) => entry.tier === tier)?.label || `Tier ${tier}`}{Number(props.population) > 0 ? ` · ${Number(props.population).toLocaleString()}` : ""}
                                     </div>
                                 </div>
@@ -5656,7 +5657,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                             </div>
 
                             {isEditing && (
-                                <div style={{ borderTop: "1px solid rgba(255,255,255,0.07)", marginTop: "0.5rem", paddingTop: "0.5rem" }}>
+                                <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", marginTop: "0.5rem", paddingTop: "0.5rem" }}>
                                     <label style={{ ...labelStyle, marginTop: 0 }}>Name</label>
                                     <input style={inputStyle} value={fields.name ?? ""} onChange={(event) => setFields({ ...fields, name: event.target.value })} />
 
@@ -5672,7 +5673,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                     <label style={labelStyle}>Population</label>
                                     <input type="number" min="0" step="1000" style={inputStyle} value={fields.population ?? ""} onChange={(event) => setFields({ ...fields, population: event.target.value })} />
 
-                                    <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.63rem", lineHeight: 1.45, marginTop: "0.4rem" }}>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.63rem", lineHeight: 1.45, marginTop: "0.4rem" }}>
                                         Tier controls historical-map visibility: Town → City → Major city → Capital. Capital uses the renderer's canonical <code>primary</code> flag.
                                     </div>
 
@@ -5716,7 +5717,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                             Save city
                                         </button>
                                     </div>
-                                    <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.6rem", marginTop: "0.35rem" }}>
+                                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.6rem", marginTop: "0.35rem" }}>
                                         Coordinates: {Number(coords[0]).toFixed?.(4) ?? "—"}, {Number(coords[1]).toFixed?.(4) ?? "—"}
                                     </div>
                                 </div>
@@ -5737,9 +5738,9 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
         const customKind = type === "other" ? String(fields.customKind ?? "").trim() : type;
         const choiceStyle = (active) => ({
             ...buttonStyle,
-            background: active ? "rgba(0,0,0,0.48)" : "rgba(255,255,255,0.05)",
-            border: active ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.1)",
-            color: active ? "#f4f4f5" : "rgba(255,255,255,0.72)",
+            background: active ? "rgba(0,0,0,0.48)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+            border: active ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
+            color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
             fontSize: "0.68rem",
             padding: "0.42rem 0.45rem",
         });
@@ -5862,7 +5863,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                     </div>
                     <label style={labelStyle}>Population (optional)</label>
                     <input type="number" min="0" step="1000" style={inputStyle} value={fields.population ?? ""} onChange={(event) => setFields({ ...fields, population: event.target.value })} />
-                    <div style={{ color: "#bfdbfe", fontSize: "0.63rem", lineHeight: 1.45, marginTop: "0.4rem" }}>
+                    <div style={{ color: "var(--oh-link, #bfdbfe)", fontSize: "0.63rem", lineHeight: 1.45, marginTop: "0.4rem" }}>
                         This scenario already uses historical custom cities, so the new city will join that same authored layer with proper population and prominence metadata.
                     </div>
                     </>
@@ -5882,12 +5883,12 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                         style={{ ...inputStyle, colorScheme: "dark", cursor: "pointer" }}
                     >
                         {MARKER_STATUSES.map((markerStatus) => (
-                            <option key={markerStatus} value={markerStatus} style={{ background: "#18181b", color: "#fff" }}>
+                            <option key={markerStatus} value={markerStatus} style={{ background: "var(--oh-paper, #18181b)", color: "var(--oh-ink, #fff)" }}>
                                 {mapFeatureStatusMeta(markerStatus).label}
                             </option>
                         ))}
                     </select>
-                    <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.61rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.61rem", lineHeight: 1.4, marginTop: "0.3rem" }}>
                         Planned and under-construction features remain canonical map objects before they become operational; damaged, abandoned, and destroyed features also remain visible historical objects.
                     </div>
                     <label style={labelStyle}>Note (optional)</label>
@@ -5900,7 +5901,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                 <button type="button" className="oh-tap-row" disabled={busy || !String(fields.name ?? "").trim()} onClick={beginPlacement} style={{ ...primaryButtonStyle, marginTop: "0.72rem", width: "100%" }}>
                     Place on map →
                 </button>
-                <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.62rem", lineHeight: 1.45, marginTop: "0.38rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.62rem", lineHeight: 1.45, marginTop: "0.38rem" }}>
                     Placement changes the present canonical world only. Normal future simulation remains free to rename or lifecycle-update the same stable feature; historical damage/destruction changes status rather than deleting its identity.
                 </div>
                 {statusLine}
@@ -5920,12 +5921,12 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
             {header(meta.title, "Destructive cleanup for runtime features and scenario city layers")}
             <div style={{ overflowY: "auto" }}>
                 <div style={{ display: "grid", gap: "0.42rem", gridTemplateColumns: "1fr 1fr" }}>
-                    <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9, padding: "0.55rem" }}>
-                        <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.6rem", fontWeight: 800, textTransform: "uppercase" }}>Runtime features</div>
+                    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 9, padding: "0.55rem" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.6rem", fontWeight: 800, textTransform: "uppercase" }}>Runtime features</div>
                         <div style={{ fontSize: "1rem", fontWeight: 850, marginTop: "0.12rem" }}>{markerCount}</div>
                     </div>
-                    <div style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: 9, padding: "0.55rem" }}>
-                        <div style={{ color: "rgba(255,255,255,0.42)", fontSize: "0.6rem", fontWeight: 800, textTransform: "uppercase" }}>Scenario cities</div>
+                    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 9, padding: "0.55rem" }}>
+                        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.6rem", fontWeight: 800, textTransform: "uppercase" }}>Scenario cities</div>
                         <div style={{ fontSize: "1rem", fontWeight: 850, marginTop: "0.12rem" }}>{data.customCities ? cityCount : "Stock"}</div>
                     </div>
                 </div>
@@ -5941,7 +5942,7 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                             return "All runtime world features removed.";
                         });
                     }}
-                    style={{ ...buttonStyle, color: markerCount ? "#fda4af" : "rgba(255,255,255,0.35)", marginTop: "0.65rem", width: "100%" }}
+                    style={{ ...buttonStyle, color: markerCount ? "#fda4af" : "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", marginTop: "0.65rem", width: "100%" }}
                 >
                     Delete all runtime features
                 </button>
@@ -5958,15 +5959,15 @@ const ToolView = ({ tool, header, busy, status, game, polities, refresh, runBusy
                                 return "Scenario city layer cleared.";
                             });
                         }}
-                        style={{ ...buttonStyle, color: cityCount ? "#fda4af" : "rgba(255,255,255,0.35)", marginTop: "0.42rem", width: "100%" }}
+                        style={{ ...buttonStyle, color: cityCount ? "#fda4af" : "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", marginTop: "0.42rem", width: "100%" }}
                     >
                         Delete all scenario cities
                     </button>
                 )}
 
-                <details style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 9, marginTop: "0.55rem", padding: "0.5rem 0.58rem" }}>
+                <details style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: 9, marginTop: "0.55rem", padding: "0.5rem 0.58rem" }}>
                     <summary style={{ cursor: "pointer", fontSize: "0.68rem", fontWeight: 800, ...(touch ? TOUCH_SUMMARY : null) }}>Advanced · city-layer source</summary>
-                    <div style={{ color: "rgba(255,255,255,0.43)", fontSize: "0.63rem", lineHeight: 1.45, marginTop: "0.45rem" }}>
+                    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 43%, transparent)", fontSize: "0.63rem", lineHeight: 1.45, marginTop: "0.45rem" }}>
                         Turning off scenario cities restores the stock PMTiles city database. On historical scenarios this may reintroduce modern/anachronistic cities, so this is intentionally not the default cleanup action.
                     </div>
                     <button

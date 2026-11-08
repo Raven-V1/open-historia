@@ -7,6 +7,7 @@
 // 2026-11-03). A country whose parties lack them can have them filled in on
 // the player's asking (onCompile: Game/AI/gameplay.js assessPoliticalLandscape).
 import React, { useEffect, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { buildGovernmentPartyPresentation, buildPoliticalLandscapeViews } from "../../runtime/politicalPresentation.js";
 import { formatGameDateReadable } from "../../runtime/gameDates.js";
 import { PARTY_ROLE_LABELS, findIdeology, isListedSubideology } from "../../runtime/politics.js";
@@ -23,8 +24,8 @@ const sectionLabel = {
 };
 
 const card = {
-  background: "rgba(255,255,255,0.042)",
-  border: "1px solid rgba(255,255,255,0.08)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4.2%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
   borderRadius: "12px",
 };
 
@@ -103,7 +104,7 @@ const PartyDonut = ({ slices, selectedId, hoveredId, onSelect, onHover, centerLa
   return (
     <div style={{ alignItems: "center", display: "flex", justifyContent: "center", minHeight: "172px", minWidth: 0 }}>
       <svg aria-label={ariaLabel} role="img" viewBox="0 0 180 180" style={{ display: "block", height: "auto", maxWidth: "185px", overflow: "visible", width: "100%" }}>
-        <circle cx="90" cy="90" r="78" fill="rgba(255,255,255,0.025)" stroke="rgba(255,255,255,0.05)" strokeWidth="1" />
+        <circle cx="90" cy="90" r="78" fill="color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)" stroke="color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)" strokeWidth="1" />
         {segments.map(({ party, start, end }) => {
           const selected = party.id === selectedId;
           const hovered = party.id === hoveredId;
@@ -113,7 +114,7 @@ const PartyDonut = ({ slices, selectedId, hoveredId, onSelect, onHover, centerLa
               d={donutPath(start, end)}
               fill={partyColor(party)}
               opacity={selected || hovered ? 1 : selectedId ? 0.58 : 0.9}
-              stroke={selected ? "rgba(255,255,255,0.9)" : "rgba(11,15,23,0.88)"}
+              stroke={selected ? "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)" : "rgba(11,15,23,0.88)"}
               strokeWidth={selected ? 2.4 : 1.5}
               role="button"
               tabIndex={0}
@@ -131,11 +132,11 @@ const PartyDonut = ({ slices, selectedId, hoveredId, onSelect, onHover, centerLa
             />
           );
         })}
-        <circle cx="90" cy="90" r="47" fill="rgba(18,20,27,0.98)" stroke="rgba(255,255,255,0.07)" strokeWidth="1" />
-        <text x="90" y="85" textAnchor="middle" fill="rgba(255,255,255,0.94)" fontSize="11" fontWeight="800">
+        <circle cx="90" cy="90" r="47" fill="rgba(18,20,27,0.98)" stroke="color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)" strokeWidth="1" />
+        <text x="90" y="85" textAnchor="middle" fill="color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)" fontSize="11" fontWeight="800">
           {centerName.length > 18 ? `${centerName.slice(0, 16)}…` : centerName}
         </text>
-        <text x="90" y="101" textAnchor="middle" fill={active ? "rgba(255,255,255,0.58)" : "rgba(255,255,255,0.36)"} fontSize="9" fontWeight="700">
+        <text x="90" y="101" textAnchor="middle" fill={active ? "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 36%, transparent)"} fontSize="9" fontWeight="700">
           {centerSub}
         </text>
       </svg>
@@ -143,7 +144,7 @@ const PartyDonut = ({ slices, selectedId, hoveredId, onSelect, onHover, centerLa
   );
 };
 
-const Badge = ({ children, tone = "rgba(255,255,255,0.06)", border = "var(--oh-grey-border)", color = "var(--oh-grey-text)" }) => (
+const Badge = ({ children, tone = "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border = "var(--oh-grey-border)", color = "var(--oh-grey-text)" }) => (
   <span style={{ background: tone, border: `1px solid ${border}`, borderRadius: "999px", color, fontSize: "0.58rem", fontWeight: 750, padding: "0.12rem 0.38rem" }}>
     {children}
   </span>
@@ -157,7 +158,7 @@ const DetailList = ({ title, values }) => {
       <div style={{ ...sectionLabel, fontSize: "0.56rem" }}>{title}</div>
       <div style={{ display: "flex", flexDirection: "column", gap: "0.28rem", marginTop: "0.32rem" }}>
         {items.map((item) => (
-          <div key={item} style={{ color: "rgba(255,255,255,0.68)", fontSize: "0.68rem", lineHeight: 1.4 }}>• {item}</div>
+          <div key={item} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent)", fontSize: "0.68rem", lineHeight: 1.4 }}>• {item}</div>
         ))}
       </div>
     </div>
@@ -187,14 +188,14 @@ const PartyMore = ({ party }) => {
           <div style={{ display: "flex", flexDirection: "column", gap: "0.38rem" }}>
             {party.members.map((member) => (
               <div key={member.id} style={{ alignItems: "center", display: "flex", gap: "0.45rem", justifyContent: "space-between" }}>
-                <span style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.68rem" }}>{member.name}</span>
-                <span style={{ color: "rgba(255,255,255,0.48)", fontSize: "0.65rem", fontWeight: 800 }}>{formatSupport(member.support)}</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: "0.68rem" }}>{member.name}</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.65rem", fontWeight: 800 }}>{formatSupport(member.support)}</span>
               </div>
             ))}
           </div>
         )}
         {party.unlistedSupport > 0.05 && (
-          <div style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.62rem", lineHeight: 1.42, marginTop: "0.58rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.62rem", lineHeight: 1.42, marginTop: "0.58rem" }}>
             {formatSupport(party.unlistedSupport)} is not individually represented in the current public political profile.
           </div>
         )}
@@ -207,7 +208,7 @@ const PartyMore = ({ party }) => {
   const hasDetail = ideology.length || party.publicDescription || party.goals?.length || party.publicPriorities?.length || party.publicForeignPolicy?.length;
   return (
     <div style={{ padding: "0 0.65rem 0.62rem" }}>
-      {party.publicDescription && <div style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.67rem", lineHeight: 1.46 }}>{party.publicDescription}</div>}
+      {party.publicDescription && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.67rem", lineHeight: 1.46 }}>{party.publicDescription}</div>}
       {ideology.length > 0 && (
         <div style={{ display: "flex", flexWrap: "wrap", gap: "0.28rem", marginTop: "0.45rem" }}>
           {ideology.map((item) => <Badge key={item}>{item}</Badge>)}
@@ -216,7 +217,7 @@ const PartyMore = ({ party }) => {
       <DetailList title="Public priorities" values={party.publicPriorities?.length ? party.publicPriorities : party.goals} />
       <DetailList title="Foreign-policy outlook" values={party.publicForeignPolicy} />
       {!hasDetail && (
-        <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.64rem", lineHeight: 1.42 }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.64rem", lineHeight: 1.42 }}>
           No additional public party information is currently available.
         </div>
       )}
@@ -234,46 +235,46 @@ const PartyRow = ({ party, open, onToggle, legislatureSeats = 0, onHover = () =>
   const role = roleOf(party);
   const seats = Number.isFinite(party.seats) ? party.seats : null;
   return (
-    <div style={{ borderLeft: `3px solid ${partyColor(party)}`, borderTop: "1px solid rgba(255,255,255,0.07)" }}>
+    <div style={{ borderLeft: `3px solid ${partyColor(party)}`, borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)" }}>
       <button
         type="button"
         aria-expanded={open}
         onClick={onToggle}
         onMouseEnter={() => onHover(party.id)}
         onMouseLeave={() => onHover("")}
-        style={{ background: open ? "rgba(255,255,255,0.04)" : "transparent", border: 0, color: "inherit", cursor: "pointer", display: "block", padding: "0.55rem 0.65rem", textAlign: "left", width: "100%" }}
+        style={{ background: open ? "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)" : "transparent", border: 0, color: "inherit", cursor: "pointer", display: "block", padding: "0.55rem 0.65rem", textAlign: "left", width: "100%" }}
       >
         <div style={{ alignItems: "flex-start", display: "flex", gap: "0.6rem", justifyContent: "space-between" }}>
           <div style={{ minWidth: 0 }}>
-            <div style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.74rem", fontWeight: 800 }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.74rem", fontWeight: 800 }}>
               {party.isOther
                 ? <span>Other political support</span>
-                : <span data-no-translate>{party.name}{abbreviations && <span style={{ color: "rgba(255,255,255,0.45)", fontWeight: 700 }}> ({abbreviations})</span>}</span>}
+                : <span data-no-translate>{party.name}{abbreviations && <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontWeight: 700 }}> ({abbreviations})</span>}</span>}
             </div>
             {!party.isOther && clean(party.nameNative) && clean(party.nameNative) !== clean(party.name) && (
-              <div data-no-translate style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.65rem", fontStyle: "italic", marginTop: "0.1rem" }}>{party.nameNative}</div>
+              <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.65rem", fontStyle: "italic", marginTop: "0.1rem" }}>{party.nameNative}</div>
             )}
           </div>
           {party.isOther
-            ? <span style={{ color: "rgba(255,255,255,0.48)", flexShrink: 0, fontSize: "0.65rem", fontWeight: 800 }}>{formatSupport(party.support)}</span>
+            ? <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", flexShrink: 0, fontSize: "0.65rem", fontWeight: 800 }}>{formatSupport(party.support)}</span>
             : <span style={{ border: `1px solid ${ROLE_TONES[role]}55`, borderRadius: "999px", color: ROLE_TONES[role], flexShrink: 0, fontSize: "0.56rem", fontWeight: 800, padding: "0.1rem 0.38rem" }}>{PARTY_ROLE_LABELS[role]}</span>}
         </div>
         {!party.isOther && (family || clean(party.subideology)) && (
-          <div style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.64rem", marginTop: "0.25rem" }}>
-            {family && <span style={{ color: family.colour || "#94a3b8", fontWeight: 800 }}>{family.name}</span>}
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.64rem", marginTop: "0.25rem" }}>
+            {family && <span style={{ color: family.colour || "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontWeight: 800 }}>{family.name}</span>}
             {clean(party.subideology) && (family
               ? (
                 <span
                   title={listed ? undefined : "Not one of this ideology's listed subideologies"}
-                  style={{ color: listed ? "rgba(255,255,255,0.62)" : "rgba(255,255,255,0.35)" }}
+                  style={{ color: listed ? "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)" }}
                 > · {party.subideology}{listed ? "" : " (unlisted)"}</span>
               )
               : <span data-no-translate>{party.subideology}</span>)}
           </div>
         )}
         {!party.isOther && (
-          <div style={{ color: "rgba(255,255,255,0.5)", display: "flex", flexWrap: "wrap", fontSize: "0.62rem", gap: "0.15rem 0.7rem", marginTop: "0.2rem" }}>
-            {party.leader && <span>Leader: <span style={{ color: "rgba(255,255,255,0.8)" }}>{party.leader}</span></span>}
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", display: "flex", flexWrap: "wrap", fontSize: "0.62rem", gap: "0.15rem 0.7rem", marginTop: "0.2rem" }}>
+            {party.leader && <span>Leader: <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)" }}>{party.leader}</span></span>}
             {seats !== null && <span data-no-translate>{seats}{legislatureSeats ? `/${legislatureSeats}` : ""} seats</span>}
             {Number.isFinite(party.support) && <span data-no-translate>{formatSupport(party.support)} support</span>}
             {party.supportApproximate && <span style={{ color: "rgba(253,230,138,0.62)", fontSize: "0.54rem", textTransform: "uppercase" }}>Approximate</span>}
@@ -295,23 +296,23 @@ const PowerBlocDetail = ({ bloc, onClose }) => {
       <div style={{ alignItems: "flex-start", display: "flex", gap: "0.55rem", justifyContent: "space-between" }}>
         <div style={{ minWidth: 0 }}>
           <div style={{ alignItems: "center", display: "flex", flexWrap: "wrap", gap: "0.3rem" }}>
-            <span style={{ color: "rgba(255,255,255,0.95)", fontSize: "0.8rem", fontWeight: 850 }}>{bloc.name}</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 95%, transparent)", fontSize: "0.8rem", fontWeight: 850 }}>{bloc.name}</span>
             {bloc.kind && <Badge>{bloc.kind}</Badge>}
             {bloc.status && <Badge tone="rgba(245,158,11,0.12)" border="rgba(245,158,11,0.25)" color="#fde68a">{bloc.status}</Badge>}
           </div>
-          <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.66rem", fontWeight: 800, marginTop: "0.15rem" }}>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.66rem", fontWeight: 800, marginTop: "0.15rem" }}>
             {bloc.displayValue || "Influence not quantified"}{bloc.displayValue ? " influence" : ""}
             {bloc.influenceApproximate && <span style={{ color: "rgba(253,230,138,0.62)", fontSize: "0.56rem", marginLeft: "0.35rem", textTransform: "uppercase" }}>Approximate</span>}
           </div>
         </div>
-        <button type="button" onClick={onClose} aria-label="Close power bloc details" style={{ background: "none", border: 0, color: "rgba(255,255,255,0.42)", cursor: "pointer", fontSize: "0.9rem", padding: 0 }}>×</button>
+        <button type="button" onClick={onClose} aria-label="Close power bloc details" style={{ background: "none", border: 0, color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", cursor: "pointer", fontSize: "0.9rem", padding: 0 }}>×</button>
       </div>
 
-      {bloc.publicDescription && <div style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.67rem", lineHeight: 1.46, marginTop: "0.55rem" }}>{bloc.publicDescription}</div>}
+      {bloc.publicDescription && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.67rem", lineHeight: 1.46, marginTop: "0.55rem" }}>{bloc.publicDescription}</div>}
       {bloc.leader && (
         <div style={{ display: "grid", gap: "0.2rem", gridTemplateColumns: "5.6rem minmax(0,1fr)", marginTop: "0.58rem" }}>
-          <span style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.62rem", fontWeight: 750 }}>Leading figure</span>
-          <span style={{ color: "rgba(255,255,255,0.76)", fontSize: "0.66rem", fontWeight: 700 }}>{bloc.leader}</span>
+          <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.62rem", fontWeight: 750 }}>Leading figure</span>
+          <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 76%, transparent)", fontSize: "0.66rem", fontWeight: 700 }}>{bloc.leader}</span>
         </div>
       )}
       {ideology.length > 0 && (
@@ -322,7 +323,7 @@ const PowerBlocDetail = ({ bloc, onClose }) => {
       <DetailList title="Public priorities" values={bloc.publicPriorities?.length ? bloc.publicPriorities : bloc.goals} />
       <DetailList title="Foreign-policy outlook" values={bloc.publicForeignPolicy} />
       {!hasDetail && (
-        <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.64rem", lineHeight: 1.42, marginTop: "0.58rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.64rem", lineHeight: 1.42, marginTop: "0.58rem" }}>
           No additional public information about this power bloc is currently available.
         </div>
       )}
@@ -388,35 +389,35 @@ const GovernmentOverview = ({ profile, fallbackGovernment, fallbackLeader }) => 
   return (
     <section className="oh-country-government" style={{ ...card, padding: "0.94rem 0.92rem" }}>
       <div style={sectionLabel}>Government</div>
-      {form && <div style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.73rem", fontWeight: 760, lineHeight: 1.35, marginTop: "0.34rem" }}>{form}</div>}
+      {form && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.73rem", fontWeight: 760, lineHeight: 1.35, marginTop: "0.34rem" }}>{form}</div>}
       <div style={{ display: "grid", gap: "0.5rem", gridTemplateColumns: headOfGovernment && headOfGovernment !== headOfState ? "1fr 1fr" : "1fr", marginTop: form ? "0.68rem" : "0.35rem" }}>
         {headOfState && (
           <div>
-            <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.55rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>Head of state</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.55rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>Head of state</div>
             <div style={{ color: "#fbbf24", fontSize: "0.72rem", fontWeight: 780, lineHeight: 1.35, marginTop: "0.18rem" }}>{headOfState}</div>
           </div>
         )}
         {headOfGovernment && headOfGovernment !== headOfState && (
           <div>
-            <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.55rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>Head of government</div>
-            <div style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.72rem", fontWeight: 760, lineHeight: 1.35, marginTop: "0.18rem" }}>{headOfGovernment}</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.55rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>Head of government</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.72rem", fontWeight: 760, lineHeight: 1.35, marginTop: "0.18rem" }}>{headOfGovernment}</div>
           </div>
         )}
       </div>
       {governmentParties.names.length > 0 && (
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.48)", fontSize: "0.63rem", lineHeight: 1.45, marginTop: "0.65rem", paddingTop: "0.55rem" }}>
-          <span style={{ color: "rgba(255,255,255,0.34)" }}>
+        <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", fontSize: "0.63rem", lineHeight: 1.45, marginTop: "0.65rem", paddingTop: "0.55rem" }}>
+          <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>
             {governmentParties.names.length > 1 ? "Governing coalition:" : "Government:"}
           </span>{" "}
           {governmentParties.names.join(" | ")}
         </div>
       )}
       {(legislature || legislatureSeats > 0 || nextElection) && (
-        <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", color: "rgba(255,255,255,0.48)", display: "flex", flexDirection: "column", fontSize: "0.63rem", gap: "0.2rem", lineHeight: 1.45, marginTop: "0.55rem", paddingTop: "0.5rem" }}>
+        <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", display: "flex", flexDirection: "column", fontSize: "0.63rem", gap: "0.2rem", lineHeight: 1.45, marginTop: "0.55rem", paddingTop: "0.5rem" }}>
           {(legislature || legislatureSeats > 0) && (
-            <div><span style={{ color: "rgba(255,255,255,0.34)" }}>Legislature</span> <span style={{ color: "rgba(255,255,255,0.72)" }}>{legislature}{legislatureSeats ? ` (${legislatureSeats} seats)` : ""}</span></div>
+            <div><span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>Legislature</span> <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)" }}>{legislature}{legislatureSeats ? ` (${legislatureSeats} seats)` : ""}</span></div>
           )}
-          {nextElection && <div><span style={{ color: "rgba(255,255,255,0.34)" }}>Next election</span> <span style={{ color: "rgba(255,255,255,0.72)" }}>{nextElection}</span></div>}
+          {nextElection && <div><span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)" }}>Next election</span> <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)" }}>{nextElection}</span></div>}
         </div>
       )}
       {seated.length > 0 && (
@@ -441,9 +442,9 @@ const PartiesCompile = ({ profile, onCompile, compiling = false, error = "" }) =
   const detailed = (Array.isArray(profile?.parties) ? profile.parties : []).some((party) => party?.ideologyFamily || Number.isFinite(party?.seats) || party?.role);
   return (
     <div className="oh-country-politics-secondary" style={{ ...card, marginTop: "0.65rem", padding: "0.6rem 0.78rem" }}>
-      {compiling && <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.68rem" }}>Compiling the government and parties…</div>}
+      {compiling && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.68rem" }}>Compiling the government and parties…</div>}
       {!compiling && !detailed && (
-        <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.68rem", lineHeight: 1.4 }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.68rem", lineHeight: 1.4 }}>
           Its parties' seats, roles and ideologies have not been filled in yet. Filling them in asks the AI once.
         </div>
       )}
@@ -466,7 +467,7 @@ const moreToggleStyle = {
   alignSelf: "flex-start",
   background: "transparent",
   border: 0,
-  color: "rgba(255,255,255,0.55)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)",
   cursor: "pointer",
   fontSize: "0.6rem",
   fontWeight: 760,
@@ -494,7 +495,7 @@ const InstitutionPortfolio = ({ rows = [] }) => {
       <div className="oh-country-institution-heading">
         <div style={{ minWidth: 0 }}>
           <div style={sectionLabel}>Institutions</div>
-          <div style={{ color: "rgba(255,255,255,0.39)", fontSize: "0.61rem", marginTop: "0.2rem" }}>Canonical memberships and institutional history</div>
+          <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 39%, transparent)", fontSize: "0.61rem", marginTop: "0.2rem" }}>Canonical memberships and institutional history</div>
         </div>
         <span data-no-translate className="oh-country-institution-count">{items.length}</span>
       </div>
@@ -535,18 +536,18 @@ const IntelligenceAssessment = ({ intelligence }) => {
   const allFindings = Array.isArray(intelligence.findings) ? intelligence.findings : [];
   const findings = showAllFindings ? allFindings : allFindings.slice(0, FINDINGS_SHOWN);
   return (
-    <div className="oh-country-politics-secondary" style={{ ...card, background: "rgba(255,255,255,0.025)", borderColor: "var(--oh-grey-border)", marginTop: "0.85rem", padding: "0.72rem 0.78rem" }}>
+    <div className="oh-country-politics-secondary" style={{ ...card, background: "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", borderColor: "var(--oh-grey-border)", marginTop: "0.85rem", padding: "0.72rem 0.78rem" }}>
       <div style={{ alignItems: "center", display: "flex", gap: "0.35rem", justifyContent: "space-between" }}>
-        <div style={{ ...sectionLabel, color: "var(--oh-grey-text)" }}>🕵 Intelligence assessment</div>
+        <div style={{ ...sectionLabel, color: "var(--oh-grey-text)" }}><UiIcon name="spy" size={14} /> Intelligence assessment</div>
         {intelligence.confidence && <Badge>{intelligence.confidence} confidence</Badge>}
       </div>
-      {intelligence.summary && <div style={{ color: "rgba(255,255,255,0.72)", fontSize: "0.69rem", lineHeight: 1.48, marginTop: "0.48rem" }}>{intelligence.summary}</div>}
+      {intelligence.summary && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: "0.69rem", lineHeight: 1.48, marginTop: "0.48rem" }}>{intelligence.summary}</div>}
       {findings.length > 0 && (
         <div style={{ display: "flex", flexDirection: "column", gap: "0.46rem", marginTop: "0.58rem" }}>
           {findings.map((finding, index) => (
-            <div key={`${finding.topic || "finding"}-${index}`} style={{ borderLeft: "2px solid rgba(255,255,255,0.22)", paddingLeft: "0.55rem" }}>
+            <div key={`${finding.topic || "finding"}-${index}`} style={{ borderLeft: "2px solid color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)", paddingLeft: "0.55rem" }}>
               {finding.topic && <div style={{ color: "var(--oh-grey-muted)", fontSize: "0.58rem", fontWeight: 800 }}>{finding.topic}</div>}
-              <div style={{ color: "rgba(255,255,255,0.6)", fontSize: "0.65rem", lineHeight: 1.43, marginTop: finding.topic ? "0.12rem" : 0 }}>{finding.text}</div>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.65rem", lineHeight: 1.43, marginTop: finding.topic ? "0.12rem" : 0 }}>{finding.text}</div>
             </div>
           ))}
           {allFindings.length > FINDINGS_SHOWN && (
@@ -557,7 +558,7 @@ const IntelligenceAssessment = ({ intelligence }) => {
         </div>
       )}
       {(intelligence.source || intelligence.gatheredAt || intelligence.stale) && (
-        <div style={{ color: intelligence.stale ? "#fbbf24" : "rgba(255,255,255,0.34)", fontSize: "0.57rem", lineHeight: 1.38, marginTop: "0.58rem" }}>
+        <div style={{ color: intelligence.stale ? "#fbbf24" : "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.57rem", lineHeight: 1.38, marginTop: "0.58rem" }}>
           {[intelligence.source, intelligence.gatheredAt ? `Report ${intelligence.gatheredAt}` : "", intelligence.stale ? "Stale" : ""].filter(Boolean).join(" · ")}
         </div>
       )}
@@ -598,9 +599,9 @@ export default function PoliticalOverview({ profile, fallbackGovernment = "", fa
           <div style={{ alignItems: "center", display: "flex", gap: "0.45rem", justifyContent: "space-between" }}>
             <div>
               <div style={sectionLabel}>{landscape.title}</div>
-              <div style={{ color: "rgba(255,255,255,0.34)", fontSize: "0.59rem", marginTop: "0.15rem" }}>{landscape.subtitle}</div>
+              <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)", fontSize: "0.59rem", marginTop: "0.15rem" }}>{landscape.subtitle}</div>
             </div>
-            <div style={{ color: "rgba(255,255,255,0.36)", fontSize: "0.59rem", fontWeight: 750, textAlign: "right" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 36%, transparent)", fontSize: "0.59rem", fontWeight: 750, textAlign: "right" }}>
               <div>{activeView === "blocs"
                 ? `${landscape.entries.length} recorded · ${landscape.entries.filter((entry) => Number.isFinite(entry.influence)).length} quantified`
                 : landscape.hasQuantitativeValues ? `${landscape.totalKnownPercent}% ${landscape.mappedLabel}` : "Qualitative"}</div>
@@ -628,7 +629,7 @@ export default function PoliticalOverview({ profile, fallbackGovernment = "", fa
                 {landscape.entries.slice(0, 4).map((entry) => (
                   <div key={entry.id} style={{ display: "flex", alignItems: "center", gap: "0.43rem", minWidth: 0 }}>
                     <span aria-hidden="true" style={{ backgroundColor: partyColor(entry), borderRadius: "999px", flexShrink: 0, height: "0.5rem", width: "0.5rem" }} />
-                    <span data-no-translate title={entry.name} style={{ color: "rgba(229,240,247,0.83)", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{entry.shortName || entry.name}</span>
+                    <span data-no-translate title={entry.name} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 83%, transparent)", flex: 1, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{entry.shortName || entry.name}</span>
                     <span data-no-translate style={{ color: "#b6d1e0", flexShrink: 0, fontVariantNumeric: "tabular-nums", fontWeight: 800 }}>{entry.displayValue || formatSupport(entry.support)}</span>
                   </div>
                 ))}
@@ -673,7 +674,7 @@ export default function PoliticalOverview({ profile, fallbackGovernment = "", fa
           <div style={sectionLabel}>National priorities</div>
           <div style={{ display: "flex", flexDirection: "column", gap: "0.34rem", marginTop: "0.48rem" }}>
             {goals.map((goal) => (
-              <div key={goal} style={{ color: "rgba(255,255,255,0.65)", fontSize: "0.67rem", lineHeight: 1.4 }}>• {goal}</div>
+              <div key={goal} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)", fontSize: "0.67rem", lineHeight: 1.4 }}>• {goal}</div>
             ))}
           </div>
         </div>

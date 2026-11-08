@@ -23,6 +23,7 @@
 // dock as wide as the screen.
 
 import React, { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 
 import { getNationFlags } from "../../runtime/assets.js";
 import { isComposerSendKey } from "../../runtime/composerKeys.js";
@@ -65,10 +66,10 @@ const ACCENT = "#2bc1f3";
 const ACCENT_SOFT = "rgba(43,193,243,0.14)";
 const ACCENT_EDGE = "rgba(43,193,243,0.45)";
 const INK = "#f4f4f5";
-const INK_SOFT = "rgba(244,244,245,0.62)";
-const INK_FAINT = "rgba(244,244,245,0.38)";
-const LINE = "rgba(255,255,255,0.08)";
-const CARD = "rgba(255,255,255,0.025)";
+const INK_SOFT = "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)";
+const INK_FAINT = "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)";
+const LINE = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)";
+const CARD = "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)";
 const AVATAR = "#2a2a2f";
 // The phone: its screen, and the frame round it.
 const SCREEN = "#0b0b0d";
@@ -83,7 +84,7 @@ const ensureStyles = () => {
   style.textContent = `
   @keyframes rostraIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
   .rostra-post { animation: rostraIn 0.28s cubic-bezier(0.2, 0.7, 0.2, 1) both; }
-  .rostra-scroll { scrollbar-width: thin; scrollbar-color: rgba(255,255,255,0.2) transparent; }
+  .rostra-scroll { scrollbar-width: thin; scrollbar-color: color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent) transparent; }
   .rostra-action:hover { color: ${ACCENT}; }
   .rostra-composer::placeholder { color: ${INK_FAINT}; }
   @media (prefers-reduced-motion: reduce) { .rostra-post { animation: none; } }
@@ -188,7 +189,7 @@ const PersonIcon = () => (
 const StatusBar = ({ date }) => (
   <div aria-hidden="true" style={{ alignItems: "center", color: INK, display: "grid", flex: "0 0 auto", fontSize: "0.7rem", fontWeight: 700, gridTemplateColumns: "1fr auto 1fr", height: "2.5rem", padding: "0.3rem 1.35rem 0" }}>
     <span data-no-translate style={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{date}</span>
-    <span style={{ background: "#000", borderRadius: "999px", boxShadow: "0 0 0 1px rgba(255,255,255,0.05)", height: "1.45rem", width: "5.2rem" }} />
+    <span style={{ background: "#000", borderRadius: "999px", boxShadow: "0 0 0 1px color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", height: "1.45rem", width: "5.2rem" }} />
     <span style={{ alignItems: "center", display: "flex", gap: "0.28rem", justifyContent: "flex-end" }}>
       <svg width="16" height="10" viewBox="0 0 17 11" fill="currentColor"><rect x="0" y="7" width="3" height="4" rx="0.7" /><rect x="4.6" y="5" width="3" height="6" rx="0.7" /><rect x="9.2" y="2.6" width="3" height="8.4" rx="0.7" /><rect x="13.8" y="0" width="3" height="11" rx="0.7" /></svg>
       <svg width="14" height="10" viewBox="0 0 15 11" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"><path d="M1 4.2a9.2 9.2 0 0 1 13 0" /><path d="M3.4 6.7a5.8 5.8 0 0 1 8.2 0" /><circle cx="7.5" cy="9.3" r="0.9" fill="currentColor" stroke="none" /></svg>
@@ -246,7 +247,7 @@ const Avatar = ({ name, flagUrl, mine, size = 2.4 }) => {
       <span style={{
         alignItems: "center",
         background: mine ? ACCENT_SOFT : AVATAR,
-        border: `1px solid ${mine ? ACCENT_EDGE : "rgba(255,255,255,0.1)"}`,
+        border: `1px solid ${mine ? ACCENT_EDGE : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)"}`,
         borderRadius: "999px",
         color: mine ? ACCENT : INK_SOFT,
         display: "flex",
@@ -293,7 +294,7 @@ const QuotedPost = ({ post, gone, flags }) => {
     );
   }
   return (
-    <div style={{ border: `1px solid rgba(255,255,255,0.12)`, borderRadius: "10px", marginTop: "0.55rem", padding: "0.55rem 0.7rem" }}>
+    <div style={{ border: `1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)`, borderRadius: "10px", marginTop: "0.55rem", padding: "0.55rem 0.7rem" }}>
       <div style={{ alignItems: "center", display: "flex", gap: "0.45rem", minWidth: 0 }}>
         <Avatar name={post.author} flagUrl={flagFor(post.country, flags.custom, flags.polities)} mine={post.kind === "player"} size={1.3} />
         <span data-no-translate style={{ color: INK, fontSize: "0.76rem", fontWeight: 700, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{post.author}</span>
@@ -316,17 +317,17 @@ const PollCard = ({ poll }) => {
   const winner = pollWinner(poll);
   const votes = results?.votes ? Number(results.votes).toLocaleString() : "";
   return (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid rgba(255,255,255,0.1)`, borderRadius: "12px", marginTop: "0.6rem", padding: "0.6rem 0.65rem 0.55rem" }}>
+    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: `1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)`, borderRadius: "12px", marginTop: "0.6rem", padding: "0.6rem 0.65rem 0.55rem" }}>
       <div style={{ display: "grid", gap: "0.38rem" }}>
         {poll.choices.map((choice, index) => {
           const share = results ? results.shares[index] ?? 0 : null;
           const won = index === winner;
           return results ? (
-            <div key={choice} style={{ background: "rgba(255,255,255,0.05)", borderRadius: "8px", overflow: "hidden", position: "relative" }}>
-              <div aria-hidden="true" style={{ background: won ? "rgba(43,193,243,0.28)" : "rgba(255,255,255,0.1)", bottom: 0, left: 0, position: "absolute", top: 0, width: `${share}%` }} />
+            <div key={choice} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", borderRadius: "8px", overflow: "hidden", position: "relative" }}>
+              <div aria-hidden="true" style={{ background: won ? "rgba(43,193,243,0.28)" : "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", bottom: 0, left: 0, position: "absolute", top: 0, width: `${share}%` }} />
               <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between", padding: "0.42rem 0.6rem", position: "relative" }}>
                 <span data-no-translate style={{ color: INK, fontSize: "0.8rem", fontWeight: won ? 800 : 600, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                  {won ? `✓ ${choice}` : choice}
+                  {won ? <><UiIcon name="check" size={14} /> {choice}</> : choice}
                 </span>
                 <span data-no-translate style={{ color: won ? ACCENT : INK_SOFT, flexShrink: 0, fontSize: "0.78rem", fontWeight: 800 }}>{`${share}%`}</span>
               </div>
@@ -349,7 +350,7 @@ const PollCard = ({ poll }) => {
         )}
       </div>
       {results?.consensus && (
-        <div style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${LINE}`, borderRadius: "8px", color: INK_SOFT, fontSize: "0.74rem", lineHeight: 1.45, marginTop: "0.5rem", padding: "0.45rem 0.55rem" }}>
+        <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: `1px solid ${LINE}`, borderRadius: "8px", color: INK_SOFT, fontSize: "0.74rem", lineHeight: 1.45, marginTop: "0.5rem", padding: "0.45rem 0.55rem" }}>
           <strong style={{ color: INK }}>Public consensus:</strong>{" "}
           <span data-no-translate>{results.consensus}</span>
         </div>
@@ -632,10 +633,10 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
     : {
       ...rising,
       backdropFilter: "blur(8px)",
-      backgroundColor: "rgba(11, 11, 13, 0.97)",
-      border: "1px solid rgba(255,255,255,0.1)",
+      backgroundColor: "color-mix(in srgb, var(--oh-paper, rgb(11,11,13)) 97%, transparent)",
+      border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
       borderRadius: "16px",
-      boxShadow: "-4px 0 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
+      boxShadow: "-4px 0 24px rgba(0,0,0,0.4), inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
       height: `min(calc(${APP_HEIGHT} - 9rem), max(calc(${APP_HEIGHT} - 16rem), 30rem))`,
       minHeight: "10rem",
       overflow: "hidden",
@@ -643,7 +644,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
     };
 
   return (
-    <div role="dialog" aria-label="Rostra" style={frameStyle}>
+    <div role="dialog" aria-label="Rostra" data-oh-dark-scope style={frameStyle}>
       {framed && (
         <>
           {/* The side buttons, as the frame's only ornament. */}
@@ -673,7 +674,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
             aria-label={composing ? "Put the post away" : "Write a post"}
             aria-pressed={composing}
             title={composing ? "Put the post away" : "Write a post"}
-            style={{ alignItems: "center", background: composing ? ACCENT_SOFT : "rgba(255,255,255,0.06)", border: composing ? `1px solid ${ACCENT_EDGE}` : "1px solid transparent", borderRadius: "999px", color: composing ? ACCENT : INK_SOFT, cursor: country ? "pointer" : "default", display: "inline-flex", flex: "0 0 auto", height: "2rem", justifyContent: "center", marginLeft: framed ? "auto" : undefined, padding: 0, width: "2rem" }}
+            style={{ alignItems: "center", background: composing ? ACCENT_SOFT : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: composing ? `1px solid ${ACCENT_EDGE}` : "1px solid transparent", borderRadius: "999px", color: composing ? ACCENT : INK_SOFT, cursor: country ? "pointer" : "default", display: "inline-flex", flex: "0 0 auto", height: "2rem", justifyContent: "center", marginLeft: framed ? "auto" : undefined, padding: 0, width: "2rem" }}
           >
             <PenIcon />
           </button>
@@ -682,7 +683,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
             className="oh-tap"
             onClick={onClose}
             aria-label="Close Rostra"
-            style={{ alignItems: "center", background: "rgba(255,255,255,0.06)", border: "none", borderRadius: "999px", color: INK_SOFT, cursor: "pointer", display: "inline-flex", flex: "0 0 auto", height: "2rem", justifyContent: "center", padding: 0, width: "2rem" }}
+            style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", border: "none", borderRadius: "999px", color: INK_SOFT, cursor: "pointer", display: "inline-flex", flex: "0 0 auto", height: "2rem", justifyContent: "center", padding: 0, width: "2rem" }}
           >
             <CloseIcon />
           </button>
@@ -737,7 +738,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
                         onChange={(event) => setChoices((all) => all.map((entry, at) => (at === index ? event.target.value : entry)))}
                         placeholder={`Choice ${index + 1}`}
                         aria-label={`Choice ${index + 1}`}
-                        style={{ background: "rgba(255,255,255,0.04)", border: `1px solid ${ACCENT_EDGE}`, borderRadius: "8px", boxSizing: "border-box", color: INK, flex: 1, fontFamily: "sans-serif", fontSize: "0.8rem", minWidth: 0, outline: "none", padding: "0.38rem 0.55rem" }}
+                        style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)", border: `1px solid ${ACCENT_EDGE}`, borderRadius: "8px", boxSizing: "border-box", color: INK, flex: 1, fontFamily: "sans-serif", fontSize: "0.8rem", minWidth: 0, outline: "none", padding: "0.38rem 0.55rem" }}
                       />
                       {choices.length > POLL_CHOICES_MIN && (
                         <button
@@ -771,7 +772,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
                     onClick={() => setQuoting(null)}
                     aria-label="Remove the quote"
                     title="Remove the quote"
-                    style={{ alignItems: "center", background: "#18181b", border: "1px solid rgba(255,255,255,0.18)", borderRadius: "999px", color: INK_SOFT, cursor: "pointer", display: "flex", height: "1.4rem", justifyContent: "center", padding: 0, position: "absolute", right: "-0.35rem", top: "0.2rem", width: "1.4rem" }}
+                    style={{ alignItems: "center", background: "var(--oh-paper, #18181b)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)", borderRadius: "999px", color: INK_SOFT, cursor: "pointer", display: "flex", height: "1.4rem", justifyContent: "center", padding: 0, position: "absolute", right: "-0.35rem", top: "0.2rem", width: "1.4rem" }}
                   >
                     <CloseIcon />
                   </button>
@@ -898,7 +899,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
                 <span style={{ display: "inline-flex", position: "relative" }}>
                   <Icon />
                   {count > 0 && (
-                    <span data-no-translate style={{ alignItems: "center", background: ACCENT, border: `1.5px solid ${framed ? SCREEN : "#18181b"}`, borderRadius: 999, color: "#06171d", display: "inline-flex", fontSize: ".55rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", minWidth: "1.05rem", padding: "0 .2rem", position: "absolute", right: "-0.6rem", top: "-0.4rem" }}>
+                    <span data-no-translate style={{ alignItems: "center", background: ACCENT, border: `1.5px solid ${framed ? SCREEN : "var(--oh-paper, #18181b)"}`, borderRadius: 999, color: "#06171d", display: "inline-flex", fontSize: ".55rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", minWidth: "1.05rem", padding: "0 .2rem", position: "absolute", right: "-0.6rem", top: "-0.4rem" }}>
                       {count > 9 ? "9+" : count}
                     </span>
                   )}
@@ -910,7 +911,7 @@ const SocialPanel = ({ isOpen, onClose, onSeen }) => {
         </div>
         {framed && (
           <div aria-hidden="true" style={{ display: "flex", flex: "0 0 auto", justifyContent: "center", padding: "0.3rem 0 0.45rem" }}>
-            <span style={{ background: "rgba(244,244,245,0.85)", borderRadius: "999px", height: "0.26rem", width: "6.6rem" }} />
+            <span style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)", borderRadius: "999px", height: "0.26rem", width: "6.6rem" }} />
           </div>
         )}
       </div>
@@ -995,8 +996,8 @@ const Social = ({ hovered, isOpen, onToggle, setHovered }) => {
               : "var(--oh-ui-glass-chip, rgba(255,255,255,0.04))",
           border: isOpen ? "1px solid var(--oh-ui-glass-active-line, rgba(96,165,250,0.34))" : "1px solid var(--oh-ui-glass-line, rgba(255,255,255,0.1))",
           borderRadius: "10px",
-          boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
-          color: "white",
+          boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+          color: "var(--oh-ink, #fff)",
           cursor: "pointer",
           display: "flex",
           fontFamily: "inherit",
@@ -1015,7 +1016,7 @@ const Social = ({ hovered, isOpen, onToggle, setHovered }) => {
         <span style={{ display: "inline-flex", position: "relative" }}>
           <RostraDockIcon />
           {unseen > 0 && (
-            <span data-no-translate style={{ alignItems: "center", background: ACCENT, border: "1px solid rgba(255,255,255,0.35)", borderRadius: "999px", boxShadow: "0 1px 4px rgba(0,0,0,0.5)", color: "#06171d", display: "flex", fontSize: "0.62rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", lineHeight: 1, minWidth: "1.05rem", padding: "0 0.2rem", position: "absolute", right: "-0.8rem", top: "-0.55rem" }}>
+            <span data-no-translate style={{ alignItems: "center", background: ACCENT, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", borderRadius: "999px", boxShadow: "0 1px 4px rgba(0,0,0,0.5)", color: "#06171d", display: "flex", fontSize: "0.62rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", lineHeight: 1, minWidth: "1.05rem", padding: "0 0.2rem", position: "absolute", right: "-0.8rem", top: "-0.55rem" }}>
               {unseen > 9 ? "9+" : unseen}
             </span>
           )}

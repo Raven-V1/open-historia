@@ -1,5 +1,6 @@
 /*! Open Historia — portions (drawer close/slide + mobile layout) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useState, useRef, useEffect } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { Chart, registerables } from "chart.js";
 import { sendMessage, startChat, loadHistory } from "../AI/main.jsx";
 import { requestDiplomaticChat } from "./chat.jsx";
@@ -67,7 +68,7 @@ const ThinkingDots = () => {
 // explicit Proceed click is the only path to the canonical Actions writer.
 // Saves the diagnostics log with this failure attached at the top, or copies
 // the failure alone while logging is off (runtime/saveDebugLog.js).
-const ReportButton = ({ buildIncident, tone = "rgba(255,255,255,0.2)", color = "rgba(255,255,255,0.6)" }) => {
+const ReportButton = ({ buildIncident, tone = "color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", color = "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)" }) => {
     const { busy, label, loggingOn, onClick } = useFailureReportButton({ buildIncident, copyIdleLabel: "Copy for a bug report" });
     return (
         <button
@@ -133,17 +134,17 @@ const AdvisorErrorDetails = ({ message, diagnostics, onRetry, retrying }) => {
         color="rgba(254,202,202,0.95)"
         />
         {hasDetail && (
-            <button type="button" onClick={() => setOpen((value) => !value)} style={{ background: "none", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "6px", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
+            <button type="button" onClick={() => setOpen((value) => !value)} style={{ background: "none", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", borderRadius: "6px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
             {open ? "Hide details" : "Show details"}
             </button>
         )}
         </div>
         {open && (
             <>
-            <p style={{ margin: "0.4rem 0 0", fontSize: "0.64rem", lineHeight: 1.4, color: "rgba(255,255,255,0.35)" }}>
+            <p style={{ margin: "0.4rem 0 0", fontSize: "0.64rem", lineHeight: 1.4, color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)" }}>
             No API key or endpoint is included. The model&apos;s own output is, so this may quote your campaign.
             </p>
-            <pre data-no-translate style={{ margin: "0.35rem 0 0", padding: "0.5rem", background: "rgba(0,0,0,0.35)", borderRadius: "6px", color: "rgba(255,255,255,0.6)", fontSize: "0.64rem", lineHeight: 1.45, maxHeight: "12rem", overflow: "auto", userSelect: "text", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+            <pre data-no-translate style={{ margin: "0.35rem 0 0", padding: "0.5rem", background: "rgba(0,0,0,0.35)", borderRadius: "6px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.64rem", lineHeight: 1.45, maxHeight: "12rem", overflow: "auto", userSelect: "text", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
             {formatReportFields(fields).join("\n")}
             </pre>
             </>
@@ -172,7 +173,7 @@ const AdvisorProjectsCard = ({ items, onOpenProjects }) => {
     return (
         <div style={{ marginTop: "0.75rem", background: "rgba(59,130,246,0.1)", border: "1px solid rgba(59,130,246,0.3)", borderRadius: "10px", padding: "0.65rem 0.8rem" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}>
-        <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "rgba(191,219,254,0.95)" }}>🎯 Projects {summary}</span>
+        <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "rgba(191,219,254,0.95)" }}><UiIcon name="target" size={14} /> Projects {summary}</span>
         {onOpenProjects && (
             <button type="button" onClick={onOpenProjects} style={{ background: "none", border: "1px solid rgba(59,130,246,0.5)", borderRadius: "6px", color: "rgba(191,219,254,0.9)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
             Open Projects
@@ -181,7 +182,7 @@ const AdvisorProjectsCard = ({ items, onOpenProjects }) => {
         </div>
         <ul style={{ margin: "0.4rem 0 0", paddingLeft: "1.1rem" }}>
         {items.map((item, index) => (
-            <li key={index} data-no-translate style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>
+            <li key={index} data-no-translate style={{ fontSize: "0.75rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)", lineHeight: 1.5 }}>
             {verb[item.change] || "Changed: "}{item.title}
             {item.change === "deferred" && (
                 <span style={{ color: "rgba(252,211,77,0.9)" }}> — this one changes the world, so the next time skip enacts it</span>
@@ -216,10 +217,10 @@ const AdvisorProjectsProblem = ({ kind, detail, excerpt, onRetry }) => {
 
     return (
         <div style={{ marginTop: "0.75rem", background: "rgba(245,158,11,0.1)", border: "1px solid rgba(245,158,11,0.35)", borderRadius: "10px", padding: "0.65rem 0.8rem" }}>
-        <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "rgba(253,230,138,0.95)" }}>⚠ Board not fully updated</div>
-        <p style={{ margin: "0.3rem 0 0", fontSize: "0.75rem", lineHeight: 1.5, color: "rgba(255,255,255,0.75)" }}>{message}</p>
+        <div style={{ fontSize: "0.76rem", fontWeight: 700, color: "rgba(253,230,138,0.95)" }}><UiIcon name="warning" size={14} /> Board not fully updated</div>
+        <p style={{ margin: "0.3rem 0 0", fontSize: "0.75rem", lineHeight: 1.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)" }}>{message}</p>
         {detail && (
-            <p data-no-translate style={{ margin: "0.3rem 0 0", fontSize: "0.68rem", lineHeight: 1.45, color: "rgba(255,255,255,0.4)" }}>
+            <p data-no-translate style={{ margin: "0.3rem 0 0", fontSize: "0.68rem", lineHeight: 1.45, color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}>
             {detail}
             </p>
         )}
@@ -230,7 +231,7 @@ const AdvisorProjectsProblem = ({ kind, detail, excerpt, onRetry }) => {
             </button>
         )}
         {excerpt && (
-            <button type="button" onClick={() => setShowExcerpt((value) => !value)} style={{ background: "none", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "6px", color: "rgba(255,255,255,0.6)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
+            <button type="button" onClick={() => setShowExcerpt((value) => !value)} style={{ background: "none", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", borderRadius: "6px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
             {showExcerpt ? "Hide" : "Show"} what broke
             </button>
         )}
@@ -247,7 +248,7 @@ const AdvisorProjectsProblem = ({ kind, detail, excerpt, onRetry }) => {
         )}
         </div>
         {excerpt && showExcerpt && (
-            <pre data-no-translate style={{ margin: "0.5rem 0 0", padding: "0.5rem", background: "rgba(0,0,0,0.35)", borderRadius: "6px", color: "rgba(255,255,255,0.6)", fontSize: "0.64rem", lineHeight: 1.45, maxHeight: "9rem", overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+            <pre data-no-translate style={{ margin: "0.5rem 0 0", padding: "0.5rem", background: "rgba(0,0,0,0.35)", borderRadius: "6px", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.64rem", lineHeight: 1.45, maxHeight: "9rem", overflow: "auto", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
             {excerpt}
             </pre>
         )}
@@ -268,18 +269,18 @@ const AdvisorActionsCard = ({ items, onOpenActions }) => {
         .join(", ");
 
     return (
-        <div style={{ marginTop: "0.75rem", background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.15)", borderRadius: "10px", padding: "0.65rem 0.8rem" }}>
+        <div style={{ marginTop: "0.75rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)", borderRadius: "10px", padding: "0.65rem 0.8rem" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "0.5rem" }}>
-        <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "#f4f4f5" }}>📋 Actions {summary}</span>
+        <span style={{ fontSize: "0.76rem", fontWeight: 700, color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" }}><UiIcon name="task" size={14} /> Actions {summary}</span>
         {onOpenActions && (
-            <button type="button" onClick={onOpenActions} style={{ background: "none", border: "1px solid rgba(255,255,255,0.25)", borderRadius: "6px", color: "#e4e4e7", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
+            <button type="button" onClick={onOpenActions} style={{ background: "none", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", borderRadius: "6px", color: "var(--oh-ink, #e4e4e7)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 600, padding: "0.2rem 0.5rem" }}>
             Open Actions
             </button>
         )}
         </div>
         <ul style={{ margin: "0.4rem 0 0", paddingLeft: "1.1rem" }}>
         {items.map((item, index) => (
-            <li key={index} style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.75)", lineHeight: 1.5 }}>
+            <li key={index} style={{ fontSize: "0.75rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)", lineHeight: 1.5 }}>
             {item.change === "removed" ? "Removed: " : item.change === "updated" ? "Updated: " : "Added: "}{item.title}
             </li>
         ))}
@@ -357,10 +358,10 @@ const AdvisorActionProposalCard = ({ proposal, receipt, queueAction, targetActio
     };
 
     return (
-        <div style={{ marginTop: "0.6rem", background: "rgba(255,255,255,0.035)", border: "1px solid rgba(255,255,255,0.2)", borderRadius: "9px", padding: "0.6rem 0.7rem" }}>
+        <div style={{ marginTop: "0.6rem", background: "color-mix(in srgb, var(--oh-ink, #fff) 3.5%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)", borderRadius: "9px", padding: "0.6rem 0.7rem" }}>
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: "0.5rem" }}>
-            <strong style={{ fontSize: "0.76rem" }}>📋 {label}</strong>
-            <span aria-live="polite" style={{ fontSize: "0.67rem", color: ["queued", "updated", "removed", "resolved"].includes(state) ? "#86efac" : "#e4e4e7" }}>
+            <strong style={{ fontSize: "0.76rem" }}><UiIcon name="task" size={14} /> {label}</strong>
+            <span aria-live="polite" style={{ fontSize: "0.67rem", color: ["queued", "updated", "removed", "resolved"].includes(state) ? "#86efac" : "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }}>
                 {statusLabel}
             </span>
         </div>
@@ -373,19 +374,19 @@ const AdvisorActionProposalCard = ({ proposal, receipt, queueAction, targetActio
         )}
         <div style={{ display: "flex", justifyContent: "flex-end", gap: "0.4rem", marginTop: "0.6rem", flexWrap: "wrap" }}>
             {canDiscuss && (
-                <button type="button" disabled={busy || disabled} onClick={discuss} style={{ border: "1px solid rgba(255,255,255,0.25)", borderRadius: "7px", background: "transparent", color: "#e4e4e7", padding: "0.3rem 0.55rem", cursor: busy || disabled ? "default" : "pointer" }}>Discuss</button>
+                <button type="button" disabled={busy || disabled} onClick={discuss} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)", borderRadius: "7px", background: "transparent", color: "var(--oh-ink, #e4e4e7)", padding: "0.3rem 0.55rem", cursor: busy || disabled ? "default" : "pointer" }}>Discuss</button>
             )}
             {queued && (
                 <button type="button" disabled={busy || disabled} onClick={() => doAction(onCancel, "The Action could not be removed from the queue.")} style={{ border: "1px solid rgba(251,191,36,0.4)", borderRadius: "7px", background: "rgba(251,191,36,0.08)", color: "#fde68a", padding: "0.3rem 0.55rem", cursor: busy || disabled ? "default" : "pointer" }}>{busy ? "Cancelling…" : "Cancel"}</button>
             )}
             {canProceed && (
-                <button type="button" disabled={busy || disabled} onClick={() => doAction(onProceed, "The Action was not queued.")} style={{ border: "1px solid rgba(147,197,253,0.6)", borderRadius: "7px", background: "rgba(59,130,246,0.22)", color: "#dbeafe", padding: "0.3rem 0.55rem", cursor: busy || disabled ? "default" : "pointer" }}>{busy ? "Queueing…" : proposal.operation === "remove" ? "Proceed / Remove" : "Proceed / Queue"}</button>
+                <button type="button" disabled={busy || disabled} onClick={() => doAction(onProceed, "The Action was not queued.")} style={{ border: "1px solid rgba(147,197,253,0.6)", borderRadius: "7px", background: "rgba(59,130,246,0.22)", color: "var(--oh-link, #dbeafe)", padding: "0.3rem 0.55rem", cursor: busy || disabled ? "default" : "pointer" }}>{busy ? "Queueing…" : proposal.operation === "remove" ? "Proceed / Remove" : "Proceed / Queue"}</button>
             )}
             {["resolved", "updated", "removed", "conflict", "no-longer-queued", "target-unavailable", "target-resolved"].includes(state) && onOpenActions && (
-                <button type="button" onClick={onOpenActions} style={{ border: "1px solid rgba(255,255,255,0.22)", borderRadius: "7px", background: "transparent", color: "#e4e4e7", padding: "0.3rem 0.55rem", cursor: "pointer" }}>Open Actions</button>
+                <button type="button" onClick={onOpenActions} style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)", borderRadius: "7px", background: "transparent", color: "var(--oh-ink, #e4e4e7)", padding: "0.3rem 0.55rem", cursor: "pointer" }}>Open Actions</button>
             )}
         </div>
-        {queued && <div style={{ fontSize: "0.68rem", marginTop: "0.35rem", color: "rgba(255,255,255,0.65)" }}>Queued on the Actions board. It will resolve when game time advances.</div>}
+        {queued && <div style={{ fontSize: "0.68rem", marginTop: "0.35rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 65%, transparent)" }}>Queued on the Actions board. It will resolve when game time advances.</div>}
         {state === "conflict" && <div style={{ fontSize: "0.68rem", marginTop: "0.35rem", color: "#fde68a" }}>This Action ID now refers to different contents. Review the Actions board before proceeding.</div>}
         {staleTarget && <div style={{ fontSize: "0.68rem", marginTop: "0.35rem", color: "#fde68a" }}>The referenced Action is no longer queued. Discuss a new Action if further work is needed.</div>}
         {error && <div role="alert" style={{ fontSize: "0.72rem", color: "#fca5a5", marginTop: "0.4rem" }}>{error}</div>}
@@ -432,7 +433,7 @@ const AdvisorDraftSend = ({ draft, onDraft }) => {
             fontFamily: "sans-serif", fontSize: "0.76rem", fontWeight: 600, padding: "0.35rem 0.65rem",
             textAlign: "left",
         }}>
-        {handedOff ? "✓ In Diplomacy — press send there" : `✉️ Draft to ${draft.targetType === "institution-council" ? `Council · ${draft.institutionId}` : draft.targetType === "institution-lifecycle" ? `hearing · ${draft.country || draft.institutionId}` : draft.country}`}
+        {handedOff ? <><UiIcon name="check" size={14} /> In Diplomacy — press send there</> : <><UiIcon name="email" size={14} /> {`Draft to ${draft.targetType === "institution-council" ? `Council · ${draft.institutionId}` : draft.targetType === "institution-lifecycle" ? `hearing · ${draft.country || draft.institutionId}` : draft.country}`}</>}
         </button>
         {sentOn && (
             <div style={{ color: "rgba(253,230,138,0.9)", fontFamily: "sans-serif", fontSize: "0.7rem", marginTop: "0.25rem" }}>
@@ -467,18 +468,18 @@ const AdvisorDeployPlace = ({ deployment, placed, onPlace }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}>
         <button type="button" onClick={handleClick} disabled={busy} style={{
             display: "flex", alignItems: "center", gap: "0.4rem",
-            background: status === "placed" ? "rgba(52,211,153,0.12)" : "rgba(255,255,255,0.06)",
-            border: `1px solid ${status === "placed" ? "rgba(52,211,153,0.4)" : "rgba(255,255,255,0.23)"}`,
+            background: status === "placed" ? "rgba(52,211,153,0.12)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+            border: `1px solid ${status === "placed" ? "rgba(52,211,153,0.4)" : "color-mix(in srgb, var(--oh-ink, #fff) 23%, transparent)"}`,
             borderRadius: "8px",
-            color: status === "placed" ? "rgba(167,243,208,0.95)" : "#f4f4f5",
+            color: status === "placed" ? "rgba(167,243,208,0.95)" : "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)",
             cursor: busy ? "default" : "pointer",
             fontFamily: "sans-serif", fontSize: "0.76rem", fontWeight: 600, padding: "0.35rem 0.65rem",
         }}>
         {status === "placed"
-            ? `✓ ${deployment.name} placed`
+            ? <><UiIcon name="check" size={14} /> {`${deployment.name} placed`}</>
             : status === "placing"
                 ? `Placing ${deployment.name}…`
-                : `📍 Place ${deployment.name} here`}
+                : <><UiIcon name="location" size={14} /> {`Place ${deployment.name} here`}</>}
         </button>
         {error && <span role="alert" style={{ color: "#fca5a5", fontSize: "0.7rem", lineHeight: 1.35 }}>{error}</span>}
         </div>
@@ -530,10 +531,10 @@ const AdvisorInstitutionDraftAction = ({ draft, completed, onExecute }) => {
             textAlign: "left",
         }}>
         {status === "completed"
-            ? `✓ ${institutionDraftButtonLabel(draft)}`
+            ? <><UiIcon name="check" size={14} /> {institutionDraftButtonLabel(draft)}</>
             : status === "working"
                 ? "Applying institution action…"
-                : `🏛️ ${institutionDraftButtonLabel(draft)}`}
+                : <><UiIcon name="building" size={14} /> {institutionDraftButtonLabel(draft)}</>}
         </button>
         {error && <span style={{ color: "#fca5a5", fontSize: "0.7rem", lineHeight: 1.35 }}>{error}</span>}
         </div>
@@ -597,9 +598,9 @@ const AdvisorChart = ({ config }) => {
                     ...coloredConfig.options?.plugins,
                     legend: { display: false },
                     tooltip: {
-                        backgroundColor: "rgba(17,17,19,0.95)",
-                                     borderColor: "rgba(255,255,255,0.12)", borderWidth: 1,
-                                     titleColor: "rgba(255,255,255,0.85)", bodyColor: "rgba(255,255,255,0.6)",
+                        backgroundColor: "color-mix(in srgb, var(--oh-paper, rgb(17,17,19)) 95%, transparent)",
+                                     borderColor: "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)", borderWidth: 1,
+                                     titleColor: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)", bodyColor: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)",
                                      padding: 10, cornerRadius: 8,
                                      ...coloredConfig.options?.plugins?.tooltip,
                                      callbacks: {
@@ -609,8 +610,8 @@ const AdvisorChart = ({ config }) => {
                     },
                 },
                 scales: isCartesian ? {
-                    x: { ticks: { color: "rgba(255,255,255,0.45)", font: { size: 10, family: "sans-serif" } }, grid: { color: "rgba(255,255,255,0.06)" }, border: { color: "rgba(255,255,255,0.08)" }, ...coloredConfig.options?.scales?.x },
-                                     y: { ticks: { color: "rgba(255,255,255,0.45)", font: { size: 10, family: "sans-serif" }, callback: val => `${val}${isPercent ? "%" : ""}` }, grid: { color: "rgba(255,255,255,0.06)" }, border: { color: "rgba(255,255,255,0.08)" }, ...coloredConfig.options?.scales?.y },
+                    x: { ticks: { color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", font: { size: 10, family: "sans-serif" } }, grid: { color: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)" }, border: { color: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" }, ...coloredConfig.options?.scales?.x },
+                                     y: { ticks: { color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", font: { size: 10, family: "sans-serif" }, callback: val => `${val}${isPercent ? "%" : ""}` }, grid: { color: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)" }, border: { color: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" }, ...coloredConfig.options?.scales?.y },
                 } : undefined,
             },
         });
@@ -622,7 +623,7 @@ const AdvisorChart = ({ config }) => {
         {legendItems.length > 0 && (
             <div style={{ display: "flex", flexWrap: "wrap", gap: "0.4rem 0.85rem", marginBottom: "0.5rem" }}>
             {legendItems.map((item, i) => (
-                <span key={i} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontSize: "0.72rem", color: "rgba(255,255,255,0.5)" }}>
+                <span key={i} style={{ display: "flex", alignItems: "center", gap: "0.35rem", fontSize: "0.72rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>
                 <span style={{ width: "8px", height: "8px", borderRadius: "2px", backgroundColor: item.color || "#60a5fa", flexShrink: 0 }} />
                 {item.label}
                 </span>
@@ -817,13 +818,13 @@ const AdvisorMessageRow = React.memo(({ msg, msgIndex, speakerName = "Advisor", 
         {/* The world moved on before this question; the advisor was told how
             (the whole note is in the tooltip). */}
         {msg.role === "user" && msg.catchUpLabel && (
-            <span title={msg.catchUp} style={{ alignSelf: "center", color: "rgba(255,255,255,0.38)", fontSize: "0.66rem", marginBottom: "0.45rem" }}>
+            <span title={msg.catchUp} style={{ alignSelf: "center", color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.66rem", marginBottom: "0.45rem" }}>
             ⏳ {msg.catchUpLabel}
             </span>
         )}
         {msg.role !== "user" && (
             <span className="oh-advisor-speaker">
-            {msg.role === "error" ? "⚠️ Error" : `🧭 ${speakerName}`}
+            {msg.role === "error" ? <><UiIcon name="warning" size={14} /> Error</> : <><UiIcon name="compass" size={14} /> {speakerName}</>}
             </span>
         )}
         {/* Player-typed text stays verbatim under UI translation. */}
@@ -839,12 +840,12 @@ const AdvisorMessageRow = React.memo(({ msg, msgIndex, speakerName = "Advisor", 
         {chartConfig && <AdvisorChart config={chartConfig} />}
         {/* Not while streaming: a chart still arriving is not a broken one. */}
         {chartProblem && !msg.streaming && (
-            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", marginTop: "0.6rem" }}>
-            📉 The chart could not be drawn: {chartProblem}.
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", marginTop: "0.6rem" }}>
+            <UiIcon name="chart" size={14} /> The chart could not be drawn: {chartProblem}.
             </div>
         )}
         {msg.suggestionsNotApplied && !msg.streaming && (
-            <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem", marginTop: "0.6rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem", marginTop: "0.6rem" }}>
             This official's suggested Actions or Projects were not applied. Authorize them through your chief advisor or the relevant panel.
             </div>
         )}
@@ -926,22 +927,22 @@ const AdvisorDocumentNotice = ({ notice }) => {
     if (!report) return null;
     return (
         <div style={{ alignItems: "flex-start", display: "flex", flexDirection: "column" }}>
-            <span style={{ color: "rgba(255,255,255,0.4)", fontSize: "0.7rem", marginBottom: "0.25rem" }}>🧭 Advisor</span>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", fontSize: "0.7rem", marginBottom: "0.25rem" }}><UiIcon name="compass" size={14} /> Advisor</span>
             <div className="oh-advisor-notice">
                 <div>
-                    📄 A new paper on your desk: <span data-no-translate style={{ fontWeight: 800 }}>{report.title}</span>, {noticeHow(notice)}.
+                    <UiIcon name="document" size={14} /> A new paper on your desk: <span data-no-translate style={{ fontWeight: 800 }}>{report.title}</span>, {noticeHow(notice)}.
                 </div>
                 <button type="button" onClick={() => setOpen((value) => !value)} style={{ background: "none", border: "none", color: "#fde68a", cursor: "pointer", fontFamily: "inherit", fontSize: "0.74rem", fontWeight: 700, marginTop: "0.3rem", padding: 0 }}>
                     {open ? "Put it away" : "Read it"}
                 </button>
                 {open && (
-                    <div data-no-translate style={{ borderTop: "1px solid rgba(255,255,255,0.08)", marginTop: "0.4rem", paddingTop: "0.45rem", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                    <div data-no-translate style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", marginTop: "0.4rem", paddingTop: "0.45rem", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
                         {report.dateline ? `${report.dateline}\n\n` : ""}{report.body}
                     </div>
                 )}
             </div>
             {notice.time && (
-                <span style={{ color: "rgba(255,255,255,0.3)", fontSize: "0.65rem", marginTop: "0.25rem" }}>{formatAdvisorDate(notice.time)}</span>
+                <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 30%, transparent)", fontSize: "0.65rem", marginTop: "0.25rem" }}>{formatAdvisorDate(notice.time)}</span>
             )}
         </div>
     );
@@ -980,7 +981,7 @@ const ADVISOR_RENDER_WINDOW_STEP = 20;
 const AdvisorMessageList = React.memo(({ messages, visibleLimit, onShowEarlier, isLoading, speakerName = "Advisor", emptyMessage = "No messages yet. Ask your advisor something!", canExecute = true, canDraft = true, canReviewActions = true, allowedUnitTypes, chatDiffers, chatDir, actionStates, onOpenActions, onOpenProjects, onRetryProjects, onRetry, retrying, onDraftMessage, onDiscussAction, onProceedAction, onCancelAction, onExecuteInstitutionDraft, onPlaceDeployment, messagesEndRef, containerRef, onScroll }) => (
     <div className="oh-advisor-messages" ref={containerRef} onScroll={onScroll}>
     {messages.length === 0 && (
-        <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.5)", marginTop: 0 }}>
+        <p style={{ fontSize: "0.85rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", marginTop: 0 }}>
         {emptyMessage}
         </p>
     )}
@@ -1008,7 +1009,7 @@ const AdvisorMessageList = React.memo(({ messages, visibleLimit, onShowEarlier, 
 
     {isLoading && !(messages[messages.length - 1]?.role === "advisor" && messages[messages.length - 1]?.streaming) && (
         <div style={{ display: "flex", alignItems: "flex-start", flexDirection: "column", gap: "0.25rem" }}>
-        <span style={{ fontSize: "0.7rem", color: "rgba(255,255,255,0.4)" }}>🧭 {speakerName}</span>
+        <span style={{ fontSize: "0.7rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" }}><UiIcon name="compass" size={14} /> {speakerName}</span>
         <div className="oh-advisor-thinking">
         <ThinkingDots />
         </div>
@@ -1909,7 +1910,7 @@ const AdvisorPanel = ({ isAdvisorOpen, mapRef, onClose, width, onResize, onResiz
             // inset is 0 on a desktop).
             ...(isMobile
                 ? { left: 0, paddingTop: SAFE_TOP, paddingBottom: SAFE_BOTTOM, paddingLeft: SAFE_LEFT, paddingRight: SAFE_RIGHT, boxSizing: "border-box" }
-                : { width: `calc(${width || ADVISOR_PANEL_WIDTH} + ${SAFE_RIGHT})`, paddingTop: SAFE_TOP, paddingBottom: SAFE_BOTTOM, paddingRight: SAFE_RIGHT, boxSizing: "border-box", borderLeft: "1px solid rgba(255,255,255,0.1)" }),
+                : { width: `calc(${width || ADVISOR_PANEL_WIDTH} + ${SAFE_RIGHT})`, paddingTop: SAFE_TOP, paddingBottom: SAFE_BOTTOM, paddingRight: SAFE_RIGHT, boxSizing: "border-box", borderLeft: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" }),
             backdropFilter: "blur(8px)",
             // Phones: above every HUD button/panel (toolbar 9999, forces 10000,
             // library panels 10031) so nothing covers the full-screen sheet;
@@ -1922,7 +1923,7 @@ const AdvisorPanel = ({ isAdvisorOpen, mapRef, onClose, width, onResize, onResiz
             boxShadow: isAdvisorOpen ? "-4px 0 24px rgba(0,0,0,0.4)" : "none",
             transition: `transform ${ADVISOR_SLIDE}, box-shadow ${ADVISOR_SLIDE}`,
             display: "flex", flexDirection: "column",
-            color: "white", fontFamily: "sans-serif", overflow: "hidden",
+            color: "var(--oh-ink, #fff)", fontFamily: "sans-serif", overflow: "hidden",
         }}>
         {/* Drag the left edge to resize the drawer (main.jsx clamps + persists).
             Not on a phone, where it is the whole screen. */}
@@ -1942,7 +1943,7 @@ const AdvisorPanel = ({ isAdvisorOpen, mapRef, onClose, width, onResize, onResiz
                     width: "3px", height: "42px", borderRadius: "2px",
                     backgroundColor: isResizing
                         ? "rgba(96,165,250,0.95)"
-                        : handleHover ? "rgba(255,255,255,0.5)" : "rgba(255,255,255,0.22)",
+                        : handleHover ? "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 22%, transparent)",
                     transition: "background-color 0.15s",
                 }} />
             </div>
@@ -1973,8 +1974,8 @@ const AdvisorPanel = ({ isAdvisorOpen, mapRef, onClose, width, onResize, onResiz
         aria-label={confirmingClear ? "Confirm clearing the chat" : "Clear chat"}
         style={confirmingClear
             ? { background: "rgba(239,68,68,0.18)", border: "1px solid rgba(239,68,68,0.55)", borderRadius: "8px", color: "#fca5a5", cursor: "pointer", fontFamily: "sans-serif", fontSize: "0.8rem", fontWeight: 600, lineHeight: 1, padding: "0 0.6rem", display: "flex", alignItems: "center" }
-            : { background: "none", border: "none", color: "rgba(255,255,255,0.4)", cursor: "pointer", fontSize: "1.35rem", lineHeight: 1, padding: 0, display: "flex", alignItems: "center" }}
-        >{confirmingClear ? "Clear?" : "🗑"}</button>
+            : { background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)", cursor: "pointer", fontSize: "1.35rem", lineHeight: 1, padding: 0, display: "flex", alignItems: "center" }}
+        >{confirmingClear ? "Clear?" : <UiIcon name="trash" size={14} />}</button>
         {/* The way out. On a phone the advisor is the whole screen and this ✕
             (or Back) is all that closes it, so it is finger-sized there. */}
         {onClose && (
@@ -1983,8 +1984,8 @@ const AdvisorPanel = ({ isAdvisorOpen, mapRef, onClose, width, onResize, onResiz
             onClick={onClose}
             title="Close advisor"
             aria-label="Close advisor"
-            style={{ background: "none", border: "none", color: "rgba(255,255,255,0.55)", cursor: "pointer", fontSize: "1.35rem", lineHeight: 1, padding: "0 0 0 0.5rem", display: "flex", alignItems: "center" }}
-            >✕</button>
+            style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", cursor: "pointer", fontSize: "1.35rem", lineHeight: 1, padding: "0 0 0 0.5rem", display: "flex", alignItems: "center" }}
+            ><UiIcon name="close" size={16} /></button>
         )}
         </div>
 

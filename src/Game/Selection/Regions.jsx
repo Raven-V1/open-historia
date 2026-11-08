@@ -1,4 +1,5 @@
 /*! Open Historia — portions (era polity names/flags + intel briefing) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
+import UiIcon from "../GameUI/carbonIcons.jsx";
 import React, { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useMap } from "react-map-gl/maplibre";
@@ -277,7 +278,7 @@ const CopyNameBtn = ({ text, title }) => {
     };
     return (
         <IconBtn title={result === "copied" ? "Copied" : result === "failed" ? "Copy failed" : title} onClick={copy}>
-        {result === "copied" ? "\u2713" : result === "failed" ? "\u2715" : "\u29C9"}
+        {result === "copied" ? <UiIcon name="check" size={14} /> : result === "failed" ? <UiIcon name="close" size={14} /> : <UiIcon name="copy" size={14} />}
         </IconBtn>
     );
 };
@@ -748,7 +749,7 @@ const RegionPopup = () => {
             fontFamily: "sans-serif",
             boxShadow: "0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)",
             border: "1px solid rgba(255,255,255,0.12)",
-            color: "white",
+            color: "var(--oh-ink, #fff)",
         }}
         >
         <div style={{ position: "relative", width: "100%", background: "rgba(41,41,45,0.6)" }}>
@@ -809,7 +810,7 @@ const RegionPopup = () => {
             e.currentTarget.style.background = "rgba(24,24,27,0.7)";
         }}
         >
-        {"\u2715"}
+        <UiIcon name="close" size={14} />
         </button>
         </div>
 

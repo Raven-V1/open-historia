@@ -34,10 +34,10 @@ const barStyle = {
   gap: "0.6rem",
   padding: "0.55rem 0.8rem",
   borderRadius: "12px",
-  border: "1px solid rgba(255,255,255,0.16)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
   backgroundColor: "var(--oh-ui-overlay-strong, rgba(16,21,24,0.96))",
   boxShadow: "0 10px 30px rgba(0,0,0,0.5)",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "sans-serif",
   fontSize: "0.78rem",
   pointerEvents: "auto",
@@ -47,9 +47,9 @@ const scoreStyle = {
   width: "1.5rem",
   height: "1.5rem",
   borderRadius: "6px",
-  border: "1px solid rgba(255,255,255,0.16)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
   backgroundColor: "rgba(0,0,0,0.25)",
-  color: "rgba(255,255,255,0.8)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)",
   fontSize: "0.7rem",
   fontWeight: 700,
   cursor: "pointer",
@@ -144,7 +144,7 @@ export const GenerationRatingToast = () => {
         type="button"
         className="oh-tap"
         onClick={() => setPending(null)}
-        style={{ ...scoreStyle, width: "auto", padding: "0 0.5rem", color: "rgba(255,255,255,0.6)" }}
+        style={{ ...scoreStyle, width: "auto", padding: "0 0.5rem", color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)" }}
       >
         Skip
       </button>

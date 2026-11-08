@@ -14,6 +14,7 @@
 // extra cost (gameplay.js resolveInteractiveScene). Letting an offer pass,
 // taking a move back and setting a scene aside cost nothing.
 import React, { useEffect, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useRuntimeState } from "../../runtime/useRuntimeState.js";
 import { offeredEvent } from "../../runtime/interactiveOffer.js";
@@ -33,7 +34,7 @@ const panelStyle = {
     border: "1px solid rgba(250,204,21,0.38)",
     borderRadius: "16px",
     boxShadow: "0 18px 60px rgba(0,0,0,0.6), 0 0 0 1px rgba(250,204,21,0.06) inset",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     display: "flex",
     flexDirection: "column",
     fontFamily: "sans-serif",
@@ -56,10 +57,10 @@ const primaryButton = (disabled) => ({
     padding: "0.6rem 1rem",
 });
 const quietButton = (disabled) => ({
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.12)",
+    background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
     borderRadius: "10px",
-    color: disabled ? "rgba(255,255,255,0.35)" : "rgba(255,255,255,0.85)",
+    color: disabled ? "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)",
     cursor: disabled ? "default" : "pointer",
     fontFamily: "inherit",
     fontSize: "0.78rem",
@@ -70,7 +71,7 @@ const choiceButton = (disabled) => ({
     background: "rgba(250,204,21,0.06)",
     border: "1px solid rgba(250,204,21,0.28)",
     borderRadius: "10px",
-    color: disabled ? "rgba(255,255,255,0.4)" : "#fef9c3",
+    color: disabled ? "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)" : "#fef9c3",
     cursor: disabled ? "default" : "pointer",
     fontFamily: "inherit",
     fontSize: "0.82rem",
@@ -80,11 +81,11 @@ const choiceButton = (disabled) => ({
     width: "100%",
 });
 const inputStyle = {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.14)",
+    background: "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
     borderRadius: "10px",
     boxSizing: "border-box",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     fontFamily: "inherit",
     fontSize: "0.82rem",
     lineHeight: 1.45,
@@ -92,7 +93,7 @@ const inputStyle = {
     resize: "vertical",
     width: "100%",
 };
-const caption = { color: "rgba(255,255,255,0.42)", fontSize: "0.68rem", lineHeight: 1.45 };
+const caption = { color: "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.68rem", lineHeight: 1.45 };
 
 // The scene's own words, written in the game's language already.
 const SceneText = ({ children, style }) => (
@@ -186,12 +187,12 @@ export const InteractivePanel = ({ open = true, onClose, onOpenTimeline }) => {
             <div role="dialog" aria-label="Interactive event" style={panelStyle}>
                 <div style={{ alignItems: "center", borderBottom: "1px solid rgba(250,204,21,0.18)", display: "flex", gap: "0.75rem", justifyContent: "space-between", padding: "0.9rem 1.1rem" }}>
                     <div>
-                        <div style={{ color: YELLOW, fontSize: "0.95rem", fontWeight: 850, letterSpacing: "0.02em" }}>⚡ Interactive event</div>
+                        <div style={{ color: YELLOW, fontSize: "0.95rem", fontWeight: 850, letterSpacing: "0.02em" }}><UiIcon name="flash" size={14} /> Interactive event</div>
                         <div style={{ ...caption, marginTop: "0.15rem" }}>A moment of the campaign played out as a scene. Time stands still until it ends.</div>
                     </div>
                     {/* Kept on one line: squeezed by the caption on a phone, it
                         broke into "✕" over "Leave". */}
-                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Leave" title="Close — a scene in progress stays where it is, and an offer stays until the next time skip" style={{ ...quietButton(false), flexShrink: 0, whiteSpace: "nowrap" }}>✕ Leave</button>
+                    <button type="button" className="oh-tap" onClick={onClose} aria-label="Leave" title="Close — a scene in progress stays where it is, and an offer stays until the next time skip" style={{ ...quietButton(false), flexShrink: 0, whiteSpace: "nowrap" }}><UiIcon name="close" size={14} /> Leave</button>
                 </div>
 
                 <div style={{ display: "flex", flexDirection: "column", gap: "0.9rem", overflowY: "auto", padding: "1rem 1.1rem 1.1rem" }}>
@@ -208,14 +209,14 @@ export const InteractivePanel = ({ open = true, onClose, onOpenTimeline }) => {
                         <>
                             <div>
                                 <SceneText style={{ fontSize: "1.05rem", fontWeight: 850 }}>{scene.title || "Untitled scene"}</SceneText>
-                                {scene.premise && <SceneText style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.78rem", fontStyle: "italic", marginTop: "0.2rem" }}>{scene.premise}</SceneText>}
+                                {scene.premise && <SceneText style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.78rem", fontStyle: "italic", marginTop: "0.2rem" }}>{scene.premise}</SceneText>}
                                 {scene.request && <div style={{ ...caption, marginTop: "0.3rem" }}>Your angle: <span data-no-translate>{scene.request}</span></div>}
                             </div>
 
                             {beats.length > 0 && (
                                 <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                                     {beats.map((beat, index) => (
-                                        <div key={index} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: "10px", padding: "0.55rem 0.7rem" }}>
+                                        <div key={index} style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: "10px", padding: "0.55rem 0.7rem" }}>
                                             <div style={{ alignItems: "baseline", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
                                                 <div style={{ fontSize: "0.74rem", color: "#fde68a" }}>
                                                     Your move: <span data-no-translate>{beat.choice}</span>
@@ -224,7 +225,7 @@ export const InteractivePanel = ({ open = true, onClose, onOpenTimeline }) => {
                                                     <button type="button" className="oh-tap-row" onClick={() => takeBack(index)} disabled={!idle} title="Return the scene to just before this move — free; choosing again is one request" style={{ ...quietButton(!idle), fontSize: "0.68rem", padding: "0.2rem 0.5rem" }}>↶ Take back</button>
                                                 )}
                                             </div>
-                                            {beat.summary && <SceneText style={{ color: "rgba(255,255,255,0.72)", fontSize: "0.8rem", marginTop: "0.25rem" }}>{beat.summary}</SceneText>}
+                                            {beat.summary && <SceneText style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: "0.8rem", marginTop: "0.25rem" }}>{beat.summary}</SceneText>}
                                         </div>
                                     ))}
                                 </div>
@@ -253,7 +254,7 @@ export const InteractivePanel = ({ open = true, onClose, onOpenTimeline }) => {
                             </div>
                             <div style={caption}>Each move is one AI request. The scene ends when it reaches its outcome, or when you end it.</div>
 
-                            <div style={{ alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", flexWrap: "wrap", gap: "0.6rem", paddingTop: "0.8rem" }}>
+                            <div style={{ alignItems: "center", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "flex", flexWrap: "wrap", gap: "0.6rem", paddingTop: "0.8rem" }}>
                                 <button type="button" className="oh-tap-row" onClick={end} disabled={!idle || !beats.length} title={beats.length ? "Write what has happened into the record — one request" : "Play a move first; with none played there is nothing to record"} style={quietButton(!idle || !beats.length)}>End the scene</button>
                                 <button
                                     type="button"
@@ -282,7 +283,7 @@ export const InteractivePanel = ({ open = true, onClose, onOpenTimeline }) => {
                                 <SceneText style={{ fontSize: "1.05rem", fontWeight: 850, marginTop: "0.2rem" }}>{offerShown.title}</SceneText>
                                 {offerShown.date && <div style={{ ...caption, marginTop: "0.1rem" }}>{isGameDate(offerShown.date) ? formatGameDateReadable(offerShown.date, "MMMM Do, YYYY") : offerShown.date}</div>}
                                 {offerShown.description && (
-                                    <SceneText style={{ color: "rgba(255,255,255,0.72)", fontSize: "0.8rem", marginTop: "0.4rem", maxHeight: "9.5rem", overflowY: "auto" }}>{offerShown.description}</SceneText>
+                                    <SceneText style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: "0.8rem", marginTop: "0.4rem", maxHeight: "9.5rem", overflowY: "auto" }}>{offerShown.description}</SceneText>
                                 )}
                             </div>
                             <label htmlFor="interactive-angle" style={{ fontSize: "0.84rem", fontWeight: 800 }}>Your angle <span style={{ ...caption, fontWeight: 400 }}>(optional)</span></label>

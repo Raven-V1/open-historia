@@ -173,7 +173,7 @@ const FeatureManager = ({ features, setFeatures, api, selection = [], setSelecti
       width={340}
       footer={
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", fontSize: 12 }}>
-          <span style={{ color: "rgba(255,255,255,0.5)" }}>{features.length} features total</span>
+          <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>{features.length} features total</span>
           {features.length > 0 && (
             <button onClick={deleteAll} style={{ ...pillButton(false), color: "#f87171" }}>
               Delete All
@@ -227,10 +227,10 @@ const FeatureManager = ({ features, setFeatures, api, selection = [], setSelecti
         />
       </div>
       {importNote && (
-        <div style={{ fontSize: 11, lineHeight: 1.4, color: importNote.startsWith("Import failed") ? "#f87171" : "rgba(255,255,255,0.7)" }}>{importNote}</div>
+        <div style={{ fontSize: 11, lineHeight: 1.4, color: importNote.startsWith("Import failed") ? "#f87171" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)" }}>{importNote}</div>
       )}
 
-      <div style={{ display: "flex", flexDirection: "column", gap: 6, padding: "8px 9px", borderRadius: 8, border: "1px solid rgba(255,255,255,0.1)", background: selectedCount ? "rgba(250,204,21,0.06)" : "rgba(255,255,255,0.03)" }}>
+      <div style={{ display: "flex", flexDirection: "column", gap: 6, padding: "8px 9px", borderRadius: 8, border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", background: selectedCount ? "rgba(250,204,21,0.06)" : "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)" }}>
         <div style={{ display: "flex", gap: 6, alignItems: "center", flexWrap: "wrap" }}>
           <button
             type="button"
@@ -248,7 +248,7 @@ const FeatureManager = ({ features, setFeatures, api, selection = [], setSelecti
           </button>
         </div>
         {selectedCount > 0 && (
-          <div style={{ fontSize: 11, color: "rgba(255,255,255,0.6)" }}>
+          <div style={{ fontSize: 11, color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)" }}>
             {`${selectedCount} selected — tag them or delete them together.`}
           </div>
         )}
@@ -267,22 +267,22 @@ const FeatureManager = ({ features, setFeatures, api, selection = [], setSelecti
           </div>
         )}
       </div>
-      <div style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{filtered.length}{filtered.length >= 300 ? "+" : ""} shown</div>
+      <div style={{ fontSize: 11, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>{filtered.length}{filtered.length >= 300 ? "+" : ""} shown</div>
 
       <div style={{ display: "flex", flexDirection: "column", gap: 3 }}>
         {filtered.map((f, index) => {
           const open = expanded === f.id;
           return (
-            <div key={f.id} style={{ border: selectedSet.has(String(f.id)) ? "1px solid rgba(250,204,21,0.6)" : "1px solid rgba(255,255,255,0.09)", borderRadius: 8 }}>
+            <div key={f.id} style={{ border: selectedSet.has(String(f.id)) ? "1px solid rgba(250,204,21,0.6)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent)", borderRadius: 8 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 6, padding: "6px 8px" }}>
                 <input type="checkbox" checked={selectedSet.has(String(f.id))} onChange={() => {}} onClick={(e) => toggleSelected(f.id, index, e.shiftKey)} aria-label={`Select ${f.name}`} style={{ cursor: "pointer", margin: 0 }} />
-                <button onClick={() => setExpanded(open ? null : f.id)} style={{ background: "transparent", border: "none", color: "white", cursor: "pointer", flex: 1, textAlign: "left" }}>
+                <button onClick={() => setExpanded(open ? null : f.id)} style={{ background: "transparent", border: "none", color: "var(--oh-ink, #fff)", cursor: "pointer", flex: 1, textAlign: "left" }}>
                   <div style={{ fontSize: 13, fontWeight: 600 }}>{f.name}</div>
-                  <div style={{ fontSize: 10.5, color: "rgba(255,255,255,0.5)" }}>
+                  <div style={{ fontSize: 10.5, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>
                     {f.type} · {f.country || f.owner || "—"} · {(f.tags || []).join(", ")}
                   </div>
                 </button>
-                <button onClick={() => api?.locateFeature(f.coord)} title="Locate" style={{ background: "transparent", border: "none", color: "rgba(255,255,255,0.7)", cursor: "pointer" }}>
+                <button onClick={() => api?.locateFeature(f.coord)} title="Locate" style={{ background: "transparent", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", cursor: "pointer" }}>
                   <Icon name="fit" size={14} />
                 </button>
                 <button onClick={() => remove(f.id)} title="Delete" style={{ background: "transparent", border: "none", color: "#f87171", cursor: "pointer" }}>

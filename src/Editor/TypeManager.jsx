@@ -81,17 +81,17 @@ const TypeManager = ({ types, setTypes, usage = {}, onClose }) => {
         return (
           <div
             key={t.id}
-            style={{ border: "1px solid rgba(255,255,255,0.1)", borderRadius: 10, overflow: "hidden" }}
+            style={{ border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: 10, overflow: "hidden" }}
           >
             <div
               onClick={() => toggleExpand(t.id)}
-              style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 10px", cursor: "pointer", background: "rgba(255,255,255,0.04)" }}
+              style={{ display: "flex", alignItems: "center", gap: 8, padding: "8px 10px", cursor: "pointer", background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)" }}
             >
               <span
-                style={{ width: 12, height: 12, borderRadius: 3, background: t.overrideColor ? `rgb(${t.overrideColor.join(",")})` : "rgba(255,255,255,0.25)" }}
+                style={{ width: 12, height: 12, borderRadius: 3, background: t.overrideColor ? `rgb(${t.overrideColor.join(",")})` : "color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)" }}
               />
               <span style={{ fontWeight: 700, fontSize: 13, flex: 1 }}>{t.name}</span>
-              <span style={{ fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{usage[t.id] || 0} regions</span>
+              <span style={{ fontSize: 11, color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)" }}>{usage[t.id] || 0} regions</span>
               <Icon name={open ? "close" : "plus"} size={13} />
             </div>
             {open && (

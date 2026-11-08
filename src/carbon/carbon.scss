@@ -1,0 +1,670 @@
+// Open Historia — the Carbon themes (Carbon Dark = g100, Carbon Light = g10) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE).
+// Carbon Design System tokens (Apache-2.0, IBM) as CSS custom properties, and
+// the bridge from them to the variables the game's own interface already reads
+// (--oh-ui-*, --oh-grey-*, --oh-hud-*; runtime/uiTheme.js, docs/ui-themes.md).
+//
+// Only the two Carbon themes use this file: every other theme sets its
+// variables from JavaScript (uiTheme.js) and the "Default (Original)" theme sets
+// none, so none of the rules below reach them. Each Carbon component that is
+// used is added by its own partial (see components.scss), never the whole
+// library, so the stylesheet grows with what is used.
+//
+// What is switched off on purpose: Carbon's global reset and body rules (the
+// game has its own, styles.css), its @font-face for IBM Plex (the fonts are
+// served from the bundle, assets/fonts/fonts-ibm-plex.css, and no Google or
+// CDN address may appear: noGoogleFonts.test.js) and its default type styles.
+
+@use '@carbon/styles/scss/config' with (
+  $css--body: false,
+  $css--font-face: false,
+  $css--reset: false,
+  $css--default-type: false
+);
+@use '@carbon/styles/scss/theme';
+@use '@carbon/styles/scss/themes';
+@use '@carbon/styles/scss/layout';
+
+// The components in use (each its own partial, never the whole library).
+@use '@carbon/styles/scss/utilities/visually-hidden' as hidden;
+@use '@carbon/styles/scss/components/toggle';
+@use '@carbon/styles/scss/components/select';
+@use '@carbon/styles/scss/components/text-input';
+@use '@carbon/styles/scss/components/checkbox';
+@use '@carbon/styles/scss/components/slider';
+@use '@carbon/styles/scss/components/form';
+@use '@carbon/styles/scss/components/list-box';
+@use '@carbon/styles/scss/components/combo-box';
+@use '@carbon/styles/scss/components/modal';
+@use '@carbon/styles/scss/components/button';
+@use '@carbon/styles/scss/components/tabs';
+@use '@carbon/styles/scss/components/popover';
+@use '@carbon/styles/scss/components/tooltip';
+
+// The tokens. Carbon Dark is the page's default while no theme attribute is
+// set yet (first paint), so a Carbon component never renders without colours.
+:root,
+:root[data-oh-ui-theme='carbon-dark'] {
+  @include theme.theme(themes.$g100);
+}
+
+:root[data-oh-ui-theme='carbon-dark'] {
+  color-scheme: dark;
+}
+:root[data-oh-ui-theme='carbon-dark'] select {
+  color-scheme: dark;
+}
+:root[data-oh-ui-theme='carbon-light'] select {
+  color-scheme: light;
+}
+
+:root[data-oh-ui-theme='carbon-light'] {
+  @include theme.theme(themes.$g10);
+  color-scheme: light;
+}
+
+// The bridge. Surfaces are flat and opaque: Carbon expresses depth by layering
+// one token over the next (background, layer-01, layer-02, layer-03), not with
+// blur, glass or shadow, so the HUD's glass, blur and shadow are switched off
+// here and its corners squared.
+@mixin oh-bridge {
+  --oh-font-ui: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+  --oh-font-mono: 'IBM Plex Mono', Menlo, Consolas, monospace;
+
+  --oh-ui-bg: var(--cds-background);
+  --oh-ui-surface: var(--cds-layer-01);
+  --oh-ui-raised: var(--cds-layer-02);
+  --oh-ui-header: var(--cds-layer-01);
+  --oh-ui-active: var(--cds-layer-selected-01);
+  --oh-ui-hover: var(--cds-layer-hover-01);
+  --oh-ui-accent: var(--cds-interactive);
+  --oh-ui-text: var(--cds-text-primary);
+  --oh-ui-muted: var(--cds-text-secondary);
+  --oh-ui-line: var(--cds-border-subtle-01);
+  --oh-ui-focus: var(--cds-focus);
+  --oh-ui-overlay: var(--cds-layer-01);
+  --oh-ui-overlay-strong: var(--cds-layer-01);
+  --oh-ui-overlay-card: var(--cds-layer-02);
+  --oh-ui-overlay-header: var(--cds-layer-02);
+
+  --oh-grey-bg: var(--cds-background);
+  --oh-grey-surface: var(--cds-layer-01);
+  --oh-grey-raised: var(--cds-layer-02);
+  --oh-grey-selected: var(--cds-layer-selected-01);
+  --oh-grey-border: var(--cds-border-subtle-01);
+  --oh-grey-border-strong: var(--cds-border-strong-01);
+  --oh-grey-text: var(--cds-text-primary);
+  --oh-grey-muted: var(--cds-text-secondary);
+  --oh-grey-faint: var(--cds-text-helper);
+
+  --oh-hud-bg: var(--cds-layer-01);
+  --oh-hud-bg-strong: var(--cds-layer-01);
+  --oh-hud-bg-soft: var(--cds-layer-02);
+  --oh-hud-border: var(--cds-border-subtle-01);
+  --oh-hud-border-strong: var(--cds-border-strong-01);
+  --oh-hud-text: var(--cds-text-primary);
+  --oh-hud-muted: var(--cds-text-secondary);
+  --oh-hud-faint: var(--cds-text-helper);
+  --oh-hud-blue: var(--cds-support-info);
+  --oh-hud-blue-soft: var(--cds-layer-selected-01);
+  --oh-hud-amber: var(--cds-support-warning);
+  --oh-hud-amber-hover: var(--cds-support-warning);
+  --oh-hud-red: var(--cds-support-error);
+  --oh-hud-radius: 0;
+  --oh-hud-shadow: none;
+  --oh-hud-shadow-soft: none;
+  --oh-hud-glass: none;
+  --oh-hud-blur: none;
+
+  // What the interface's hard-coded white (text, lines, translucent fills) turns
+  // into: the theme's own text colour. Code writes var(--oh-ink, #fff), so the
+  // original and the other themes, which never set this, keep the white.
+  --oh-ink: var(--cds-text-primary);
+  --oh-link: var(--cds-link-primary);
+  // The dark panel fills (opaque or translucent) of popups, cards and sheets.
+  --oh-paper: var(--cds-layer-01);
+  --oh-ui-glass-pill: var(--cds-layer-01);
+  --oh-ui-glass-chip: var(--cds-layer-02);
+  --oh-ui-glass-line: var(--cds-border-subtle-01);
+  --oh-ui-glass-hover: var(--cds-layer-hover-01);
+  --oh-ui-glass-active: var(--cds-layer-selected-01);
+  --oh-ui-glass-active-line: var(--cds-interactive);
+  --oh-ui-glass-active-text: var(--cds-text-primary);
+}
+
+:root[data-oh-ui-theme^='carbon'] {
+  @include oh-bridge;
+}
+
+// A workspace that stays dark in Carbon Light (the map editor: its panels and
+// toolbars are dark surfaces over the map): Carbon's dark theme is applied to
+// it, so its text, lines and controls keep the dark theme's colours.
+:root[data-oh-ui-theme='carbon-light'] [data-oh-dark-scope] {
+  @include theme.theme(themes.$g100);
+  @include oh-bridge;
+  color-scheme: dark;
+}
+
+// Typography. The page and its controls are set in Plex. Many components name
+// their font inline (fontFamily: "sans-serif" on about a hundred of them,
+// "monospace" and ui-monospace on the code and log views), and an inline style
+// beats a stylesheet, so those are matched by what the style attribute says
+// and carried over with !important. Cinzel / EB Garamond (the loading screen,
+// the vault door, the update notices) and Georgia are named on purpose and are
+// not matched, so the game's own artwork keeps its faces.
+:root[data-oh-ui-theme^='carbon'] {
+  body,
+  button,
+  input,
+  select,
+  textarea {
+    font-family: var(--oh-font-ui);
+  }
+
+  [style*='font-family: sans-serif'] {
+    font-family: var(--oh-font-ui) !important;
+  }
+
+  [style*='font-family: monospace'],
+  [style*='font-family: ui-monospace'] {
+    font-family: var(--oh-font-mono) !important;
+  }
+}
+
+// Carbon's section heading is plain text over a rule or a layer: no coloured
+// bar before it. The settings headings carry data-oh-section-bar on the bar
+// itself; the three decorative left edges (the Subordination block, the
+// Government card, the update-notice card) are switched to Carbon's ordinary
+// 1px border. Bars that carry meaning (party colours, war lines, the country
+// picker's colours, quotations) are not touched.
+:root[data-oh-ui-theme^='carbon'] {
+  [data-oh-section-bar] {
+    display: none !important;
+  }
+
+  [data-oh-section-desc] {
+    padding-left: 0 !important;
+  }
+
+  [data-oh-edge-bar],
+  .oh-country-government {
+    border-left: 1px solid var(--cds-border-subtle-01) !important;
+  }
+
+  // The update notice's cards are dark artwork in both themes.
+  .ohr-card {
+    border-left: 1px solid rgba(255, 255, 255, 0.1) !important;
+  }
+}
+
+// Carbon's corners are square. Most of the interface writes its radius inline
+// (borderRadius: "10px" on cards, buttons, inputs, popups), which only an
+// !important rule in the stylesheet can override; matched by the radius the
+// style attribute says. Circles and pills (50%, 999px) are not matched, so
+// dots, avatars and the round logo stay round.
+:root[data-oh-ui-theme^='carbon'] {
+  @each $r in 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 16, 18, 20, 24 {
+    [style*='border-radius: #{$r}px'] {
+      border-radius: 0 !important;
+    }
+  }
+}
+
+// The system-drawn list of a <select> takes the theme's layer and text (styles.css
+// forces a dark list with light text for the original interface).
+:root[data-oh-ui-theme^='carbon'] {
+  select {
+    color-scheme: normal;
+  }
+
+  select option,
+  select optgroup {
+    background-color: var(--cds-layer-01) !important;
+    color: var(--cds-text-primary) !important;
+  }
+
+  select option:disabled {
+    color: var(--cds-text-disabled) !important;
+  }
+}
+
+// Carbon components under the other themes. The controls are Carbon's whatever
+// the theme, so that there is one set of them and not a copy per theme; they
+// take their colours from the theme the player chose by reading its variables
+// (the --oh-grey-* and --oh-ui-* ones the five palettes, Custom and the
+// original interface already set), falling back to Carbon Dark's own values.
+:root[data-oh-ui-theme]:not([data-oh-ui-theme^='carbon']) {
+  --cds-background: var(--oh-grey-bg);
+  --cds-layer-01: var(--oh-grey-surface);
+  --cds-layer-02: var(--oh-grey-raised);
+  --cds-layer-hover-01: var(--oh-grey-selected);
+  --cds-layer-selected-01: var(--oh-grey-selected);
+  --cds-field-01: var(--oh-grey-raised);
+  --cds-field-02: var(--oh-grey-raised);
+  --cds-field-hover-01: var(--oh-grey-selected);
+  --cds-border-subtle-01: var(--oh-grey-border);
+  --cds-border-strong-01: var(--oh-grey-border-strong);
+  --cds-text-primary: var(--oh-grey-text);
+  --cds-text-secondary: var(--oh-grey-muted);
+  --cds-text-helper: var(--oh-grey-faint);
+  --cds-icon-primary: var(--oh-grey-text);
+  --cds-icon-secondary: var(--oh-grey-muted);
+  --cds-interactive: var(--oh-ui-accent, #3b82f6);
+  --cds-focus: var(--oh-ui-accent, #3b82f6);
+  --cds-link-primary: var(--oh-ui-accent, #60a5fa);
+  --cds-toggle-off: var(--oh-grey-border-strong);
+  --cds-button-primary: var(--oh-ui-accent, #3b82f6);
+  --cds-background-hover: var(--oh-grey-selected);
+  --cds-overlay: rgba(0, 0, 0, 0.6);
+}
+
+// Carbon's helper for text that is only for screen readers (the label of the
+// switches, for one); its own stylesheet declares it, the partials above do not.
+.cds--visually-hidden {
+  @include hidden.visually-hidden;
+}
+
+// A password field keeps room for its show / hide button.
+.cds--text-input.oh-carbon-password {
+  padding-inline-end: 2.75rem;
+}
+
+// The lists Carbon draws (the language picker's menu): the page has no global
+// reset, so the bullets and the browser's margins are taken off here.
+.cds--list-box__menu,
+.cds--list-box__menu-item__option {
+  list-style: none;
+  margin: 0;
+}
+.cds--list-box__menu {
+  padding: 0;
+}
+.cds--list-box__menu {
+  overflow-x: hidden;
+}
+
+// Above the game's own layers (the HUD, the panels), as its other dialogs are.
+.cds--modal {
+  z-index: 10040;
+}
+
+// Carbon Light: the pastel text colours the panels write inline for a dark
+// background (light blue, green, amber, red) become Carbon's darker tones, so
+// they can be read on white. Matched by the colour in the style attribute
+// ("; color:" so a border-color is not caught); the update notice's cards,
+// which stay dark artwork, keep theirs.
+:root[data-oh-ui-theme='carbon-light'] {
+  [style^='color: rgb(252, 165, 165']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(252, 165, 165']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(252, 165, 165']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(252, 165, 165']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(254, 202, 202']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(254, 202, 202']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(254, 202, 202']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(254, 202, 202']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(248, 113, 113']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(248, 113, 113']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(248, 113, 113']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(248, 113, 113']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(253, 164, 175']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(253, 164, 175']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(253, 164, 175']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(253, 164, 175']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(255, 180, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(255, 180, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(255, 180, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(255, 180, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(255, 123, 114']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(255, 123, 114']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(255, 123, 114']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(255, 123, 114']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #a2191f !important;
+  }
+  [style^='color: rgb(253, 230, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(253, 230, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(253, 230, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(253, 230, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(251, 191, 36']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(251, 191, 36']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(251, 191, 36']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(251, 191, 36']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(252, 211, 77']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(252, 211, 77']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(252, 211, 77']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(252, 211, 77']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(245, 158, 11']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(245, 158, 11']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(245, 158, 11']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(245, 158, 11']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #8e6a00 !important;
+  }
+  [style^='color: rgb(254, 215, 170']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(254, 215, 170']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(254, 215, 170']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(254, 215, 170']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(253, 186, 116']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(253, 186, 116']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(253, 186, 116']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(253, 186, 116']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #8a3800 !important;
+  }
+  [style^='color: rgb(187, 247, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(187, 247, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(187, 247, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(187, 247, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(134, 239, 172']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(134, 239, 172']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(134, 239, 172']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(134, 239, 172']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(52, 211, 153']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(52, 211, 153']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(52, 211, 153']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(52, 211, 153']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(34, 197, 94']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(34, 197, 94']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(34, 197, 94']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(34, 197, 94']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(167, 243, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(167, 243, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(167, 243, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(167, 243, 208']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #0e6027 !important;
+  }
+  [style^='color: rgb(147, 197, 253']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(147, 197, 253']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(147, 197, 253']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(147, 197, 253']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(191, 219, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(191, 219, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(191, 219, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(191, 219, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(96, 165, 250']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(96, 165, 250']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(96, 165, 250']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(96, 165, 250']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(224, 246, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(224, 246, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(224, 246, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(224, 246, 254']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #0043ce !important;
+  }
+}
+
+// Carbon Light: hairline borders written as a faint white line (made for a dark
+// panel) become Carbon's own subtle border, so they show on white.
+:root[data-oh-ui-theme='carbon-light'] {
+  [style*='solid rgba(255, 255, 255, 0.04)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.05)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.06)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.07)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.08)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.09)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.1)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.12)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.14)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.15)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.16)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.18)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.2)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.22)']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='solid rgba(255, 255, 255, 0.25)']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    border-color: var(--cds-border-subtle-01) !important;
+  }
+}
+
+// The dialog's close button already has its label for screen readers; the
+// tooltip Carbon shows beside it while it holds focus is left out.
+.cds--modal-close-button .cds--popover-content {
+  display: none;
+}
+
+// Carbon Light: the rest of the light, tinted text colours the panels write
+// inline (generated from the colours the source uses), by hue.
+:root[data-oh-ui-theme='carbon-light'] {
+  [style^='color: rgb(34, 211, 238']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(34, 211, 238']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(34, 211, 238']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(34, 211, 238']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(43, 193, 243']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(43, 193, 243']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(43, 193, 243']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(43, 193, 243']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(56, 189, 248']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(56, 189, 248']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(56, 189, 248']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(56, 189, 248']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(96, 165, 250']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(96, 165, 250']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(96, 165, 250']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(96, 165, 250']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(103, 232, 249']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(103, 232, 249']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(103, 232, 249']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(103, 232, 249']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(125, 211, 252']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(125, 211, 252']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(125, 211, 252']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(125, 211, 252']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(138, 205, 230']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(138, 205, 230']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(138, 205, 230']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(138, 205, 230']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(147, 197, 253']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(147, 197, 253']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(147, 197, 253']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(147, 197, 253']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(148, 163, 184']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(148, 163, 184']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(148, 163, 184']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(148, 163, 184']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(151, 172, 189']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(151, 172, 189']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(151, 172, 189']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(151, 172, 189']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(162, 182, 198']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(162, 182, 198']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(162, 182, 198']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(162, 182, 198']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(170, 200, 220']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(170, 200, 220']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(170, 200, 220']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(170, 200, 220']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(173, 202, 220']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(173, 202, 220']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(173, 202, 220']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(173, 202, 220']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(182, 209, 224']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(182, 209, 224']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(182, 209, 224']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(182, 209, 224']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(191, 219, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(191, 219, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(191, 219, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(191, 219, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(194, 211, 224']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(194, 211, 224']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(194, 211, 224']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(194, 211, 224']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(199, 220, 255']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(199, 220, 255']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(199, 220, 255']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(199, 220, 255']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(219, 234, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(219, 234, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(219, 234, 254']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(219, 234, 254']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #0043ce !important;
+  }
+  [style^='color: rgb(52, 211, 153']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(52, 211, 153']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(52, 211, 153']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(52, 211, 153']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(74, 222, 128']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(74, 222, 128']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(74, 222, 128']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(74, 222, 128']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(134, 239, 172']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(134, 239, 172']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(134, 239, 172']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(134, 239, 172']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(167, 243, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(167, 243, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(167, 243, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(167, 243, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(180, 230, 190']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(180, 230, 190']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(180, 230, 190']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(180, 230, 190']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(187, 247, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(187, 247, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(187, 247, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(187, 247, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(220, 252, 231']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(220, 252, 231']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(220, 252, 231']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(220, 252, 231']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #0e6027 !important;
+  }
+  [style^='color: rgb(215, 190, 140']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(215, 190, 140']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(215, 190, 140']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(215, 190, 140']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(230, 185, 120']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(230, 185, 120']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(230, 185, 120']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(230, 185, 120']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(242, 232, 204']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(242, 232, 204']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(242, 232, 204']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(242, 232, 204']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(244, 234, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(244, 234, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(244, 234, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(244, 234, 208']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(245, 158, 11']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(245, 158, 11']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(245, 158, 11']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(245, 158, 11']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(251, 146, 60']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(251, 146, 60']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(251, 146, 60']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(251, 146, 60']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(251, 191, 36']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(251, 191, 36']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(251, 191, 36']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(251, 191, 36']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(252, 217, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(252, 217, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(252, 217, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(252, 217, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(253, 186, 116']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(253, 186, 116']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(253, 186, 116']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(253, 186, 116']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(254, 215, 170']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(254, 215, 170']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(254, 215, 170']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(254, 215, 170']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(255, 179, 92']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(255, 179, 92']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(255, 179, 92']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(255, 179, 92']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(255, 200, 97']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(255, 200, 97']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(255, 200, 97']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(255, 200, 97']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(255, 210, 120']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(255, 210, 120']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(255, 210, 120']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(255, 210, 120']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #8a3800 !important;
+  }
+  [style^='color: rgb(234, 179, 8']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(234, 179, 8']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(234, 179, 8']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(234, 179, 8']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(240, 204, 64']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(240, 204, 64']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(240, 204, 64']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(240, 204, 64']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(250, 204, 21']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(250, 204, 21']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(250, 204, 21']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(250, 204, 21']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(252, 211, 77']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(252, 211, 77']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(252, 211, 77']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(252, 211, 77']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(253, 224, 71']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(253, 224, 71']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(253, 224, 71']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(253, 224, 71']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(253, 230, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(253, 230, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(253, 230, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(253, 230, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(254, 240, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(254, 240, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(254, 240, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(254, 240, 138']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(254, 243, 199']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(254, 243, 199']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(254, 243, 199']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(254, 243, 199']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(254, 249, 195']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(254, 249, 195']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(254, 249, 195']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(254, 249, 195']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(255, 213, 74']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(255, 213, 74']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(255, 213, 74']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(255, 213, 74']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #8e6a00 !important;
+  }
+  [style^='color: rgb(243, 168, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(243, 168, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(243, 168, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(243, 168, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(248, 113, 113']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(248, 113, 113']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(248, 113, 113']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(248, 113, 113']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(252, 165, 165']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(252, 165, 165']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(252, 165, 165']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(252, 165, 165']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(253, 164, 175']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(253, 164, 175']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(253, 164, 175']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(253, 164, 175']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(254, 202, 202']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(254, 202, 202']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(254, 202, 202']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(254, 202, 202']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(255, 123, 114']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(255, 123, 114']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(255, 123, 114']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(255, 123, 114']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgb(255, 180, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgb(255, 180, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style^='color: rgba(255, 180, 168']:not(.ohr-card *):not([data-oh-dark-scope] *),
+  [style*='; color: rgba(255, 180, 168']:not(.ohr-card *):not([data-oh-dark-scope] *) {
+    color: #a2191f !important;
+  }
+}
+
+// The interface is flat: Carbon's two visible fades (the bottom of a scrolling
+// dialog, the edges of a tab strip that scrolls) are turned off.
+.cds--modal-scroll-content,
+.cds--modal--slug .cds--modal-content.cds--modal-scroll-content,
+.cds--modal--decorator .cds--modal-content.cds--modal-scroll-content {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+.cds--modal-content--overflow-indicator {
+  display: none;
+}
+.cds--tabs .cds--tab--overflow-nav-button::before,
+.cds--tabs .cds--tab--list-gradient_top,
+.cds--tabs .cds--tab--list-gradient_bottom {
+  background: none;
+}

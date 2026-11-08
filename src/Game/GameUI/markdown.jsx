@@ -64,8 +64,8 @@ const COMPONENTS = { table: TableWrap, a: ExternalLink, img: LocalImage };
 const markdownStyles = `
 .oh-md {
     --oh-md-accent: #3b82f6;
-    --oh-md-rule: rgba(255,255,255,0.14);
-    --oh-md-dim: rgba(255,255,255,0.62);
+    --oh-md-rule: color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent);
+    --oh-md-dim: color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent);
     /* The bubbles set pre-wrap for the player's own typed text; inside rendered
        markdown it would double every line break and wreck table layout. */
     white-space: normal;
@@ -85,28 +85,28 @@ const markdownStyles = `
 .oh-md > *:last-child { margin-bottom: 0; }
 
 .oh-md p { margin: 0 0 0.5rem 0; }
-.oh-md strong { color: rgba(255,255,255,0.97); font-weight: 700; }
-.oh-md em { color: rgba(255,255,255,0.78); }
-.oh-md del { color: rgba(255,255,255,0.4); text-decoration-color: rgba(255,255,255,0.35); }
+.oh-md strong { color: color-mix(in srgb, var(--oh-ink, #fff) 97%, transparent); font-weight: 700; }
+.oh-md em { color: color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent); }
+.oh-md del { color: color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent); text-decoration-color: color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent); }
 .oh-md a { color: var(--oh-md-accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--oh-md-accent) 40%, transparent); }
 .oh-md a:hover { border-bottom-color: var(--oh-md-accent); }
 
 /* Three levels that read as three levels at 0.85rem in a narrow column: a
    titled rule, a plain bold line, then a small-caps label. */
 .oh-md h1, .oh-md h2, .oh-md h3, .oh-md h4, .oh-md h5, .oh-md h6 {
-    color: rgba(255,255,255,0.95);
+    color: color-mix(in srgb, var(--oh-ink, #fff) 95%, transparent);
     font-weight: 700;
     line-height: 1.3;
     margin: 0.9rem 0 0.4rem;
 }
 .oh-md h1 { font-size: 1.02rem; letter-spacing: 0.01em; border-bottom: 1px solid var(--oh-md-rule); padding-bottom: 0.28rem; }
-.oh-md h2 { font-size: 0.94rem; border-bottom: 1px solid rgba(255,255,255,0.09); padding-bottom: 0.22rem; }
+.oh-md h2 { font-size: 0.94rem; border-bottom: 1px solid color-mix(in srgb, var(--oh-ink, #fff) 9%, transparent); padding-bottom: 0.22rem; }
 .oh-md h3 { font-size: 0.88rem; }
 .oh-md h4, .oh-md h5, .oh-md h6 {
     font-size: 0.74rem;
     text-transform: uppercase;
     letter-spacing: 0.07em;
-    color: color-mix(in srgb, var(--oh-md-accent) 65%, rgba(255,255,255,0.85));
+    color: color-mix(in srgb, var(--oh-md-accent) 65%, color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent));
 }
 
 .oh-md ul, .oh-md ol { margin: 0.3rem 0 0.6rem 0; padding-left: 1.15rem; }
@@ -131,7 +131,7 @@ const markdownStyles = `
     border-radius: 0 6px 6px 0;
     margin: 0.55rem 0;
     padding: 0.4rem 0.7rem;
-    color: rgba(255,255,255,0.82);
+    color: color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent);
 }
 .oh-md blockquote p:last-child { margin-bottom: 0; }
 
@@ -143,7 +143,7 @@ const markdownStyles = `
 
 .oh-md code {
     background: rgba(0,0,0,0.32);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent);
     border-radius: 4px;
     font-size: 0.8em;
     padding: 0.08rem 0.3rem;
@@ -151,7 +151,7 @@ const markdownStyles = `
 }
 .oh-md pre {
     background: rgba(0,0,0,0.32);
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent);
     border-radius: 8px;
     margin: 0.5rem 0;
     overflow-x: auto;
@@ -167,7 +167,7 @@ const markdownStyles = `
     width: 100%;
 }
 .oh-md-table-wrap th, .oh-md-table-wrap td {
-    border: 1px solid rgba(255,255,255,0.10);
+    border: 1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent);
     padding: 0.3rem 0.5rem;
     text-align: left;
     vertical-align: top;
@@ -190,13 +190,13 @@ const markdownStyles = `
 .oh-md-table-wrap thead th {
     /* The fallback is for a bare body (no .oh-md, so no accent set), where an
        unset variable would drop the header's background altogether. */
-    background: color-mix(in srgb, var(--oh-md-accent, #3b82f6) 16%, rgba(255,255,255,0.05));
-    color: rgba(255,255,255,0.95);
+    background: color-mix(in srgb, var(--oh-md-accent, #3b82f6) 16%, color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent));
+    color: color-mix(in srgb, var(--oh-ink, #fff) 95%, transparent);
     font-weight: 700;
     letter-spacing: 0.02em;
 }
-.oh-md-table-wrap tbody tr:nth-child(even) { background: rgba(255,255,255,0.04); }
-.oh-md-table-wrap td:first-child { color: rgba(255,255,255,0.9); font-weight: 600; }
+.oh-md-table-wrap tbody tr:nth-child(even) { background: color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent); }
+.oh-md-table-wrap td:first-child { color: color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent); font-weight: 600; }
 
 .oh-md .footnotes { border-top: 1px solid var(--oh-md-rule); color: var(--oh-md-dim); font-size: 0.78rem; margin-top: 0.8rem; padding-top: 0.4rem; }
 .oh-md .footnotes h2 { border: 0; font-size: 0.72rem; letter-spacing: 0.07em; text-transform: uppercase; }

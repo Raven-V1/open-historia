@@ -87,7 +87,7 @@ export const showSavedNotice = ({ fileName, onShare = null }) => {
   if (typeof onShare === "function") {
     box.append(button(SAVED_NOTICE_TEXT.share, () => { hide(); onShare(); }));
   }
-  const close = button("✕", hide, { background: "transparent", border: "none", padding: "0.45rem 0.55rem" });
+  const close = button("Close", hide, { background: "transparent", border: "none", padding: "0.45rem 0.55rem" });
   close.setAttribute("aria-label", SAVED_NOTICE_TEXT.close);
   close.title = SAVED_NOTICE_TEXT.close;
   box.append(close);

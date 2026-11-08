@@ -1,5 +1,6 @@
 /*! Open Historia — portions (defensive date rendering) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { useCallback, useEffect, useMemo, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, useTouchPrimary } from "../../runtime/mobileUi.js";
 import dayjs from "dayjs";
 import advancedFormat from "dayjs/plugin/advancedFormat";
@@ -115,11 +116,11 @@ const ensureTimelineStyles = () => {
     }
 
     .timeline-markdown strong {
-        color: rgba(255,255,255,0.96);
+        color: color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent);
     }
 
     .timeline-markdown em {
-        color: rgba(230,230,233,0.78);
+        color: color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent);
     }
 
     .timeline-markdown ul,
@@ -134,13 +135,13 @@ const ensureTimelineStyles = () => {
 
     .timeline-markdown blockquote {
         border-left: 2px solid rgba(96,165,250,0.55);
-        color: rgba(229,229,232,0.68);
+        color: color-mix(in srgb, var(--oh-ink, #fff) 68%, transparent);
         margin: 0.55rem 0;
         padding-left: 0.8rem;
     }
 
     .timeline-markdown code {
-        background: rgba(20,20,23,0.55);
+        background: color-mix(in srgb, var(--oh-paper, rgb(20,20,23)) 55%, transparent);
         border-radius: 4px;
         padding: 0.05rem 0.32rem;
     }
@@ -157,7 +158,7 @@ const ensureTimelineStyles = () => {
 // <br>/<b> tags it writes instead of markdown, and links open in the system
 // browser. `bare`: the card keeps its own stylesheet (.timeline-markdown) rather
 // than borrowing .oh-md, which is sized for a side panel.
-const SpinnerRing = ({ size = 14, tone = "rgba(255,255,255,0.88)" }) => {
+const SpinnerRing = ({ size = 14, tone = "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }) => {
     useEffect(() => {
         ensureTimelineStyles();
     }, []);
@@ -171,7 +172,7 @@ const SpinnerRing = ({ size = 14, tone = "rgba(255,255,255,0.88)" }) => {
         aria-hidden="true"
         style={{ animation: "timeline-spin 0.7s linear infinite" }}
         >
-        <circle cx="12" cy="12" r="8" stroke="rgba(255,255,255,0.2)" strokeWidth="2.2" />
+        <circle cx="12" cy="12" r="8" stroke="color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)" strokeWidth="2.2" />
         <path d="M12 4a8 8 0 0 1 8 8" stroke={tone} strokeWidth="2.2" strokeLinecap="round" />
         </svg>
     );
@@ -213,7 +214,7 @@ const panelSurface = {
     border: "1px solid var(--oh-ui-line, var(--oh-hud-border))",
     borderRadius: "18px",
     boxShadow: "var(--oh-hud-shadow)",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     fontFamily: "sans-serif",
     overflow: "hidden",
     position: "fixed",
@@ -228,7 +229,7 @@ const widgetSurface = {
     border: "1px solid var(--oh-hud-border)",
     borderRadius: "14px",
     boxShadow: "var(--oh-hud-shadow-soft)",
-    color: "white",
+    color: "var(--oh-ink, #fff)",
     display: "flex",
     fontFamily: "sans-serif",
     gap: "0.25rem",
@@ -245,7 +246,7 @@ const buttonStyle = {
     background: "none",
     border: "none",
     borderRadius: "6px",
-    color: "rgba(255,255,255,0.7)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)",
     cursor: "pointer",
     display: "flex",
     flexShrink: 0,
@@ -491,7 +492,7 @@ const StrikePill = ({ onWatch }) => (
         padding: "0.24rem 0.55rem",
     }}
     >
-    <span aria-hidden="true" style={{ opacity: 0.75 }}>➶</span>
+    <span aria-hidden="true" style={{ opacity: 0.75 }}><UiIcon name="arrow" size={14} /></span>
     Watch it on the map
     </button>
 );
@@ -563,7 +564,7 @@ const MetricPill = ({ children, icon = null, tone = "default", onClick = null, a
         default: {
             background: "var(--oh-ui-overlay-card, rgba(148,163,184,0.12))",
             border: "1px solid var(--oh-ui-line, rgba(148,163,184,0.18))",
-            color: "rgba(232,232,234,0.84)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 84%, transparent)",
         },
         accent: {
             background: "var(--oh-ui-active, rgba(96,165,250,0.12))",
@@ -573,7 +574,7 @@ const MetricPill = ({ children, icon = null, tone = "default", onClick = null, a
         slate: {
             background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.04))",
             border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.1))",
-            color: "#f4f4f5",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)",
         },
     };
 
@@ -614,7 +615,7 @@ const TagPill = ({ children }) => (
         background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.04))",
                                    border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.08))",
                                    borderRadius: "999px",
-                                   color: "rgba(230,230,233,0.74)",
+                                   color: "color-mix(in srgb, var(--oh-ink, #fff) 74%, transparent)",
                                    display: "inline-flex",
                                    fontSize: "0.68rem",
                                    fontWeight: 600,
@@ -630,7 +631,7 @@ const ghostButtonStyle = {
     background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.04))",
     border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.08))",
     borderRadius: "10px",
-    color: "rgba(255,255,255,0.84)",
+    color: "color-mix(in srgb, var(--oh-ink, #fff) 84%, transparent)",
     cursor: "pointer",
     display: "inline-flex",
     fontSize: "0.74rem",
@@ -646,7 +647,7 @@ const ghostButtonStyle = {
 // A chip is only ever a place the event named with its kind, something its
 // operations changed or a polity its structured fields name: a word in its
 // text that happens to be a place's name is not one.
-const LINK_GLYPHS = { polity: "⚑", region: "⌖", city: "●", unit: "⛊", structure: "▣", sea: "≈" };
+const LINK_GLYPHS = { polity: <UiIcon name="flag" size={14} />, region: <UiIcon name="location" size={14} />, city: <UiIcon name="dot" size={10} />, unit: <UiIcon name="cube" size={14} />, structure: <UiIcon name="building" size={14} />, sea: <UiIcon name="water" size={14} /> };
 
 const LinkPill = ({ link, onFocus }) => (
     <button
@@ -669,7 +670,7 @@ const LinkPill = ({ link, onFocus }) => (
         padding: "0.24rem 0.55rem",
     }}
     >
-    <span aria-hidden="true" style={{ opacity: 0.7 }}>{LINK_GLYPHS[link.kind] || "⌖"}</span>
+    <span aria-hidden="true" style={{ opacity: 0.7 }}>{LINK_GLYPHS[link.kind] || LINK_GLYPHS.region}</span>
     {link.label}
     </button>
 );
@@ -687,7 +688,7 @@ const EventDocument = ({ report }) => {
         onClick={() => setOpen((value) => !value)}
         style={{ alignItems: "center", background: "none", border: "none", color: "rgba(254,243,199,0.92)", cursor: "pointer", display: "flex", font: "inherit", fontSize: "0.74rem", fontWeight: 700, gap: "0.45rem", padding: "0.5rem 0.7rem", textAlign: "left", width: "100%" }}
         >
-        <span aria-hidden="true">📄</span>
+        <span aria-hidden="true"><UiIcon name="document" size={14} /></span>
         <span style={{ flex: 1, minWidth: 0 }}>{report.title}</span>
         <span style={{ color: "rgba(254,243,199,0.5)", flexShrink: 0, fontSize: "0.62rem", fontWeight: 600 }}>
         {report.visibleTo === null ? "Published" : "Our government's"}{report.dateline ? ` · ${report.dateline}` : ""} {open ? "▴" : "▾"}
@@ -697,7 +698,7 @@ const EventDocument = ({ report }) => {
             line structure matters most: a dateline, a salutation, numbered
             articles. */}
         {open && (
-            <Markdown bare className="timeline-markdown" style={{ borderTop: "1px solid rgba(251,191,36,0.12)", color: "rgba(228,228,231,0.84)", fontSize: "0.74rem", lineHeight: 1.55, padding: "0.55rem 0.8rem 0.7rem" }}>
+            <Markdown bare className="timeline-markdown" style={{ borderTop: "1px solid rgba(251,191,36,0.12)", color: "color-mix(in srgb, var(--oh-ink, #fff) 84%, transparent)", fontSize: "0.74rem", lineHeight: 1.55, padding: "0.55rem 0.8rem 0.7rem" }}>
             {report.body}
             </Markdown>
         )}
@@ -710,7 +711,7 @@ const EventDocument = ({ report }) => {
 // What became of an event the engine kept off the timeline, in the player's
 // words (runtime/filedEvents.js): the fate, then why.
 const FiledNote = ({ fate, note }) => (
-    <div style={{ background: "rgba(148,163,184,0.1)", borderBottom: "1px solid rgba(255,255,255,0.05)", color: "rgba(226,232,240,0.86)", fontSize: "0.7rem", lineHeight: 1.4, padding: "0.45rem 1rem" }}>
+    <div style={{ background: "rgba(148,163,184,0.1)", borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)", color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", fontSize: "0.7rem", lineHeight: 1.4, padding: "0.45rem 1rem" }}>
     <strong style={{ fontWeight: 800, letterSpacing: "0.04em", textTransform: "uppercase" }}>{filedFateLabel(fate)}</strong>
     {note ? <span> · {note}</span> : null}
     </div>
@@ -725,14 +726,14 @@ const EventQuotation = ({ quote, compact = false }) => {
         data-event-quotation="true"
         style={{
             borderLeft: "2px solid rgba(148,163,184,0.42)",
-            color: "rgba(239,239,242,0.86)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)",
             marginTop: compact ? "0.15rem" : "0.05rem",
             padding: compact ? "0.18rem 0 0.18rem 0.6rem" : "0.28rem 0 0.28rem 0.72rem",
         }}
         >
         <div style={{ fontSize: compact ? "0.73rem" : "0.79rem", lineHeight: 1.5 }}>“{entry.text}”</div>
         {attribution && (
-            <div style={{ color: "rgba(206,206,210,0.62)", fontSize: compact ? "0.66rem" : "0.7rem", fontStyle: "italic", marginTop: "0.18rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: compact ? "0.66rem" : "0.7rem", fontStyle: "italic", marginTop: "0.18rem" }}>
             {attribution}
             </div>
         )}
@@ -760,14 +761,14 @@ const FiledEventsSection = ({ events }) => {
         {open && events.map((event) => (
             <div
             key={`filed-${event.title}`}
-            style={{ border: "1px dashed rgba(255,255,255,0.14)", borderRadius: "16px", opacity: 0.6, overflow: "hidden" }}
+            style={{ border: "1px dashed color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)", borderRadius: "16px", opacity: 0.6, overflow: "hidden" }}
             >
             <FiledNote fate={event.fate} note={event.note} />
             <div style={{ display: "flex", flexDirection: "column", gap: "0.45rem", padding: "0.75rem 1rem 0.85rem" }}>
-            {event.date && <div style={{ color: "rgba(228,228,231,0.6)", fontSize: "0.68rem" }}>{formatDate(event.date)}</div>}
+            {event.date && <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", fontSize: "0.68rem" }}>{formatDate(event.date)}</div>}
             {/* The AI wrote these in the player's language: the interface translator leaves them alone. */}
-            <div data-no-translate style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.78rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>{event.title}</div>
-            {event.description && <div data-no-translate style={{ color: "rgba(228,228,231,0.76)", fontSize: "0.74rem", lineHeight: 1.55 }}>{event.description}</div>}
+            <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.78rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>{event.title}</div>
+            {event.description && <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 76%, transparent)", fontSize: "0.74rem", lineHeight: 1.55 }}>{event.description}</div>}
             <div data-no-translate><EventQuotation quote={event.quote} compact /></div>
             </div>
             </div>
@@ -807,9 +808,9 @@ const EventCard = ({ event, footer = null, lookups, openMapChanges = null, onTog
         <div
         style={{
             background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.045))",
-            border: filed ? "1px dashed rgba(255,255,255,0.14)" : "1px solid rgba(255,255,255,0.08)",
+            border: filed ? "1px dashed color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
             borderRadius: "16px",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.03)",
+            boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
             opacity: filed ? 0.6 : 1,
             overflow: "hidden",
         }}
@@ -855,9 +856,9 @@ const EventCard = ({ event, footer = null, lookups, openMapChanges = null, onTog
         )}
         {showMapChanges && mapChanges.length > 0 && (
             <div style={{ background: "rgba(96,165,250,0.06)", border: "1px solid rgba(96,165,250,0.18)", borderRadius: "12px", display: "grid", gap: "0.3rem", padding: "0.55rem 0.7rem" }}>
-            <div style={{ color: "#bfdbfe", fontSize: "0.64rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>What changed on the map</div>
+            <div style={{ color: "var(--oh-link, #bfdbfe)", fontSize: "0.64rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>What changed on the map</div>
             {mapChanges.map((change, index) => (
-                <div key={`${event.id}-change-${index}`} style={{ color: "rgba(228,228,231,0.86)", display: "flex", fontSize: "0.74rem", gap: "0.45rem", lineHeight: 1.45 }}>
+                <div key={`${event.id}-change-${index}`} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", display: "flex", fontSize: "0.74rem", gap: "0.45rem", lineHeight: 1.45 }}>
                 <span style={{ color: "rgba(191,219,254,0.7)", flexShrink: 0, fontSize: "0.6rem", fontWeight: 700, letterSpacing: "0.04em", minWidth: "4.4rem", paddingTop: "0.12rem", textTransform: "uppercase" }}>{MAP_CHANGE_KIND_LABELS[change.kind] || change.kind}</span>
                 <span>{change.text}</span>
                 </div>
@@ -865,12 +866,12 @@ const EventCard = ({ event, footer = null, lookups, openMapChanges = null, onTog
             </div>
         )}
 
-        <div data-no-translate={written} style={{ color: "rgba(255,255,255,0.94)", fontSize: "0.82rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+        <div data-no-translate={written} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", fontSize: "0.82rem", fontWeight: 800, letterSpacing: "0.06em", textTransform: "uppercase" }}>
         {event.title}
         </div>
 
         {event.description && (
-            <Markdown bare className="timeline-markdown" written={written !== undefined} style={{ color: "rgba(228,228,231,0.82)", fontSize: "0.77rem", lineHeight: "1.58" }}>
+            <Markdown bare className="timeline-markdown" written={written !== undefined} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: "0.77rem", lineHeight: "1.58" }}>
             {event.description}
             </Markdown>
         )}
@@ -911,10 +912,10 @@ const InteractiveOfferStrip = () => {
     return (
         <div style={{ alignItems: "center", background: "rgba(250,204,21,0.08)", border: "1px solid rgba(250,204,21,0.45)", borderRadius: "12px", display: "flex", flexWrap: "wrap", gap: "0.5rem", padding: "0.55rem 0.7rem" }}>
             <div style={{ flex: "1 1 12rem", minWidth: 0 }}>
-                <div style={{ color: "#fde047", fontSize: "0.74rem", fontWeight: 800 }}>⚡ Interactive event</div>
+                <div style={{ color: "#fde047", fontSize: "0.74rem", fontWeight: 800 }}><UiIcon name="flash" size={14} /> Interactive event</div>
                 <div style={{ color: "rgba(254,249,195,0.72)", fontSize: "0.68rem", lineHeight: 1.4 }}>Play this moment out as a scene: you make the moves, and how it ends goes into the record.</div>
             </div>
-            <button type="button" className="oh-tap-row" onClick={openInteractiveEvent} style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "#1c1917", cursor: "pointer", fontSize: "0.72rem", fontWeight: 800, padding: "0.4rem 0.75rem" }}>
+            <button type="button" className="oh-tap-row" onClick={openInteractiveEvent} style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "var(--oh-paper, #1c1917)", cursor: "pointer", fontSize: "0.72rem", fontWeight: 800, padding: "0.4rem 0.75rem" }}>
                 Play it out
             </button>
             <button type="button" className="oh-tap-row" onClick={letPass} disabled={passing} title="Let the moment pass as it happened — free" style={{ ...ghostButtonStyle, opacity: passing ? 0.6 : 1, padding: "0.4rem 0.75rem" }}>
@@ -937,27 +938,27 @@ const EngineChangesNote = ({ receipt }) => {
     const summary = useMemo(() => describeReceiptForPlayer(receipt), [receipt]);
     if (!summary) return null;
     return (
-        <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "12px", marginTop: "0.75rem", overflow: "hidden" }}>
+        <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "12px", marginTop: "0.75rem", overflow: "hidden" }}>
         <button
         type="button"
         className="oh-tap-row"
         onClick={() => setOpen((value) => !value)}
         title="Why something an event describes may be missing from the map or the timeline"
-        style={{ alignItems: "center", background: "none", border: "none", color: "rgba(228,228,231,0.78)", cursor: "pointer", display: "flex", font: "inherit", fontSize: "0.72rem", fontWeight: 700, gap: "0.45rem", padding: "0.55rem 0.75rem", textAlign: "left", width: "100%" }}
+        style={{ alignItems: "center", background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", cursor: "pointer", display: "flex", font: "inherit", fontSize: "0.72rem", fontWeight: 700, gap: "0.45rem", padding: "0.55rem 0.75rem", textAlign: "left", width: "100%" }}
         >
         <span style={{ flex: 1, minWidth: 0 }}>{summary.count === 1 ? "What the engine changed: 1 note" : `What the engine changed: ${summary.count} notes`}</span>
         <span aria-hidden="true">{open ? "\u25B4" : "\u25BE"}</span>
         </button>
         {open && (
-            <div style={{ borderTop: "1px solid rgba(255,255,255,0.06)", display: "grid", gap: "0.55rem", padding: "0.6rem 0.8rem 0.75rem" }}>
-            <div style={{ color: "rgba(228,228,231,0.5)", fontSize: "0.68rem", lineHeight: 1.45 }}>{"What the engine left out of this time skip's answer, or changed, before it reached the map and the timeline."}</div>
+            <div style={{ borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)", display: "grid", gap: "0.55rem", padding: "0.6rem 0.8rem 0.75rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.68rem", lineHeight: 1.45 }}>{"What the engine left out of this time skip's answer, or changed, before it reached the map and the timeline."}</div>
             {summary.groups.map((group) => (
                 <div key={group.kind} style={{ display: "grid", gap: "0.25rem" }}>
-                <div style={{ color: "rgba(255,255,255,0.86)", fontSize: "0.7rem", fontWeight: 700 }}>{group.title}</div>
-                <ul style={{ color: "rgba(228,228,231,0.72)", display: "grid", fontSize: "0.7rem", gap: "0.2rem", lineHeight: 1.45, margin: 0, paddingLeft: "1.1rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", fontSize: "0.7rem", fontWeight: 700 }}>{group.title}</div>
+                <ul style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", display: "grid", fontSize: "0.7rem", gap: "0.2rem", lineHeight: 1.45, margin: 0, paddingLeft: "1.1rem" }}>
                 {group.notes.map((note, index) => (
                     <li key={`${group.kind}-${index}`}>
-                    {note.event && <div data-no-translate style={{ color: "rgba(255,255,255,0.8)", fontWeight: 600 }}>{note.event}</div>}
+                    {note.event && <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)", fontWeight: 600 }}>{note.event}</div>}
                     {note.engine ? <div data-no-translate>{note.text}</div> : <div>{note.text}</div>}
                     </li>
                 ))}
@@ -965,7 +966,7 @@ const EngineChangesNote = ({ receipt }) => {
                 </div>
             ))}
             {summary.omitted > 0 && (
-                <div style={{ color: "rgba(228,228,231,0.5)", fontSize: "0.68rem" }}>{summary.omitted === 1 ? "1 more note was left out for length." : `${summary.omitted} more notes were left out for length.`}</div>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.68rem" }}>{summary.omitted === 1 ? "1 more note was left out for length." : `${summary.omitted} more notes were left out for length.`}</div>
             )}
             </div>
         )}
@@ -977,10 +978,10 @@ const EmptyPanelState = ({ text }) => (
     <div
     style={{
         alignItems: "center",
-        background: "rgba(255,255,255,0.03)",
-                                       border: "1px dashed rgba(255,255,255,0.1)",
+        background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)",
+                                       border: "1px dashed color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
                                        borderRadius: "16px",
-                                       color: "rgba(229,229,232,0.48)",
+                                       color: "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)",
                                        display: "flex",
                                        fontSize: "0.78rem",
                                        fontStyle: "italic",
@@ -1042,12 +1043,12 @@ const PanelChrome = ({
                 </div>
             )}
             {title && (
-                <div style={{ color: "rgba(255,255,255,0.96)", fontSize: "1rem", fontWeight: 700 }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)", fontSize: "1rem", fontWeight: 700 }}>
                 {title}
                 </div>
             )}
             {subtitle && (
-                <div style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.75rem", lineHeight: "1.45", marginTop: "0.12rem" }}>
+                <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.75rem", lineHeight: "1.45", marginTop: "0.12rem" }}>
                 {subtitle}
                 </div>
             )}
@@ -1061,7 +1062,7 @@ const PanelChrome = ({
             background: "none",
             border: "none",
             borderRadius: "6px",
-            color: "rgba(255,255,255,0.5)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)",
             cursor: "pointer",
             display: "flex",
             fontSize: "1.1rem",
@@ -1070,12 +1071,12 @@ const PanelChrome = ({
             transition: "all 0.15s ease",
         }}
         onMouseEnter={(event) => {
-            event.currentTarget.style.background = "rgba(255,255,255,0.08)";
+            event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)";
             event.currentTarget.style.color = "white";
         }}
         onMouseLeave={(event) => {
             event.currentTarget.style.background = "none";
-            event.currentTarget.style.color = "rgba(255,255,255,0.5)";
+            event.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)";
         }}
         aria-label="Close panel"
         >
@@ -1123,7 +1124,7 @@ const RequestsTodayCaption = () => {
     return (
         <div
         title="Counted on this device since midnight Pacific time. Change what the game spends in Settings → AI → AI requests."
-        style={{ color: nearlyOut ? "#fbbf24" : "rgba(255,255,255,0.42)", fontSize: "0.68rem", lineHeight: 1.45, marginTop: "0.45rem", textAlign: "center", width: "12.5rem" }}
+        style={{ color: nearlyOut ? "#fbbf24" : "color-mix(in srgb, var(--oh-ink, #fff) 42%, transparent)", fontSize: "0.68rem", lineHeight: 1.45, marginTop: "0.45rem", textAlign: "center", width: "12.5rem" }}
         >
             <span data-no-translate>{day.used}</span> of <span data-no-translate>{day.limit}</span> AI requests used today
             <br />
@@ -1161,7 +1162,7 @@ const JumpNode = ({ isLoading, opt, onJump }) => {
             background: hovered ? "var(--oh-ui-hover, rgba(255,255,255,0.1))" : "var(--oh-ui-overlay-card, rgba(255,255,255,0.05))",
             border: hovered ? "1px solid var(--oh-ui-accent, rgba(255,255,255,0.28))" : "1px solid var(--oh-ui-line, rgba(255,255,255,0.18))",
             borderRadius: "10px",
-            color: "white",
+            color: "var(--oh-ink, #fff)",
             cursor: "pointer",
             opacity: isLoading ? 0.7 : 1,
             outline: "none",
@@ -1172,7 +1173,7 @@ const JumpNode = ({ isLoading, opt, onJump }) => {
         }}
         >
         <div style={{ fontSize: "0.9rem", fontWeight: 600 }}>{opt.sublabel}</div>
-        <div style={{ color: "#e4e4e7", fontSize: "0.7rem" }}>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)", fontSize: "0.7rem" }}>
         {opt.label}
         </div>
         </button>
@@ -1228,10 +1229,10 @@ const SkipProgressRow = ({ label, onCancel, startedAt = 0 }) => {
     return (
         <div
         style={{
-            background: "rgba(255,255,255,0.04)",
-            border: "1px solid rgba(255,255,255,0.08)",
+            background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
             borderRadius: "12px",
-            color: "rgba(255,255,255,0.75)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 75%, transparent)",
             display: "flex",
             flexDirection: "column",
             fontSize: "0.76rem",
@@ -1246,7 +1247,7 @@ const SkipProgressRow = ({ label, onCancel, startedAt = 0 }) => {
         <span style={{ minWidth: 0, overflowWrap: "anywhere" }}>{label || "Simulating…"}</span>
         {/* Its own element: a number that changes every second is never text to translate. */}
         {progress.elapsed && (
-            <span data-no-translate style={{ color: "rgba(255,255,255,0.5)", flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
+            <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", flexShrink: 0, fontVariantNumeric: "tabular-nums" }}>
             {progress.elapsed}
             </span>
         )}
@@ -1276,7 +1277,7 @@ const SkipProgressRow = ({ label, onCancel, startedAt = 0 }) => {
         {/* Each sentence in an element of its own, so each is looked up whole
             in the player's language. */}
         {activity && (
-            <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.72rem", lineHeight: 1.45, textAlign: "center" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, textAlign: "center" }}>
             <span>{activity}</span>
             {progress.request.stillWorking && <> <span>{REQUEST_STILL_OPEN_TEXT}</span></>}
             {progress.request.state === REQUEST_AGENT && (
@@ -1286,10 +1287,10 @@ const SkipProgressRow = ({ label, onCancel, startedAt = 0 }) => {
                 className="oh-tap-row"
                 onClick={() => { void openAgentFolder(); }}
                 style={{
-                    background: "rgba(255,255,255,0.08)",
-                    border: "1px solid rgba(255,255,255,0.18)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)",
                     borderRadius: "8px",
-                    color: "white",
+                    color: "var(--oh-ink, #fff)",
                     cursor: "pointer",
                     fontSize: "0.72rem",
                     padding: "0.26rem 0.7rem",
@@ -1403,10 +1404,10 @@ const HeldFailureList = ({ failures }) => {
 };
 
 const heldButtonStyle = (primary, busy) => ({
-    background: primary ? "rgba(251,191,36,0.18)" : "rgba(255,255,255,0.06)",
-    border: primary ? "1px solid rgba(251,191,36,0.4)" : "1px solid rgba(255,255,255,0.16)",
+    background: primary ? "rgba(251,191,36,0.18)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+    border: primary ? "1px solid rgba(251,191,36,0.4)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
     borderRadius: "12px",
-    color: primary ? "#fde68a" : "rgba(255,255,255,0.72)",
+    color: primary ? "#fde68a" : "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
     cursor: busy ? "default" : "pointer",
     flex: 1,
     fontSize: "0.76rem",
@@ -1589,12 +1590,12 @@ const TimelineSkipPanel = ({
         >
         {sceneInProgress && (
             <div style={{ background: "rgba(250,204,21,0.1)", border: "1px solid rgba(250,204,21,0.5)", borderRadius: "10px", color: "#fef08a", fontSize: "0.72rem", lineHeight: 1.45, marginBottom: "0.6rem", padding: "0.5rem 0.6rem", textAlign: "center", width: "12.5rem" }}>
-                ⚡ A scene is in progress. Time stands still until it ends or is set aside.
+                <UiIcon name="flash" size={14} /> A scene is in progress. Time stands still until it ends or is set aside.
                 <button
                 type="button"
                 className="oh-tap-row"
                 onClick={openInteractiveEvent}
-                style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "#1c1917", cursor: "pointer", display: "block", fontSize: "0.72rem", fontWeight: 800, margin: "0.4rem auto 0", padding: "0.3rem 0.7rem" }}
+                style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "var(--oh-paper, #1c1917)", cursor: "pointer", display: "block", fontSize: "0.72rem", fontWeight: 800, margin: "0.4rem auto 0", padding: "0.3rem 0.7rem" }}
                 >
                 Return to the scene
                 </button>
@@ -1604,12 +1605,12 @@ const TimelineSkipPanel = ({
             says so where the skip is pressed. */}
         {!sceneInProgress && offeredInteractive && (
             <div style={{ background: "rgba(250,204,21,0.07)", border: "1px solid rgba(250,204,21,0.35)", borderRadius: "10px", color: "#fef08a", fontSize: "0.72rem", lineHeight: 1.45, marginBottom: "0.6rem", padding: "0.5rem 0.6rem", textAlign: "center", width: "12.5rem" }}>
-                ⚡ An interactive event is on offer: <span data-no-translate style={{ fontWeight: 800 }}>{offeredInteractive.title}</span>. The next time skip lets it pass.
+                <UiIcon name="flash" size={14} /> An interactive event is on offer: <span data-no-translate style={{ fontWeight: 800 }}>{offeredInteractive.title}</span>. The next time skip lets it pass.
                 <button
                 type="button"
                 className="oh-tap-row"
                 onClick={openInteractiveEvent}
-                style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "#1c1917", cursor: "pointer", display: "block", fontSize: "0.72rem", fontWeight: 800, margin: "0.4rem auto 0", padding: "0.3rem 0.7rem" }}
+                style={{ background: "#facc15", border: "none", borderRadius: "8px", color: "var(--oh-paper, #1c1917)", cursor: "pointer", display: "block", fontSize: "0.72rem", fontWeight: 800, margin: "0.4rem auto 0", padding: "0.3rem 0.7rem" }}
                 >
                 Play it out
                 </button>
@@ -1639,7 +1640,7 @@ const TimelineSkipPanel = ({
             {undoCount} turn{undoCount === 1 ? "" : "s"} can be undone
             </div>
             </button>
-            <div style={{ background: "rgba(255,255,255,0.1)", height: "1.25rem", width: "2px" }} />
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", height: "1.25rem", width: "2px" }} />
             </>
         )}
         <div
@@ -1647,7 +1648,7 @@ const TimelineSkipPanel = ({
             background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.07))",
             border: "2px solid var(--oh-ui-line, rgba(255,255,255,0.28))",
             borderRadius: "999px",
-            color: "#e4e4e7",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)",
             fontSize: "0.7rem",
             fontWeight: 700,
             letterSpacing: "0.04em",
@@ -1661,12 +1662,12 @@ const TimelineSkipPanel = ({
 
         {jumpOptions.map((opt) => (
             <React.Fragment key={opt.label}>
-            <div style={{ background: "rgba(255,255,255,0.1)", height: "1.25rem", width: "2px" }} />
+            <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", height: "1.25rem", width: "2px" }} />
             <JumpNode isLoading={blocked} opt={opt} onJump={onJump} />
             </React.Fragment>
         ))}
 
-        <div style={{ background: "rgba(255,255,255,0.1)", height: "1.25rem", width: "2px" }} />
+        <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", height: "1.25rem", width: "2px" }} />
         <button
         type="button"
         className="oh-tap-row"
@@ -1681,7 +1682,7 @@ const TimelineSkipPanel = ({
             background: "var(--oh-ui-active, rgba(37,99,235,0.2))",
             border: "1px solid var(--oh-ui-accent, rgba(96,165,250,0.45))",
             borderRadius: "12px",
-            color: "white",
+            color: "var(--oh-ink, #fff)",
             cursor: blocked ? "default" : "pointer",
             opacity: blocked ? 0.72 : 1,
             padding: "0.55rem 0.7rem",
@@ -1692,7 +1693,7 @@ const TimelineSkipPanel = ({
         <div style={{ fontSize: "0.85rem", fontWeight: 700 }}>Auto-jump</div>
         </button>
 
-        <div style={{ background: "rgba(255,255,255,0.1)", height: "1.25rem", width: "2px" }} />
+        <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", height: "1.25rem", width: "2px" }} />
         <div
         style={{
             alignItems: "center",
@@ -1719,7 +1720,7 @@ const TimelineSkipPanel = ({
             background: "var(--oh-ui-overlay-strong, rgba(0,0,0,0.25))",
             border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.16))",
             borderRadius: "8px",
-            color: "#fff",
+            color: "var(--oh-ink, #fff)",
             fontSize: "0.8rem",
             minWidth: 0,
             outline: "none",
@@ -1736,7 +1737,7 @@ const TimelineSkipPanel = ({
             background: "var(--oh-ui-overlay-strong, rgba(0,0,0,0.25))",
             border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.16))",
             borderRadius: "8px",
-            color: "#fff",
+            color: "var(--oh-ink, #fff)",
             cursor: "pointer",
             flex: 1,
             fontSize: "0.8rem",
@@ -1760,7 +1761,7 @@ const TimelineSkipPanel = ({
             background: "var(--oh-ui-active, rgba(255,255,255,0.1))",
             border: "1px solid var(--oh-ui-accent, rgba(255,255,255,0.28))",
             borderRadius: "8px",
-            color: "#fff",
+            color: "var(--oh-ink, #fff)",
             cursor: blocked || !customValue ? "default" : "pointer",
             fontSize: "0.8rem",
             fontWeight: 700,
@@ -1772,7 +1773,7 @@ const TimelineSkipPanel = ({
         </button>
         </div>
         {customLanding && (
-            <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.72rem", marginTop: "0.3rem", textAlign: "center", width: "12.5rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.72rem", marginTop: "0.3rem", textAlign: "center", width: "12.5rem" }}>
             Lands on {customLanding}
             </div>
         )}
@@ -1854,10 +1855,10 @@ const TimelineSkipPanel = ({
                 disabled={isApplyingParked}
                 onClick={onDiscardParked}
                 style={{
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
                     borderRadius: "12px",
-                    color: "rgba(255,255,255,0.72)",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
                     cursor: isApplyingParked ? "default" : "pointer",
                     flex: 1,
                     fontSize: "0.76rem",
@@ -1893,7 +1894,7 @@ const TimelineSkipPanel = ({
                 background: "rgba(30,58,138,0.28)",
                 border: "1px solid rgba(96,165,250,0.32)",
                 borderRadius: "16px",
-                color: "#bfdbfe",
+                color: "var(--oh-link, #bfdbfe)",
                 display: "flex",
                 flexDirection: "column",
                 fontSize: "0.76rem",
@@ -1920,7 +1921,7 @@ const TimelineSkipPanel = ({
                     background: "rgba(96,165,250,0.2)",
                     border: "1px solid rgba(96,165,250,0.42)",
                     borderRadius: "12px",
-                    color: "#bfdbfe",
+                    color: "var(--oh-link, #bfdbfe)",
                     cursor: "pointer",
                     flex: 1,
                     fontSize: "0.76rem",
@@ -1934,10 +1935,10 @@ const TimelineSkipPanel = ({
                 className="oh-tap-row"
                 onClick={onDeclineModeSuggestion}
                 style={{
-                    background: "rgba(255,255,255,0.06)",
-                    border: "1px solid rgba(255,255,255,0.16)",
+                    background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                    border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
                     borderRadius: "12px",
-                    color: "rgba(255,255,255,0.72)",
+                    color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)",
                     cursor: "pointer",
                     flex: 1,
                     fontSize: "0.76rem",
@@ -1961,7 +1962,7 @@ const turnPickerButtonStyle = (enabled) => ({
     background: "none",
     border: "none",
     borderRadius: "6px",
-    color: enabled ? "rgba(255,255,255,0.8)" : "rgba(255,255,255,0.2)",
+    color: enabled ? "color-mix(in srgb, var(--oh-ink, #fff) 80%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)",
     cursor: enabled ? "pointer" : "default",
     display: "inline-flex",
     font: "inherit",
@@ -2077,7 +2078,7 @@ const TimelineHistoryPanel = ({
     // fallback alone under the button's old label (runtime/saveDebugLog.js).
     const report = useFailureReportButton({
         buildIncident: () => buildDebugIncident?.() ?? null,
-        copyIdleLabel: "📋 Copy debugging message",
+        copyIdleLabel: <><UiIcon name="copy" size={14} /> Copy debugging message</>,
     });
     // idle | working — the undo runs without switching panels, so this button is
     // the only place the player can see that anything is happening.
@@ -2170,7 +2171,7 @@ const TimelineHistoryPanel = ({
         {/* The shared markdown sheet: tables in an event body or a document. */}
         <MarkdownStyleInjector />
         {pastTurn && (
-            <div style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.72rem", lineHeight: 1.45, marginBottom: "0.75rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.72rem", lineHeight: 1.45, marginBottom: "0.75rem" }}>
             This is an earlier turn, shown in full. The map shows the world as it is now.
             </div>
         )}
@@ -2287,9 +2288,9 @@ const TimelineHistoryPanel = ({
                         style={{
                             padding: "0.2rem 0.6rem",
                             borderRadius: "999px",
-                            border: active ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.16)",
-                            background: active ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.06)",
-                            color: "white",
+                            border: active ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 16%, transparent)",
+                            background: active ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+                            color: "var(--oh-ink, #fff)",
                             fontSize: "0.68rem",
                             fontWeight: 700,
                             cursor: "pointer",
@@ -2421,7 +2422,7 @@ const TimelineHistoryPanel = ({
                             cursor: intervening === "working" ? "default" : "pointer",
                         }}
                         >
-                        <span>{intervening === "working" ? "Stopping the round…" : "✋ Intervene here"}</span>
+                        <span>{intervening === "working" ? "Stopping the round…" : <><UiIcon name="stop" size={14} /> Intervene here</>}</span>
                         </button>
                     )
                 )}
@@ -3941,7 +3942,7 @@ const DateWidget = ({
         aria-label="Events"
         style={{
             ...buttonStyle,
-            color: openPanel === "history" ? "#bfdbfe" : buttonStyle.color,
+            color: openPanel === "history" ? "var(--oh-link, #bfdbfe)" : buttonStyle.color,
         }}
         onClick={() => togglePanel("history")}
         onMouseEnter={(event) => {
@@ -3974,7 +3975,7 @@ const DateWidget = ({
             >
             <span
             style={{
-                color: countryButton && countryOpen ? "#bfdbfe" : "rgba(147,197,253,0.88)",
+                color: countryButton && countryOpen ? "var(--oh-link, #bfdbfe)" : "rgba(147,197,253,0.88)",
                 fontSize: isMobile ? "0.68rem" : "0.8rem",
                 fontWeight: 700,
                 letterSpacing: "0.05em",
@@ -3989,12 +3990,12 @@ const DateWidget = ({
             >
             {playerCountry}
             </span>
-            <span style={{ color: "rgba(255,255,255,0.94)", flexShrink: 0, fontSize: isMobile ? "0.82rem" : "0.95rem", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>
+            <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", flexShrink: 0, fontSize: isMobile ? "0.82rem" : "0.95rem", letterSpacing: "0.02em", whiteSpace: "nowrap" }}>
             {displayDate}
             </span>
             </CountryStack>
         ) : (
-            <div style={{ color: "rgba(255,255,255,0.94)", fontSize: "0.95rem", letterSpacing: "0.02em" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", fontSize: "0.95rem", letterSpacing: "0.02em" }}>
             {displayDate}
             </div>
         )}
@@ -4006,7 +4007,7 @@ const DateWidget = ({
         aria-label="Timeline"
         style={{
             ...buttonStyle,
-            color: openPanel === "skip" ? "#e4e4e7" : buttonStyle.color,
+            color: openPanel === "skip" ? "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" : buttonStyle.color,
         }}
         onClick={() => {
             if (isLoading) {
@@ -4027,7 +4028,7 @@ const DateWidget = ({
             }
         }}
         >
-        {isLoading ? <SpinnerRing size={15} tone="rgba(255,255,255,0.28)" /> : "\u00BB"}
+        {isLoading ? <SpinnerRing size={15} tone="color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" /> : "\u00BB"}
         </button>
         </div>
         </>

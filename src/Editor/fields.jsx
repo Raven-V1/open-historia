@@ -23,7 +23,7 @@ export const hexToRgb = (hex) => {
 
 export const Row = ({ label, children, title }) => (
   <label title={title} style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 12.5 }}>
-    <span style={{ flex: "0 0 46%", color: "rgba(255,255,255,0.72)" }}>{label}</span>
+    <span style={{ flex: "0 0 46%", color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)" }}>{label}</span>
     <span style={{ flex: 1, display: "flex", justifyContent: "flex-end" }}>{children}</span>
   </label>
 );
@@ -62,7 +62,7 @@ export const ColorField = ({ value, onChange }) => (
       width: 40,
       height: 26,
       padding: 0,
-      border: "1px solid rgba(255,255,255,0.2)",
+      border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)",
       borderRadius: 6,
       background: "transparent",
       cursor: "pointer",
@@ -79,8 +79,8 @@ export const Toggle = ({ value, onChange }) => (
       width: 38,
       height: 22,
       borderRadius: 11,
-      border: "1px solid rgba(255,255,255,0.2)",
-      background: value ? ACCENT : "rgba(255,255,255,0.12)",
+      border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)",
+      background: value ? ACCENT : "color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
       position: "relative",
       cursor: "pointer",
       transition: "background 0.15s",
@@ -177,7 +177,7 @@ export const TagField = ({ value, onChange, suggestions = [], placeholder = "add
               key={tag}
               style={{
                 display: "inline-flex", alignItems: "center", gap: 4,
-                background: "rgba(255,255,255,0.11)", border: "1px solid rgba(255,255,255,0.25)",
+                background: "color-mix(in srgb, var(--oh-ink, #fff) 11%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 25%, transparent)",
                 borderRadius: 999, padding: "1px 4px 1px 7px", fontSize: 11, lineHeight: "16px",
               }}
             >

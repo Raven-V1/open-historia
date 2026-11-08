@@ -1,5 +1,6 @@
 /*! Open Historia — portions (panel sizing on small screens) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { APP_HEIGHT, useCanHover, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { isComposerSendKey } from "../../runtime/composerKeys.js";
 import { useIsMobile } from "../../runtime/useIsMobile.js";
@@ -81,7 +82,7 @@ const SendIcon = () => (
     </svg>
 );
 
-const SpinnerRing = ({ size = 14, tone = "rgba(255,255,255,0.88)" }) => {
+const SpinnerRing = ({ size = 14, tone = "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)" }) => {
     React.useEffect(() => {
         ensureActionsStyles();
     }, []);
@@ -95,7 +96,7 @@ const SpinnerRing = ({ size = 14, tone = "rgba(255,255,255,0.88)" }) => {
         aria-hidden="true"
         style={{ animation: "actions-spin 0.7s linear infinite" }}
         >
-        <circle cx="12" cy="12" r="8" stroke="rgba(255,255,255,0.2)" strokeWidth="2.2" />
+        <circle cx="12" cy="12" r="8" stroke="color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)" strokeWidth="2.2" />
         <path d="M12 4a8 8 0 0 1 8 8" stroke={tone} strokeWidth="2.2" strokeLinecap="round" />
         </svg>
     );
@@ -191,10 +192,10 @@ const ActionItem = ({ action, onDelete, locked = false }) => {
         onMouseLeave={() => setHovered(false)}
         style={{
             alignItems: "center",
-            backgroundColor: hovered ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)",
-            border: "1px solid rgba(255,255,255,0.07)",
+            backgroundColor: hovered ? "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+            border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
             borderRadius: "10px",
-            color: "rgba(255,255,255,0.85)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent)",
             display: "flex",
             gap: "0.5rem",
             justifyContent: "space-between",
@@ -206,16 +207,16 @@ const ActionItem = ({ action, onDelete, locked = false }) => {
         <div style={{ flex: 1, minWidth: 0 }}>
         {/* The player's own order, as typed: never the interface's to translate. */}
         {showTitle && (
-            <div data-no-translate style={{ color: "rgba(255,255,255,0.95)", fontSize: "0.78rem", fontWeight: 700, marginBottom: "0.15rem" }}>
+            <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 95%, transparent)", fontSize: "0.78rem", fontWeight: 700, marginBottom: "0.15rem" }}>
             {normalized.title}
             </div>
         )}
-        <div data-no-translate style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.82rem", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+        <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: "0.82rem", whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
         {label}
         </div>
         <div
         style={{
-            color: "rgba(255,255,255,0.38)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)",
             fontSize: "0.68rem",
             letterSpacing: "0.06em",
             marginTop: "0.25rem",
@@ -237,7 +238,7 @@ const ActionItem = ({ action, onDelete, locked = false }) => {
             background: hovered && !locked ? "rgba(239,68,68,0.1)" : "none",
             border: "none",
             borderRadius: "6px",
-            color: locked ? "rgba(255,255,255,0.18)" : hovered ? "rgba(239,68,68,0.95)" : "rgba(239,68,68,0.8)",
+            color: locked ? "color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)" : hovered ? "rgba(239,68,68,0.95)" : "rgba(239,68,68,0.8)",
             cursor: locked ? "not-allowed" : "pointer",
             display: "flex",
             flexShrink: 0,
@@ -249,7 +250,7 @@ const ActionItem = ({ action, onDelete, locked = false }) => {
             transition: "opacity 0.15s, color 0.15s, background 0.15s",
         }}
         >
-        {"\u2715"}
+        <UiIcon name="close" size={14} />
         </button>
         </div>
     );
@@ -265,7 +266,7 @@ const SectionHeader = ({ title, count, open, onToggle }) => (
         alignItems: "center",
         background: "none",
         border: "none",
-        color: "rgba(255,255,255,0.9)",
+        color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)",
         cursor: "pointer",
         display: "flex",
         flexShrink: 0,
@@ -275,17 +276,17 @@ const SectionHeader = ({ title, count, open, onToggle }) => (
         width: "100%",
     }}
     >
-    <span aria-hidden="true" style={{ color: "rgba(255,255,255,0.5)", display: "inline-block", fontSize: "0.7rem", transform: open ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}>{"\u25B6"}</span>
+    <span aria-hidden="true" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", display: "inline-block", fontSize: "0.7rem", transform: open ? "rotate(90deg)" : "none", transition: "transform 0.15s" }}>{"\u25B6"}</span>
     <span style={{ flex: 1, fontSize: "0.78rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" }}>{title}</span>
-    <span data-no-translate style={{ color: "rgba(255,255,255,0.45)", fontSize: "0.72rem" }}>{count}</span>
+    <span data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", fontSize: "0.72rem" }}>{count}</span>
     </button>
 );
 
 const SuggestionCard = ({ topic, onQueue, queuedIds }) => (
     <div
     style={{
-        background: "rgba(255,255,255,0.04)",
-                                                border: "1px solid rgba(255,255,255,0.08)",
+        background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                                                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
                                                 borderRadius: "12px",
                                                 display: "flex",
                                                 flexDirection: "column",
@@ -294,8 +295,8 @@ const SuggestionCard = ({ topic, onQueue, queuedIds }) => (
     }}
     >
     <div>
-    <div style={{ color: "rgba(255,255,255,0.94)", fontSize: "0.8rem", fontWeight: 700 }}>{topic.title}</div>
-    <div style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.76rem", lineHeight: "1.5", marginTop: "0.2rem" }}>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", fontSize: "0.8rem", fontWeight: 700 }}>{topic.title}</div>
+    <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.76rem", lineHeight: "1.5", marginTop: "0.2rem" }}>
     {topic.description}
     </div>
     </div>
@@ -310,10 +311,10 @@ const SuggestionCard = ({ topic, onQueue, queuedIds }) => (
             disabled={isQueued}
             onClick={() => onQueue(action)}
             style={{
-                background: isQueued ? "rgba(34,197,94,0.12)" : "rgba(255,255,255,0.04)",
-                border: isQueued ? "1px solid rgba(74,222,128,0.35)" : "1px solid rgba(255,255,255,0.12)",
+                background: isQueued ? "rgba(34,197,94,0.12)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+                border: isQueued ? "1px solid rgba(74,222,128,0.35)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
                 borderRadius: "10px",
-                color: "rgba(255,255,255,0.9)",
+                color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)",
                 cursor: isQueued ? "default" : "pointer",
                 fontFamily: "sans-serif",
                 padding: "0.55rem 0.7rem",
@@ -321,9 +322,9 @@ const SuggestionCard = ({ topic, onQueue, queuedIds }) => (
             }}
             >
             <div style={{ fontSize: "0.76rem", fontWeight: 700 }}>
-            {isQueued ? `✓ Queued — ${action.title}` : action.title}
+            {isQueued ? <><UiIcon name="check" size={14} /> {`Queued — ${action.title}`}</> : action.title}
             </div>
-            <div style={{ color: "rgba(255,255,255,0.62)", fontSize: "0.74rem", lineHeight: "1.45", marginTop: "0.18rem" }}>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 62%, transparent)", fontSize: "0.74rem", lineHeight: "1.45", marginTop: "0.18rem" }}>
             {action.text}
             </div>
             </button>
@@ -334,10 +335,10 @@ const SuggestionCard = ({ topic, onQueue, queuedIds }) => (
 );
 
 const goalButtonStyle = (enabled, tone = "neutral") => ({
-    background: tone === "primary" ? (enabled ? "rgba(255,255,255,0.1)" : "rgba(255,255,255,0.07)") : "none",
-    border: tone === "primary" ? "1px solid rgba(255,255,255,0.28)" : "1px solid rgba(255,255,255,0.14)",
+    background: tone === "primary" ? (enabled ? "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)") : "none",
+    border: tone === "primary" ? "1px solid color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "1px solid color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)",
     borderRadius: "8px",
-    color: enabled ? "rgba(255,255,255,0.9)" : "rgba(255,255,255,0.4)",
+    color: enabled ? "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 40%, transparent)",
     cursor: enabled ? "pointer" : "not-allowed",
     fontFamily: "sans-serif",
     fontSize: "0.74rem",
@@ -369,7 +370,7 @@ const GoalProgress = ({ country, round, turnRunning }) => {
         }
     };
 
-    const muted = { color: "rgba(255,255,255,0.55)", fontSize: "0.72rem" };
+    const muted = { color: "color-mix(in srgb, var(--oh-ink, #fff) 55%, transparent)", fontSize: "0.72rem" };
     if (!progress) {
         return (
             <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between" }}>
@@ -386,7 +387,7 @@ const GoalProgress = ({ country, round, turnRunning }) => {
     const list = (title, items) => items.length > 0 && (
         <div>
         <span style={{ ...muted, fontWeight: 700 }}>{title}</span>
-        <ul style={{ color: "rgba(255,255,255,0.78)", fontSize: "0.74rem", lineHeight: "1.45", margin: "0.15rem 0 0", paddingLeft: "1.1rem" }}>
+        <ul style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.74rem", lineHeight: "1.45", margin: "0.15rem 0 0", paddingLeft: "1.1rem" }}>
         {items.map((item) => <li key={item}>{item}</li>)}
         </ul>
         </div>
@@ -395,19 +396,19 @@ const GoalProgress = ({ country, round, turnRunning }) => {
         <div style={{ display: "flex", flexDirection: "column", gap: "0.35rem" }}>
         <div style={{ alignItems: "center", display: "flex", gap: "0.5rem" }}>
         <div role="progressbar" aria-label="Goal progress" aria-valuemin={0} aria-valuemax={100} aria-valuenow={progress.progress}
-        style={{ background: "rgba(255,255,255,0.1)", borderRadius: "999px", flex: 1, height: "6px", overflow: "hidden" }}>
+        style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)", borderRadius: "999px", flex: 1, height: "6px", overflow: "hidden" }}>
         <div style={{ background: "#7dd3fc", height: "100%", width: `${progress.progress}%` }} />
         </div>
-        <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.76rem", fontWeight: 700 }}>{progress.progress}%</span>
+        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.76rem", fontWeight: 700 }}>{progress.progress}%</span>
         {change !== 0 && <span style={{ color: change > 0 ? "#86efac" : "#fca5a5", fontSize: "0.72rem" }}>{change > 0 ? `+${change}` : change}</span>}
         <button type="button" className="oh-tap" disabled={busy || turnRunning} onClick={() => void assess()}
         title={turnRunning ? "A turn is running." : "Assess again"} aria-label="Assess progress again"
-        style={{ background: "none", border: "none", color: "rgba(255,255,255,0.45)", cursor: busy || turnRunning ? "not-allowed" : "pointer", fontSize: "0.8rem", padding: 0 }}>
+        style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)", cursor: busy || turnRunning ? "not-allowed" : "pointer", fontSize: "0.8rem", padding: 0 }}>
         {busy ? "…" : "↻"}
         </button>
         </div>
         <button type="button" className="oh-tap" onClick={() => setOpen((value) => !value)} aria-expanded={open}
-        style={{ background: "none", border: "none", color: "rgba(255,255,255,0.78)", cursor: "pointer", fontSize: "0.74rem", lineHeight: "1.45", padding: 0, textAlign: "left" }}>
+        style={{ background: "none", border: "none", color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", cursor: "pointer", fontSize: "0.74rem", lineHeight: "1.45", padding: 0, textAlign: "left" }}>
         {progress.summary}
         </button>
         {open && (
@@ -497,7 +498,7 @@ const StandingGoal = ({ country, round, gameDate, isOpen }) => {
     };
 
     const label = (
-        <span style={{ color: "rgba(255,255,255,0.9)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" }}>
+        <span style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)", fontSize: "0.72rem", fontWeight: 700, letterSpacing: "0.06em", textTransform: "uppercase" }}>
         Standing goal
         </span>
     );
@@ -519,10 +520,10 @@ const StandingGoal = ({ country, round, gameDate, isOpen }) => {
             onKeyDown={handleKeyDown}
             style={{
                 background: "var(--oh-ui-bg, rgba(0,0,0,0.25))",
-                border: "1px solid rgba(255,255,255,0.15)",
+                border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 15%, transparent)",
                 borderRadius: "8px",
                 boxSizing: "border-box",
-                color: "white",
+                color: "var(--oh-ink, #fff)",
                 fontFamily: "sans-serif",
                 fontSize: "0.8rem",
                 lineHeight: "1.45",
@@ -562,9 +563,9 @@ const StandingGoal = ({ country, round, gameDate, isOpen }) => {
             title={turnRunning ? lockedNote : "Your advisor, the time skip and the AI suggestions steer by it. Foreign leaders never see it."}
             style={{
                 background: "none",
-                border: "1px dashed rgba(255,255,255,0.2)",
+                border: "1px dashed color-mix(in srgb, var(--oh-ink, #fff) 20%, transparent)",
                 borderRadius: "10px",
-                color: turnRunning ? "rgba(255,255,255,0.45)" : "#e4e4e7",
+                color: turnRunning ? "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)",
                 cursor: turnRunning ? "not-allowed" : "pointer",
                 fontFamily: "sans-serif",
                 fontSize: "0.78rem",
@@ -573,7 +574,7 @@ const StandingGoal = ({ country, round, gameDate, isOpen }) => {
                 width: "100%",
             }}
             >
-            {"\u{1F3AF} Set a standing goal"}
+            <UiIcon name="target" size={14} /> <span>Set a standing goal</span>
             </button>
         );
     }
@@ -588,13 +589,13 @@ const StandingGoal = ({ country, round, gameDate, isOpen }) => {
         disabled={turnRunning}
         onClick={startEditing}
         title={turnRunning ? lockedNote : "Change or clear the goal"}
-        style={{ background: "none", border: "none", color: turnRunning ? "rgba(255,255,255,0.18)" : "rgba(255,255,255,0.28)", cursor: turnRunning ? "not-allowed" : "pointer", fontFamily: "sans-serif", fontSize: "0.74rem", padding: 0 }}
+        style={{ background: "none", border: "none", color: turnRunning ? "color-mix(in srgb, var(--oh-ink, #fff) 18%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)", cursor: turnRunning ? "not-allowed" : "pointer", fontFamily: "sans-serif", fontSize: "0.74rem", padding: 0 }}
         >
         Edit
         </button>
         </div>
-        <span title={goal} style={{ color: "rgba(255,255,255,0.82)", display: "-webkit-box", fontSize: "0.8rem", lineHeight: "1.45", overflow: "hidden", WebkitBoxOrient: "vertical", WebkitLineClamp: 3 }}>
-        {"\u{1F3AF} "}{goal}
+        <span title={goal} style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", display: "-webkit-box", fontSize: "0.8rem", lineHeight: "1.45", overflow: "hidden", WebkitBoxOrient: "vertical", WebkitLineClamp: 3 }}>
+        <UiIcon name="target" size={14} /> {goal}
         </span>
         <GoalProgress country={country} round={round} turnRunning={turnRunning} />
         </div>
@@ -893,8 +894,8 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
             border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.1))",
             borderRadius: "16px",
             bottom: isOpen ? "4.25rem" : "-30rem",
-            boxShadow: "-4px 0 24px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.06)",
-            color: "white",
+            boxShadow: "-4px 0 24px rgba(0,0,0,0.4), inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+            color: "var(--oh-ink, #fff)",
             display: "flex",
             flexDirection: "column",
             fontFamily: "sans-serif",
@@ -917,7 +918,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
         <div
         style={{
             alignItems: "center",
-            borderBottom: "1px solid rgba(255,255,255,0.07)",
+            borderBottom: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
             display: "flex",
             gap: "0.5rem",
             justifyContent: "space-between",
@@ -935,12 +936,12 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
                 aria-selected={active}
                 className="oh-tap-row"
                 onClick={() => setTab(key)}
-                style={{ alignItems: "center", background: active ? "var(--oh-ui-active, var(--oh-grey-selected))" : "rgba(255,255,255,.025)", border: "1px solid " + (active ? "var(--oh-ui-accent, var(--oh-grey-border-strong))" : "rgba(255,255,255,.07)"), borderRadius: "8px", color: active ? "white" : "rgba(255,255,255,0.48)", cursor: "pointer", display: "flex", flex: "0 0 auto", fontFamily: "sans-serif", fontSize: ".8rem", fontWeight: 750, gap: ".38rem", padding: isTouch ? ".3rem .62rem" : ".36rem .74rem", whiteSpace: "nowrap" }}
+                style={{ alignItems: "center", background: active ? "var(--oh-ui-active, var(--oh-grey-selected))" : "color-mix(in srgb, var(--oh-ink, #fff) 2.5%, transparent)", border: "1px solid " + (active ? "var(--oh-ui-accent, var(--oh-grey-border-strong))" : "color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)"), borderRadius: "8px", color: active ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 48%, transparent)", cursor: "pointer", display: "flex", flex: "0 0 auto", fontFamily: "sans-serif", fontSize: ".8rem", fontWeight: 750, gap: ".38rem", padding: isTouch ? ".3rem .62rem" : ".36rem .74rem", whiteSpace: "nowrap" }}
                 >
                 <span aria-hidden="true" style={{ display: "inline-flex", opacity: .8 }}>{key === "projects" ? <ProjectsTabIcon /> : <OrdersTabIcon />}</span>
                 <span>{label}</span>
                 {key === "projects" && projectCount > 0 && (
-                    <span data-no-translate style={{ alignItems: "center", background: active ? "rgba(255,255,255,.14)" : "rgba(255,255,255,.08)", borderRadius: 999, color: active ? "#fff" : "rgba(255,255,255,0.6)", display: "inline-flex", fontSize: ".57rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", minWidth: "1.05rem", padding: "0 .25rem" }}>{projectCount}</span>
+                    <span data-no-translate style={{ alignItems: "center", background: active ? "color-mix(in srgb, var(--oh-ink, #fff) 14%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: 999, color: active ? "var(--oh-ink, #fff)" : "color-mix(in srgb, var(--oh-ink, #fff) 60%, transparent)", display: "inline-flex", fontSize: ".57rem", fontWeight: 800, height: "1.05rem", justifyContent: "center", minWidth: "1.05rem", padding: "0 .25rem" }}>{projectCount}</span>
                 )}
                 </button>
             );
@@ -955,7 +956,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
             background: "none",
             border: "none",
             borderRadius: "6px",
-            color: "rgba(255,255,255,0.5)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)",
             cursor: "pointer",
             fontSize: "1.1rem",
             lineHeight: 1,
@@ -964,14 +965,14 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
         }}
         onMouseEnter={(event) => {
             event.currentTarget.style.color = "white";
-            event.currentTarget.style.background = "rgba(255,255,255,0.08)";
+            event.currentTarget.style.background = "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)";
         }}
         onMouseLeave={(event) => {
-            event.currentTarget.style.color = "rgba(255,255,255,0.5)";
+            event.currentTarget.style.color = "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)";
             event.currentTarget.style.background = "none";
         }}
         >
-        {"\u2715"}
+        <UiIcon name="close" size={14} />
         </button>
         </div>
 
@@ -1004,7 +1005,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
             background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.05))",
             border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.2))",
             borderRadius: "10px",
-            color: "#e4e4e7",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 88%, transparent)",
             cursor: "pointer",
             fontSize: "0.82rem",
             fontWeight: 500,
@@ -1035,7 +1036,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
             background: "var(--oh-ui-overlay-card, rgba(255,255,255,0.05))",
             border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.12))",
             borderRadius: "10px",
-            color: "rgba(255,255,255,0.82)",
+            color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)",
             cursor: "pointer",
             display: "flex",
             fontSize: "0.8rem",
@@ -1089,7 +1090,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
                             </AiFailureNote>
                         )}
                         {!suggestionError && hasRequestedSuggestions && !isSuggesting && suggestions.length === 0 && (
-                            <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.78rem", fontStyle: "italic", margin: 0 }}>
+                            <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.78rem", fontStyle: "italic", margin: 0 }}>
                             No AI suggestions generated yet.
                             </p>
                         )}
@@ -1112,7 +1113,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
                 ) : (
                     <p
                     style={{
-                        color: "rgba(255,255,255,0.9)",
+                        color: "color-mix(in srgb, var(--oh-ink, #fff) 90%, transparent)",
                         fontSize: "0.78rem",
                         fontWeight: 700,
                         letterSpacing: "0.06em",
@@ -1126,7 +1127,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
                 {submittedOpen && (
                     <div style={listStyle}>
                     {submittedActions.length === 0 && (
-                        <p style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.8rem", fontStyle: "italic", margin: 0 }}>
+                        <p style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 35%, transparent)", fontSize: "0.8rem", fontStyle: "italic", margin: 0 }}>
                         No actions submitted yet.
                         </p>
                     )}
@@ -1161,7 +1162,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
         style={{
             alignItems: "center",
             backgroundColor: "rgba(0,0,0,0.2)",
-            borderTop: "1px solid rgba(255,255,255,0.07)",
+            borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)",
             display: "flex",
             gap: "0.5rem",
             padding: "0.75rem 1rem",
@@ -1182,7 +1183,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
             border: "1px solid var(--oh-ui-line, rgba(255,255,255,0.15))",
             borderRadius: "10px",
             boxSizing: "border-box",
-            color: "white",
+            color: "var(--oh-ink, #fff)",
             fontFamily: "sans-serif",
             fontSize: "0.82rem",
             outline: "none",
@@ -1213,7 +1214,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
             background: "none",
             border: "none",
             borderRadius: "8px",
-            color: isImproving || inputValue.trim() ? "var(--oh-ui-accent, #e4e4e7)" : "rgba(255,255,255,0.45)",
+            color: isImproving || inputValue.trim() ? "var(--oh-ui-accent, #e4e4e7)" : "color-mix(in srgb, var(--oh-ink, #fff) 45%, transparent)",
             cursor: isImproving || inputValue.trim() ? "pointer" : "default",
             display: "flex",
             height: "1.8rem",
@@ -1243,7 +1244,7 @@ const ActionsPanel = ({ isOpen, onClose, onOpenAdvisor, mapRef, requestedTab = n
             border: "none",
             boxShadow: "inset 0 0 0 1px var(--oh-ui-accent, transparent)",
             borderRadius: "10px",
-            color: "white",
+            color: "var(--oh-ink, #fff)",
             cursor: inputValue.trim() && !isSubmitting && !isImproving ? "pointer" : "not-allowed",
             display: "flex",
             flexShrink: 0,
@@ -1304,8 +1305,8 @@ const Actions = ({ onOpenAdvisor, mapRef, requestedTab = null, hovered, setHover
             : "var(--oh-ui-glass-chip, rgba(255,255,255,0.04))",
             border: isOpen ? "1px solid var(--oh-ui-glass-active-line, rgba(96,165,250,0.34))" : "1px solid var(--oh-ui-glass-line, rgba(255,255,255,0.1))",
             borderRadius: "10px",
-            boxShadow: "inset 0 1px 0 rgba(255,255,255,0.05)",
-            color: "white",
+            boxShadow: "inset 0 1px 0 color-mix(in srgb, var(--oh-ink, #fff) 5%, transparent)",
+            color: "var(--oh-ink, #fff)",
             cursor: "pointer",
             display: "flex",
             fontFamily: "inherit",

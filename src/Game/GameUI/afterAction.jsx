@@ -107,7 +107,7 @@ export const AfterActionReport = ({ record, mine, onClose }) => {
     return () => window.removeEventListener("keydown", onKey);
   }, [onClose]);
   return (
-    <div role="presentation" onClick={onClose} style={{ alignItems: "center", background: "rgba(3,5,8,0.62)", display: "flex", inset: 0, justifyContent: "center", padding: `calc(0.5rem + ${SAFE_TOP}) 0.5rem calc(0.5rem + ${SAFE_BOTTOM})`, position: "fixed", zIndex: 10060 }}>
+    <div role="presentation" onClick={onClose} style={{ alignItems: "center", background: "color-mix(in srgb, var(--oh-paper, rgb(3,5,8)) 62%, transparent)", display: "flex", inset: 0, justifyContent: "center", padding: `calc(0.5rem + ${SAFE_TOP}) 0.5rem calc(0.5rem + ${SAFE_BOTTOM})`, position: "fixed", zIndex: 10060 }}>
       <div
         role="dialog"
         aria-modal="true"
@@ -221,12 +221,12 @@ export const WarReportsList = ({ world, country, style = null }) => {
   if (reports.length === 0) return null;
   return (
     <div data-oh-war-reports="" style={style}>
-      <div style={{ color: "rgba(255,255,255,0.7)", fontSize: "0.72rem", fontWeight: 800, padding: "0.55rem 0.65rem" }}>War reports</div>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)", fontSize: "0.72rem", fontWeight: 800, padding: "0.55rem 0.65rem" }}>War reports</div>
       {reports.map((record) => (
-        <div key={record.name} style={{ alignItems: "center", borderTop: "1px solid rgba(255,255,255,0.07)", display: "flex", gap: "0.5rem", justifyContent: "space-between", padding: "0.45rem 0.65rem" }}>
+        <div key={record.name} style={{ alignItems: "center", borderTop: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", display: "flex", gap: "0.5rem", justifyContent: "space-between", padding: "0.45rem 0.65rem" }}>
           <div style={{ minWidth: 0 }}>
-            <div data-no-translate style={{ color: "rgba(255,255,255,0.86)", fontSize: "0.72rem", fontWeight: 750 }}>{record.name}</div>
-            <div style={{ color: "rgba(255,255,255,0.38)", fontSize: "0.61rem", marginTop: "0.14rem" }}>Ended {formatGameDateReadable(record.closedDate) || record.closedDate}</div>
+            <div data-no-translate style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 86%, transparent)", fontSize: "0.72rem", fontWeight: 750 }}>{record.name}</div>
+            <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 38%, transparent)", fontSize: "0.61rem", marginTop: "0.14rem" }}>Ended {formatGameDateReadable(record.closedDate) || record.closedDate}</div>
           </div>
           <button
             type="button"

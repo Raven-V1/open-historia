@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import Map from "ol/Map";
 import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
@@ -610,7 +611,7 @@ const CountryPickerMap = ({
               fontSize: "0.74rem",
             }}
           >
-            <span>🌍 Drag to pan • Scroll to zoom • Click any nation to select</span>
+            <span>Drag to pan • Scroll to zoom • Click any nation to select</span>
             <span>{countryOptions.length} playable nations</span>
           </div>
         )}
@@ -684,7 +685,7 @@ const CountryPickerMap = ({
               }}
             >
               <span aria-hidden="true" style={{ fontSize: "1.1rem", width: "1.5rem" }}>
-                ⭐
+                <UiIcon name="flag" size={16} />
               </span>
               <div style={{ display: "flex", flexDirection: "column", gap: 1 }}>
                 <span>{playGameId ? "Keep scenario default" : "Scenario default"}</span>

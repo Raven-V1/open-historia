@@ -7,6 +7,7 @@
 // are disband one of their own units and ask, in words, for orders — which
 // queues an action the AI weighs on the next jump rather than moving anything now.
 
+import UiIcon from "../GameUI/carbonIcons.jsx";
 import React, { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { useMap } from "react-map-gl/maplibre";
@@ -71,12 +72,12 @@ const TYPE_LABEL = {
   garrison: "Garrison",
 };
 const TYPE_GLYPH = {
-  infantry: "🛡",
-  armor: "⚙",
-  air: "✈",
-  naval: "⚓",
-  artillery: "💥",
-  garrison: "🏰",
+  infantry: <UiIcon name="military" size={24} />,
+  armor: <UiIcon name="tools" size={24} />,
+  air: <UiIcon name="plane" size={24} />,
+  naval: <UiIcon name="anchor" size={24} />,
+  artillery: <UiIcon name="rocket" size={24} />,
+  garrison: <UiIcon name="building" size={24} />,
 };
 
 const ANIM_ID = "unit-popup-anims";
@@ -380,11 +381,11 @@ const UnitPopup = () => {
           maxHeight: asSheet ? (isMobile ? SHEET_MAX_HEIGHT : SIDEWAYS_SHEET_MAX_HEIGHT) : undefined,
           boxShadow: "0 8px 32px rgba(0,0,0,0.5), 0 2px 8px rgba(0,0,0,0.3)",
           border: "1px solid rgba(255,255,255,0.12)",
-          color: "white",
+          color: "var(--oh-ink, #fff)",
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: "9px", padding: "10px 12px 8px" }}>
-          <span style={{ fontSize: "1.5rem", lineHeight: 1 }}>{TYPE_GLYPH[unit.type] ?? "🛡"}</span>
+          <span style={{ fontSize: "1.5rem", lineHeight: 1 }}>{TYPE_GLYPH[unit.type] ?? <UiIcon name="military" size={24} />}</span>
           <div style={{ minWidth: 0, flex: 1 }}>
             <div style={{ fontWeight: 700, fontSize: "13px", wordBreak: "break-word" }}>{unit.name}</div>
             <div style={{ fontSize: "11px", color: "rgba(255,255,255,0.6)" }}>
@@ -408,7 +409,7 @@ const UnitPopup = () => {
               flexShrink: 0,
             }}
           >
-            {"✕"}
+            <UiIcon name="close" size={14} />
           </button>
         </div>
 
@@ -451,7 +452,7 @@ const UnitPopup = () => {
 
           <div style={{ display: "flex", justifyContent: "space-between", fontSize: "11px", color: "rgba(255,255,255,0.7)", marginBottom: "3px" }}>
             <span>Strength</span>
-            <span style={{ fontWeight: 600, color: "white" }}>{unit.strength}%</span>
+            <span style={{ fontWeight: 600, color: "var(--oh-ink, #fff)" }}>{unit.strength}%</span>
           </div>
           <div style={{ height: "6px", borderRadius: "3px", background: "rgba(255,255,255,0.12)", overflow: "hidden" }}>
             <div
@@ -496,7 +497,7 @@ const UnitPopup = () => {
                   background: "rgba(0,0,0,0.3)",
                   border: "1px solid rgba(255,255,255,0.15)",
                   borderRadius: "6px",
-                  color: "white",
+                  color: "var(--oh-ink, #fff)",
                   fontFamily: "inherit",
                   fontSize: "11px",
                   padding: "5px 6px",
@@ -505,7 +506,7 @@ const UnitPopup = () => {
               />
               <div style={{ display: "flex", gap: "5px", marginTop: "6px" }}>
                 <ActionButton
-                  label={requestState === "queued" ? "✓ Queued" : requestState === "sending" ? "Queueing…" : "Request orders"}
+                  label={requestState === "queued" ? "Queued" : requestState === "sending" ? "Queueing…" : "Request orders"}
                   tone="primary"
                   disabled={requestState !== "idle" || !request.trim()}
                   onClick={sendRequest}

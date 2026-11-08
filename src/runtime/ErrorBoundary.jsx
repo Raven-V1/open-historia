@@ -10,7 +10,7 @@ import { useFailureReportButton } from "./saveDebugLog.js";
 const CrashReportButton = ({ error, componentStack }) => {
   const report = useFailureReportButton({
     buildIncident: () => buildRenderCrashIncident(error, componentStack),
-    copyIdleLabel: "📋 Copy crash details",
+    copyIdleLabel: "Copy crash details",
   });
   return (
     <button

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import {
+  CARBON_THEMES,
   DEFAULT_UI_THEME,
+  FORK_DEFAULT_UI_THEME,
   UI_THEME_PRESETS,
   normalizeUiColor,
-  resetUiTheme,
+  resetUiThemeToForkDefault,
   selectUiTheme,
   setCustomUiThemeColor,
   uiThemeColors,
@@ -12,7 +14,7 @@ import {
 import "./uiThemeSettings.css";
 
 // Default restores each panel's own authored colors. This is only a preview swatch.
-const ORIGINAL_PREVIEW = { background: "#131315", surface: "#232327", accent: "#4B91FF" };
+const ORIGINAL_PREVIEW = { background: "var(--oh-paper, #131315)", surface: "var(--oh-paper, #232327)", accent: "#4B91FF" };
 
 const FIELDS = [
   { key: "background", label: "Background" },
@@ -69,12 +71,25 @@ export default function UiThemeSettings() {
   const colors = uiThemeColors(theme);
   return (
     <div className="oh-theme-settings">
-      <div className="oh-theme-intro">Keep the original interface or choose five themed palettes or your own. Map and gameplay colors are not affected.</div>
+      <div className="oh-theme-intro">Choose Carbon Dark or Carbon Light, keep the original interface, pick one of five themed palettes or make your own. Map and gameplay colors are not affected.</div>
+      <div className="oh-theme-scheme" role="group" aria-label="Dark or light">
+        {CARBON_THEMES.map((item) => (
+          <button key={item.id} type="button" className="oh-theme-preset" aria-pressed={theme.preset === item.id} onClick={() => selectUiTheme(item.id)}>
+            <span>{item.scheme === "dark" ? "Dark" : "Light"}</span>
+          </button>
+        ))}
+      </div>
       <div className="oh-theme-preset-grid" role="group" aria-label="Interface theme">
         <button type="button" className="oh-theme-preset" aria-pressed={theme.preset === DEFAULT_UI_THEME} onClick={() => selectUiTheme(DEFAULT_UI_THEME)}>
           <Sample colors={ORIGINAL_PREVIEW} />
           <span>Default (Original)</span>
         </button>
+        {CARBON_THEMES.map((item) => (
+          <button key={item.id} type="button" className="oh-theme-preset" aria-pressed={theme.preset === item.id} onClick={() => selectUiTheme(item.id)}>
+            <Sample colors={item.colors} />
+            <span>{item.name}</span>
+          </button>
+        ))}
         {UI_THEME_PRESETS.map((item) => (
           <button key={item.id} type="button" className="oh-theme-preset" aria-pressed={theme.preset === item.id} onClick={() => selectUiTheme(item.id)}>
             <Sample colors={item.colors} />
@@ -102,7 +117,7 @@ export default function UiThemeSettings() {
           <Sample colors={theme.preset === DEFAULT_UI_THEME ? ORIGINAL_PREVIEW : colors} large />
           <span>Live preview</span>
         </div>
-        <button type="button" className="oh-theme-reset" onClick={resetUiTheme} disabled={theme.preset === DEFAULT_UI_THEME && JSON.stringify(theme.custom) === JSON.stringify(UI_THEME_PRESETS[0].colors)}>
+        <button type="button" className="oh-theme-reset" onClick={resetUiThemeToForkDefault} disabled={theme.preset === FORK_DEFAULT_UI_THEME && JSON.stringify(theme.custom) === JSON.stringify(UI_THEME_PRESETS[0].colors)}>
           Reset to default
         </button>
       </div>

@@ -31,10 +31,10 @@ import { formatGameDateReadable } from "../../runtime/gameDates.js";
 
 const buttonStyle = {
   alignItems: "center",
-  background: "rgba(255,255,255,0.06)",
-  border: "1px solid rgba(255,255,255,0.12)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 6%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 12%, transparent)",
   borderRadius: "9px",
-  color: "rgba(246,246,248,0.92)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 92%, transparent)",
   cursor: "pointer",
   display: "inline-flex",
   fontSize: "0.76rem",
@@ -46,10 +46,10 @@ const buttonStyle = {
 };
 const primaryButtonStyle = { ...buttonStyle, background: "rgba(43,193,243,0.16)", borderColor: "rgba(43,193,243,0.4)", color: "#e0f6fe" };
 const inputStyle = {
-  background: "rgba(255,255,255,0.04)",
-  border: "1px solid rgba(255,255,255,0.1)",
+  background: "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 10%, transparent)",
   borderRadius: "10px",
-  color: "#f8fafc",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "inherit",
   fontSize: "0.78rem",
   outline: "none",
@@ -57,7 +57,7 @@ const inputStyle = {
   width: "100%",
 };
 const labelStyle = {
-  color: "rgba(255,255,255,0.58)",
+  color: "color-mix(in srgb, var(--oh-ink, #fff) 58%, transparent)",
   display: "block",
   fontSize: "0.63rem",
   fontWeight: 700,
@@ -65,14 +65,14 @@ const labelStyle = {
   marginBottom: "0.3rem",
   textTransform: "uppercase",
 };
-const hintStyle = { color: "rgba(255,255,255,0.5)", fontSize: "0.7rem", lineHeight: 1.5 };
-const sectionStyle = { background: "rgba(255,255,255,0.02)", border: "1px solid rgba(255,255,255,0.07)", borderRadius: 14, marginTop: "0.8rem", padding: "0.75rem" };
-const sectionTitleStyle = { color: "rgba(255,255,255,0.78)", fontSize: "0.66rem", fontWeight: 800, letterSpacing: "0.06em", marginBottom: "0.5rem", textTransform: "uppercase" };
+const hintStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 50%, transparent)", fontSize: "0.7rem", lineHeight: 1.5 };
+const sectionStyle = { background: "color-mix(in srgb, var(--oh-ink, #fff) 2%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 7%, transparent)", borderRadius: 14, marginTop: "0.8rem", padding: "0.75rem" };
+const sectionTitleStyle = { color: "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.66rem", fontWeight: 800, letterSpacing: "0.06em", marginBottom: "0.5rem", textTransform: "uppercase" };
 const choiceStyle = (active) => ({
   ...buttonStyle,
-  background: active ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.04)",
-  borderColor: active ? "rgba(255,255,255,0.28)" : "rgba(255,255,255,0.08)",
-  color: active ? "#f4f4f5" : "rgba(255,255,255,0.7)",
+  background: active ? "rgba(0,0,0,0.42)" : "color-mix(in srgb, var(--oh-ink, #fff) 4%, transparent)",
+  borderColor: active ? "color-mix(in srgb, var(--oh-ink, #fff) 28%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)",
+  color: active ? "color-mix(in srgb, var(--oh-ink, #fff) 96%, transparent)" : "color-mix(in srgb, var(--oh-ink, #fff) 70%, transparent)",
   fontSize: "0.7rem",
   minHeight: "1.8rem",
   padding: "0 0.6rem",
@@ -124,7 +124,7 @@ const DayOneRow = ({ row, onRemove, touch }) => {
           : `Ongoing storyline: ${title}`;
   return (
     <div style={{ alignItems: "center", display: "flex", gap: "0.5rem", justifyContent: "space-between", padding: "0.3rem 0" }}>
-      <div style={{ color: "rgba(255,255,255,0.82)", fontSize: "0.74rem", lineHeight: 1.45, minWidth: 0, overflowWrap: "anywhere" }}>{line}</div>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 82%, transparent)", fontSize: "0.74rem", lineHeight: 1.45, minWidth: 0, overflowWrap: "anywhere" }}>{line}</div>
       <button className="oh-tap" onClick={onRemove} style={touchFit({ ...buttonStyle, flex: "0 0 auto", fontSize: "0.68rem", minHeight: "1.7rem" }, touch)} type="button">Remove</button>
     </div>
   );
@@ -138,7 +138,7 @@ const EventCard = ({ event, index, count, problems, startDate, onChange, onMove,
     onChange({ ...event, tags });
   };
   return (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${problems.length ? "rgba(248,113,113,0.35)" : "rgba(255,255,255,0.08)"}`, borderRadius: 12, display: "grid", gap: "0.55rem", padding: "0.65rem" }}>
+    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: `1px solid ${problems.length ? "rgba(248,113,113,0.35)" : "color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)"}`, borderRadius: 12, display: "grid", gap: "0.55rem", padding: "0.65rem" }}>
       {/* Side by side while there is room for both, stacked when there is not. */}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.55rem" }}>
         <div style={{ flex: "1 1 8.5rem", maxWidth: isMobile ? "none" : "12rem" }}>
@@ -155,7 +155,7 @@ const EventCard = ({ event, index, count, problems, startDate, onChange, onMove,
         <textarea onChange={(e) => edit("description", e.target.value)} placeholder="What canonically happened?" rows={3} style={{ ...inputStyle, lineHeight: 1.45, resize: "vertical" }} value={event.description} />
       </div>
       <details>
-        <summary className="oh-tap-row" style={{ color: "rgba(255,255,255,0.72)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 750 }}>Advanced event metadata</summary>
+        <summary className="oh-tap-row" style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", cursor: "pointer", fontSize: "0.7rem", fontWeight: 750 }}>Advanced event metadata</summary>
         <div style={{ display: "grid", gap: "0.55rem", marginTop: "0.5rem" }}>
           <div>
             <span style={labelStyle}>Importance</span>
@@ -320,8 +320,8 @@ const PrehistoryPanel = ({ details, onDetailsChange }) => {
   };
 
   return (
-    <div style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
-      <div style={{ color: "rgba(255,255,255,0.94)", fontSize: "0.95rem", fontWeight: 800 }}>Pre-game history</div>
+    <div style={{ background: "color-mix(in srgb, var(--oh-ink, #fff) 3%, transparent)", border: "1px solid color-mix(in srgb, var(--oh-ink, #fff) 8%, transparent)", borderRadius: "18px", marginBottom: "0.95rem", padding: "0.9rem" }}>
+      <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 94%, transparent)", fontSize: "0.95rem", fontWeight: 800 }}>Pre-game history</div>
       <div style={{ ...hintStyle, marginTop: "0.2rem" }}>The events before round one. A new game from this scenario starts with them on its timeline, without asking your AI for them.</div>
       <div style={{ ...hintStyle, marginTop: "0.2rem" }}>Write them below, or generate them from a prompt and edit the result.</div>
       {!saved && briefing ? (
@@ -396,7 +396,7 @@ const PrehistoryPanel = ({ details, onDetailsChange }) => {
       ) : null}
 
       {error ? <div style={{ color: "#fca5a5", fontSize: "0.72rem", lineHeight: 1.5, marginTop: "0.7rem", overflowWrap: "anywhere" }}>{error}</div> : null}
-      {message ? <div style={{ color: "rgba(255,255,255,0.72)", fontSize: "0.72rem", lineHeight: 1.5, marginTop: "0.7rem" }}>{message}</div> : null}
+      {message ? <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 72%, transparent)", fontSize: "0.72rem", lineHeight: 1.5, marginTop: "0.7rem" }}>{message}</div> : null}
       {problems.length ? <div style={{ color: "#fca5a5", fontSize: "0.72rem", lineHeight: 1.5, marginTop: "0.7rem" }}>Fix the events marked above before saving.</div> : null}
       <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem", marginTop: "0.75rem" }}>
         <button className="oh-tap" disabled={busy || !dirty || problems.length > 0} onClick={save} style={touchFit({ ...primaryButtonStyle, opacity: busy || !dirty || problems.length ? 0.55 : 1 }, touch)} type="button">Save pre-history</button>

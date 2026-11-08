@@ -13,8 +13,8 @@ import React, { useState } from "react";
 import { generateRostraPosts } from "../AI/gameplayLazy.js";
 
 const INK = "#f4f4f5";
-const INK_SOFT = "rgba(244,244,245,0.56)";
-const INK_FAINT = "rgba(244,244,245,0.34)";
+const INK_SOFT = "color-mix(in srgb, var(--oh-ink, #fff) 56%, transparent)";
+const INK_FAINT = "color-mix(in srgb, var(--oh-ink, #fff) 34%, transparent)";
 
 export const RefreshIcon = ({ size = 15 }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.9" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
@@ -33,7 +33,7 @@ export const RefreshButton = ({ busy = false, disabled = false, onClick }) => (
       className="oh-tap-row"
       onClick={onClick}
       disabled={busy || disabled}
-      style={{ alignItems: "center", background: INK, border: "none", borderRadius: "999px", color: "#0b0b0d", cursor: busy || disabled ? "default" : "pointer", display: "inline-flex", fontFamily: "inherit", fontSize: "0.78rem", fontWeight: 800, gap: "0.4rem", marginTop: "0.65rem", opacity: disabled ? 0.5 : 1, padding: "0.42rem 1.05rem" }}
+      style={{ alignItems: "center", background: INK, border: "none", borderRadius: "999px", color: "var(--oh-paper, #0b0b0d)", cursor: busy || disabled ? "default" : "pointer", display: "inline-flex", fontFamily: "inherit", fontSize: "0.78rem", fontWeight: 800, gap: "0.4rem", marginTop: "0.65rem", opacity: disabled ? 0.5 : 1, padding: "0.42rem 1.05rem" }}
     >
       <RefreshIcon />
       <span>{busy ? "Refreshing…" : "Refresh"}</span>

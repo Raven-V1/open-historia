@@ -1,5 +1,6 @@
 /*! Open Historia — portions (mobile HUD wiring + advisor/forces launchers) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { Suspense, lazy, useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
+import UiIcon from "./carbonIcons.jsx";
 import { GenerationRatingToast } from "./generationRatingToast.jsx";
 import { SettingsButton, SettingsMenu } from "./settings";
 import { Presence } from "./presence.jsx";
@@ -97,7 +98,7 @@ const baseStyle = {
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
-  color: "white",
+  color: "var(--oh-ink, #fff)",
   fontFamily: "sans-serif",
   borderRadius: "14px",
   border: "1px solid var(--oh-hud-border)",
@@ -158,13 +159,13 @@ const WebGLWarningPopup = () => (
   >
     <div
       style={{
-        backgroundColor: "#1a1a1e",
+        backgroundColor: "var(--oh-paper, #1a1a1e)",
         border: "1px solid #e94560",
         borderRadius: "12px",
         padding: "2rem",
         maxWidth: "420px",
         width: "90%",
-        color: "#eaeaea",
+        color: "var(--oh-ink, #eaeaea)",
         boxShadow: "0 8px 32px rgba(0,0,0,0.5)",
         textAlign: "center",
       }}
@@ -178,13 +179,13 @@ const WebGLWarningPopup = () => (
           justifyContent: "center",
         }}
       >
-        ⚠️
+        <UiIcon name="warning" size={32} />
       </div>
       <h2 style={{ margin: "0 0 0.75rem", fontSize: "1.3rem", color: "#e94560" }}>
         WebGL Not Available
       </h2>
       <p style={{ margin: "0 0 0.5rem", lineHeight: 1.6, color: "#ccc", fontSize: "0.95rem" }}>
-        This application requires <strong style={{ color: "#eaeaea" }}>WebGL</strong> to render
+        This application requires <strong style={{ color: "var(--oh-ink, #eaeaea)" }}>WebGL</strong> to render
         the map, but it doesn't appear to be supported or enabled in your browser.
       </p>
       <p style={{ margin: "0 0 1.5rem", lineHeight: 1.6, color: "#999", fontSize: "0.85rem" }}>
@@ -198,7 +199,7 @@ const WebGLWarningPopup = () => (
           border: "1px solid #e94560",
           borderRadius: "8px",
           background: "#e94560",
-          color: "#fff",
+          color: "var(--oh-ink, #fff)",
           padding: "0.55rem 1.2rem",
           fontSize: "0.9rem",
           fontWeight: 700,
@@ -297,7 +298,7 @@ const WarRoomButton = ({ open, isMobile, onToggle }) => {
       backgroundSize: "cover",
       border: "1px solid rgba(0,0,0,0.6)",
       boxShadow: open
-        ? "0 0 0 2px rgba(255,255,255,0.85), 0 3px 12px rgba(0,0,0,0.55)"
+        ? "0 0 0 2px color-mix(in srgb, var(--oh-ink, #fff) 85%, transparent), 0 3px 12px rgba(0,0,0,0.55)"
         : "0 3px 12px rgba(0,0,0,0.55)",
       transition: "left 0.3s ease, bottom 0.3s ease, box-shadow 0.15s ease",
       // Under an open Actions, Projects or Diplomacy panel (9998), as the
