@@ -54,6 +54,25 @@ import { RELEASES } from "./notesReleases.js";
 // make UPDATES, newest first by date.
 const NEW_UPDATES = [
   {
+    // This fork's cloud saves (cloud/worker.js, runtime/cloudSaves.js): a game's export zip kept in the site's R2 bucket and
+    // listed in D1, per Cloudflare Access login; opened on another device the way Import opens one. Only shown where the site
+    // answers /cloud/v1/me.
+    id: "2026-11-cloud-saves",
+    kind: "minor",
+    date: "2026-11-08",
+    banners: [
+      {
+        title: "Carry your games between devices",
+        items: [
+          "Pick Save to cloud on a game's menu to keep a copy online, along with its map when no other device could download it.",
+          "On your phone or another computer, open the Games page and press Open on the game under Cloud saves to carry on from there.",
+          "A game you saved to the cloud saves again by itself every few rounds while you play it.",
+          "If another device saved a game since this one last saw it, you are asked before anything is replaced, and a copy you replace goes to Recently deleted.",
+        ],
+      },
+    ],
+  },
+  {
     // Import Game / Import Scenario said nothing when a file was refused (the error went to the scenario drawer, which is
     // closed on those pages); the difficulty picker opened behind the Scenarios page after the Carbon change.
     id: "2026-11-import-errors",

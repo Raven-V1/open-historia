@@ -86,6 +86,19 @@ import { formatGameDateShort } from "../../runtime/gameDates.js";
 import { getStoredLanguage } from "../../runtime/i18n.js";
 import { splitBundleFiles } from "../../runtime/bundleFiles.js";
 import { buildGameZipBlob, formatZipSize, readGameZip, saveGameZipToDisk } from "../../runtime/gameZip.js";
+import {
+  checkCloudSaves,
+  deleteCloudSave,
+  downloadCloudSave,
+  hasUnsyncedProgress,
+  localGameForSlot,
+  readCloudLinks,
+  refreshCloudSaves,
+  setCloudLink,
+  startCloudAutoSave,
+  uploadGameToCloud,
+  useCloudSaves,
+} from "../../runtime/cloudSaves.js";
 import { findScenarioCopyOfBundle } from "../../runtime/importedScenarioCopy.js";
 import { createLatestRequest } from "../../runtime/latestRequest.js";
 import { changedFields, followSavedFields, formDiffers } from "../../runtime/editorForm.js";
@@ -1283,7 +1296,7 @@ const ScenarioCard = ({ onClone, onEdit, onPlay, onSelect, onUpdate, scenario, s
 // face of the card. Three verbs compete for width with Play, and Play is the one a
 // player came to press; the other three are occasional, and none of them is
 // destructive, which is why Archive stays out here on its own.
-const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete = null, onEdit, onExport }) => {
+const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onCloudSave = null, onDelete = null, onEdit, onExport }) => {
   const cardImageUrl = game.coverImageUrl || DEFAULT_SCENARIO_COVER;
   const touch = useTouchPrimary();
   const isMobile = useIsMobile();
@@ -1300,6 +1313,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
   // open and says so on the row that was pressed, rather than closing and leaving
   // the card looking like nothing happened. Edit and Clone are instant and close.
   const [exporting, setExporting] = useState(false);
+  const [cloudSaving, setCloudSaving] = useState(false);
 
   // Click-away. It used to be a fixed layer over the screen, but the card's
   // backdrop-filter makes the card the containing block of anything fixed
@@ -1310,14 +1324,14 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
   useEffect(() => {
     if (!cardMenuOpen) return undefined;
     const onPointerDown = (event) => {
-      if (exporting) return;
+      if (exporting || cloudSaving) return;
       if (cardMenuRef.current?.contains(event.target) || cardMenuButtonRef.current?.contains(event.target)) return;
       setCardMenuOpen(false);
       setHoveredMenuItem(null);
     };
     document.addEventListener("pointerdown", onPointerDown, true);
     return () => document.removeEventListener("pointerdown", onPointerDown, true);
-  }, [cardMenuOpen, exporting]);
+  }, [cardMenuOpen, exporting, cloudSaving]);
   useBackToClose(cardMenuOpen, () => {
     setCardMenuOpen(false);
     setHoveredMenuItem(null);
@@ -1334,6 +1348,18 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
     }
   };
 
+  // Saving to the cloud packs the same zip Export does, so it waits the same way.
+  const runCloudSave = async () => {
+    setCloudSaving(true);
+    try {
+      await onCloudSave(game);
+    } finally {
+      setCloudSaving(false);
+      setCardMenuOpen(false);
+      setHoveredMenuItem(null);
+    }
+  };
+
   const cardMenuItems = [
     ["Edit", () => { setCardMenuOpen(false); onEdit(game.id); }, false],
     ["Clone", () => { setCardMenuOpen(false); onClone(game); }, false],
@@ -1341,6 +1367,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
     // Offered everywhere, the Android app included: runtime/saveFile.js saves
     // the zip into Downloads/Open Historia there (runtime/native/fileSave.js).
     [exporting ? "Exporting…" : "Export", runExport, exporting],
+    ...(onCloudSave ? [[cloudSaving ? "Saving to cloud…" : "Save to cloud", runCloudSave, cloudSaving]] : []),
   ];
 
   return (
@@ -1471,7 +1498,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
                 <button
                   key={label}
                   className="oh-tap-row"
-                  disabled={exporting}
+                  disabled={exporting || cloudSaving}
                   onClick={() => { setHoveredMenuItem(null); run(); }}
                   onFocus={() => setHoveredMenuItem(label)}
                   onBlur={() => setHoveredMenuItem(null)}
@@ -1488,7 +1515,7 @@ const GameCard = ({ active, busy, game, onActivate, onArchive, onClone, onDelete
                     cursor: working ? "progress" : undefined,
                     justifyContent: "flex-start",
                     minWidth: "8rem",
-                    opacity: exporting && !working ? 0.45 : 1,
+                    opacity: (exporting || cloudSaving) && !working ? 0.45 : 1,
                     padding: "0.55rem 0.8rem",
                     textAlign: "left",
                   }, touch)}
@@ -1792,6 +1819,135 @@ const RecentlyDeletedRow = ({ kind, onChanged, trash }) => {
       >
         {entries.map((entry) => (
           <DeletedCard key={entry.entry} busy={busy} entry={entry} onRestore={(target) => run(() => restoreFromTrash(target.entry))} touch={touch} />
+        ))}
+      </MenuRow>
+    </>
+  );
+};
+
+// When a cloud save was made, in the player's words.
+const savedWhen = (savedAt) => {
+  const time = Date.parse(savedAt);
+  if (!Number.isFinite(time)) return "";
+  const minutes = Math.round((Date.now() - time) / 60000);
+  if (minutes < 1) return "Saved just now";
+  if (minutes < 60) return minutes === 1 ? "Saved a minute ago" : `Saved ${minutes} minutes ago`;
+  const hours = Math.round(minutes / 60);
+  if (hours < 24) return hours === 1 ? "Saved an hour ago" : `Saved ${hours} hours ago`;
+  const days = Math.round(hours / 24);
+  return days === 1 ? "Saved yesterday" : `Saved ${days} days ago`;
+};
+
+const CLOUD_NOTICE_TONES = {
+  ok: { background: "rgba(36,161,72,0.14)", border: "rgba(66,190,101,0.4)", color: "#defbe6" },
+  warning: { background: "rgba(241,194,27,0.12)", border: "rgba(241,194,27,0.4)", color: "#fcf4d6" },
+  error: { background: "rgba(248,113,113,0.12)", border: "rgba(248,113,113,0.34)", color: "#fecaca" },
+};
+
+const CloudSaveCard = ({ busy, linkedGame, link, onDelete, onOpen, save, touch }) => {
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const behind = linkedGame && link?.revision === save.revision && hasUnsyncedProgress(linkedGame, link);
+  const status = link?.conflict
+    ? "Saved from another device since. Open it to carry on, or Save to cloud to replace it."
+    : linkedGame
+      ? (link?.revision === save.revision
+        ? (behind ? "This device is ahead: it saves again in a few rounds." : "Up to date on this device.")
+        : "Newer than this device's copy.")
+      : "Not on this device yet.";
+  return (
+    <div
+      style={{
+        ...themeSurfaceStyle,
+        borderRadius: "24px",
+        display: "flex",
+        flex: `0 0 ${SHELF_CARD_WIDTH}`,
+        flexDirection: "column",
+        gap: "0.8rem",
+        justifyContent: "space-between",
+        padding: "1.1rem 1.2rem",
+      }}
+    >
+      <div style={{ minWidth: 0 }}>
+        <div data-no-translate style={{ fontSize: "1.02rem", fontWeight: 800, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={save.name || undefined}>
+          {save.name || "Untitled game"}
+        </div>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 64%, transparent)", display: "flex", flexWrap: "wrap", fontSize: "0.82rem", gap: "0.3rem 0.6rem", marginTop: "0.3rem" }}>
+          {save.country && <span data-no-translate>{save.country}</span>}
+          <span>Round {save.round || 1}</span>
+          {save.gameDate && <span data-no-translate>{save.gameDate}</span>}
+        </div>
+        <div style={{ color: "color-mix(in srgb, var(--oh-ink, #fff) 64%, transparent)", display: "flex", flexWrap: "wrap", fontSize: "0.82rem", gap: "0.3rem 0.6rem", marginTop: "0.2rem" }}>
+          <span>{savedWhen(save.updatedAt)}</span>
+          {save.device && <span>from <span data-no-translate>{save.device}</span></span>}
+          {Number.isFinite(save.bytes) && save.bytes > 0 && <span data-no-translate>{formatZipSize(save.bytes)}</span>}
+        </div>
+        <div style={{ color: link?.conflict ? "#fcf4d6" : "color-mix(in srgb, var(--oh-ink, #fff) 78%, transparent)", fontSize: "0.82rem", marginTop: "0.5rem" }}>
+          {status}
+        </div>
+      </div>
+      {confirmDelete ? (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
+          <button className="oh-tap-row" disabled={busy} onClick={() => setConfirmDelete(false)} style={touchFit({ ...themeButtonStyle }, touch)} type="button">
+            Cancel
+          </button>
+          <button className="oh-tap-row" disabled={busy} onClick={() => { setConfirmDelete(false); onDelete(save); }} style={touchFit({ ...themeButtonStyle, background: "rgba(185,28,28,0.72)", borderColor: "rgba(248,113,113,0.4)", color: "var(--oh-ink, #fff)" }, touch)} type="button">
+            Delete from cloud
+          </button>
+        </div>
+      ) : (
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "0.45rem" }}>
+          <button className="oh-tap-row" disabled={busy} onClick={() => onOpen(save)} style={touchFit({ ...themeButtonStyle, cursor: busy ? "progress" : "pointer" }, touch)} type="button">
+            <UiIcon name="download" size={15} /> Open
+          </button>
+          <button aria-label="Delete this cloud save" className="oh-tap-row" disabled={busy} onClick={() => setConfirmDelete(true)} style={touchFit({ ...themeButtonStyle }, touch)} type="button">
+            <UiIcon name="trash" size={15} />
+          </button>
+        </div>
+      )}
+    </div>
+  );
+};
+
+// The Games tab's Cloud saves shelf: every save this player keeps on the site,
+// newest first, each with Open (carry it on here) and Delete. A game reaches
+// the cloud from its card's menu, Save to cloud.
+const CloudSavesRow = ({ busy, cloud, games, notice, onDelete, onOpen, onRefresh }) => {
+  const touch = useTouchPrimary();
+  const tone = notice ? CLOUD_NOTICE_TONES[notice.tone] ?? CLOUD_NOTICE_TONES.ok : null;
+  const linkedGameFor = (save) => {
+    const gameId = localGameForSlot(save.slotId, cloud.links);
+    return gameId ? games.find((entry) => entry.id === gameId) ?? null : null;
+  };
+  const description = `Carry a campaign on from any device signed in as ${cloud.email}.`;
+  return (
+    <>
+      {(notice || cloud.error) && (
+        <div style={{ background: (tone ?? CLOUD_NOTICE_TONES.error).background, border: `1px solid ${(tone ?? CLOUD_NOTICE_TONES.error).border}`, borderRadius: "14px", color: (tone ?? CLOUD_NOTICE_TONES.error).color, marginBottom: "0.9rem", padding: "0.8rem 0.9rem" }}>
+          {notice?.text || cloud.error}
+        </div>
+      )}
+      <MenuRow
+        action={(
+          <button className="oh-tap-row" disabled={busy} onClick={onRefresh} style={touchFit({ ...themeButtonStyle, flexShrink: 0 }, touch)} type="button">
+            <ButtonIcon kind="refresh" /> Refresh
+          </button>
+        )}
+        description={description}
+        emptyText="Nothing saved to the cloud yet. Pick Save to cloud on a game's menu to carry it on from your other devices."
+        icon={<UiIcon name="upload" size={16} />}
+        title="Cloud saves"
+      >
+        {cloud.saves.map((save) => (
+          <CloudSaveCard
+            key={save.slotId}
+            busy={busy || Boolean(cloud.working)}
+            link={cloud.links[localGameForSlot(save.slotId, cloud.links) ?? ""] ?? null}
+            linkedGame={linkedGameFor(save)}
+            onDelete={onDelete}
+            onOpen={onOpen}
+            save={save}
+            touch={touch}
+          />
         ))}
       </MenuRow>
     </>
@@ -3514,6 +3670,21 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         throw new Error("That file isn't a game export. Pick the .zip you saved with Export.");
       }
 
+      await importGameZipBuffer(buffer);
+      await refreshLibraryCatalog({ force: true });
+      setActiveTab("games");
+      setMenuOpen(true);
+    } catch (nextError) {
+      setEditorError(nextError.message);
+      setImportProblem(describeImportProblem(nextError, "game"));
+    } finally {
+      setIsBusy(false);
+    }
+  };
+
+  // A game export's bytes into the library: what the Import button and Open
+  // from the cloud share. Resolves to the new game's details.
+  const importGameZipBuffer = async (buffer) => {
       const { bundle, scenarioBundle, snapshotsText } = await readGameZip(buffer);
 
       // The scenario first, so the game's card names its map the moment it
@@ -3534,15 +3705,100 @@ const LibraryTopBar = ({ onOpenSettings }) => {
       // Restore points go back as the text they arrived as, so neither side ever
       // parses ~21 MB of them.
       if (snapshotsText) await writeGameSnapshotsText(details.game.id, snapshotsText);
+      return details;
+  };
 
-      await refreshLibraryCatalog({ force: true });
-      setActiveTab("games");
-      setMenuOpen(true);
+  // ---- Cloud saves (runtime/cloudSaves.js): shown only where the site keeps them.
+  const cloud = useCloudSaves();
+  const [cloudNotice, setCloudNotice] = useState(null);
+  useEffect(() => {
+    checkCloudSaves().then((enabled) => { if (enabled) startCloudAutoSave(); });
+  }, []);
+
+  const handleCloudSave = async (game) => {
+    setCloudNotice(null);
+    try {
+      let result = await uploadGameToCloud(game);
+      if (result.conflict) {
+        const other = result.conflict;
+        const overwrite = window.confirm(
+          `The cloud copy of “${game.name}” was saved from ${other.device || "another device"}` +
+          `${other.round ? ` at round ${other.round}` : ""} since this device last saw it.\n\n` +
+          "Replace the cloud copy with this device's game? To keep the cloud copy instead, open it from Cloud saves.",
+        );
+        if (!overwrite) {
+          setCloudNotice({ tone: "warning", text: `“${game.name}” was not saved to the cloud. Open the cloud copy to carry on from it.` });
+          return;
+        }
+        result = await uploadGameToCloud(game, { force: true });
+      }
+      setCloudNotice({
+        tone: "ok",
+        text: result.oversizeScenario
+          ? `“${game.name}” is saved to the cloud, but its map is too large to go with it: another device needs the scenario already.`
+          : `“${game.name}” is saved to the cloud. It saves again by itself every few rounds while you play it here.`,
+      });
     } catch (nextError) {
-      setEditorError(nextError.message);
-      setImportProblem(describeImportProblem(nextError, "game"));
+      setCloudNotice({ tone: "error", text: `Could not save “${game.name}” to the cloud: ${nextError.message}` });
+    }
+  };
+
+  // Open a cloud save on this device: import its zip, link the new game to the
+  // save, open it, and move this device's older copy (if any) to Recently deleted.
+  const handleCloudOpen = async (save) => {
+    setCloudNotice(null);
+    const links = readCloudLinks();
+    const localId = localGameForSlot(save.slotId, links);
+    const localGame = localId ? games.find((entry) => entry.id === localId) : null;
+    const localLink = localId ? links[localId] : null;
+
+    if (localGame && localLink?.revision === save.revision && !localLink.conflict) {
+      await handleGameActivate(localGame.id);
+      return;
+    }
+    if (localGame && hasUnsyncedProgress(localGame, localLink)) {
+      const replace = window.confirm(
+        `This device's copy of “${localGame.name}” has turns that were never saved to the cloud ` +
+        `(round ${localGame.round || 1} here, round ${save.round || 1} in the cloud).\n\n` +
+        "Replace it with the cloud copy? This device's copy goes to Recently deleted.",
+      );
+      if (!replace) return;
+    }
+
+    setIsBusy(true);
+    try {
+      const buffer = await downloadCloudSave(save.slotId);
+      const details = await importGameZipBuffer(buffer);
+      const newId = details.game.id;
+      setCloudLink(newId, { slotId: save.slotId, revision: save.revision, syncedRound: save.round || 1, syncedDate: save.gameDate || "" });
+      if (localGame) {
+        setCloudLink(localGame.id, null);
+        await removeGame(localGame.id).catch(() => {});
+        refreshTrash();
+      }
+      // The import named the copy "(Imported)" while the old one still held the
+      // name; with that one gone it takes the save's own name back.
+      if (save.name && details.game?.name && details.game.name !== save.name
+        && !games.some((entry) => entry.id !== localGame?.id && entry.name === save.name)) {
+        await saveGame(newId, { name: save.name }, { refresh: false }).catch(() => {});
+      }
+      await refreshLibraryCatalog({ force: true });
+      setMenuOpen(false);
+      await activateGame(newId);
+    } catch (nextError) {
+      setMenuOpen(true);
+      setCloudNotice({ tone: "error", text: `Could not open “${save.name || "that save"}” from the cloud: ${nextError.message}` });
     } finally {
       setIsBusy(false);
+    }
+  };
+
+  const handleCloudDelete = async (save) => {
+    setCloudNotice(null);
+    try {
+      await deleteCloudSave(save.slotId);
+    } catch (nextError) {
+      setCloudNotice({ tone: "error", text: `Could not delete the cloud save: ${nextError.message}` });
     }
   };
 
@@ -5366,7 +5622,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                   {continueGames.length > 0 && (
                     <MenuRow description="Pick up exactly where you left off." icon="▶" title="Continue Playing">
                       {continueGames.map((game) => (
-                        <GameCard key={game.id} active={game.id === activeGameId} busy={isBusy} game={game} onActivate={handleGameActivate} onArchive={handleGameArchive} onClone={handleGameClone} onDelete={handleGameDelete} onEdit={openGameEditor} onExport={handleGameExport} />
+                        <GameCard key={game.id} active={game.id === activeGameId} busy={isBusy} game={game} onActivate={handleGameActivate} onArchive={handleGameArchive} onClone={handleGameClone} onDelete={handleGameDelete} onCloudSave={cloud.enabled ? handleCloudSave : null} onEdit={openGameEditor} onExport={handleGameExport} />
                       ))}
                     </MenuRow>
                   )}
@@ -5397,11 +5653,22 @@ const LibraryTopBar = ({ onOpenSettings }) => {
                         child either way, so an empty view still says so. */}
                     {loaded
                       ? browsedGames.map((game) => (
-                        <GameCard key={game.id} active={game.id === activeGameId} busy={isBusy} game={game} onActivate={handleGameActivate} onArchive={handleGameArchive} onClone={handleGameClone} onDelete={handleGameDelete} onEdit={openGameEditor} onExport={handleGameExport} />
+                        <GameCard key={game.id} active={game.id === activeGameId} busy={isBusy} game={game} onActivate={handleGameActivate} onArchive={handleGameArchive} onClone={handleGameClone} onDelete={handleGameDelete} onCloudSave={cloud.enabled ? handleCloudSave : null} onEdit={openGameEditor} onExport={handleGameExport} />
                       ))
                       : <MenuCardSkeletons count={isMobile ? 3 : 8} kind="game" width={SHELF_CARD_WIDTH} />}
                   </LibraryCollection>
                 </>
+              )}
+              {cloud.enabled && (
+                <CloudSavesRow
+                  busy={isBusy}
+                  cloud={cloud}
+                  games={games}
+                  notice={cloudNotice}
+                  onDelete={handleCloudDelete}
+                  onOpen={handleCloudOpen}
+                  onRefresh={() => refreshCloudSaves()}
+                />
               )}
               <RecentlyDeletedRow kind="game" onChanged={refreshTrash} trash={trash} />
               </>
