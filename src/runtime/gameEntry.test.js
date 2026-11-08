@@ -238,6 +238,7 @@ test("every way out of the menu opens a game: each flow closes it and then has t
     handleGameActivate: /await activateGame\(gameId\);/,
     handleMissingScenarioImport: /await activateGame\(game\.id\);/,
     choosePlayCountry: /await activateGame\(gid\);/,
+    handleCloudOpen: /await activateGame\(newId\);/,
   };
   let closes = 0;
   for (const [name, opening] of Object.entries(opens)) {
@@ -257,7 +258,7 @@ test("every way out of the menu opens a game: each flow closes it and then has t
     "the menu is closed somewhere new: that flow must open a game through the library, or close it with enterActiveGame",
   );
   // A flow that fails opens the menu again, so the cover does not stay up over no game.
-  for (const name of ["startGameForCountry", "startGameForFaction", "startGameForGroup", "handleGameClone", "playAppliedMap", "handleGameActivate", "handleMissingScenarioImport"]) {
+  for (const name of ["startGameForCountry", "startGameForFaction", "startGameForGroup", "handleGameClone", "playAppliedMap", "handleGameActivate", "handleMissingScenarioImport", "handleCloudOpen"]) {
     assert.match(flow(name), /catch \(nextError\) \{[\s\S]*?setMenuOpen\(true\);/, `${name} leaves the menu closed when it fails`);
   }
 });

@@ -5,7 +5,33 @@
   "observability": {
     "enabled": true
   },
+  // The Worker answers /cloud/* only (cloud saves); every other request is the
+  // static site from dist-web, served by the assets binding as before.
+  "main": "cloud/worker.js",
   "assets": {
-    "directory": "dist-web"
+    "directory": "dist-web",
+    "binding": "ASSETS",
+    "run_worker_first": ["/cloud/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "belvenar-historia",
+      // Paste the id printed by: npx wrangler d1 create belvenar-historia
+      "database_id": "REPLACE_WITH_D1_DATABASE_ID"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "SAVES",
+      "bucket_name": "belvenar-historia-saves"
+    }
+  ],
+  "vars": {
+    // Zero Trust → Settings → Custom pages shows the team domain,
+    // e.g. "yourteam.cloudflareaccess.com".
+    "ACCESS_TEAM_DOMAIN": "REPLACE_WITH_TEAM.cloudflareaccess.com",
+    // Zero Trust → Access → Applications → this app → Overview → Application Audience (AUD) Tag.
+    "ACCESS_AUD": "REPLACE_WITH_ACCESS_AUD_TAG"
   }
 }
