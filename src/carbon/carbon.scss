@@ -413,10 +413,14 @@
 }
 
 // The dialog's close button already has its label for screen readers; the
-// tooltip Carbon shows beside it while it holds focus is left out.
+// tooltip Carbon shows beside it while it holds focus is left out, with its
+// arrow.
 .cds--modal .cds--icon-tooltip .cds--popover-content,
-.cds--modal .cds--modal-close-button .cds--popover-content {
-  display: none;
+.cds--modal .cds--icon-tooltip .cds--popover-caret,
+.cds--modal .cds--modal-close-button .cds--popover-content,
+.cds--modal .cds--modal-close-button .cds--popover-caret {
+  // Carbon's own rule for the open arrow is more specific than this one.
+  display: none !important;
 }
 
 // Carbon Light: the rest of the light, tinted text colours the panels write

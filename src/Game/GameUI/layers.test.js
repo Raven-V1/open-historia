@@ -19,3 +19,8 @@ test("the pages and both pickers take their layer from the shared scale", () => 
   assert.match(library, /className="oh-difficulty-modal"\s*style=\{\{ zIndex: Z_LAYER\.gameStartDialog \}\}/);
   assert.doesNotMatch(library, /zIndex: 10046|zIndex: 10060/);
 });
+
+test("a dialog's close button shows no tooltip or arrow beside it", () => {
+  const scss = fs.readFileSync(new URL("../../carbon/carbon.scss", import.meta.url), "utf8");
+  assert.match(scss, /\.cds--modal \.cds--modal-close-button \.cds--popover-content[\s\S]*?\.cds--modal-close-button \.cds--popover-caret \{[^}]*display: none !important/);
+});
