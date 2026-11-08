@@ -1,6 +1,8 @@
 /*! Open Historia — portions (map-editor embed, apply-to-scenario, country picker) © 2026 Nicholas Krol, AGPL-3.0-or-later (see LICENSE). */
 import React, { lazy, Suspense, useEffect, useMemo, useRef, useState, useSyncExternalStore } from "react";
-import { CarbonModal } from "./carbonControls.jsx";
+import { CarbonModal, CarbonToastNotification } from "./carbonControls.jsx";
+import { Z_LAYER } from "./layers.js";
+import { describeImportProblem } from "../../runtime/importProblem.js";
 import UiIcon, { DifficultyIcon } from "./carbonIcons.jsx";
 import { APP_HEIGHT, SAFE_BOTTOM, SAFE_LEFT, SAFE_RIGHT, SAFE_TOP, SCREEN_HEIGHT, useTouchPrimary } from "../../runtime/mobileUi.js";
 import { useBackToClose } from "../../runtime/backToClose.js";
@@ -2707,6 +2709,9 @@ const LibraryTopBar = ({ onOpenSettings }) => {
   // The open scenario's Stats sheet failed to download: Save leaves it alone.
   const [editorStatsFailed, setEditorStatsFailed] = useState(false);
   const [editorError, setEditorError] = useState(null);
+  // A refused import file: shown over the page, since the drawer that shows
+  // editorError is not open on the Games and Scenarios pages.
+  const [importProblem, setImportProblem] = useState(null);
   // What delete moved to the trash (GET /api/trash), for the Recently deleted
   // shelves and the delete confirmation. null until it loads, and where the
   // store will not serve it: the shelves then stay hidden.
@@ -3498,6 +3503,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
     }
 
     setEditorError(null);
+    setImportProblem(null);
     setIsBusy(true);
 
     try {
@@ -3534,6 +3540,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
       setMenuOpen(true);
     } catch (nextError) {
       setEditorError(nextError.message);
+      setImportProblem(describeImportProblem(nextError, "game"));
     } finally {
       setIsBusy(false);
     }
@@ -3909,6 +3916,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
     }
 
     setEditorError(null);
+    setImportProblem(null);
     setIsBusy(true);
 
     try {
@@ -3929,6 +3937,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
       }
     } catch (nextError) {
       setEditorError(nextError.message);
+      setImportProblem(describeImportProblem(nextError, "scenario"));
     } finally {
       setIsBusy(false);
     }
@@ -4779,7 +4788,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         {(countryPicker) => (
         <div
           onClick={closeCountryPicker}
-          style={{ visibility: difficultyPick ? "hidden" : "visible", position: "fixed", inset: 0, zIndex: 10060, background: "rgba(0,0,0,0.7)", backdropFilter: "blur(6px)", display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "center", padding: `${SAFE_TOP} ${SAFE_RIGHT} ${SAFE_BOTTOM} ${SAFE_LEFT}` }}
+          style={{ visibility: difficultyPick ? "hidden" : "visible", position: "fixed", inset: 0, zIndex: Z_LAYER.gameStartDialog, background: "rgba(0,0,0,0.7)", backdropFilter: "blur(6px)", display: "flex", alignItems: isMobile ? "flex-start" : "center", justifyContent: "center", padding: `${SAFE_TOP} ${SAFE_RIGHT} ${SAFE_BOTTOM} ${SAFE_LEFT}` }}
         >
           {/* On a phone the card takes the whole screen height rather than 80%
               of it: the search, the map, the list and the buttons need every
@@ -4986,6 +4995,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         passiveModal
         size="sm"
         className="oh-difficulty-modal"
+        style={{ zIndex: Z_LAYER.gameStartDialog }}
         modalHeading="Choose your difficulty"
         modalLabel="How hard should the world fight back?"
         onRequestClose={() => setDifficultyPick(null)}
@@ -5057,7 +5067,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         {(pending) => (
           <div
             onClick={() => setMissingScenarioGame(null)}
-            style={{ alignItems: "center", background: "rgba(0,0,0,0.55)", display: "flex", inset: 0, justifyContent: "center", position: "fixed", zIndex: 10060 }}
+            style={{ alignItems: "center", background: "rgba(0,0,0,0.55)", display: "flex", inset: 0, justifyContent: "center", position: "fixed", zIndex: Z_LAYER.pageDialog }}
           >
             <div
               onClick={(event) => event.stopPropagation()}
@@ -5131,7 +5141,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         {(pending) => (
           <div
             onClick={() => setReplaceEditsTarget(null)}
-            style={{ alignItems: "center", background: "rgba(0,0,0,0.55)", display: "flex", inset: 0, justifyContent: "center", position: "fixed", zIndex: 10060 }}
+            style={{ alignItems: "center", background: "rgba(0,0,0,0.55)", display: "flex", inset: 0, justifyContent: "center", position: "fixed", zIndex: Z_LAYER.pageDialog }}
           >
             <div
               aria-modal="true"
@@ -5172,6 +5182,20 @@ const LibraryTopBar = ({ onOpenSettings }) => {
         )}
       </Presence>
 
+      {importProblem && (
+        <div style={{ position: "fixed", right: "1rem", top: "1rem", zIndex: Z_LAYER.notice }}>
+          <CarbonToastNotification
+            kind="error"
+            role="alert"
+            lowContrast
+            title={importProblem.title}
+            subtitle={importProblem.detail}
+            onClose={() => { setImportProblem(null); return false; }}
+            onCloseButtonClick={() => setImportProblem(null)}
+          />
+        </div>
+      )}
+
       <input
         ref={importScenarioInputRef}
         accept={acceptFor(".json,application/json,.zip,application/zip")}
@@ -5207,7 +5231,7 @@ const LibraryTopBar = ({ onOpenSettings }) => {
             fontFamily: "sans-serif",
             inset: 0,
             position: "fixed",
-            zIndex: 10046,
+            zIndex: Z_LAYER.pageOverlay,
           }}
         >
           {isMobile ? (

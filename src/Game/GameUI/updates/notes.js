@@ -54,6 +54,22 @@ import { RELEASES } from "./notesReleases.js";
 // make UPDATES, newest first by date.
 const NEW_UPDATES = [
   {
+    // Import Game / Import Scenario said nothing when a file was refused (the error went to the scenario drawer, which is
+    // closed on those pages); the difficulty picker opened behind the Scenarios page after the Carbon change.
+    id: "2026-11-import-errors",
+    kind: "minor",
+    date: "2026-11-08",
+    banners: [
+      {
+        title: "Clearer imports, and a picker fix",
+        items: [
+          "Import Game and Import Scenario now tell you when a file is refused: the wrong kind of file, a file that is not valid JSON, or one that is not an Open Historia export.",
+          "The difficulty picker now opens above the Scenarios, Games and Community pages after you choose a country.",
+        ],
+      },
+    ],
+  },
+  {
     // This fork's redesign: the interface follows IBM's Carbon Design System (Carbon Dark and Carbon Light as themes of the
     // existing theme system), icons replace the emoji, and Settings → Help links to the source.
     id: "2026-11-carbon-look",
